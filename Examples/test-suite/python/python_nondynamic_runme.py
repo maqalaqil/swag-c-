@@ -1,8 +1,8 @@
 import python_nondynamic
 
 def is_python_modern():
-    """Return True if SWIG is generating Python code using -modern. Works only if %python_nondynamic has been used."""
-    return hasattr(python_nondynamic, "_swig_setattr_nondynamic_class_variable")
+    """Return True if alaqil is generating Python code using -modern. Works only if %python_nondynamic has been used."""
+    return hasattr(python_nondynamic, "_alaqil_setattr_nondynamic_class_variable")
 
 def debug_print(s):
     show_debug = False

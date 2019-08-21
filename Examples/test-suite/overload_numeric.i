@@ -3,9 +3,9 @@
 // Tests overloading of integral and floating point types to verify the range checking required
 // for dispatch to the correct overloaded method
 
-#ifdef SWIGLUA
+#ifdef alaqilLUA
 // lua only has one numeric type, so most of the overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) Nums::over;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) Nums::over;
 #endif
 
 %{

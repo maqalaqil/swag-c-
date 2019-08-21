@@ -3,7 +3,7 @@ module li_std_string_runme;
 import std.exception;
 import li_std_string.li_std_string;
 import li_std_string.Structure;
-import li_std_string.SWIGTYPE_p_std__string;
+import li_std_string.alaqilTYPE_p_std__string;
 
 void main() {
   // Checking expected use of %typemap(in) std::string {}
@@ -28,7 +28,7 @@ void main() {
   // std::string are *not* supported; the following tests confirm
   // that none of these cases are slipping through.
 
-  SWIGTYPE_p_std__string stringPtr = null;
+  alaqilTYPE_p_std__string stringPtr = null;
 
   stringPtr = test_pointer_out();
   test_pointer(stringPtr);

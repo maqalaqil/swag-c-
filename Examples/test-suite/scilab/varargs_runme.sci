@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 checkequal(test("Hello"), "Hello", "test(""Hello"")");
 
@@ -14,4 +14,4 @@ checkequal(test_def("Hello", 1), "Hello", "test_def(""Hello"", 1)");
 
 checkequal(test_def("Hello"), "Hello", "test_def(""Hello"")");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

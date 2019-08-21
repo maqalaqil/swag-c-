@@ -1,8 +1,8 @@
-  These examples/tests are for when the SWIG generated wrapper module is split
+  These examples/tests are for when the alaqil generated wrapper module is split
 between two packages.  Specifically the pure python part is part of a package
-and the C/C++ part is not in any package at all.  Historically SWIG has
+and the C/C++ part is not in any package at all.  Historically alaqil has
 supported this sort of thing.
-From SWIG 4.0.0 onwards, split modules are not supported by default.
+From alaqil 4.0.0 onwards, split modules are not supported by default.
 The %module directive needs to be customised with the moduleimport attribute
 in order to import the a global C/C++ module.
 

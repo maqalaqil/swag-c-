@@ -1,6 +1,6 @@
 %module union_parameter
 
-%warnfilter(SWIGWARN_PARSE_KEYWORD) type; // 'type' is a Go keyword, renamed as 'Xtype'
+%warnfilter(alaqilWARN_PARSE_KEYWORD) type; // 'type' is a Go keyword, renamed as 'Xtype'
 
 %inline %{
 

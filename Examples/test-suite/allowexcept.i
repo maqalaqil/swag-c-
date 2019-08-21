@@ -26,9 +26,9 @@ UVW Bar::static_member_variable;
 struct XYZ {
 };
 
-// The operator& trick doesn't work for SWIG/PHP because the generated code
+// The operator& trick doesn't work for alaqil/PHP because the generated code
 // takes the address of the variable in the code in the "vinit" section.
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 %{
 struct XYZ {
   void foo() {}
@@ -46,12 +46,12 @@ private:
 };
 %}
 #endif
-#if defined(SWIGUTL)
+#if defined(alaqilUTL)
 %exception {
   /* 
    $action
   */
-  SWIG_fail;
+  alaqil_fail;
 }
 #else
 %exception {

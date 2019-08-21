@@ -4,7 +4,7 @@
 #include "example.h"
 %}
 
-/* Tell SWIG that create_animal creates a new object */
+/* Tell alaqil that create_animal creates a new object */
 %newobject Zoo::create_animal;
 
 /* Keep track of mappings between C/C++ structs/classes
@@ -27,7 +27,7 @@
 
 		for(int i = 0; i < count; ++i) {
 			Animal* animal = zoo->get_animal(i);
-			VALUE object = SWIG_RubyInstanceFor(animal);
+			VALUE object = alaqil_RubyInstanceFor(animal);
 
 			if (object != Qnil) {
 				rb_gc_mark(object);

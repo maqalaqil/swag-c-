@@ -4,7 +4,7 @@ import std.conv;
 import std.exception;
 import member_pointer.member_pointer;
 import member_pointer.Square;
-import member_pointer.SWIGTYPE_m_Shape__f_void__double;
+import member_pointer.alaqilTYPE_m_Shape__f_void__double;
 
 void main() {
   auto s = new Square(10);
@@ -15,7 +15,7 @@ void main() {
   check("Square area", 100.0, do_op(s, area_pt));
   check("Square perim", 40.0, do_op(s, perim_pt));
 
-  SWIGTYPE_m_Shape__f_void__double memberPtr = null;
+  alaqilTYPE_m_Shape__f_void__double memberPtr = null;
   memberPtr = areavar;
   memberPtr = perimetervar;
 

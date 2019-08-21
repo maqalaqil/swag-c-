@@ -1,10 +1,10 @@
-// Tests handling of inheritance when a base class isn't provided to SWIG
+// Tests handling of inheritance when a base class isn't provided to alaqil
 %module inherit_missing
 
 %warnfilter(402);
 
 %{
-/* Define the class internally, but don't tell SWIG about it */
+/* Define the class internally, but don't tell alaqil about it */
 class Foo {
 public:
      virtual ~Foo() {}

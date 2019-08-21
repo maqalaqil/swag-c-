@@ -22,7 +22,7 @@ include $(srcdir)/../common.mk
 TARGETPREFIX =# Should be php_ for Windows, empty otherwise
 
 # Custom tests - tests with additional commandline options
-prefix.cpptest: SWIGOPT += -prefix Project
+prefix.cpptest: alaqilOPT += -prefix Project
 
 # write out tests without a _runme.php
 missingcpptests:
@@ -36,17 +36,17 @@ missingtests: missingcpptests missingctests
 # Rules for the different types of tests
 %.cpptest:
 	$(setup)
-	+$(swig_and_compile_cpp)
+	+$(alaqil_and_compile_cpp)
 	+$(run_testcase)
 
 %.ctest:
 	$(setup)
-	+$(swig_and_compile_c)
+	+$(alaqil_and_compile_c)
 	+$(run_testcase)
 
 %.multicpptest:
 	$(setup)
-	+$(swig_and_compile_multi_cpp)
+	+$(alaqil_and_compile_multi_cpp)
 	+$(run_testcase)
 
 # Smart target

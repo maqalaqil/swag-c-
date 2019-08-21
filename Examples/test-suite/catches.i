@@ -1,6 +1,6 @@
 %module catches
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW3(T1, T2, T3) throw(T1, T2, T3)
 %{
 #define TESTCASE_THROW3(T1, T2, T3)

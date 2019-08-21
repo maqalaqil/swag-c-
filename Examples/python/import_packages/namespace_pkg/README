@@ -1,11 +1,11 @@
-  This is an example (and test) of using swig generated modules in the context
+  This is an example (and test) of using alaqil generated modules in the context
 of python3's namespace packages:
 
 https://www.python.org/dev/peps/pep-0420/
 
   Consequently, this example requires python (3.3 or newer) to build and run.
 
-  This example creates a simple swig module named robin.  The robin.py module
+  This example creates a simple alaqil module named robin.  The robin.py module
 has a companion C module named _robin.so.  The robin module is tested in four
 ways:
 

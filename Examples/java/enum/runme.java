@@ -4,7 +4,7 @@ public class runme {
     try {
         System.loadLibrary("example");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -13,14 +13,14 @@ public class runme {
   {
     // Print out the value of some enums
     System.out.println("*** color ***");
-    System.out.println("    " + color.RED + " = " + color.RED.swigValue());
-    System.out.println("    " + color.BLUE + " = " + color.BLUE.swigValue());
-    System.out.println("    " + color.GREEN + " = " + color.GREEN.swigValue());
+    System.out.println("    " + color.RED + " = " + color.RED.alaqilValue());
+    System.out.println("    " + color.BLUE + " = " + color.BLUE.alaqilValue());
+    System.out.println("    " + color.GREEN + " = " + color.GREEN.alaqilValue());
 
     System.out.println("\n*** Foo::speed ***");
-    System.out.println("    Foo::" + Foo.speed.IMPULSE + " = " + Foo.speed.IMPULSE.swigValue());
-    System.out.println("    Foo::" + Foo.speed.WARP + " = " + Foo.speed.WARP.swigValue());
-    System.out.println("    Foo::" + Foo.speed.LUDICROUS + " = " + Foo.speed.LUDICROUS.swigValue());
+    System.out.println("    Foo::" + Foo.speed.IMPULSE + " = " + Foo.speed.IMPULSE.alaqilValue());
+    System.out.println("    Foo::" + Foo.speed.WARP + " = " + Foo.speed.WARP.alaqilValue());
+    System.out.println("    Foo::" + Foo.speed.LUDICROUS + " = " + Foo.speed.LUDICROUS.alaqilValue());
 
     System.out.println("\nTesting use of enums with functions\n");
 

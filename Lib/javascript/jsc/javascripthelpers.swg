@@ -1,6 +1,6 @@
 %insert(wrapper) %{
  
-SWIGINTERN bool JS_registerClass(JSGlobalContextRef context, JSObjectRef parentObject,
+alaqilINTERN bool JS_registerClass(JSGlobalContextRef context, JSObjectRef parentObject,
                              const char* className,
                              JSClassDefinition* definition) {
 
@@ -14,7 +14,7 @@ SWIGINTERN bool JS_registerClass(JSGlobalContextRef context, JSObjectRef parentO
     return true;
 }
 
-SWIGINTERN bool JS_registerNamespace(JSGlobalContextRef context, 
+alaqilINTERN bool JS_registerNamespace(JSGlobalContextRef context, 
                            JSObjectRef namespaceObj, JSObjectRef parentNamespace,
                            const char* name)
 {
@@ -28,7 +28,7 @@ SWIGINTERN bool JS_registerNamespace(JSGlobalContextRef context,
 }
 
 
-SWIGINTERN bool JS_registerFunction(JSGlobalContextRef context, JSObjectRef object, 
+alaqilINTERN bool JS_registerFunction(JSGlobalContextRef context, JSObjectRef object, 
                         const char* functionName, JSObjectCallAsFunctionCallback callback)
 {
     JSStringRef js_functionName = JSStringCreateWithUTF8CString(functionName);
@@ -39,7 +39,7 @@ SWIGINTERN bool JS_registerFunction(JSGlobalContextRef context, JSObjectRef obje
     return true;
 }
 
-SWIGINTERN bool JS_veto_set_variable(JSContextRef context, JSObjectRef thisObject, JSStringRef propertyName, JSValueRef value, JSValueRef* exception)
+alaqilINTERN bool JS_veto_set_variable(JSContextRef context, JSObjectRef thisObject, JSStringRef propertyName, JSValueRef value, JSValueRef* exception)
 {
     char buffer[256];
     char msg[512];
@@ -49,15 +49,15 @@ SWIGINTERN bool JS_veto_set_variable(JSContextRef context, JSObjectRef thisObjec
     res = sprintf(msg, "Tried to write read-only variable: %s.", buffer);
     
     if(res<0) {
-      SWIG_exception(SWIG_ERROR, "Tried to write read-only variable.");
+      alaqil_exception(alaqil_ERROR, "Tried to write read-only variable.");
     } else {
-      SWIG_exception(SWIG_ERROR, msg);
+      alaqil_exception(alaqil_ERROR, msg);
     }
 fail:    
     return false;
 }
 
-SWIGINTERN JSValueRef JS_CharPtrToJSValue(JSContextRef context, char* cstr) {
+alaqilINTERN JSValueRef JS_CharPtrToJSValue(JSContextRef context, char* cstr) {
   JSValueRef val;
   
   JSStringRef jsstring = JSStringCreateWithUTF8CString((char*) cstr);

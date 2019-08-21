@@ -1,0 +1,1 @@
+%insert(initbeforefunc) "alaqilinit.swg"

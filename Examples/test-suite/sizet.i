@@ -3,7 +3,7 @@
 #include <vector>
 %}
 
-#ifndef SWIGCHICKEN
+#ifndef alaqilCHICKEN
 %include "std_common.i"
 #endif
 
@@ -31,7 +31,7 @@
 
 }
 
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 %include "std_vector.i"
 
 %template(vectors) std::vector<unsigned long>;

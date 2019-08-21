@@ -1,7 +1,7 @@
 %module csharp_features
 %include "wchar.i"
 
-// SWIG gets the method modifiers wrong occasionally, like with private inheritance, %csmethodmodifiers can fix this
+// alaqil gets the method modifiers wrong occasionally, like with private inheritance, %csmethodmodifiers can fix this
 %csmethodmodifiers Derived::VirtualMethod() "public virtual"
 %csmethodmodifiers MoreDerived::variable "public new"
 

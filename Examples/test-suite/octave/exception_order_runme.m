@@ -31,7 +31,7 @@ end_try_catch
 try
   a.foobar()
 catch
-  check_lasterror("postcatch unknown (SWIG_RuntimeError)")
+  check_lasterror("postcatch unknown (alaqil_RuntimeError)")
 end_try_catch
 
 try

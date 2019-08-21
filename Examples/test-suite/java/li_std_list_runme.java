@@ -6,7 +6,7 @@ public class li_std_list_runme {
     try {
         System.loadLibrary("li_std_list");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }

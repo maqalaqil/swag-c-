@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 
 # This is the union runtime testcase. It ensures that values within a 

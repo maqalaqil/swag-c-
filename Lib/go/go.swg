@@ -209,7 +209,7 @@
 		      double
 %{ $result = ($1_ltype)$input; %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) const bool &,
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) const bool &,
 		      const char &,
 		      const signed char &,
 		      const unsigned char &,
@@ -225,7 +225,7 @@
 		      const double &
 %{
   $result = new $*1_ltype($input);
-  swig_acquire_pointer(&swig_mem, $result);
+  alaqil_acquire_pointer(&alaqil_mem, $result);
 %}
 
 /* The size_t type.  */
@@ -261,169 +261,169 @@
 %typemap(directorout) size_t
 %{ $result = ($1_ltype)$input; %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) const size_t &
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) const size_t &
 %{
   $result = new $*1_ltype($input);
-  swig_acquire_pointer(&swig_mem, $result);
+  alaqil_acquire_pointer(&alaqil_mem, $result);
 %}
 
 /* Member pointers.  */
 
-%typemap(gotype) SWIGTYPE (CLASS::*)
+%typemap(gotype) alaqilTYPE (CLASS::*)
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE (CLASS::*)
+%typemap(in) alaqilTYPE (CLASS::*)
 %{ $1 = *($&1_ltype)$input; %}
 
-%typemap(out) SWIGTYPE (CLASS::*)
+%typemap(out) alaqilTYPE (CLASS::*)
 %{
-  struct swig_out_type { intgo size; void* val; } *swig_out;
-  swig_out = (struct swig_out_type*)malloc(sizeof(*swig_out));
-  if (swig_out) {
-    swig_out->size = sizeof($1_ltype);
-    swig_out->val = malloc(swig_out->size);
-    if (swig_out->val) {
-      *($&1_ltype)(swig_out->val) = $1;
+  struct alaqil_out_type { intgo size; void* val; } *alaqil_out;
+  alaqil_out = (struct alaqil_out_type*)malloc(sizeof(*alaqil_out));
+  if (alaqil_out) {
+    alaqil_out->size = sizeof($1_ltype);
+    alaqil_out->val = malloc(alaqil_out->size);
+    if (alaqil_out->val) {
+      *($&1_ltype)(alaqil_out->val) = $1;
     }
   }
-  $result = swig_out;
+  $result = alaqil_out;
 %}
 
-%typemap(goout) SWIGTYPE (CLASS::*)
+%typemap(goout) alaqilTYPE (CLASS::*)
 %{
   {
-    type swig_out_type struct { size int; val uintptr }
-    p := (*swig_out_type)(unsafe.Pointer($1))
+    type alaqil_out_type struct { size int; val uintptr }
+    p := (*alaqil_out_type)(unsafe.Pointer($1))
     if p == nil || p.val == 0 {
       $result = nil
     } else {
       m := make([]byte, p.size)
       a := (*[1024]byte)(unsafe.Pointer(p.val))[:p.size]
       copy(m, a)
-      Swig_free(p.val)
-      Swig_free(uintptr(unsafe.Pointer(p)))
+      alaqil_free(p.val)
+      alaqil_free(uintptr(unsafe.Pointer(p)))
       $result = &m[0]
     }
   }
 %}
 
-%typemap(directorin) SWIGTYPE (CLASS::*)
+%typemap(directorin) alaqilTYPE (CLASS::*)
 %{ $input = *($&1_ltype)$1; %}
 
-%typemap(godirectorin) SWIGTYPE (CLASS::*) ""
+%typemap(godirectorin) alaqilTYPE (CLASS::*) ""
 
-%typemap(directorout) SWIGTYPE (CLASS::*)
+%typemap(directorout) alaqilTYPE (CLASS::*)
 %{
   $result = new $1_ltype($input);
-  swig_acquire_pointer(&swig_mem, $result);
+  alaqil_acquire_pointer(&alaqil_mem, $result);
 %}
 
 /* Pointers.  */
 
 /* We can't translate pointers using a typemap, so that is handled in
    the C++ code.  */
-%typemap(gotype) SWIGTYPE *
+%typemap(gotype) alaqilTYPE *
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE *
+%typemap(in) alaqilTYPE *
 %{ $1 = *($&1_ltype)&$input; %}
 
-%typemap(out) SWIGTYPE *
+%typemap(out) alaqilTYPE *
 %{ *($&1_ltype)&$result = ($1_ltype)$1; %}
 
-%typemap(goout) SWIGTYPE * ""
+%typemap(goout) alaqilTYPE * ""
 
-%typemap(directorin) SWIGTYPE *
+%typemap(directorin) alaqilTYPE *
 %{ *($&1_ltype)&$input = ($1_ltype)$1; %}
 
-%typemap(godirectorin) SWIGTYPE * ""
+%typemap(godirectorin) alaqilTYPE * ""
 
-%typemap(directorout) SWIGTYPE *
+%typemap(directorout) alaqilTYPE *
 %{ $result = *($&1_ltype)&$input; %}
 
 /* Pointer references.  */
 
-%typemap(gotype) SWIGTYPE *const&
+%typemap(gotype) alaqilTYPE *const&
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE *const& ($*1_ltype temp = 0)
+%typemap(in) alaqilTYPE *const& ($*1_ltype temp = 0)
 %{
   temp = *($1_ltype)&$input;
   $1 = ($1_ltype)&temp;
 %}
 
-%typemap(out) SWIGTYPE *const&
+%typemap(out) alaqilTYPE *const&
 %{ *($1_ltype)&$result = *$1; %}
 
-%typemap(goout) SWIGTYPE *const& ""
+%typemap(goout) alaqilTYPE *const& ""
 
 /* References.  */
 
 /* Converting a C++ reference to Go has to be handled in the C++
    code.  */
-%typemap(gotype) SWIGTYPE &
+%typemap(gotype) alaqilTYPE &
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE &
+%typemap(in) alaqilTYPE &
 %{ $1 = *($&1_ltype)&$input; %}
 
-%typemap(out) SWIGTYPE &
+%typemap(out) alaqilTYPE &
 %{ *($&1_ltype)&$result = $1; %}
 
-%typemap(goout) SWIGTYPE & ""
+%typemap(goout) alaqilTYPE & ""
 
-%typemap(directorin) SWIGTYPE &
+%typemap(directorin) alaqilTYPE &
 %{ $input = ($1_ltype)&$1; %}
 
-%typemap(godirectorin) SWIGTYPE & ""
+%typemap(godirectorin) alaqilTYPE & ""
 
-%typemap(directorout) SWIGTYPE &
+%typemap(directorout) alaqilTYPE &
 %{ *($&1_ltype)&$result = $input; %}
 
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE *const&
-%{ static $*1_ltype swig_temp;
-   swig_temp = *($1_ltype)&$input;
-   $result = &swig_temp; %}
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE *const&
+%{ static $*1_ltype alaqil_temp;
+   alaqil_temp = *($1_ltype)&$input;
+   $result = &alaqil_temp; %}
 
-%typemap(gotype) SWIGTYPE &&
+%typemap(gotype) alaqilTYPE &&
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE &&
+%typemap(in) alaqilTYPE &&
 %{ $1 = *($&1_ltype)&$input; %}
 
-%typemap(out) SWIGTYPE &&
+%typemap(out) alaqilTYPE &&
 %{ *($&1_ltype)&$result = $1; %}
 
-%typemap(goout) SWIGTYPE && ""
+%typemap(goout) alaqilTYPE && ""
 
-%typemap(directorin) SWIGTYPE &&
+%typemap(directorin) alaqilTYPE &&
 %{ $input = ($1_ltype)&$1_name; %}
 
-%typemap(godirectorin) SWIGTYPE && ""
+%typemap(godirectorin) alaqilTYPE && ""
 
-%typemap(directorout) SWIGTYPE &&
+%typemap(directorout) alaqilTYPE &&
 %{ *($&1_ltype)&$result = $input; %}
 
 /* C arrays turn into Go pointers.  If we know the length we can use a
    slice.  */
 
-%typemap(gotype) SWIGTYPE []
+%typemap(gotype) alaqilTYPE []
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE []
+%typemap(in) alaqilTYPE []
 %{ $1 = *($&1_ltype)&$input; %}
 
-%typemap(out) SWIGTYPE []
+%typemap(out) alaqilTYPE []
 %{ *($&1_ltype)&$result = $1; %}
 
-%typemap(goout) SWIGTYPE [] ""
+%typemap(goout) alaqilTYPE [] ""
 
-%typemap(directorin) SWIGTYPE []
+%typemap(directorin) alaqilTYPE []
 %{ $input = *($1_ltype)&$1; %}
 
-%typemap(godirectorin) SWIGTYPE [] ""
+%typemap(godirectorin) alaqilTYPE [] ""
 
-%typemap(directorout) SWIGTYPE []
+%typemap(directorout) alaqilTYPE []
 %{ *($&1_ltype)&$result = $input; %}
 
 /* Strings.  */
@@ -458,29 +458,29 @@
 
 %typemap(out,fragment="AllocateString")
 	char *, char *&, char[ANY], char[]
-%{ $result = Swig_AllocateString((char*)$1, $1 ? strlen((char*)$1) : 0); %}
+%{ $result = alaqil_AllocateString((char*)$1, $1 ? strlen((char*)$1) : 0); %}
 
 %typemap(goout,fragment="CopyString")
 	char *, char *&, char[ANY], char[]
-%{ $result = swigCopyString($1) %}
+%{ $result = alaqilCopyString($1) %}
 
 %typemap(directorin,fragment="AllocateString")
 	char *, char *&, char[ANY], char[]
 %{
-  $input = Swig_AllocateString((char*)$1, $1 ? strlen((char*)$1) : 0);
+  $input = alaqil_AllocateString((char*)$1, $1 ? strlen((char*)$1) : 0);
 %}
 
 %typemap(godirectorin,fragment="CopyString")
 	char *, char *&, char[ANY], char[]
 %{
-  $result = swigCopyString($input)
+  $result = alaqilCopyString($input)
 %}
 
 %typemap(godirectorout)
 	char *, char *&, char[ANY], char[]
 %{
   {
-    p := Swig_malloc(len($input) + 1)
+    p := alaqil_malloc(len($input) + 1)
     s := (*[1<<30]byte)(unsafe.Pointer(p))[:len($input) + 1]
     copy(s, $input)
     s[len($input)] = 0
@@ -488,7 +488,7 @@
   }
 %}
 
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG)
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG)
 	char *, char *&, char[ANY], char[]
 %{ $result = ($1_ltype)$input.p; %}
 
@@ -503,16 +503,16 @@
 %}
 
 %typemap(out,fragment="AllocateString") (char *STRING, size_t LENGTH)
-%{ $result = Swig_AllocateString((char*)$1, (size_t)$2); %}
+%{ $result = alaqil_AllocateString((char*)$1, (size_t)$2); %}
 
 %typemap(goout,fragment="CopyString") (char *STRING, size_t LENGTH)
-%{ $result = swigCopyString($1) %}
+%{ $result = alaqilCopyString($1) %}
 
 %typemap(directorin,fragment="AllocateString") (char *STRING, size_t LENGTH)
-%{ $input = Swig_AllocateString((char*)$1, $2); %}
+%{ $input = alaqil_AllocateString((char*)$1, $2); %}
 
 %typemap(godirectorin,fragment="CopyString") (char *STRING, size_t LENGTH)
-%{ $result = swigCopyString($input) %}
+%{ $result = alaqilCopyString($input) %}
 
 %typemap(directorout) (char *STRING, size_t LENGTH)
 %{
@@ -524,34 +524,34 @@
    we deliberately don't define them.  The right thing would be to
    capitalize the name.  This is instead done in go.cxx.  */
 
-%typemap(gotype) enum SWIGTYPE
+%typemap(gotype) enum alaqilTYPE
 %{$gotypename%}
 
-%typemap(in) enum SWIGTYPE
+%typemap(in) enum alaqilTYPE
 %{ $1 = ($1_ltype)$input; %}
 
-%typemap(out) enum SWIGTYPE
+%typemap(out) enum alaqilTYPE
 %{ $result = (intgo)$1; %}
 
-%typemap(goout) enum SWIGTYPE ""
+%typemap(goout) enum alaqilTYPE ""
 
-%typemap(directorin) enum SWIGTYPE
+%typemap(directorin) enum alaqilTYPE
 %{ $input = (intgo)$1; %}
 
-%typemap(godirectorin) enum SWIGTYPE ""
+%typemap(godirectorin) enum alaqilTYPE ""
 
-%typemap(directorout) enum SWIGTYPE
+%typemap(directorout) enum alaqilTYPE
 %{ $result = ($1_ltype)$input; %}
 
-%typemap(directorin) enum SWIGTYPE & (intgo e)
+%typemap(directorin) enum alaqilTYPE & (intgo e)
 %{
   e = (intgo)$1;
   $input = ($1_ltype)&e;
 %}
 
-%typemap(godirectorin) enum SWIGTYPE & ""
+%typemap(godirectorin) enum alaqilTYPE & ""
 
-%typemap(directorout) enum SWIGTYPE &
+%typemap(directorout) enum alaqilTYPE &
 %{
   $*1_ltype f = ($*1_ltype)*$input;
   $result = ($1_ltype)&f;
@@ -561,19 +561,19 @@
    We convert it to a pointer for the Go code.  Note that all basic
    types are explicitly handled above.  */
 
-%typemap(gotype) SWIGTYPE
+%typemap(gotype) alaqilTYPE
 %{$gotypename%}
 
-%typemap(in) SWIGTYPE ($&1_type argp)
+%typemap(in) alaqilTYPE ($&1_type argp)
 %{
   argp = ($&1_ltype)$input;
   if (argp == NULL) {
-    _swig_gopanic("Attempt to dereference null $1_type");
+    _alaqil_gopanic("Attempt to dereference null $1_type");
   }
   $1 = ($1_ltype)*argp;
 %}
 
-%typemap(out) SWIGTYPE
+%typemap(out) alaqilTYPE
 #ifdef __cplusplus
 %{ *($&1_ltype*)&$result = new $1_ltype($1); %}
 #else
@@ -584,93 +584,93 @@
 }
 #endif
 
-%typemap(goout) SWIGTYPE ""
+%typemap(goout) alaqilTYPE ""
 
-%typemap(directorin) SWIGTYPE
+%typemap(directorin) alaqilTYPE
 %{ $input = new $1_ltype((const $1_ltype &)$1); %}
 
-%typemap(godirectorin) SWIGTYPE ""
+%typemap(godirectorin) alaqilTYPE ""
 
-%typemap(directorout) SWIGTYPE
+%typemap(directorout) alaqilTYPE
 %{ $result = *($&1_ltype)$input; %}
 
 /* Exception handling */
 
 %typemap(throws) char *
-%{ _swig_gopanic($1); %}
+%{ _alaqil_gopanic($1); %}
 
-%typemap(throws) SWIGTYPE, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE *, SWIGTYPE [], SWIGTYPE [ANY]
+%typemap(throws) alaqilTYPE, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE *, alaqilTYPE [], alaqilTYPE [ANY]
 %{
   (void)$1;
-  _swig_gopanic("C++ $1_type exception thrown");
+  _alaqil_gopanic("C++ $1_type exception thrown");
 %}
 
 /* Typecheck typemaps.  The purpose of these is merely to issue a
    warning for overloaded C++ functions that cannot be overloaded in
    Go as more than one C++ type maps to a single Go type.  */
 
-%typecheck(SWIG_TYPECHECK_BOOL) /* Go bool */
+%typecheck(alaqil_TYPECHECK_BOOL) /* Go bool */
     bool,
     const bool &
     ""
 
-%typecheck(SWIG_TYPECHECK_CHAR) /* Go byte */
+%typecheck(alaqil_TYPECHECK_CHAR) /* Go byte */
     char,
     const char &,
     unsigned char,
     const unsigned char &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT8) /* Go int8 */
+%typecheck(alaqil_TYPECHECK_INT8) /* Go int8 */
     signed char,
     const signed char &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT16) /* Go int16 */
+%typecheck(alaqil_TYPECHECK_INT16) /* Go int16 */
     short,
     const short &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT16) /* Go uint16 */
+%typecheck(alaqil_TYPECHECK_INT16) /* Go uint16 */
     unsigned short,
     const unsigned short &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT32) /* Go int */
+%typecheck(alaqil_TYPECHECK_INT32) /* Go int */
     int,
     const int &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT32) /* Go uint */
+%typecheck(alaqil_TYPECHECK_INT32) /* Go uint */
     unsigned int,
     const unsigned int &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT64) /* Go int64 */
+%typecheck(alaqil_TYPECHECK_INT64) /* Go int64 */
     long, 
     const long &, 
     long long,
     const long long &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT64) /* Go uint64 */
+%typecheck(alaqil_TYPECHECK_INT64) /* Go uint64 */
     unsigned long, 
     const unsigned long &, 
     unsigned long long,
     const unsigned long long &
     ""
 
-%typecheck(SWIG_TYPECHECK_FLOAT) /* Go float32 */
+%typecheck(alaqil_TYPECHECK_FLOAT) /* Go float32 */
     float,
     const float &
     ""
 
-%typecheck(SWIG_TYPECHECK_DOUBLE) /* Go float64 */
+%typecheck(alaqil_TYPECHECK_DOUBLE) /* Go float64 */
     double,
     const double &
     ""
 
-%typecheck(SWIG_TYPECHECK_STRING) /* Go string */
+%typecheck(alaqil_TYPECHECK_STRING) /* Go string */
     char *,
     char *&,
     char[ANY],
@@ -685,19 +685,19 @@
     unsigned char []
     ""
 
-%typecheck(SWIG_TYPECHECK_POINTER)
-    SWIGTYPE,
-    SWIGTYPE *,
-    SWIGTYPE &,
-    SWIGTYPE &&,
-    SWIGTYPE *const&,
-    SWIGTYPE [],
-    SWIGTYPE (CLASS::*)
+%typecheck(alaqil_TYPECHECK_POINTER)
+    alaqilTYPE,
+    alaqilTYPE *,
+    alaqilTYPE &,
+    alaqilTYPE &&,
+    alaqilTYPE *const&,
+    alaqilTYPE [],
+    alaqilTYPE (CLASS::*)
     ""
 
-%apply SWIGTYPE * { SWIGTYPE *const }
-%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
-%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
+%apply alaqilTYPE * { alaqilTYPE *const }
+%apply alaqilTYPE (CLASS::*) { alaqilTYPE (CLASS::*const) }
+%apply alaqilTYPE & { alaqilTYPE (CLASS::*const&) }
 
 /* Go keywords.  */
 %include <gokw.swg>

@@ -30,23 +30,23 @@ class wstring;
 
 %typemap(in, canthrow=1) wstring 
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null wstring", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null wstring", 0);
     return $null;
    }
    $1.assign($input); %}
-%typemap(out) wstring %{ $result = SWIG_csharp_wstring_callback($1.c_str()); %}
+%typemap(out) wstring %{ $result = alaqil_csharp_wstring_callback($1.c_str()); %}
 
 %typemap(directorout, canthrow=1) wstring 
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null wstring", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null wstring", 0);
     return $null;
    }
    $result.assign($input); %}
 
-%typemap(directorin) wstring %{ $input = SWIG_csharp_wstring_callback($1.c_str()); %}
+%typemap(directorin) wstring %{ $input = alaqil_csharp_wstring_callback($1.c_str()); %}
 
 %typemap(csin) wstring "$csinput"
-%typemap(csout, excode=SWIGEXCODE) wstring {
+%typemap(csout, excode=alaqilEXCODE) wstring {
     string ret = $imcall;$excode
     return ret;
   }
@@ -55,7 +55,7 @@ class wstring;
 
 %typemap(throws, canthrow=1) wstring
 %{ std::string message($1.begin(), $1.end());
-   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, message.c_str());
+   alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, message.c_str());
    return $null; %}
 
 // const wstring &
@@ -68,22 +68,22 @@ class wstring;
 
 %typemap(in, canthrow=1) const wstring &
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null wstring", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null wstring", 0);
     return $null;
    }
    std::wstring $1_str($input);
    $1 = &$1_str; %}
-%typemap(out) const wstring & %{ $result = SWIG_csharp_wstring_callback($1->c_str()); %}
+%typemap(out) const wstring & %{ $result = alaqil_csharp_wstring_callback($1->c_str()); %}
 
 %typemap(csin) const wstring & "$csinput"
-%typemap(csout, excode=SWIGEXCODE) const wstring & {
+%typemap(csout, excode=alaqilEXCODE) const wstring & {
     string ret = $imcall;$excode
     return ret;
   }
 
-%typemap(directorout, canthrow=1, warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const wstring &
+%typemap(directorout, canthrow=1, warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const wstring &
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null wstring", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null wstring", 0);
     return $null;
    }
    /* possible thread/reentrant code problem */
@@ -91,13 +91,13 @@ class wstring;
    $1_str = $input;
    $result = &$1_str; %}
 
-%typemap(directorin) const wstring & %{ $input = SWIG_csharp_wstring_callback($1.c_str()); %}
+%typemap(directorin) const wstring & %{ $input = alaqil_csharp_wstring_callback($1.c_str()); %}
 
-%typemap(csvarin, excode=SWIGEXCODE2) const wstring & %{
+%typemap(csvarin, excode=alaqilEXCODE2) const wstring & %{
     set {
       $imcall;$excode
     } %}
-%typemap(csvarout, excode=SWIGEXCODE2) const wstring & %{
+%typemap(csvarout, excode=alaqilEXCODE2) const wstring & %{
     get {
       string ret = $imcall;$excode
       return ret;
@@ -107,7 +107,7 @@ class wstring;
 
 %typemap(throws, canthrow=1) const wstring &
 %{ std::string message($1.begin(), $1.end());
-   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, message.c_str());
+   alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, message.c_str());
    return $null; %}
 
 }

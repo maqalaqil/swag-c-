@@ -61,7 +61,7 @@ using IntRValueRef = Int&&;
 using IntArray = Int[];
 %}
 
-// Test that SWIG understands these new types
+// Test that alaqil understands these new types
 
 %callback("%s_cb");
 Int mult2(Int x);

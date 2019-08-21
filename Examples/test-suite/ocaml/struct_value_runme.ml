@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Struct_value
 
 let b = new_Bar (C_void)

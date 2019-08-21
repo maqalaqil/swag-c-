@@ -177,7 +177,7 @@ public class runme
         throw new Exception("member csvarout not working");
       } catch (IndexOutOfRangeException) {
       }
-      // test SWIG_exception macro - it must return from unmanaged code without executing any further unmanaged code
+      // test alaqil_exception macro - it must return from unmanaged code without executing any further unmanaged code
       try {
         csharp_exceptions.exceptionmacrotest(-1);
         throw new Exception("exception macro not working");

@@ -1,5 +1,5 @@
 /**
- * Regression test for PHP bug: https://sourceforge.net/p/swig/bugs/1350/
+ * Regression test for PHP bug: https://sourceforge.net/p/alaqil/bugs/1350/
  */
 
 %module newobject3

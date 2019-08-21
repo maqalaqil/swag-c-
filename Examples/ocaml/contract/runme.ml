@@ -1,4 +1,4 @@
-open Swig 
+open alaqil 
 open Example
 
 let _ = print_endline "This won't throw." 

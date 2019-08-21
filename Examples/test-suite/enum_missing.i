@@ -1,6 +1,6 @@
 %module enum_missing
 
-// Test when SWIG does not parse the enum definition
+// Test when alaqil does not parse the enum definition
 %{
 enum AVPixelFormat {
     AV_PIX_FMT_NONE = -1,

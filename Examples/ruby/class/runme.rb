@@ -1,6 +1,6 @@
 # file: runme.rb
 
-# This file illustrates the C++ interface created by SWIG.
+# This file illustrates the C++ interface created by alaqil.
 # All of our C++ classes get converted into Ruby classes.
 
 require 'example'

@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Class_ignore
 
 let a = new_Bar C_void

@@ -1,8 +1,8 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 function checkEnum(enum_val, expected_enum_val)
-  if typeof(enum_val) <> "constant" then swigtesterror(); end
-  if enum_val <> expected_enum_val then swigtesterror(); end
+  if typeof(enum_val) <> "constant" then alaqiltesterror(); end
+  if enum_val <> expected_enum_val then alaqiltesterror(); end
 endfunction
 
 checkEnum(ENUM_1, 0);
@@ -33,4 +33,4 @@ checkEnum(clsEnum_CLS_ENUM_2, 101);
 checkEnum(clsEnum_CLS_ENUM_REF_1, 101);
 checkEnum(clsEnum_CLS_ENUM_REF_2, 110);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

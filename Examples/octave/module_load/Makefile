@@ -1,7 +1,7 @@
 SRCS     = example.c
-TARGET   = swigexample
-SWIGOPT  = -module swigexample
-TARGET2  = swigexample2
-SWIGOPT2 = -module swigexample2 -globals .
+TARGET   = alaqilexample
+alaqilOPT  = -module alaqilexample
+TARGET2  = alaqilexample2
+alaqilOPT2 = -module alaqilexample2 -globals .
 
 include $(SRCDIR)../example.mk

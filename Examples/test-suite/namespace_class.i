@@ -1,10 +1,10 @@
 %module namespace_class
 
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) Ala::Ola;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) Ala::Ola;
 
-#ifdef SWIGD
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_LT);
+#ifdef alaqilD
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_LT);
 #endif
 
 %inline %{

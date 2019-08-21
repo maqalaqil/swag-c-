@@ -1,6 +1,6 @@
 %module template_nested
 
-#if !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+#if !defined(alaqilCSHARP) && !defined(alaqilJAVA)
 %feature ("flatnested");
 #endif
 
@@ -75,7 +75,7 @@ namespace ns {
     };
     Inner2<int> useInner2(const Inner2<int>& inner) { return inner; }
     Inner2<NormalClass> useInner2Again(const Inner2<NormalClass>& inner) { return inner; }
-#ifdef SWIG
+#ifdef alaqil
     %template(T_OuterClassInner1Double) Inner1<double>;
 #endif
     int iii;
@@ -115,7 +115,7 @@ namespace ns {
 }
 %}
 
-#if !defined(SWIGSCILAB)
+#if !defined(alaqilSCILAB)
 %extend ns::OuterClass {
   %template(T_OuterClassInner2Double) Inner2<double>;
 }

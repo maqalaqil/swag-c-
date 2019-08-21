@@ -11,17 +11,17 @@
 
 (in-package :cl-user)
 
-;; Interaction with the SWIG binary
+;; Interaction with the alaqil binary
 
-(defvar *swig-source-directory* #p"/home/mkoeppe/s/swig1.3/")
+(defvar *alaqil-source-directory* #p"/home/mkoeppe/s/alaqil1.3/")
 
-(defvar *swig-program* (merge-pathnames "swig" *swig-source-directory*))
+(defvar *alaqil-program* (merge-pathnames "alaqil" *alaqil-source-directory*))
 
-(defun run-swig (swig-interface-file-name &key directory-search-list module
+(defun run-alaqil (alaqil-interface-file-name &key directory-search-list module
 		 ignore-errors c++)
-  (let ((temp-file-name "/tmp/swig.lsp"))
+  (let ((temp-file-name "/tmp/alaqil.lsp"))
     (let ((process
-	   (port:run-prog (namestring *swig-program*)
+	   (port:run-prog (namestring *alaqil-program*)
 			  :output t
 			  :args `(,@(and c++ '("-c++"))
 				  "-sexp"
@@ -32,20 +32,20 @@
 				  ,@(and module
 					 `("-module" ,module))
 				  "-o" ,temp-file-name
-				  ,(namestring swig-interface-file-name)))))
+				  ,(namestring alaqil-interface-file-name)))))
       #+cmu (unless (or (zerop (ext:process-exit-code process))
 			ignore-errors)
-	      (error "Process swig exited abnormally"))
+	      (error "Process alaqil exited abnormally"))
       (with-open-file (s temp-file-name)
 	(read s)))))
 
 ;; Type system
 
-(defun parse-swigtype (type-string &key start end junk-ok)
-  "Parse TYPE-STRING as SWIG's internal representation of C/C++
+(defun parse-alaqiltype (type-string &key start end junk-ok)
+  "Parse TYPE-STRING as alaqil's internal representation of C/C++
 types. Return two values: The type description (an improper list) and
 the terminating index into TYPE-STRING."
-  ;; SWIG's internal representation is described in Source/Swig/stype.c
+  ;; alaqil's internal representation is described in Source/alaqil/stype.c
   (unless start
     (setq start 0))
   (unless end
@@ -55,14 +55,14 @@ the terminating index into TYPE-STRING."
 	     (or (not position)
 		 (= position (length prefix)))))
 	 (bad-type-error (reason)
-	   (error "Bad SWIG type (~A): ~A" reason
+	   (error "Bad alaqil type (~A): ~A" reason
 		  (subseq type-string start end)))
 	 (type-char (index)
 	   (and (< index (length type-string))
 		(char type-string index)))	       
 	 (cons-and-recurse (prefix start end)
 	   (multiple-value-bind (type-description index)
-	       (parse-swigtype type-string :start start :end end
+	       (parse-alaqiltype type-string :start start :end end
 				:junk-ok junk-ok)
 	     (values (cons prefix type-description)
 		     index))))
@@ -93,7 +93,7 @@ the terminating index into TYPE-STRING."
 			   (+ closing-paren 2) end)))
       ((prefix-match "m(")		; C++ member pointer
        (multiple-value-bind (class-type class-end-index)
-	   (parse-swigtype type-string :junk-ok t
+	   (parse-alaqiltype type-string :junk-ok t
 			    :start (+ start 2) :end end)
 	 (unless (eql (type-char class-end-index) #\))
 	   (bad-type-error "missing right paren"))
@@ -105,7 +105,7 @@ the terminating index into TYPE-STRING."
        (loop with index = (+ start 2) 
 	     until (eql (type-char index) #\))
 	     collect (multiple-value-bind (arg-type arg-end-index)
-			 (parse-swigtype type-string :junk-ok t
+			 (parse-alaqiltype type-string :junk-ok t
 					  :start index :end end)
 		       (case (type-char arg-end-index)
 			 (#\, (setq index (+ arg-end-index 1)))
@@ -138,14 +138,14 @@ the terminating index into TYPE-STRING."
 		  (values (subseq type-string start end)
 			  end))))))))
 
-(defun swigtype-function-p (swigtype)
-  "Check whether SWIGTYPE designates a function.  If so, the second
+(defun alaqiltype-function-p (alaqiltype)
+  "Check whether alaqilTYPE designates a function.  If so, the second
 value is the list of argument types, and the third value is the return
 type."
-  (if (and (consp swigtype)
-	   (consp (first swigtype))
-	   (eql (first (first swigtype)) 'FUNCTION))
-      (values t (rest (first swigtype)) (rest swigtype))
+  (if (and (consp alaqiltype)
+	   (consp (first alaqiltype))
+	   (eql (first (first alaqiltype)) 'FUNCTION))
+      (values t (rest (first alaqiltype)) (rest alaqiltype))
       (values nil nil nil)))
 	      
 
@@ -213,21 +213,21 @@ is no representation."
 (defvar *linkage* :C "NIL or :C")
 
 (defgeneric handle-node (node-type &key &allow-other-keys)
-  (:documentation "Handle a node of SWIG's parse tree of a C/C++ program"))
+  (:documentation "Handle a node of alaqil's parse tree of a C/C++ program"))
 
 (defmethod handle-node ((node-type t) &key &allow-other-keys)
   ;; do nothing for unknown node types
   nil)
 
 (defmethod handle-node ((node-type (eql 'cdecl)) &key name decl storage parms type &allow-other-keys)
-  (let ((swigtype (parse-swigtype (concatenate 'string decl type))))
+  (let ((alaqiltype (parse-alaqiltype (concatenate 'string decl type))))
     (let ((*print-pretty* nil) ; or FUNCTION would be printed as #' by cmucl
 	  (*print-circle* t))
       (format *uffi-output* "~&;; C Declaration: ~A ~A ~A ~A~%;;  with-parms ~W~%;;   of-type ~W~%"
-	      storage type name decl parms swigtype))
-    (multiple-value-bind (function-p arg-swigtype-list return-swigtype)
-	(swigtype-function-p swigtype)
-      (declare (ignore arg-swigtype-list))
+	      storage type name decl parms alaqiltype))
+    (multiple-value-bind (function-p arg-alaqiltype-list return-alaqiltype)
+	(alaqiltype-function-p alaqiltype)
+      (declare (ignore arg-alaqiltype-list))
       (cond
 	((and (null *class-scope*) function-p
 	      (or (eql *linkage* :c)
@@ -236,7 +236,7 @@ is no representation."
 	 (let ((argnum 0)
 	       (argname-list '()))
 	   (flet ((unique-argname (name)
-		    ;; Sometimes the functions in SWIG interfaces
+		    ;; Sometimes the functions in alaqil interfaces
 		    ;; do not have unique names.  Make them unique
 		    ;; by adding a suffix.  Also avoid symbols
 		    ;; that are specially bound.
@@ -251,7 +251,7 @@ is no representation."
 		    (mapcan (lambda (param)
 			      (incf argnum)
 			      (destructuring-bind (&key name type &allow-other-keys) param
-				(let ((uffi-type (uffi-type-spec (parse-swigtype type))))
+				(let ((uffi-type (uffi-type-spec (parse-alaqiltype type))))
 				  (cond
 				    ((not uffi-type)
 				     (format *uffi-output* "~&;; Warning: Cannot handle type ~S of argument `~A'~%"
@@ -264,15 +264,15 @@ is no representation."
 				       (list `(,symbol ,uffi-type))))))))
 			    parms))
 		   (uffi-return-type
-		    (uffi-type-spec return-swigtype)))
+		    (uffi-type-spec return-alaqiltype)))
 	       (unless uffi-return-type
 		 (format *uffi-output* "~&;; Warning: Cannot handle return type `~S'~%"
-			 return-swigtype)
+			 return-alaqiltype)
 		 (return-from handle-node))
 	       (emit-uffi-definition `(UFFI:DEF-FUNCTION ,name ,uffi-arg-list :RETURNING ,uffi-return-type))))))
 	((and (not (null *class-scope*)) (null (rest *class-scope*))
 	      (not function-p))	; class/struct member (no nested structs)
-	 (let ((uffi-type (uffi-type-spec swigtype)))
+	 (let ((uffi-type (uffi-type-spec alaqiltype)))
 	   (unless  uffi-type
 	     (format *uffi-output* "~&;; Warning: Cannot handle type ~S of struct field `~A'~%"
 		     type name)
@@ -305,14 +305,14 @@ is no representation."
     (dolist (child children)
       (apply 'handle-node child))))
 
-;;(defun compute-uffi-definitions (swig-interface)
+;;(defun compute-uffi-definitions (alaqil-interface)
 ;;  (let ((*uffi-definitions* '()))
-;;    (handle-node swig-interface)
+;;    (handle-node alaqil-interface)
 ;;    *uffi-definitions*))
 
 ;; Test instances
 
-;;; Link to SWIG itself
+;;; Link to alaqil itself
 
 #||
 
@@ -336,40 +336,40 @@ is no representation."
 		 (get-output-stream-string error-output))))
       (string-right-trim '(#\Newline) (get-output-stream-string name-output)))))
 
-(defvar *swig-interface* nil)
+(defvar *alaqil-interface* nil)
 
-(defvar *swig-uffi-pathname* #p"/tmp/swig-uffi.lisp")
+(defvar *alaqil-uffi-pathname* #p"/tmp/alaqil-uffi.lisp")
 
-(defun link-swig ()
-  (setq *swig-interface*
-	(run-swig (merge-pathnames "Source/swig.i" *swig-source-directory*)
+(defun link-alaqil ()
+  (setq *alaqil-interface*
+	(run-alaqil (merge-pathnames "Source/alaqil.i" *alaqil-source-directory*)
 		  :directory-search-list
-		  (list (merge-pathnames "Source/" *swig-source-directory*))
-		  :module "swig"
+		  (list (merge-pathnames "Source/" *alaqil-source-directory*))
+		  :module "alaqil"
 		  :ignore-errors t
 		  :c++ t))
-  (with-open-file (f *swig-uffi-pathname* :direction :output)
+  (with-open-file (f *alaqil-uffi-pathname* :direction :output)
     (let ((*linkage* :c++)
 	  (*uffi-definitions* '())
 	  (*uffi-output* f)
 	  (*uffi-primitive-type-alist* *uffi-default-primitive-type-alist*))
-      (apply 'handle-node *swig-interface*)))
-  (compile-file *swig-uffi-pathname*)
-  (alien:load-foreign (merge-pathnames "Source/libswig.a"
-				       *swig-source-directory*)
+      (apply 'handle-node *alaqil-interface*)))
+  (compile-file *alaqil-uffi-pathname*)
+  (alien:load-foreign (merge-pathnames "Source/libalaqil.a"
+				       *alaqil-source-directory*)
 		      :libraries (list (stdc++-library)))
   ;; FIXME: UFFI stuffes a "-l" in front of the passed library names
-  ;;  (uffi:load-foreign-library (merge-pathnames "Source/libswig.a"
-  ;;                                              *swig-source-directory*)
+  ;;  (uffi:load-foreign-library (merge-pathnames "Source/libalaqil.a"
+  ;;                                              *alaqil-source-directory*)
   ;;                             :supporting-libraries
   ;;                             (list (stdc++-library)))
-  (load (compile-file-pathname *swig-uffi-pathname*)))
+  (load (compile-file-pathname *alaqil-uffi-pathname*)))
 
 ||#
 
 ;;;; TODO:
 
-;; * How to do type lookups?  Is everything important that SWIG knows
+;; * How to do type lookups?  Is everything important that alaqil knows
 ;;   about the types written out?  What to make of typemaps?
 ;;
 ;; * Wrapped functions should probably automatically COERCE their
@@ -379,11 +379,11 @@ is no representation."
 ;; * Why are the functions created by FFI interpreted?
 ;;
 ;; * We can't deal with more complicated structs and C++ classes
-;; directly with the FFI; we have to emit SWIG wrappers that access
+;; directly with the FFI; we have to emit alaqil wrappers that access
 ;; those classes.
 ;;
 ;; * A CLOS layer where structure fields are mapped as slots.  It
 ;; looks like we need MOP functions to implement this.
 ;;
-;; * Maybe modify SWIG so that key-value hashes are distinguished from
+;; * Maybe modify alaqil so that key-value hashes are distinguished from
 ;; value-value hashes.

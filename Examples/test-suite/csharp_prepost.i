@@ -206,14 +206,14 @@ void subtractYears(CDate *pDate, int years) {
 }
 %}
 
-%typemap(csvarin, excode=SWIGEXCODE2) CDate * %{
+%typemap(csvarin, excode=alaqilEXCODE2) CDate * %{
     /* csvarin typemap code */
     set {
       CDate temp$csinput = new CDate($csinput.Year, $csinput.Month, $csinput.Day);
       $imcall;$excode
     } %}
 
-%typemap(csvarout, excode=SWIGEXCODE2) CDate * %{
+%typemap(csvarout, excode=alaqilEXCODE2) CDate * %{
     /* csvarout typemap code */
     get {
       global::System.IntPtr cPtr = $imcall;

@@ -18,14 +18,14 @@
       virtual void say_hello() {} // this works fine
  
     protected:
-      A() { }  // defined protected as swig generates constructor by default
+      A() { }  // defined protected as alaqil generates constructor by default
     };
  
     template <class T>
     class B : public A<T>
     {
     protected:
-      B() { } // defined protected as swig generates constructor by default
+      B() { } // defined protected as alaqil generates constructor by default
     };
  
 %}

@@ -75,8 +75,8 @@
     <Compile Include="runme.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SWIGTYPE_p_double.cs" />
-    <Compile Include="SWIGTYPE_p_int.cs" />
+    <Compile Include="alaqilTYPE_p_double.cs" />
+    <Compile Include="alaqilTYPE_p_int.cs" />
     <Compile Include="vecdouble.cs" />
     <Compile Include="vecint.cs" />
   </ItemGroup>

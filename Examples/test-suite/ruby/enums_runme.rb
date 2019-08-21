@@ -3,10 +3,10 @@
 # Runtime tests for enums.i
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'enums'
 
-swig_assert_each_line( <<EOF )
+alaqil_assert_each_line( <<EOF )
 Enums::CSP_ITERATION_FWD == 0
 Enums::CSP_ITERATION_BWD == 11
 Enums::ABCDE == 0
@@ -28,7 +28,7 @@ EOF
 #
 # @bug: 
 #
-# swig_assert_each_line( <<EOF )
+# alaqil_assert_each_line( <<EOF )
 # Enums::IFoo::Phoo == 50
 # Enums::IFoo::Char == 'a'[0]
 # EOF

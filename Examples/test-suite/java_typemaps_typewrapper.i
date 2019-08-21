@@ -3,7 +3,7 @@
 %module java_typemaps_typewrapper
 
 
-%typemap(javaimports) SWIGTYPE * "import java.math.*;";
+%typemap(javaimports) alaqilTYPE * "import java.math.*;";
 %typemap(javacode) Farewell * %{
   public static $javaclassname CreateNullPointer() {
     return new $javaclassname();
@@ -39,18 +39,18 @@ import java.lang.*; // for Exception
 // Create a new getCPtr() function which takes Java null and is public
 // Make the pointer constructor public
 %typemap(javabody) Farewell * %{
-  private transient long swigCPtr;
+  private transient long alaqilCPtr;
 
   public $javaclassname(long cPtr, boolean bFutureUse) {
-    swigCPtr = cPtr;
+    alaqilCPtr = cPtr;
   }
 
   protected $javaclassname() {
-    swigCPtr = 0;
+    alaqilCPtr = 0;
   }
 
   public static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 

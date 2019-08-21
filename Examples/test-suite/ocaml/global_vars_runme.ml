@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Global_vars
 
 _init '()

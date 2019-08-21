@@ -5,7 +5,7 @@
 #include <stdarg.h>
 %}
 
-/* This example illustrates SWIG's handling of varargs functions.  
+/* This example illustrates alaqil's handling of varargs functions.  
    By default, variable length arguments are simply ignored.  This
    is generally appropriate for wrapping I/O functions like printf.
    You can simply format a string in the scripting language, and

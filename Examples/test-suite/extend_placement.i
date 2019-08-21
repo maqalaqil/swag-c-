@@ -18,7 +18,7 @@ class Foo {
 public:
   Foo(){}
 
-#ifdef SWIG
+#ifdef alaqil
 %extend { Foo(int a, int b) { return new Foo(); } }  
 #endif
 
@@ -69,7 +69,7 @@ class FooT {
 public:
   FooT(){}
 
-#ifdef SWIG
+#ifdef alaqil
 %extend { FooT(int a, int b) { return new FooT<T>(); } }  
 #endif
 

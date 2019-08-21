@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_string.i
  *
- * SWIG typemaps for std::string
+ * alaqil typemaps for std::string
  * ----------------------------------------------------------------------------- */
 
 %{
@@ -34,13 +34,13 @@ namespace std {
       if ($input == C_SCHEME_FALSE) {
 	$1.resize(0);
       } else { 
-	if (!C_swig_is_string ($input)) {
-	  swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, 
+	if (!C_alaqil_is_string ($input)) {
+	  alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, 
 		     "Argument #$argnum is not a string");
 	}
-	tempptr = SWIG_MakeString($input);
+	tempptr = alaqil_MakeString($input);
 	$1.assign(tempptr);
-	if (tempptr) SWIG_free(tempptr);
+	if (tempptr) alaqil_free(tempptr);
       }
     }
 
@@ -50,13 +50,13 @@ namespace std {
 	temp.resize(0);
 	$1 = &temp;
       } else { 
-	if (!C_swig_is_string ($input)) {
-	  swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, 
+	if (!C_alaqil_is_string ($input)) {
+	  alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, 
 		     "Argument #$argnum is not a string");
 	}
-	tempptr = SWIG_MakeString($input);
+	tempptr = alaqil_MakeString($input);
 	temp.assign(tempptr);
-	if (tempptr) SWIG_free(tempptr);
+	if (tempptr) alaqil_free(tempptr);
 	$1 = &temp;
       }
     }
@@ -78,13 +78,13 @@ namespace std {
 	$1.resize(0);
       } else { 
         char *tempptr;
-	if (!C_swig_is_string ($input)) {
-	  swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, 
+	if (!C_alaqil_is_string ($input)) {
+	  alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, 
 		     "Argument #$argnum is not a string");
    	}
-	tempptr = SWIG_MakeString($input);
+	tempptr = alaqil_MakeString($input);
 	$1.assign(tempptr);
-	if (tempptr) SWIG_free(tempptr);
+	if (tempptr) alaqil_free(tempptr);
       }
     }
 

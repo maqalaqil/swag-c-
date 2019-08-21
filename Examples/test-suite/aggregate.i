@@ -1,15 +1,15 @@
 /* This file tests a few new contract features.
    First it checks to make sure the constant aggregation macro
-   %aggregate_check() works.  This is defined in swig.swg.
+   %aggregate_check() works.  This is defined in alaqil.swg.
 
    Next, it checks to make sure a simple contract works.
    To support contracts, you need to add a macro to the runtime.
    For Python, it looks like this:
 
-#define SWIG_contract_assert(expr, msg)  if (!(expr)) { PyErr_SetString(PyExc_RuntimeError, (char *) msg #expr ); goto fail; } else
+#define alaqil_contract_assert(expr, msg)  if (!(expr)) { PyErr_SetString(PyExc_RuntimeError, (char *) msg #expr ); goto fail; } else
 
    Note: It is used like this:
-   SWIG_contract_assert(x == 1, "Some kind of error message");
+   alaqil_contract_assert(x == 1, "Some kind of error message");
 
    Note: Contracts are still experimental.  The runtime interface may
    change in future versions.   

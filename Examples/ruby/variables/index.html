@@ -1,21 +1,21 @@
 <html>
 <head>
-<title>SWIG:Examples:ruby:variables</title>
+<title>alaqil:Examples:ruby:variables</title>
 </head>
 
 <body bgcolor="#ffffff">
 
-<tt>SWIG/Examples/ruby/variables/</tt>
+<tt>alaqil/Examples/ruby/variables/</tt>
 <hr>
 
 <H2>Wrapping C Global Variables</H2>
 
 <p>
-When a C global variable appears in an interface file, SWIG tries to
+When a C global variable appears in an interface file, alaqil tries to
 wrap it using a technique known as "variable linking."  The idea is
 pretty simple---we try to create a Ruby variable (actually module method) that
 magically retrieves or updates the value of the underlying C variable when it is
-accessed.  Click <a href="example.i">here</a> to see a SWIG interface with some variable
+accessed.  Click <a href="example.i">here</a> to see a alaqil interface with some variable
 declarations in it.
 
 <h2>Manipulating Variables from Ruby</h2>
@@ -54,7 +54,7 @@ out the values of the variables using this technique.
 <h2>Key points</h2>
 
 <ul>
-<li>When a global variable has the type "<tt>char *</tt>", SWIG manages it as a character
+<li>When a global variable has the type "<tt>char *</tt>", alaqil manages it as a character
 string.   However, whenever the value of such a variable is set from Ruby, the old
 value is destroyed using <tt>free()</tt>.
 <li><tt>signed char</tt> and <tt>unsigned char</tt> are handled as small 8-bit integers.

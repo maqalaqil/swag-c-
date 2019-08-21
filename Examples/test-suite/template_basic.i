@@ -1,9 +1,9 @@
 /* File: template_basic.i */
 %module "template_basic"
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) vector<int>;         /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) vector<double>;      /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) vector<int (*)[10]>; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) vector<int>;         /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) vector<double>;      /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) vector<int (*)[10]>; /* Ruby, wrong class name */
 
 /* Let's just grab the original header file here */
 

@@ -1,10 +1,10 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // Class Klass
 try
   klass = new_Klass("allprotected_klass")
 catch
-  swigtesterror(lasterror());
+  alaqiltesterror(lasterror());
 end
 
 checkequal(Klass_getName(klass), "allprotected_klass",  "Klass_getName(new_Klass(""allprotected_klass""))");
@@ -13,7 +13,7 @@ checkequal(Klass_getName(klass), "allprotected_klass",  "Klass_getName(new_Klass
 try
   pubBase = new_PubBase("allprotected_PubBase");
 catch
-  swigtesterror(lasterror());
+  alaqiltesterror(lasterror());
 end
 
 checkequal(PubBase_virtualMethod(pubBase), "PublicBase", "PubBase_virtualMethod(pubBase)");
@@ -59,7 +59,7 @@ checkequal(PubBase_stringMember_get(pubBase), "dummy", "PubBase_stringMember_get
 try
 // Constructor is propected and must not be defined here
   ProcBase = new_ProctectedBase("allprotected_ProcBase");
-  swigtesterror();
+  alaqiltesterror();
 catch
 end
 
@@ -69,12 +69,12 @@ checkequal(ProcBase_EnumVal2_get(), 1, "ProcBase_EnumVal2_get()");
 try
   delete_Klass(klass);
 catch
-  swigtesterror();
+  alaqiltesterror();
 end
 try
   delete_PubBase(pubBase);
 catch
-  swigtesterror();
+  alaqiltesterror();
 end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

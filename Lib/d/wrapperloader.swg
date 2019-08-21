@@ -51,7 +51,7 @@ private {
     alias char* CCPTR;
   }
 
-  CCPTR swigToCString(string str) {
+  CCPTR alaqilToCString(string str) {
     version(Tango) {
       return tango.stdc.stringz.toStringz(str);
     } else {
@@ -59,7 +59,7 @@ private {
     }
   }
 
-  string swigToDString(CCPTR cstr) {
+  string alaqilToDString(CCPTR cstr) {
     version(Tango) {
       return tango.stdc.stringz.fromStringz(cstr);
     } else {
@@ -72,7 +72,7 @@ private {
   }
 }
 
-class SwigSwigSharedLibLoadException : Exception {
+class alaqilalaqilSharedLibLoadException : Exception {
   this(in string[] libNames, in string[] reasons) {
     string msg = "Failed to load one or more shared libraries:";
     foreach(i, n; libNames) {
@@ -86,9 +86,9 @@ class SwigSwigSharedLibLoadException : Exception {
   }
 }
 
-class SwigSymbolLoadException : Exception {
-  this(string SwigSharedLibName, string symbolName) {
-    super("Failed to load symbol " ~ symbolName ~ " from shared library " ~ SwigSharedLibName);
+class alaqilSymbolLoadException : Exception {
+  this(string alaqilSharedLibName, string symbolName) {
+    super("Failed to load symbol " ~ symbolName ~ " from shared library " ~ alaqilSharedLibName);
     _symbolName = symbolName;
   }
 
@@ -124,26 +124,26 @@ private {
       }
     }
 
-    alias void* SwigSharedLibHandle;
+    alias void* alaqilSharedLibHandle;
 
-    SwigSharedLibHandle swigLoadSharedLib(string libName) {
-      return dlopen(swigToCString(libName), RTLD_NOW);
+    alaqilSharedLibHandle alaqilLoadSharedLib(string libName) {
+      return dlopen(alaqilToCString(libName), RTLD_NOW);
     }
 
-    void swigUnloadSharedLib(SwigSharedLibHandle hlib) {
+    void alaqilUnloadSharedLib(alaqilSharedLibHandle hlib) {
       dlclose(hlib);
     }
 
-    void* swigGetSymbol(SwigSharedLibHandle hlib, string symbolName) {
-      return dlsym(hlib, swigToCString(symbolName));
+    void* alaqilGetSymbol(alaqilSharedLibHandle hlib, string symbolName) {
+      return dlsym(hlib, alaqilToCString(symbolName));
     }
 
-    string swigGetErrorStr() {
+    string alaqilGetErrorStr() {
       CCPTR err = dlerror();
       if (err is null) {
         return "Unknown Error";
       }
-      return swigToDString(err);
+      return alaqilToDString(err);
     }
   } else version(Windows) {
     alias ushort WORD;
@@ -175,21 +175,21 @@ private {
       FORMAT_MESSAGE_FROM_SYSTEM      = 4096
     }
 
-    alias HMODULE SwigSharedLibHandle;
+    alias HMODULE alaqilSharedLibHandle;
 
-    SwigSharedLibHandle swigLoadSharedLib(string libName) {
-      return LoadLibraryA(swigToCString(libName));
+    alaqilSharedLibHandle alaqilLoadSharedLib(string libName) {
+      return LoadLibraryA(alaqilToCString(libName));
     }
 
-    void swigUnloadSharedLib(SwigSharedLibHandle hlib) {
+    void alaqilUnloadSharedLib(alaqilSharedLibHandle hlib) {
       FreeLibrary(hlib);
     }
 
-    void* swigGetSymbol(SwigSharedLibHandle hlib, string symbolName) {
-      return GetProcAddress(hlib, swigToCString(symbolName));
+    void* alaqilGetSymbol(alaqilSharedLibHandle hlib, string symbolName) {
+      return GetProcAddress(hlib, alaqilToCString(symbolName));
     }
 
-    string swigGetErrorStr() {
+    string alaqilGetErrorStr() {
       DWORD errcode = GetLastError();
 
       LPCSTR msgBuf;
@@ -204,7 +204,7 @@ private {
         0,
         null);
 
-      string text = swigToDString(msgBuf);
+      string text = alaqilToDString(msgBuf);
       LocalFree(cast(HLOCAL)msgBuf);
 
       if (i >= 2) {
@@ -216,7 +216,7 @@ private {
     static assert(0, "Operating system not supported by the wrapper loading code.");
   }
 
-  final class SwigSharedLib {
+  final class alaqilSharedLib {
     void load(string[] names) {
       if (_hlib !is null) return;
 
@@ -224,10 +224,10 @@ private {
       string[] reasons;
 
       foreach(n; names) {
-        _hlib = swigLoadSharedLib(n);
+        _hlib = alaqilLoadSharedLib(n);
         if (_hlib is null) {
           failedLibs ~= n;
-          reasons ~= swigGetErrorStr();
+          reasons ~= alaqilGetErrorStr();
           continue;
         }
         _name = n;
@@ -235,28 +235,28 @@ private {
       }
 
       if (_hlib is null) {
-        throw new SwigSwigSharedLibLoadException(failedLibs, reasons);
+        throw new alaqilalaqilSharedLibLoadException(failedLibs, reasons);
       }
     }
 
     void* loadSymbol(string symbolName, bool doThrow = true) {
-      void* sym = swigGetSymbol(_hlib, symbolName);
+      void* sym = alaqilGetSymbol(_hlib, symbolName);
       if(doThrow && (sym is null)) {
-        throw new SwigSymbolLoadException(_name, symbolName);
+        throw new alaqilSymbolLoadException(_name, symbolName);
       }
       return sym;
     }
 
     void unload() {
       if(_hlib !is null) {
-        swigUnloadSharedLib(_hlib);
+        alaqilUnloadSharedLib(_hlib);
         _hlib = null;
       }
     }
 
   private:
     string _name;
-    SwigSharedLibHandle _hlib;
+    alaqilSharedLibHandle _hlib;
   }
 }
 
@@ -273,7 +273,7 @@ static this() {
     static assert(false, "Operating system not supported by the wrapper loading code.");
   }
 
-  auto library = new SwigSharedLib;
+  auto library = new alaqilSharedLib;
   library.load(possibleFileNames);
 
   string bindCode(string functionPointer, string symbol) {
@@ -281,27 +281,27 @@ static this() {
       "))library.loadSymbol(`" ~ symbol ~ "`);";
   }
 
-  //#if !defined(SWIG_D_NO_EXCEPTION_HELPER)
-  mixin(bindCode("swigRegisterExceptionCallbacks$module", "SWIGRegisterExceptionCallbacks_$module"));
-  //#endif // SWIG_D_NO_EXCEPTION_HELPER
-  //#if !defined(SWIG_D_NO_STRING_HELPER)
-  mixin(bindCode("swigRegisterStringCallback$module", "SWIGRegisterStringCallback_$module"));
-  //#endif // SWIG_D_NO_STRING_HELPER
+  //#if !defined(alaqil_D_NO_EXCEPTION_HELPER)
+  mixin(bindCode("alaqilRegisterExceptionCallbacks$module", "alaqilRegisterExceptionCallbacks_$module"));
+  //#endif // alaqil_D_NO_EXCEPTION_HELPER
+  //#if !defined(alaqil_D_NO_STRING_HELPER)
+  mixin(bindCode("alaqilRegisterStringCallback$module", "alaqilRegisterStringCallback_$module"));
+  //#endif // alaqil_D_NO_STRING_HELPER
   $wrapperloaderbindcode
 }
 
-//#if !defined(SWIG_D_NO_EXCEPTION_HELPER)
+//#if !defined(alaqil_D_NO_EXCEPTION_HELPER)
 extern(C) void function(
-  SwigExceptionCallback exceptionCallback,
-  SwigExceptionCallback illegalArgumentCallback,
-  SwigExceptionCallback illegalElementCallback,
-  SwigExceptionCallback ioCallback,
-  SwigExceptionCallback noSuchElementCallback) swigRegisterExceptionCallbacks$module;
-//#endif // SWIG_D_NO_EXCEPTION_HELPER
+  alaqilExceptionCallback exceptionCallback,
+  alaqilExceptionCallback illegalArgumentCallback,
+  alaqilExceptionCallback illegalElementCallback,
+  alaqilExceptionCallback ioCallback,
+  alaqilExceptionCallback noSuchElementCallback) alaqilRegisterExceptionCallbacks$module;
+//#endif // alaqil_D_NO_EXCEPTION_HELPER
 
-//#if !defined(SWIG_D_NO_STRING_HELPER)
-extern(C) void function(SwigStringCallback callback) swigRegisterStringCallback$module;
-//#endif // SWIG_D_NO_STRING_HELPER
+//#if !defined(alaqil_D_NO_STRING_HELPER)
+extern(C) void function(alaqilStringCallback callback) alaqilRegisterStringCallback$module;
+//#endif // alaqil_D_NO_STRING_HELPER
 %}
 
 %pragma(d) wrapperloaderbindcommand = %{

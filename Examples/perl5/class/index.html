@@ -1,19 +1,19 @@
 <html>
 <head>
-<title>SWIG:Examples:perl5:class</title>
+<title>alaqil:Examples:perl5:class</title>
 </head>
 
 <body bgcolor="#ffffff">
 
 
-<tt>SWIG/Examples/perl5/class/</tt>
+<tt>alaqil/Examples/perl5/class/</tt>
 <hr>
 
 <H2>Wrapping a simple C++ class</H2>
 
 <p>
 This example illustrates the most primitive form of C++ class wrapping performed
-by SWIG.  In this case, C++ classes are simply transformed into a collection of
+by alaqil.  In this case, C++ classes are simply transformed into a collection of
 C-style functions that provide access to class members.
 
 <h2>The C++ Code</h2>
@@ -60,9 +60,9 @@ public:
 </pre>
 </blockquote>
 
-<h2>The SWIG interface</h2>
+<h2>The alaqil interface</h2>
 
-A simple SWIG interface for this can be built by simply grabbing the header file
+A simple alaqil interface for this can be built by simply grabbing the header file
 like this:
 
 <blockquote>
@@ -79,10 +79,10 @@ like this:
 </pre>
 </blockquote>
 
-Note: when creating a C++ extension, you must run SWIG with the <tt>-c++</tt> option like this:
+Note: when creating a C++ extension, you must run alaqil with the <tt>-c++</tt> option like this:
 <blockquote>
 <pre>
-% swig -c++ -perl example.i
+% alaqil -c++ -perl example.i
 </pre>
 </blockquote>
 
@@ -144,7 +144,7 @@ $example::Shapes::nshapes = 13;   # Set a static data member
 <h2>General Comments</h2>
 
 <ul>
-<li>SWIG <b>does</b> know how to properly perform upcasting of objects in an inheritance
+<li>alaqil <b>does</b> know how to properly perform upcasting of objects in an inheritance
 hierarchy (including multiple inheritance).  Therefore it is perfectly safe to pass
 an object of a derived class to any function involving a base class.
 

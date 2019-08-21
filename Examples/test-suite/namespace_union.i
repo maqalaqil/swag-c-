@@ -1,6 +1,6 @@
 %module namespace_union
 
-#pragma SWIG nowarn=SWIGWARN_PARSE_UNNAMED_NESTED_CLASS
+#pragma alaqil nowarn=alaqilWARN_PARSE_UNNAMED_NESTED_CLASS
 
 %inline %{
 namespace SpatialIndex 

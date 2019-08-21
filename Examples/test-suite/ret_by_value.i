@@ -1,8 +1,8 @@
-/* Simple test to check SWIG's handling of return by value */
+/* Simple test to check alaqil's handling of return by value */
 
 %module ret_by_value
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) test; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) test; /* Ruby, wrong class name */
 
 %inline %{
 

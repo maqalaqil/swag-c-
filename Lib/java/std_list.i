@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_list.i
  *
- * SWIG typemaps for std::list.
+ * alaqil typemaps for std::list.
  * The Java proxy class extends java.util.AbstractSequentialList. The std::list
  * container looks and feels much like a java.util.LinkedList from Java.
  * ----------------------------------------------------------------------------- */
@@ -13,9 +13,9 @@
 #include <stdexcept>
 %}
 
-%fragment("SWIG_ListSize", "header", fragment="SWIG_JavaIntFromSize_t") {
-SWIGINTERN jint SWIG_ListSize(size_t size) {
-  jint sz = SWIG_JavaIntFromSize_t(size);
+%fragment("alaqil_ListSize", "header", fragment="alaqil_JavaIntFromSize_t") {
+alaqilINTERN jint alaqil_ListSize(size_t size) {
+  jint sz = alaqil_JavaIntFromSize_t(size);
   if (sz == -1)
     throw std::out_of_range("list size is too large to fit into a Java int");
   return sz;
@@ -197,7 +197,7 @@ namespace std {
     iterator insert(iterator pos, const T &value);
 
     %extend {
-      %fragment("SWIG_ListSize");
+      %fragment("alaqil_ListSize");
 
       list(jint count, const T &value) throw (std::out_of_range) {
         if (count < 0)
@@ -206,15 +206,15 @@ namespace std {
       }
 
       jint doSize() const throw (std::out_of_range) {
-        return SWIG_ListSize(self->size());
+        return alaqil_ListSize(self->size());
       }
 
       jint doPreviousIndex(const iterator &pos) const throw (std::out_of_range) {
-        return pos == self->begin() ? -1 : SWIG_ListSize(std::distance(self->begin(), static_cast<std::list<T>::const_iterator>(pos)));
+        return pos == self->begin() ? -1 : alaqil_ListSize(std::distance(self->begin(), static_cast<std::list<T>::const_iterator>(pos)));
       }
 
       jint doNextIndex(const iterator &pos) const throw (std::out_of_range) {
-        return pos == self->end() ? SWIG_ListSize(self->size()) : SWIG_ListSize(std::distance(self->begin(), static_cast<std::list<T>::const_iterator>(pos)));
+        return pos == self->end() ? alaqil_ListSize(self->size()) : alaqil_ListSize(std::distance(self->begin(), static_cast<std::list<T>::const_iterator>(pos)));
       }
 
       bool doHasNext(const iterator &pos) const {

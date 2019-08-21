@@ -2,8 +2,8 @@
 
 %module overload_method
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %inline %{

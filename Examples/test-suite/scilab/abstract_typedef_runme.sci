@@ -1,17 +1,17 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     e = new_Engine();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     a = new_A();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 // TODO: test write method
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

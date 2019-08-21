@@ -1,7 +1,7 @@
 %module(directors="1") director_default
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) DefaultsBase;
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) DefaultsDerived;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) DefaultsBase;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) DefaultsDerived;
 
 %{
 #include <string>

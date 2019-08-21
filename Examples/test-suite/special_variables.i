@@ -91,7 +91,7 @@ namespace SpaceNamespace {
 /////////////////////////////////// directors /////////////////////////////////
 %{
 void DirectorTest_director_testmethod(int i) {}
-void DirectorTest_director_testmethodSwigExplicitDirectorTest(int i) {}
+void DirectorTest_director_testmethodalaqilExplicitDirectorTest(int i) {}
 %}
 %typemap(directorargout) int i {
   $symname(99);

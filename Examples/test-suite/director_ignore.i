@@ -1,6 +1,6 @@
 %module(directors="1") director_ignore
 
-%warnfilter(SWIGWARN_LANG_DIRECTOR_ABSTRACT) DIgnoreOnlyConstructor;
+%warnfilter(alaqilWARN_LANG_DIRECTOR_ABSTRACT) DIgnoreOnlyConstructor;
 
 %include "std_string.i"
 

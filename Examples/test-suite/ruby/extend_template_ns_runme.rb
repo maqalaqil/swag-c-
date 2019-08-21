@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'extend_template_ns'
 

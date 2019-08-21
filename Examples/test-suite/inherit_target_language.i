@@ -4,9 +4,9 @@
 
 %module inherit_target_language
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 # define csbase javabase
-#elif defined(SWIGD)
+#elif defined(alaqilD)
 # define csbase dbase
 #endif
 
@@ -27,7 +27,7 @@ private class TargetLanguageBase { public void targetLanguageBaseMethod() {} };
 private class TargetLanguageBase2 { public void targetLanguageBase2Method() {} };
 %}
 
-%typemap(csbase) SWIGTYPE "TargetLanguageBase"
+%typemap(csbase) alaqilTYPE "TargetLanguageBase"
 
 // Two ways to replace a C++ base with a completely different target language base
 %ignore Base1; // another way to use the target language base
@@ -70,7 +70,7 @@ struct MultipleDerived4 : MBase4a, MBase4b {};
 %}
 
 // Replace a C++ base, but only classes that do not have a C++ base
-%typemap(csbase, notderived="1") SWIGTYPE "TargetLanguageBase2"
+%typemap(csbase, notderived="1") alaqilTYPE "TargetLanguageBase2"
 
 %inline %{
 struct BaseX            { virtual ~BaseX() {}; void basex() {} };

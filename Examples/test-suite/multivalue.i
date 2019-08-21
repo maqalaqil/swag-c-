@@ -2,7 +2,7 @@
 
 %module multivalue
 
-#ifdef SWIGGUILE
+#ifdef alaqilGUILE
 
 /* Multiple values as lists. By default, if more than one value is to
 be returned, a list of the values is created and returned; to switch

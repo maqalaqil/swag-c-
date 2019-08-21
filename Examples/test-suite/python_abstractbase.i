@@ -18,15 +18,15 @@ namespace std
 }
 
 %inline %{
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }
 #endif
 %}
 
-#ifdef SWIGPYTHON_PY3 // set when using -py3
-#define is_swig_py3 1
+#ifdef alaqilPYTHON_PY3 // set when using -py3
+#define is_alaqil_py3 1
 #else
-#define is_swig_py3 0
+#define is_alaqil_py3 0
 #endif

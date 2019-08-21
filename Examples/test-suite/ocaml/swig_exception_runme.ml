@@ -1,5 +1,5 @@
-open Swig
-open Swig_exception
+open alaqil
+open alaqil_exception
 
 let _ =
   let c = new_Circle '(10) and s = new_Square '(10) in

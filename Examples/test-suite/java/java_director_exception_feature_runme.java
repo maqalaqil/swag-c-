@@ -17,7 +17,7 @@ class java_director_exception_feature_Consts {
 
 }
 
-// an exception not mentioned or wrapped by the swig interface,
+// an exception not mentioned or wrapped by the alaqil interface,
 // to reconstruct using generic DirectorException handling
 class NewCheckedException extends Exception {
     public NewCheckedException(String s) {
@@ -25,7 +25,7 @@ class NewCheckedException extends Exception {
     }
 }
 
-// an exception not mentioned or wrapped by the swig interface,
+// an exception not mentioned or wrapped by the alaqil interface,
 // to reconstruct using generic DirectorException handling
 class NewUncheckedException extends RuntimeException {
     public NewUncheckedException(String s) {
@@ -82,7 +82,7 @@ public class java_director_exception_feature_runme {
     try {
       System.loadLibrary("java_director_exception_feature");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }

@@ -1,8 +1,8 @@
 %module bloody_hell
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) kMaxIOCTLSpaceParmsSize;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) kMaxIOCTLSpaceParmsSize;
 
-#ifdef SWIGSCILAB
+#ifdef alaqilSCILAB
 %rename(Parms) sm_channel_ix_dump_parms;
 #endif
 

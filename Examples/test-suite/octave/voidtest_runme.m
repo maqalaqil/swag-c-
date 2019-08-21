@@ -26,16 +26,16 @@ end_try_catch
 
 v1 = voidtest.vfunc1(f);
 v2 = voidtest.vfunc2(f);
-if (swig_this(v1) != swig_this(v2))
+if (alaqil_this(v1) != alaqil_this(v2))
     error
 endif
 
 v3 = voidtest.vfunc3(v1);
-if (swig_this(v3) != swig_this(f))
+if (alaqil_this(v3) != alaqil_this(f))
     error
 endif
 v4 = voidtest.vfunc1(f);
-if (swig_this(v4) != swig_this(v1))
+if (alaqil_this(v4) != alaqil_this(v1))
     error
 endif
 

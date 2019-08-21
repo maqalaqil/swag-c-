@@ -1,4 +1,4 @@
-%module swigobject
+%module alaqilobject
 
 
 

@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_map.i
  *
- * SWIG typemaps for std::map
+ * alaqil typemaps for std::map
  * The Java proxy class extends java.util.AbstractMap. The std::map
  * container looks and feels much like a java.util.HashMap from Java.
  * ----------------------------------------------------------------------------- */
@@ -17,9 +17,9 @@
 #include <stdexcept>
 %}
 
-%fragment("SWIG_MapSize", "header", fragment="SWIG_JavaIntFromSize_t") {
-  SWIGINTERN jint SWIG_MapSize(size_t size) {
-    jint sz = SWIG_JavaIntFromSize_t(size);
+%fragment("alaqil_MapSize", "header", fragment="alaqil_JavaIntFromSize_t") {
+  alaqilINTERN jint alaqil_MapSize(size_t size) {
+    jint sz = alaqil_JavaIntFromSize_t(size);
     if (sz == -1) {
       throw std::out_of_range("map size is too large to fit into a Java int");
     }
@@ -188,10 +188,10 @@ template<class K, class T, class C = std::less< K> > class map {
     iterator begin();
     iterator end();
     %extend {
-      %fragment("SWIG_MapSize");
+      %fragment("alaqil_MapSize");
 
       jint sizeImpl() const throw (std::out_of_range) {
-        return SWIG_MapSize(self->size());
+        return alaqil_MapSize(self->size());
       }
 
       bool containsImpl(const K& key) {

@@ -1,6 +1,6 @@
 %module global_vars
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
 
 %include std_string.i
 

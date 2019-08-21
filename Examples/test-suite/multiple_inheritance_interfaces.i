@@ -1,11 +1,11 @@
 %module  multiple_inheritance_interfaces
 
-%warnfilter(SWIGWARN_RUBY_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE); /* languages not supporting multiple inheritance or %interface */
+%warnfilter(alaqilWARN_RUBY_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE); /* languages not supporting multiple inheritance or %interface */
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
-%include "swiginterface.i"
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
+%include "alaqilinterface.i"
 %interface_custom("A", "IA", IA)
 %interface_custom("B", "IB", IB)
 %interface_custom("%(strip:[I])s", "I%s", IC) // same as %interface_custom("C", "IC", IC)
@@ -24,7 +24,7 @@ struct D : IC {};
 struct E : D {};
 %}
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 %interface_custom("J", "IJ", IJ)
 %interface_custom("K", "IK", IK)
 %interface_custom("L", "IL", IL)
@@ -36,7 +36,7 @@ struct IL : IK {};
 struct M : IL {};
 %}
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 %interface_custom("Q", "IQ", IQ)
 #endif
 %inline %{
@@ -50,7 +50,7 @@ struct V : S {};
 struct W : T {};
 %}
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 %interface_impl(BaseOverloaded);
 #endif
 %inline %{

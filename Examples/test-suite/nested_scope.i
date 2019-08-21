@@ -1,6 +1,6 @@
 %module nested_scope
 
-#if !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+#if !defined(alaqilCSHARP) && !defined(alaqilJAVA)
 %feature ("flatnested");
 #endif
 

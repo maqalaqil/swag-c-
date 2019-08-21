@@ -11,10 +11,10 @@
 static JSObjectRef $jswrapper(JSContextRef context, JSObjectRef thisObject, size_t argc, const JSValueRef argv[], JSValueRef* exception)
 {
     $jslocals
-    if(argc != $jsargcount) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for $jswrapper.");
+    if(argc != $jsargcount) alaqil_exception_fail(alaqil_ERROR, "Illegal number of arguments for $jswrapper.");
 
     $jscode
-    return SWIG_JSC_NewPointerObj(context, result, SWIGTYPE_$jsmangledtype, SWIG_POINTER_OWN);
+    return alaqil_JSC_NewPointerObj(context, result, alaqilTYPE_$jsmangledtype, alaqil_POINTER_OWN);
     goto fail;
     fail:
     return NULL;
@@ -31,7 +31,7 @@ static JSObjectRef $jswrapper(JSContextRef context, JSObjectRef thisObject, size
 static JSObjectRef $jswrapper(JSContextRef context, JSObjectRef ctorObject,
     size_t argc, const JSValueRef argv[], JSValueRef* exception)
 {
-    SWIG_exception(SWIG_ERROR, "Class $jsname can not be instantiated");
+    alaqil_exception(alaqil_ERROR, "Class $jsname can not be instantiated");
 fail:
     return 0;
 }
@@ -54,7 +54,7 @@ static JSObjectRef $jswrapper(JSContextRef context, JSObjectRef ctorObject,
     $jsdispatchcases
 
     // default:
-    SWIG_exception_fail(SWIG_ERROR, "Illegal arguments for construction of $jsname");
+    alaqil_exception_fail(alaqil_ERROR, "Illegal arguments for construction of $jsname");
 
     fail:
     return thisObject;
@@ -75,7 +75,7 @@ static JSObjectRef $jswrapper(JSContextRef context, JSObjectRef thisObject, size
 {
     $jslocals
     $jscode
-    return SWIG_JSC_NewPointerObj(context, result, SWIGTYPE_$jsmangledtype, SWIG_POINTER_OWN);
+    return alaqil_JSC_NewPointerObj(context, result, alaqilTYPE_$jsmangledtype, alaqil_POINTER_OWN);
 
     goto fail;
     fail:
@@ -108,10 +108,10 @@ static JSObjectRef $jswrapper(JSContextRef context, JSObjectRef thisObject, size
 %{
 static void $jswrapper(JSObjectRef thisObject)
 {
-  SwigPrivData* t = (SwigPrivData*) JSObjectGetPrivate(thisObject);
+  alaqilPrivData* t = (alaqilPrivData*) JSObjectGetPrivate(thisObject);
   if(t) {
-    if (t->swigCMemOwn) {
-      free (($jstype)t->swigCObject);
+    if (t->alaqilCMemOwn) {
+      free (($jstype)t->alaqilCObject);
     }
     JSObjectSetPrivate(thisObject, NULL);
     free(t);
@@ -129,10 +129,10 @@ static void $jswrapper(JSObjectRef thisObject)
 %{
 static void $jswrapper(JSObjectRef thisObject)
 {
-  SwigPrivData* t = (SwigPrivData*) JSObjectGetPrivate(thisObject);
+  alaqilPrivData* t = (alaqilPrivData*) JSObjectGetPrivate(thisObject);
   if(t) {
-    if (t->swigCMemOwn) {
-      $jstype arg1 = ($jstype)t->swigCObject;
+    if (t->alaqilCMemOwn) {
+      $jstype arg1 = ($jstype)t->alaqilCObject;
       ${destructor_action}
     }
     /* remove the private data to make sure that it isn't accessed elsewhere */
@@ -198,7 +198,7 @@ static JSValueRef $jswrapper(JSContextRef context, JSObjectRef function, JSObjec
   $jslocals
   JSValueRef jsresult;
 
-  if(argc != $jsargcount) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for $jswrapper.");
+  if(argc != $jsargcount) alaqil_exception_fail(alaqil_ERROR, "Illegal number of arguments for $jswrapper.");
 
   $jscode
   return jsresult;
@@ -225,7 +225,7 @@ static JSValueRef $jswrapper(JSContextRef context, JSObjectRef function, JSObjec
   int res;
   $jscode
 
-  SWIG_exception_fail(SWIG_ERROR, "Illegal arguments for function $jsname.");
+  alaqil_exception_fail(alaqil_ERROR, "Illegal arguments for function $jsname.");
   return jsresult;
 
   goto fail;
@@ -247,15 +247,15 @@ static int $jswrapper(JSContextRef context, JSObjectRef function, JSObjectRef th
   $jslocals
   JSValueRef jsresult;
 
-  if(argc != $jsargcount) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for $jswrapper.");
+  if(argc != $jsargcount) alaqil_exception_fail(alaqil_ERROR, "Illegal number of arguments for $jswrapper.");
 
   $jscode
   *p_result = jsresult;
-  return SWIG_OK;
+  return alaqil_OK;
 
   goto fail;
   fail:
-  return SWIG_TypeError;
+  return alaqil_TypeError;
 }
 %}
 
@@ -269,7 +269,7 @@ static int $jswrapper(JSContextRef context, JSObjectRef function, JSObjectRef th
 %{
   if(argc == $jsargcount) {
      res = $jswrapper(context, function, thisObject, argc, argv, exception, &jsresult);
-     if(res == SWIG_OK) { *exception = 0; return jsresult; }
+     if(res == alaqil_OK) { *exception = 0; return jsresult; }
   }
 %}
 
@@ -356,19 +356,19 @@ static JSStaticFunction $jsmangledname_functions[] = {
   $jsmangledname_objectDefinition.staticFunctions = $jsmangledname_functions;
   $jsclass_inheritance
   $jsmangledname_classRef = JSClassCreate(&$jsmangledname_objectDefinition);
-  SWIGTYPE_$jsmangledtype->clientdata = $jsmangledname_classRef;
+  alaqilTYPE_$jsmangledtype->clientdata = $jsmangledname_classRef;
 %}
 
 %fragment ("jsc_class_inherit", templates)
 %{
-    if (SWIGTYPE_p$jsbaseclassmangled != NULL) {
-      $jsmangledname_objectDefinition.parentClass = (JSClassRef) SWIGTYPE_p$jsbaseclassmangled->clientdata;
+    if (alaqilTYPE_p$jsbaseclassmangled != NULL) {
+      $jsmangledname_objectDefinition.parentClass = (JSClassRef) alaqilTYPE_p$jsbaseclassmangled->clientdata;
     }
 %}
 
 %fragment ("jsc_class_noinherit", templates)
 %{
-    $jsmangledname_objectDefinition.parentClass = _SwigObject_classRef;
+    $jsmangledname_objectDefinition.parentClass = _alaqilObject_classRef;
 %}
 
 

@@ -4,7 +4,7 @@
 
 %module reference_global_vars
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);      /* memory leak when setting a ptr/ref variable */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);      /* memory leak when setting a ptr/ref variable */
 
 %inline %{
 class TestClass {

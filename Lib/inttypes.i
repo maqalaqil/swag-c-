@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * inttypes.i
  *
- * SWIG library file  for ISO C99 types: 7.8 Format conversion of integer types <inttypes.h>
+ * alaqil library file  for ISO C99 types: 7.8 Format conversion of integer types <inttypes.h>
  * ----------------------------------------------------------------------------- */
 
 %{
@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#ifdef SWIGWORDSIZE64
+#ifdef alaqilWORDSIZE64
   
   /* We have to define the `uintmax_t' type using `ldiv_t'.  */
   typedef struct
@@ -41,7 +41,7 @@ extern "C" {
   /* Return the `imaxdiv_t' representation of the value of NUMER over DENOM. */
   extern imaxdiv_t imaxdiv (intmax_t numer, intmax_t denom);
   
-#ifdef SWIG_WCHAR
+#ifdef alaqil_WCHAR
   /* Like `wcstol' but convert to `intmax_t'.  */
   extern intmax_t wcstoimax (const wchar_t *nptr, wchar_t **endptr, int base);
   
@@ -49,7 +49,7 @@ extern "C" {
   extern uintmax_t wcstoumax (const wchar_t *nptr, wchar_t ** endptr, int base);
 #endif
 
-#ifdef SWIGWORDSIZE64
+#ifdef alaqilWORDSIZE64
   
   /* Like `strtol' but convert to `intmax_t'.  */
   extern  intmax_t strtoimax (const char *nptr, char **endptr, int base);
@@ -57,7 +57,7 @@ extern "C" {
   /* Like `strtoul' but convert to `uintmax_t'.  */
   extern  uintmax_t strtoumax (const char *nptr, char **endptr,int base);
   
-#ifdef SWIG_WCHAR
+#ifdef alaqil_WCHAR
   /* Like `wcstol' but convert to `intmax_t'.  */
   extern  intmax_t wcstoimax (const wchar_t *nptr, wchar_t **endptr, int base);
   
@@ -65,7 +65,7 @@ extern "C" {
   extern  uintmax_t wcstoumax (const wchar_t *nptr, wchar_t **endptr, int base);
 #endif
   
-#else /* SWIGWORDSIZE32 */
+#else /* alaqilWORDSIZE32 */
   
   /* Like `strtol' but convert to `intmax_t'.  */
   extern  intmax_t strtoimax (const char *nptr, char **endptr, int base);
@@ -73,12 +73,12 @@ extern "C" {
   /* Like `strtoul' but convert to `uintmax_t'.  */
   extern  uintmax_t strtoumax (const char *nptr, char **endptr, int base);
   
-#ifdef SWIG_WCHAR
+#ifdef alaqil_WCHAR
   /* Like `wcstol' but convert to `intmax_t'.  */
   extern  uintmax_t wcstoumax (const wchar_t *nptr, wchar_t **endptr, int base);
 #endif
 
-#endif /* SWIGWORDSIZE64 */
+#endif /* alaqilWORDSIZE64 */
 
 #ifdef __cplusplus
 }

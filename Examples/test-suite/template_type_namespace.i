@@ -1,6 +1,6 @@
 %module template_type_namespace
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) std::vector<std::string>;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) std::vector<std::string>;	// Ruby, wrong class name
 
 %include std_string.i
 %include std_vector.i

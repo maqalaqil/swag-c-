@@ -4,7 +4,7 @@
  * Javascript typemaps
  * ----------------------------------------------------------------------------- */
 
-%include <typemaps/swigmacros.swg>
+%include <typemaps/alaqilmacros.swg>
 
 %include <javascripttypemaps.swg>
 

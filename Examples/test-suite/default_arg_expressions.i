@@ -1,11 +1,11 @@
 %module default_arg_expressions
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) ptr;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) UsdGeomTokensPtr;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) ptr;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) UsdGeomTokensPtr;
 %immutable UsdGeomTokens;
 
 %inline %{

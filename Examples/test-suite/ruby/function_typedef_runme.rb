@@ -4,7 +4,7 @@
 #
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'function_typedef'
 include Function_typedef
 

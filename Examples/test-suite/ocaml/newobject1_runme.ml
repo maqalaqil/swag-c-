@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Newobject1
 
 exception RuntimeError of string * int

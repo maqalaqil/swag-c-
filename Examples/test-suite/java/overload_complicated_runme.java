@@ -7,14 +7,14 @@ public class overload_complicated_runme {
     try {
         System.loadLibrary("overload_complicated");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
 
   public static void main(String argv[]) 
   {
-      SWIGTYPE_p_int pInt = null;
+      alaqilTYPE_p_int pInt = null;
 
       // Check the correct constructors are available
       Pop p = new Pop(pInt);

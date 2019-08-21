@@ -58,12 +58,12 @@ type In json.Marshaler
 
 %typemap(out,fragment="AllocateString") RetStruct
 %{
-  $result = Swig_AllocateString($1.str.data(), $1.str.length());
+  $result = alaqil_AllocateString($1.str.data(), $1.str.length());
 %}
 
 %typemap(goout,fragment="CopyString") RetStruct
 %{
-	if err := json.Unmarshal([]byte(swigCopyString($1)), &$result); err != nil {
+	if err := json.Unmarshal([]byte(alaqilCopyString($1)), &$result); err != nil {
 		panic(err)
 	}
 %}
@@ -75,14 +75,14 @@ type In json.Marshaler
 %typemap(out,fragment="AllocateString") RetStruct*
 %{
   $result = (_gostring_*)malloc(sizeof(_gostring_));
-  *$result = Swig_AllocateString($1->str.data(), $1->str.length());
+  *$result = alaqil_AllocateString($1->str.data(), $1->str.length());
 %}
 
 %typemap(goout,fragment="CopyString") RetStruct*
 %{
-	defer Swig_free(uintptr(unsafe.Pointer($1)))
+	defer alaqil_free(uintptr(unsafe.Pointer($1)))
 	var rm map[string]interface{}
-	if err := json.Unmarshal([]byte(swigCopyString(*$1)), &rm); err != nil {
+	if err := json.Unmarshal([]byte(alaqilCopyString(*$1)), &rm); err != nil {
 		panic(err)
 	}
 	$result = &rm
@@ -193,7 +193,7 @@ static void putuint64(std::string *s, size_t off, uint64_t v) {
       str.replace(off, p->size(), *p);
       off += p->size();
     }
-    *$input = Swig_AllocateString(str.data(), str.size());
+    *$input = alaqil_AllocateString(str.data(), str.size());
   }
 %}
 
@@ -201,7 +201,7 @@ static void putuint64(std::string *s, size_t off, uint64_t v) {
 %typemap(goargout,fragment="CopyString") MyArray*
 %{
 	{
-		str := swigCopyString(*$input)
+		str := alaqilCopyString(*$input)
 		bin := binary.LittleEndian
 		size := bin.Uint64([]byte(str[:8]))
 		str = str[8:]

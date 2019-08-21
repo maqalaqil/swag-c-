@@ -1,11 +1,11 @@
 %module(directors="1") virtual_poly
 
-%warnfilter(SWIGWARN_JAVA_COVARIANT_RET, SWIGWARN_CSHARP_COVARIANT_RET) copy; /* Java, C# covariant return types */
-%warnfilter(SWIGWARN_JAVA_COVARIANT_RET, SWIGWARN_CSHARP_COVARIANT_RET) ref_this; /* Java, C# covariant return types */
-%warnfilter(SWIGWARN_JAVA_COVARIANT_RET, SWIGWARN_CSHARP_COVARIANT_RET) covariant; /* Java, C# covariant return types */
-%warnfilter(SWIGWARN_JAVA_COVARIANT_RET, SWIGWARN_CSHARP_COVARIANT_RET) covariant2; /* Java, C# covariant return types */
-%warnfilter(SWIGWARN_JAVA_COVARIANT_RET, SWIGWARN_CSHARP_COVARIANT_RET) covariant3; /* Java, C# covariant return types */
-%warnfilter(SWIGWARN_JAVA_COVARIANT_RET, SWIGWARN_CSHARP_COVARIANT_RET) covariant4; /* Java, C# covariant return types */
+%warnfilter(alaqilWARN_JAVA_COVARIANT_RET, alaqilWARN_CSHARP_COVARIANT_RET) copy; /* Java, C# covariant return types */
+%warnfilter(alaqilWARN_JAVA_COVARIANT_RET, alaqilWARN_CSHARP_COVARIANT_RET) ref_this; /* Java, C# covariant return types */
+%warnfilter(alaqilWARN_JAVA_COVARIANT_RET, alaqilWARN_CSHARP_COVARIANT_RET) covariant; /* Java, C# covariant return types */
+%warnfilter(alaqilWARN_JAVA_COVARIANT_RET, alaqilWARN_CSHARP_COVARIANT_RET) covariant2; /* Java, C# covariant return types */
+%warnfilter(alaqilWARN_JAVA_COVARIANT_RET, alaqilWARN_CSHARP_COVARIANT_RET) covariant3; /* Java, C# covariant return types */
+%warnfilter(alaqilWARN_JAVA_COVARIANT_RET, alaqilWARN_CSHARP_COVARIANT_RET) covariant4; /* Java, C# covariant return types */
 
 %{
 #if defined(__SUNPRO_CC)
@@ -13,8 +13,8 @@
 #endif
 %}
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 //
@@ -150,7 +150,7 @@
 
 %inline %{
 
-// These three classes test covariant return types and whether swig accurately matches
+// These three classes test covariant return types and whether alaqil accurately matches
 // polymorphic methods (mainly for C# override keyword). Also tests methods which hide
 // the base class' method (for C#, new keyword required on method declaration).
 

@@ -12,8 +12,8 @@
 typedef int MyInteger;
 
 template<typename T> struct XXX {
-#ifdef SWIG
-// In swig-3.0.12 'Long aa' was actually stored as 'long aa' in typemap table instead of 'XXX<int>::Long aa'
+#ifdef alaqil
+// In alaqil-3.0.12 'Long aa' was actually stored as 'long aa' in typemap table instead of 'XXX<int>::Long aa'
 %apply int TMAP55 { Long aa }
 %apply int TMAP66 { XXX<int>::Long bb }
 %apply int TMAP88 { XXX<MyInteger>::Long dd }
@@ -27,7 +27,7 @@ template<typename T> struct XXX {
   long cc2(Long cc) { return cc; }
   long dd1(long dd) { return dd; }
   long dd2(Long dd) { return dd; }
-#ifdef SWIG
+#ifdef alaqil
 %clear Long aa;
 %clear XXX<int>::Long bb;
 %clear XXX<MyInteger>::Long dd;

@@ -7,12 +7,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'li_std_stack'
 include Li_std_stack
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 a = IntStack.new
 a << 1
 a << 2

@@ -1,6 +1,6 @@
 (* Test case stolen from the python directory *)
 
-open Swig
+open alaqil
 open Varargs
 
 let _ = if _test (C_string "Hello") <> (C_string "Hello") then

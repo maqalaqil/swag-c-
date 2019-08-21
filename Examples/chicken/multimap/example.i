@@ -17,18 +17,18 @@ extern int    gcd(int x, int y);
 
 %typemap(in) (int argc, char *argv[]) {
   int i;
-  if (!C_swig_is_vector ($input)) {
-    swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, "Argument $input is not a vector");
+  if (!C_alaqil_is_vector ($input)) {
+    alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, "Argument $input is not a vector");
   }
   $1 = C_header_size ($input);
   $2 = (char **) malloc(($1+1)*sizeof(char *));
   for (i = 0; i < $1; i++) {
     C_word o = C_block_item ($input, i);
-    if (!C_swig_is_string (o)) {
+    if (!C_alaqil_is_string (o)) {
       char err[50];
       free($2);
       sprintf (err, "$input[%d] is not a string", i);
-      swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, err);
+      alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, err);
     }
     $2[i] = C_c_string (o);
   }
@@ -41,8 +41,8 @@ extern int    gcd(int x, int y);
 extern int gcdmain(int argc, char *argv[]);
 
 %typemap(in) (char *bytes, int len) {
-  if (!C_swig_is_string ($input)) {
-    swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, "Argument $input is not a string");
+  if (!C_alaqil_is_string ($input)) {
+    alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, "Argument $input is not a string");
   }	
   $1 = C_c_string ($input);
   $2 = C_header_size ($input);
@@ -54,8 +54,8 @@ extern int count(char *bytes, int len, char c);
 /* This example shows how to wrap a function that mutates a string */
 
 %typemap(in) (char *str, int len) 
-%{  if (!C_swig_is_string ($input)) {
-    swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, "Argument $input is not a string");
+%{  if (!C_alaqil_is_string ($input)) {
+    alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, "Argument $input is not a string");
   }
   $2 = C_header_size ($input);
   $1 = (char *) malloc ($2+1);
@@ -66,7 +66,7 @@ extern int count(char *bytes, int len, char c);
 
 %typemap(argout) (char *str, int len) (C_word *scmstr) 
 %{  scmstr = C_alloc (C_SIZEOF_STRING ($2));
-  SWIG_APPEND_VALUE(C_string (&scmstr, $2, $1));
+  alaqil_APPEND_VALUE(C_string (&scmstr, $2, $1));
   free ($1);
 %}
 
@@ -78,7 +78,7 @@ extern void capitalize (char *str, int len);
 %typemap(check) (double cx, double cy) {
   double a = $1*$1 + $2*$2;
   if (a > 1.0) {
-    SWIG_exception (SWIG_ValueError, "cx and cy must be in unit circle");
+    alaqil_exception (alaqil_ValueError, "cx and cy must be in unit circle");
   }
 }
 

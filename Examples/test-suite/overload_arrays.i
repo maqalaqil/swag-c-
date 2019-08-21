@@ -2,24 +2,24 @@
 // Based on overload_simple testcase
 %module overload_arrays
 
-#ifdef SWIGCHICKEN
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) fbool;
+#ifdef alaqilCHICKEN
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) fbool;
 #endif
 
-#ifdef SWIGLUA
+#ifdef alaqilLUA
 // lua only has one numeric type, so most of the overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) foo;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) bar;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) Spam;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) foo;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) bar;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) Spam;
 #endif
 
-#ifdef SWIGGO
-%warnfilter(SWIGWARN_PARSE_KEYWORD) type; // 'type' is a Go keyword, renamed as 'Xtype'
+#ifdef alaqilGO
+%warnfilter(alaqilWARN_PARSE_KEYWORD) type; // 'type' is a Go keyword, renamed as 'Xtype'
 %rename(Foos) Foo;
 #endif
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) type;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) type;
 #endif
 
 %immutable Spam::type;

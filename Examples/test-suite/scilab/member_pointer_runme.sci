@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 s = new_Square(10);
 
@@ -17,4 +17,4 @@ checkequal(do_op(s, PERIMPT_get()), 40.0, "Square perimeter");
 
 delete_Square(s);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

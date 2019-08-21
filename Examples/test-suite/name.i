@@ -1,12 +1,12 @@
-/* This interface file tests whether SWIG/Guile handle the %rename and
+/* This interface file tests whether alaqil/Guile handle the %rename and
    %name directives, which was not the case in 1.3a5.
 */
 
 %module name
 
-#pragma SWIG nowarn=SWIGWARN_DEPRECATED_NAME // %name is deprecated. Use %rename instead.
+#pragma alaqil nowarn=alaqilWARN_DEPRECATED_NAME // %name is deprecated. Use %rename instead.
 
-#ifdef SWIGGUILE
+#ifdef alaqilGUILE
 %rename foo_1 "foo-2";
 #else
 %rename foo_1 "foo_2";
@@ -15,7 +15,7 @@
 void foo_1() {}
 %}
 
-#ifdef SWIGGUILE
+#ifdef alaqilGUILE
 %name("bar-2")
 #else
 %name("bar_2")

@@ -1,6 +1,6 @@
 %module smart_pointer_extend
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) hi::CBase::z;	/* Ruby, wrong const name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) hi::CBase::z;	/* Ruby, wrong const name */
 
 %inline %{
   namespace hi

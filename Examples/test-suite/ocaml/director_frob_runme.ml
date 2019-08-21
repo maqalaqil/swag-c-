@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Director_frob
 
 let foo = new_Bravo '()

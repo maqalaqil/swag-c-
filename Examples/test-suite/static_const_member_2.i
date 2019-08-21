@@ -1,11 +1,11 @@
 %module static_const_member_2
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) oss::modules::CavityPackFlags::forward_field;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) oss::modules::CavityPackFlags::backward_field;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) oss::modules::Test::current_profile;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) oss::modules::CavityPackFlags::forward_field;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) oss::modules::CavityPackFlags::backward_field;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) oss::modules::Test::current_profile;
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %inline %{ 

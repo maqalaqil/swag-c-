@@ -1,43 +1,43 @@
 // This is a copy of the multiple_inheritance_abstract test and extended for testing %shared_ptr and %interface_impl
 %module  multiple_inheritance_shared_ptr
 
-%warnfilter(SWIGWARN_RUBY_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE); /* languages not supporting multiple inheritance or %interface */
+%warnfilter(alaqilWARN_RUBY_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE); /* languages not supporting multiple inheritance or %interface */
 
 // Typemap changes required to mix %shared_ptr and %interface_impl
 // Note we don't have a way to use $javainterfacename/$csinterfacename (yet),
-// so we improvise somewhat by adding the SwigImpl suffix
-%define SWIG_SHARED_PTR_INTERFACE_TYPEMAPS(CONST, TYPE...)
-#if defined(SWIGJAVA)
-%typemap(javain) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                 SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
-                 SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
-                 SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& "($javainput == null) ? 0 : $javainput.$typemap(jstype, TYPE)_GetInterfaceCPtr()"
-%typemap(javaout) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
-                  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
-                  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& {
+// so we improvise somewhat by adding the alaqilImpl suffix
+%define alaqil_SHARED_PTR_INTERFACE_TYPEMAPS(CONST, TYPE...)
+#if defined(alaqilJAVA)
+%typemap(javain) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                 alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
+                 alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
+                 alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& "($javainput == null) ? 0 : $javainput.$typemap(jstype, TYPE)_GetInterfaceCPtr()"
+%typemap(javaout) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
+                  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
+                  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& {
     long cPtr = $jnicall;
-    return (cPtr == 0) ? null : ($typemap(jstype, TYPE))new $typemap(jstype, TYPE)SwigImpl(cPtr, true);
+    return (cPtr == 0) ? null : ($typemap(jstype, TYPE))new $typemap(jstype, TYPE)alaqilImpl(cPtr, true);
   }
-#elif defined(SWIGCSHARP)
-%typemap(csin) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-               SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
-               SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
-               SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& "$csinput == null ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : $csinput.GetInterfaceCPtr()"
-%typemap(csout, excode=SWIGEXCODE) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                                   SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
-                                   SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
-                                   SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& {
+#elif defined(alaqilCSHARP)
+%typemap(csin) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+               alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
+               alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
+               alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& "$csinput == null ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : $csinput.GetInterfaceCPtr()"
+%typemap(csout, excode=alaqilEXCODE) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                                   alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
+                                   alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
+                                   alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *& {
     global::System.IntPtr cPtr = $imcall;
-    $typemap(cstype, TYPE) ret = (cPtr == global::System.IntPtr.Zero) ? null : new $typemap(cstype, TYPE)SwigImpl(cPtr, true);$excode
+    $typemap(cstype, TYPE) ret = (cPtr == global::System.IntPtr.Zero) ? null : new $typemap(cstype, TYPE)alaqilImpl(cPtr, true);$excode
     return ret;
   }
 #endif
 %enddef
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 %include <boost_shared_ptr.i>
 %shared_ptr(Space::ABase1)
 %shared_ptr(Space::CBase1)
@@ -49,16 +49,16 @@
 %shared_ptr(Space::Bottom2)
 %shared_ptr(Space::Bottom3)
 
-%include "swiginterface.i"
-SWIG_SHARED_PTR_INTERFACE_TYPEMAPS(, Space::ABase1)
-SWIG_SHARED_PTR_INTERFACE_TYPEMAPS(, Space::CBase1)
-SWIG_SHARED_PTR_INTERFACE_TYPEMAPS(, Space::CBase2)
+%include "alaqilinterface.i"
+alaqil_SHARED_PTR_INTERFACE_TYPEMAPS(, Space::ABase1)
+alaqil_SHARED_PTR_INTERFACE_TYPEMAPS(, Space::CBase1)
+alaqil_SHARED_PTR_INTERFACE_TYPEMAPS(, Space::CBase2)
 %interface_impl(Space::ABase1)
 %interface_impl(Space::CBase1)
 %interface_impl(Space::CBase2)
 #endif
 
-#if defined(SWIGD)
+#if defined(alaqilD)
 // Missing multiple inheritance support results in incorrect use of override
 %ignore CBase1;
 %ignore CBase2;

@@ -8,7 +8,7 @@
 
 %include "std_string.i"
 
-#ifdef SWIGSCILAB
+#ifdef alaqilSCILAB
 %rename(ProcBase) ProtectedBase;
 %rename(PubBase) PublicBase;
 #endif

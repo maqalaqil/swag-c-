@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly parses the support for types
+/* This testcase checks whether alaqil correctly parses the support for types
    without the defined trivial constructor in the unions. */
 %module cpp11_unrestricted_unions
 

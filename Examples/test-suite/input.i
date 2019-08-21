@@ -2,11 +2,11 @@
 
 %apply int *INPUT {int *bar};
 
-%typemap(out, fragment=SWIG_From_frag(int)) int *foo {
+%typemap(out, fragment=alaqil_From_frag(int)) int *foo {
   if ($1) {
-    $result = SWIG_From(int)(*$1);
+    $result = alaqil_From(int)(*$1);
   } else {
-    $result = SWIG_Py_Void();
+    $result = alaqil_Py_Void();
   }
 }
 
@@ -25,11 +25,11 @@
 %include std_string.i
 %apply std::string *INPUT {std::string *bar};
 
-%typemap(out, fragment=SWIG_From_frag(std::string)) std::string *sfoo {
+%typemap(out, fragment=alaqil_From_frag(std::string)) std::string *sfoo {
   if ($1) {
-    $result = SWIG_From(std::string)(*$1);
+    $result = alaqil_From(std::string)(*$1);
   } else {
-    $result = SWIG_Py_Void();
+    $result = alaqil_Py_Void();
   }
 }
 

@@ -1,5 +1,5 @@
 /* This interface file tests whether whitespace in angle brackets
-   affects the SWIG types. SF Bug #221917, reported by
+   affects the alaqil types. SF Bug #221917, reported by
    burchanb@cs.tamu.edu. */
 
 %module template_whitespace

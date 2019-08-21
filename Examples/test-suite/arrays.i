@@ -7,7 +7,7 @@ This test case tests that various types of arrays are working.
 #include <stdlib.h>
 %}
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(ArrSt) ArrayStruct;
 #endif
 

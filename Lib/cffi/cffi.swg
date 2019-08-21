@@ -1,7 +1,7 @@
 /* Define a C preprocessor symbol that can be used in interface files
-   to distinguish between the SWIG language modules. */ 
+   to distinguish between the alaqil language modules. */ 
 
-#define SWIG_CFFI
+#define alaqil_CFFI
 
 /* Typespecs for basic types. */
 
@@ -30,7 +30,7 @@
 
 %typemap(cin) float ":float";
 %typemap(cin) double ":double";
-%typemap(cin) SWIGTYPE ":pointer";
+%typemap(cin) alaqilTYPE ":pointer";
 
 %typemap(cout) void ":void";
 
@@ -57,7 +57,7 @@
 
 %typemap(cout) float ":float";
 %typemap(cout) double ":double";
-%typemap(cout) SWIGTYPE ":pointer";
+%typemap(cout) alaqilTYPE ":pointer";
 
 
 %typemap(ctype) bool                       "int";
@@ -66,9 +66,9 @@
                 int, signed int, unsigned int,
                 long, signed long, unsigned long,
                 float, double, long double, char *, void *, void,
-                enum SWIGTYPE, SWIGTYPE *,
-                SWIGTYPE[ANY], SWIGTYPE &, SWIGTYPE && "$1_ltype";
-%typemap(ctype) SWIGTYPE                   "$&1_type";
+                enum alaqilTYPE, alaqilTYPE *,
+                alaqilTYPE[ANY], alaqilTYPE &, alaqilTYPE && "$1_ltype";
+%typemap(ctype) alaqilTYPE                   "$&1_type";
 
 %typemap(in) bool                          "$1 = (bool)$input;";
 %typemap(in) char, unsigned char, signed char,
@@ -76,9 +76,9 @@
              int, signed int, unsigned int,
              long, signed long, unsigned long,
              float, double, long double, char *, void *, void,
-             enum SWIGTYPE, SWIGTYPE *,
-             SWIGTYPE[ANY], SWIGTYPE &, SWIGTYPE && "$1 = $input;";
-%typemap(in) SWIGTYPE                      "$1 = *$input;";
+             enum alaqilTYPE, alaqilTYPE *,
+             alaqilTYPE[ANY], alaqilTYPE &, alaqilTYPE && "$1 = $input;";
+%typemap(in) alaqilTYPE                      "$1 = *$input;";
 
 %typemap(out) void                         "";
 %typemap(out) bool                          "$result = (int)$1;";
@@ -87,30 +87,30 @@
               int, signed int, unsigned int,
               long, signed long, unsigned long,
               float, double, long double, char *, void *,
-              enum SWIGTYPE, SWIGTYPE *,
-              SWIGTYPE[ANY], SWIGTYPE &, SWIGTYPE && "$result = $1;";
+              enum alaqilTYPE, alaqilTYPE *,
+              alaqilTYPE[ANY], alaqilTYPE &, alaqilTYPE && "$result = $1;";
 #ifdef __cplusplus
-%typemap(out) SWIGTYPE                     "$result = new $1_type($1);";
+%typemap(out) alaqilTYPE                     "$result = new $1_type($1);";
 #else
-%typemap(out) SWIGTYPE {
+%typemap(out) alaqilTYPE {
   $result = ($&1_ltype) malloc(sizeof($1_type));
   memmove($result, &$1, sizeof($1_type));
 }
 #endif
 
-%typecheck(SWIG_TYPECHECK_BOOL) bool { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_CHAR) char { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_FLOAT) float { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_DOUBLE) double { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_STRING) char * { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_INTEGER)
+%typecheck(alaqil_TYPECHECK_BOOL) bool { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_CHAR) char { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_FLOAT) float { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_DOUBLE) double { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_STRING) char * { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_INTEGER)
                     unsigned char, signed char,
                     short, signed short, unsigned short,
                     int, signed int, unsigned int,
                     long, signed long, unsigned long,
-                    enum SWIGTYPE { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_POINTER) SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&,
-                                   SWIGTYPE[ANY], SWIGTYPE { $1 = 1; };
+                    enum alaqilTYPE { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_POINTER) alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&,
+                                   alaqilTYPE[ANY], alaqilTYPE { $1 = 1; };
 /* This maps C/C++ types to Lisp classes for overload dispatch */
 
 %typemap(lisptype) bool "cl:boolean";
@@ -124,20 +124,20 @@
                     short, signed short, unsigned short,
                     int, signed int, unsigned int,
                     long, signed long, unsigned long,
-                    enum SWIGTYPE       "cl:integer";
+                    enum alaqilTYPE       "cl:integer";
 /* CLOS methods can't be specialized on single-float or double-float */
 %typemap(lispclass) float "cl:number";
 %typemap(lispclass) double "cl:number";
 %typemap(lispclass) char * "cl:string";
 
 /* Array reference typemaps */
-%apply SWIGTYPE & { SWIGTYPE ((&)[ANY]) }
-%apply SWIGTYPE && { SWIGTYPE ((&&)[ANY]) }
+%apply alaqilTYPE & { alaqilTYPE ((&)[ANY]) }
+%apply alaqilTYPE && { alaqilTYPE ((&&)[ANY]) }
 
 /* const pointers */
-%apply SWIGTYPE * { SWIGTYPE *const }
-%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
-%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
+%apply alaqilTYPE * { alaqilTYPE *const }
+%apply alaqilTYPE (CLASS::*) { alaqilTYPE (CLASS::*const) }
+%apply alaqilTYPE & { alaqilTYPE (CLASS::*const&) }
 
 %{
 
@@ -147,13 +147,13 @@
 #  define EXTERN   extern
 #endif
 
-#define EXPORT   EXTERN SWIGEXPORT
+#define EXPORT   EXTERN alaqilEXPORT
 
 #include <string.h>
 %}
 
-%insert("swiglisp") %{
-;;;SWIG wrapper code starts here
+%insert("alaqillisp") %{
+;;;alaqil wrapper code starts here
 
 (cl:defmacro defanonenum (cl:&body enums)
    "Converts anonymous enums to defconstants."
@@ -164,8 +164,8 @@
                         collect `(cl:defconstant ,value ,index))))
 
 (cl:eval-when (:compile-toplevel :load-toplevel)
-  (cl:unless (cl:fboundp 'swig-lispify)
-    (cl:defun swig-lispify (name flag cl:&optional (package cl:*package*))
+  (cl:unless (cl:fboundp 'alaqil-lispify)
+    (cl:defun alaqil-lispify (name flag cl:&optional (package cl:*package*))
       (cl:labels ((helper (lst last rest cl:&aux (c (cl:car lst)))
                     (cl:cond
                       ((cl:null lst)
@@ -198,13 +198,13 @@
             fix)
            package))))))
 
-;;;SWIG wrapper code ends here
+;;;alaqil wrapper code ends here
 %}
 
 #ifdef __cplusplus
-%typemap(out) SWIGTYPE                     "$result = new $1_type($1);";
+%typemap(out) alaqilTYPE                     "$result = new $1_type($1);";
 #else
-%typemap(out) SWIGTYPE {
+%typemap(out) alaqilTYPE {
   $result = ($&1_ltype) malloc(sizeof($1_type));
   memmove($result, &$1, sizeof($1_type));
 }
@@ -287,7 +287,7 @@
 #  define EXTERN   extern
 #endif
 
-#define EXPORT   EXTERN SWIGEXPORT
+#define EXPORT   EXTERN alaqilEXPORT
 
 #include <string.h>
 #include <stdlib.h>

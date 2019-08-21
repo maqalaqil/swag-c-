@@ -5,7 +5,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'member_pointer'
 

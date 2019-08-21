@@ -46,12 +46,12 @@ type GoRetStruct struct {
 
 %typemap(out,fragment="AllocateString") RetStruct
 %{
-  $result = Swig_AllocateString($1.str.data(), $1.str.length());
+  $result = alaqil_AllocateString($1.str.data(), $1.str.length());
 %}
 
 %typemap(goout,fragment="CopyString") RetStruct
 %{
-	$result = GoRetStruct{Str: swigCopyString($input)}
+	$result = GoRetStruct{Str: alaqilCopyString($input)}
 %}
 
 %typemap(godirectorout) RetStruct
@@ -83,24 +83,24 @@ type GoRetStruct struct {
 
 %typemap(directorin,fragment="AllocateString") MyStruct
 %{
-  $input = Swig_AllocateString($1.str.data(), $1.str.length());
+  $input = alaqil_AllocateString($1.str.data(), $1.str.length());
 %}
 
 %typemap(godirectorin,fragment="CopyString") MyStruct
 %{
-	if err := json.Unmarshal([]byte(swigCopyString($input)), &$result); err != nil {
+	if err := json.Unmarshal([]byte(alaqilCopyString($input)), &$result); err != nil {
 		panic(err)
 	}
 %}
 
 %typemap(out,fragment="AllocateString") MyStruct
 %{
-  $result = Swig_AllocateString($1.str.data(), $1.str.length());
+  $result = alaqil_AllocateString($1.str.data(), $1.str.length());
 %}
 
 %typemap(goout,fragment="CopyString") MyStruct
 %{
-	$result = swigCopyString($input)
+	$result = alaqilCopyString($input)
 %}
 
 %typemap(in) MyStruct

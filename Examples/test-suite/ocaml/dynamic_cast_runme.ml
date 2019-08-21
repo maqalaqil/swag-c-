@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Dynamic_cast
 
 let f = new_Foo '()

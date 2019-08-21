@@ -4,8 +4,8 @@
  *  Opaque types
  */
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %feature("valuewrapper") C;
@@ -30,14 +30,14 @@ public:
 
 
 /*
- * Hint swig that the Opaque type B don't need the value wrapper.
+ * Hint alaqil that the Opaque type B don't need the value wrapper.
  * This hint is only necessary in very very special cases.
  */
 %feature("novaluewrapper") B;
 class B;
 
 /*
- * Force swig to use the value wrapper, even when the class
+ * Force alaqil to use the value wrapper, even when the class
  * has a default constructor, in case you want to save a
  * instance construction.
  * 
@@ -197,7 +197,7 @@ public:
 };
 
 
-#if defined(SWIGPYTHON) 
+#if defined(alaqilPYTHON) 
 
 /*
   This case can't be fixed by using the valuewrapper feature and the

@@ -1,4 +1,4 @@
-/* This interface checks whether SWIG supports the new double angled brackets
+/* This interface checks whether alaqil supports the new double angled brackets
    in the template syntax without having a space inbetween. This feature was
    introduced in new C++11 standard.
 */

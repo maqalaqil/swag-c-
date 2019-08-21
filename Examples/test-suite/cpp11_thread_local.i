@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly parses the 'thread_local' storage specifier */
+/* This testcase checks whether alaqil correctly parses the 'thread_local' storage specifier */
 
 %module cpp11_thread_local
 

@@ -1,6 +1,6 @@
 %module nested_structs
 
-#if defined(SWIG_JAVASCRIPT_V8)
+#if defined(alaqil_JAVASCRIPT_V8)
 
 %inline %{
 #if __GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
@@ -12,8 +12,8 @@
 
 #endif
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 // bug #491476
@@ -49,7 +49,7 @@ int getInside1Val(struct Outer *n) { return n->inside1.val; }
 Below was causing problems in Octave as wrappers were compiled as C++.
 Solution requires regenerating the inner struct into
 the global C++ namespace (which is where it is intended to be in C).
-See cparse_cplusplusout / Swig_cparse_cplusplusout in the Source.
+See cparse_cplusplusout / alaqil_cparse_cplusplusout in the Source.
 */
 %inline %{
 int nestedByVal(struct Named s);

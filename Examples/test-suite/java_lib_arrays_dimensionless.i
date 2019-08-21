@@ -3,7 +3,7 @@
 %include "arrays_java.i"
 
 // Can't wrap dimensionless arrays, so we use the old pointer approach
-%apply SWIGTYPE* { int globalints[], int constglobalints[], int Bar::ints[] }
+%apply alaqilTYPE* { int globalints[], int constglobalints[], int Bar::ints[] }
 
 // Test %apply for arrays in arrays_java.i library file
 %apply bool []                  { bool *array }

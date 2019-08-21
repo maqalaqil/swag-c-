@@ -1,5 +1,5 @@
 // This testcase tests corner cases for the -fvirtual optimisation flag.
-// Note that the test-suite does not actually run with -fvirtual at any point, but this can be tested using the SWIG_FEATURES=-fvirtual env variable.
+// Note that the test-suite does not actually run with -fvirtual at any point, but this can be tested using the alaqil_FEATURES=-fvirtual env variable.
 %module fvirtual
 
 // Test overloaded methods #1508327 (requires a scripting language runtime test)

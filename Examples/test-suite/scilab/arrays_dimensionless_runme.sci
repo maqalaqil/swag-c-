@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // bool
 checkequal(arr_bool([%T %F %F %T %F %T %T %T], 8), 5, "arr_bool");
@@ -52,4 +52,4 @@ checkequal(arr_float(a, 4), 10, "arr_float");
 a = [1, 2, 3, 4];
 checkequal(arr_double(a, 4), 10, "arr_double");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

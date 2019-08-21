@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Constructor_rename
 
 let x = new_RenamedConstructor '()

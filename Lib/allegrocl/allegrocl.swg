@@ -1,32 +1,32 @@
 /* Define a C preprocessor symbol that can be used in interface files
-   to distinguish between the SWIG language modules. */ 
+   to distinguish between the alaqil language modules. */ 
 
-#define SWIG_ALLEGRO_CL
+#define alaqil_ALLEGRO_CL
 
 #define %ffargs(...) %feature("ffargs", "1", ##__VA_ARGS__)
 %ffargs(strings_convert="t");
 
 /* typemaps for argument and result type conversions. */
-%typemap(lin,numinputs=1)	SWIGTYPE 	"(cl::let (($out $in))\n  $body)";
+%typemap(lin,numinputs=1)	alaqilTYPE 	"(cl::let (($out $in))\n  $body)";
 
 %typemap(lout) bool, char, unsigned char, signed char,
                short, signed short, unsigned short,
                int, signed int, unsigned int,
                long, signed long, unsigned long,
                float, double, long double, char *, void *,
-               enum SWIGTYPE    "(cl::setq ACL_ffresult $body)";
+               enum alaqilTYPE    "(cl::setq ACL_ffresult $body)";
 %typemap(lout) void "$body";
 #ifdef __cplusplus
-%typemap(lout) SWIGTYPE[ANY], SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&
+%typemap(lout) alaqilTYPE[ANY], alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&
 %{ (cl:let* ((address $body)
 	  (new-inst (cl:make-instance '$lclass :foreign-address address)))
      (cl:when (cl:and $owner (cl:not (cl:zerop address)))
        (excl:schedule-finalization new-inst #'$ldestructor))
      (cl:setq ACL_ffresult new-inst)) %}
 
-%typemap(lout) SWIGTYPE         "(cl::let* ((address $body)\n         (new-inst (cl::make-instance '$lclass :foreign-address address)))\n    (cl::unless (cl::zerop address)\n      (excl:schedule-finalization new-inst #'$ldestructor))\n    (cl::setq ACL_ffresult new-inst))";
+%typemap(lout) alaqilTYPE         "(cl::let* ((address $body)\n         (new-inst (cl::make-instance '$lclass :foreign-address address)))\n    (cl::unless (cl::zerop address)\n      (excl:schedule-finalization new-inst #'$ldestructor))\n    (cl::setq ACL_ffresult new-inst))";
 #else
-%typemap(lout) SWIGTYPE[ANY], SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE
+%typemap(lout) alaqilTYPE[ANY], alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE
 %{ (cl:let* ((address $body)
 	  (new-inst (cl:make-instance '$lclass :foreign-address address)))
      (cl:setq ACL_ffresult new-inst)) %}
@@ -64,9 +64,9 @@
 		  unsigned int &, const unsigned int &	"(* :unsigned-int)";
 %typemap(ffitype) void * "(* :void)";
 %typemap(ffitype) void ":void";
-%typemap(ffitype) enum SWIGTYPE ":int";
-%typemap(ffitype) SWIGTYPE & "(* :void)";
-%typemap(ffitype) SWIGTYPE && "(* :void)";
+%typemap(ffitype) enum alaqilTYPE ":int";
+%typemap(ffitype) alaqilTYPE & "(* :void)";
+%typemap(ffitype) alaqilTYPE && "(* :void)";
 
 /* const typemaps
 idea: marshall all primitive c types to their respective lisp types
@@ -90,9 +90,9 @@ and error if a setf operation is performed on the address of this object.
 
 */
 
-// %typemap(throws) SWIGTYPE {
+// %typemap(throws) alaqilTYPE {
 //   (void)$1;
-//   SWIG_fail;
+//   alaqil_fail;
 // }
 
 %typemap(ctype) bool, const bool		"int";
@@ -101,9 +101,9 @@ and error if a setf operation is performed on the address of this object.
                 int, signed int, unsigned int,
                 long, signed long, unsigned long,
                 float, double, long double, char *, void *, void,
-                enum SWIGTYPE, SWIGTYPE *, SWIGTYPE[],
-                SWIGTYPE[ANY], SWIGTYPE &, SWIGTYPE &&, const SWIGTYPE  "$1_ltype";
-%typemap(ctype) SWIGTYPE                   "$&1_type";
+                enum alaqilTYPE, alaqilTYPE *, alaqilTYPE[],
+                alaqilTYPE[ANY], alaqilTYPE &, alaqilTYPE &&, const alaqilTYPE  "$1_ltype";
+%typemap(ctype) alaqilTYPE                   "$&1_type";
 
 %typemap(in) bool                          "$1 = (bool)$input;";
 %typemap(in) char, unsigned char, signed char,
@@ -111,9 +111,9 @@ and error if a setf operation is performed on the address of this object.
              int, signed int, unsigned int,
              long, signed long, unsigned long,
              float, double, long double, char *, void *, void,
-             enum SWIGTYPE, SWIGTYPE *, SWIGTYPE[],
-             SWIGTYPE[ANY], SWIGTYPE &, SWIGTYPE && "$1 = $input;";
-%typemap(in) SWIGTYPE                      "$1 = *$input;";
+             enum alaqilTYPE, alaqilTYPE *, alaqilTYPE[],
+             alaqilTYPE[ANY], alaqilTYPE &, alaqilTYPE && "$1 = $input;";
+%typemap(in) alaqilTYPE                      "$1 = *$input;";
 
 /* We don't need to do any actual C-side typechecking, but need to
    use the precedence values to choose which overloaded function
@@ -123,53 +123,53 @@ and error if a setf operation is performed on the address of this object.
 
 Symbolic Name                   Precedence Value
 ------------------------------  ------------------
-SWIG_TYPECHECK_POINTER           0  
-SWIG_TYPECHECK_VOIDPTR           10 
-SWIG_TYPECHECK_BOOL              15 
-SWIG_TYPECHECK_UINT8             20 
-SWIG_TYPECHECK_INT8              25 
-SWIG_TYPECHECK_UINT16            30 
-SWIG_TYPECHECK_INT16             35 
-SWIG_TYPECHECK_UINT32            40 
-SWIG_TYPECHECK_INT32             45 
-SWIG_TYPECHECK_UINT64            50 
-SWIG_TYPECHECK_INT64             55 
-SWIG_TYPECHECK_UINT128           60 
-SWIG_TYPECHECK_INT128            65 
-SWIG_TYPECHECK_INTEGER           70 
-SWIG_TYPECHECK_FLOAT             80 
-SWIG_TYPECHECK_DOUBLE            90 
-SWIG_TYPECHECK_COMPLEX           100 
-SWIG_TYPECHECK_UNICHAR           110 
-SWIG_TYPECHECK_UNISTRING         120 
-SWIG_TYPECHECK_CHAR              130 
-SWIG_TYPECHECK_STRING            140 
-SWIG_TYPECHECK_BOOL_ARRAY        1015 
-SWIG_TYPECHECK_INT8_ARRAY        1025 
-SWIG_TYPECHECK_INT16_ARRAY       1035 
-SWIG_TYPECHECK_INT32_ARRAY       1045 
-SWIG_TYPECHECK_INT64_ARRAY       1055 
-SWIG_TYPECHECK_INT128_ARRAY      1065 
-SWIG_TYPECHECK_FLOAT_ARRAY       1080 
-SWIG_TYPECHECK_DOUBLE_ARRAY      1090 
-SWIG_TYPECHECK_CHAR_ARRAY        1130 
-SWIG_TYPECHECK_STRING_ARRAY      1140
+alaqil_TYPECHECK_POINTER           0  
+alaqil_TYPECHECK_VOIDPTR           10 
+alaqil_TYPECHECK_BOOL              15 
+alaqil_TYPECHECK_UINT8             20 
+alaqil_TYPECHECK_INT8              25 
+alaqil_TYPECHECK_UINT16            30 
+alaqil_TYPECHECK_INT16             35 
+alaqil_TYPECHECK_UINT32            40 
+alaqil_TYPECHECK_INT32             45 
+alaqil_TYPECHECK_UINT64            50 
+alaqil_TYPECHECK_INT64             55 
+alaqil_TYPECHECK_UINT128           60 
+alaqil_TYPECHECK_INT128            65 
+alaqil_TYPECHECK_INTEGER           70 
+alaqil_TYPECHECK_FLOAT             80 
+alaqil_TYPECHECK_DOUBLE            90 
+alaqil_TYPECHECK_COMPLEX           100 
+alaqil_TYPECHECK_UNICHAR           110 
+alaqil_TYPECHECK_UNISTRING         120 
+alaqil_TYPECHECK_CHAR              130 
+alaqil_TYPECHECK_STRING            140 
+alaqil_TYPECHECK_BOOL_ARRAY        1015 
+alaqil_TYPECHECK_INT8_ARRAY        1025 
+alaqil_TYPECHECK_INT16_ARRAY       1035 
+alaqil_TYPECHECK_INT32_ARRAY       1045 
+alaqil_TYPECHECK_INT64_ARRAY       1055 
+alaqil_TYPECHECK_INT128_ARRAY      1065 
+alaqil_TYPECHECK_FLOAT_ARRAY       1080 
+alaqil_TYPECHECK_DOUBLE_ARRAY      1090 
+alaqil_TYPECHECK_CHAR_ARRAY        1130 
+alaqil_TYPECHECK_STRING_ARRAY      1140
 */
 
-%typecheck(SWIG_TYPECHECK_BOOL) bool { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_CHAR) char { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_FLOAT) float { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_DOUBLE) double { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_STRING) char * { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_INTEGER)
+%typecheck(alaqil_TYPECHECK_BOOL) bool { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_CHAR) char { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_FLOAT) float { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_DOUBLE) double { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_STRING) char * { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_INTEGER)
                     unsigned char, signed char,
                     short, signed short, unsigned short,
                     int, signed int, unsigned int,
                     long, signed long, unsigned long,
-                    enum SWIGTYPE { $1 = 1; };
-%typecheck(SWIG_TYPECHECK_POINTER) SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&,
-				   SWIGTYPE[], SWIGTYPE[ANY],
-				   SWIGTYPE { $1 = 1; };
+                    enum alaqilTYPE { $1 = 1; };
+%typecheck(alaqil_TYPECHECK_POINTER) alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&,
+				   alaqilTYPE[], alaqilTYPE[ANY],
+				   alaqilTYPE { $1 = 1; };
 
 /* This maps C/C++ types to Lisp classes for overload dispatch */
 
@@ -179,7 +179,7 @@ SWIG_TYPECHECK_STRING_ARRAY      1140
                     short, signed short, unsigned short,
                     int, signed int, unsigned int,
                     long, signed long, unsigned long,
-                    enum SWIGTYPE       "cl:integer";
+                    enum alaqilTYPE       "cl:integer";
 %typemap(lispclass) float "cl:single-float";
 %typemap(lispclass) double "cl:double-float";
 %typemap(lispclass) char * "cl:string";
@@ -191,12 +191,12 @@ SWIG_TYPECHECK_STRING_ARRAY      1140
               int, signed int, unsigned int,
               long, signed long, unsigned long,
               float, double, long double, char *, void *,
-              enum SWIGTYPE, SWIGTYPE *,
-              SWIGTYPE[ANY], SWIGTYPE &, SWIGTYPE && "$result = $1;";
+              enum alaqilTYPE, alaqilTYPE *,
+              alaqilTYPE[ANY], alaqilTYPE &, alaqilTYPE && "$result = $1;";
 #ifdef __cplusplus
-%typemap(out) SWIGTYPE                     "$result = new $1_ltype($1);";
+%typemap(out) alaqilTYPE                     "$result = new $1_ltype($1);";
 #else
-%typemap(out) SWIGTYPE {
+%typemap(out) alaqilTYPE {
   $result = ($&1_ltype) malloc(sizeof($1_type));
   memmove($result, &$1, sizeof($1_type));
 }
@@ -205,8 +205,8 @@ SWIG_TYPECHECK_STRING_ARRAY      1140
 //////////////////////////////////////////////////////////////
 // UCS-2 string conversion
 
-// should this be SWIG_TYPECHECK_CHAR?
-%typecheck(SWIG_TYPECHECK_UNICHAR) wchar_t { $1 = 1; };
+// should this be alaqil_TYPECHECK_CHAR?
+%typecheck(alaqil_TYPECHECK_UNICHAR) wchar_t { $1 = 1; };
 
 %typemap(in)        wchar_t "$1 = $input;";
 %typemap(lin,numinputs=1)       wchar_t "(cl::let (($out (cl:char-code $in)))\n  $body)";
@@ -227,13 +227,13 @@ $body)"
 //////////////////////////////////////////////////////////////
 
 /* Array reference typemaps */
-%apply SWIGTYPE & { SWIGTYPE ((&)[ANY]) }
-%apply SWIGTYPE && { SWIGTYPE ((&&)[ANY]) }
+%apply alaqilTYPE & { alaqilTYPE ((&)[ANY]) }
+%apply alaqilTYPE && { alaqilTYPE ((&&)[ANY]) }
 
 /* const pointers */
-%apply SWIGTYPE * { SWIGTYPE *const }
-%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
-%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
+%apply alaqilTYPE * { alaqilTYPE *const }
+%apply alaqilTYPE (CLASS::*) { alaqilTYPE (CLASS::*const) }
+%apply alaqilTYPE & { alaqilTYPE (CLASS::*const&) }
 
 /* name conversion for overloaded operators. */
 #ifdef __cplusplus
@@ -316,28 +316,28 @@ $body)"
 ;;; specify its name.
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-   (cl::defparameter *swig-export-list* nil))
+   (cl::defparameter *alaqil-export-list* nil))
 
 (cl::defconstant *void* :..void..)
 
-;; parsers to aid in finding SWIG definitions in files.
+;; parsers to aid in finding alaqil definitions in files.
 (cl::defun scm-p1 (form)
   (let* ((info (cl::second form))
 	 (id (car info))
-	 (id-args (if (eq (cl::car form) 'swig-dispatcher)
+	 (id-args (if (eq (cl::car form) 'alaqil-dispatcher)
 		      (cl::cdr info)
 		      (cl::cddr info))))
-    (cl::apply *swig-identifier-converter* id 
-	   (cl::progn (cl::when (cl::eq (cl::car form) 'swig-dispatcher)
+    (cl::apply *alaqil-identifier-converter* id 
+	   (cl::progn (cl::when (cl::eq (cl::car form) 'alaqil-dispatcher)
 		    (cl::remf id-args :arities))
 		  id-args))))
 
-(cl::defmacro defswig1 (name (&rest args) &body body)
+(cl::defmacro defalaqil1 (name (&rest args) &body body)
   `(cl::progn (cl::defmacro ,name ,args
 	    ,@body)
 	  (excl::define-simple-parser ,name scm-p1)) )
 
-(cl::defmacro defswig2 (name (&rest args) &body body)
+(cl::defmacro defalaqil2 (name (&rest args) &body body)
   `(cl::progn (cl::defmacro ,name ,args
 	    ,@body)
 	  (excl::define-simple-parser ,name second)))
@@ -356,7 +356,7 @@ $body)"
   ; We need some kind of a hack here to handle template classes
   ; and other synonym types right. We need the original name.
   (let*( (sym (read-symbol-from-string 
-                (if (eq *swig-identifier-converter* 'identifier-convert-lispify)
+                (if (eq *alaqil-identifier-converter* 'identifier-convert-lispify)
                   (string-lispify id)
                   id)))
          (sym-class (find-class sym nil))
@@ -418,19 +418,19 @@ $body)"
 
 (cl::defun id-convert-and-export (name &rest kwargs)
   (cl::multiple-value-bind (symbol package)
-      (cl::apply *swig-identifier-converter* name kwargs)
+      (cl::apply *alaqil-identifier-converter* name kwargs)
     (cl::let ((args (cl::list (cl::if (cl::consp symbol)
     	     	    	         (cl::cadr symbol) symbol)
                       (cl::or package cl::*package*))))
       (cl::apply #'cl::export args)
-      (cl::pushnew args *swig-export-list*))
+      (cl::pushnew args *alaqil-export-list*))
     symbol))
 
-(cl::defmacro swig-insert-id (name namespace &key (type :type) class)
+(cl::defmacro alaqil-insert-id (name namespace &key (type :type) class)
   `(cl::let ((cl::*package* (cl::find-package ,(package-name-for-namespace namespace))))
     (id-convert-and-export ,name :type ,type :class ,class)))
 
-(defswig2 swig-defconstant (string value)
+(defalaqil2 alaqil-defconstant (string value)
   (cl::let ((symbol (id-convert-and-export string :type :constant)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
        (cl::defconstant ,symbol ,value))))
@@ -449,10 +449,10 @@ $body)"
            (cl::caar arglist)
            (cl::car arglist)))))
 
-(cl::defun swig-anyvarargs-p (arglist)
-  (cl::member :SWIG__varargs_ arglist))
+(cl::defun alaqil-anyvarargs-p (arglist)
+  (cl::member :alaqil__varargs_ arglist))
 
-(defswig1 swig-defun ((name &optional (mangled-name name)
+(defalaqil1 alaqil-defun ((name &optional (mangled-name name)
                             &key (type :operator) class arity)
                       arglist kwargs
 		      &body body)
@@ -476,18 +476,18 @@ $body)"
 	 	      arglist
 		    (cl::mapcar #'cl::cdr arglist)))
 	 )
-    (cl::when (swig-anyvarargs-p ffargs)
+    (cl::when (alaqil-anyvarargs-p ffargs)
       (cl::setq ffargs '()))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
        (excl::compiler-let ((*record-xref-info* nil))
          (ff:def-foreign-call (,mangle ,mangled-name) ,ffargs ,@kwargs))
-       (cl::macrolet ((swig-ff-call (&rest args)
+       (cl::macrolet ((alaqil-ff-call (&rest args)
                       (cl::cons ',mangle args)))
          (cl::defun ,symbol ,defun-args
            ,@body
            ,@(maybe-return-value symbol defun-args))))))
 
-(defswig1 swig-defmethod ((name &optional (mangled-name name)
+(defalaqil1 alaqil-defmethod ((name &optional (mangled-name name)
 	  	                &key (type :operator) class arity)
                           ffargs kwargs
                           &body body)
@@ -507,13 +507,13 @@ $body)"
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
        (excl::compiler-let ((*record-xref-info* nil))
          (ff:def-foreign-call (,mangle ,mangled-name) ,ffargs ,@kwargs))
-       (cl::macrolet ((swig-ff-call (&rest args)
+       (cl::macrolet ((alaqil-ff-call (&rest args)
                       (cl::cons ',mangle args)))
          (cl::defmethod ,symbol ,defmethod-args
            ,@body
            ,@(maybe-return-value symbol defmethod-args))))))
 
-(defswig1 swig-dispatcher ((name &key (type :operator) class arities))
+(defalaqil1 alaqil-dispatcher ((name &key (type :operator) class arities))
   (cl::let ((symbol (id-convert-and-export name
                          :type type :class class)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
@@ -526,14 +526,14 @@ $body)"
 	   (t (cl::error "No applicable wrapper-methods for foreign call ~a with args ~a of classes ~a" ',symbol args (cl::mapcar #'(cl::lambda (x) (cl::class-name (cl::class-of x))) args)))
 	   )))))
 
-(defswig2 swig-def-foreign-stub (name)
+(defalaqil2 alaqil-def-foreign-stub (name)
   (cl::let ((lsymbol (id-convert-and-export name :type :class))
 	    (symbol (id-convert-and-export name :type :type)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
 	(ff:def-foreign-type ,symbol (:class ))
 	(cl::defclass ,lsymbol (ff:foreign-pointer) ()))))
 
-(defswig2 swig-def-foreign-class (name supers &rest rest)
+(defalaqil2 alaqil-def-foreign-class (name supers &rest rest)
   (cl::let ((lsymbol (id-convert-and-export name :type :class))
 	    (symbol (id-convert-and-export name :type :type)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
@@ -542,43 +542,43 @@ $body)"
 	 ((foreign-type :initform ',symbol :initarg :foreign-type
 			:accessor foreign-pointer-type))))))
 
-(defswig2 swig-def-foreign-type (name &rest rest)
+(defalaqil2 alaqil-def-foreign-type (name &rest rest)
   (cl::let ((symbol (id-convert-and-export name :type :type)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
        (ff:def-foreign-type ,symbol ,@rest))))
 
-(defswig2 swig-def-synonym-type (synonym of ff-synonym)
+(defalaqil2 alaqil-def-synonym-type (synonym of ff-synonym)
   `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
      (cl::setf (cl::find-class ',synonym) (cl::find-class ',of))
      (ff:def-foreign-type ,ff-synonym (:struct ))))
 
 (cl::defun package-name-for-namespace (namespace)
   (excl::list-to-delimited-string
-   (cl::cons *swig-module-name*
+   (cl::cons *alaqil-module-name*
          (cl::mapcar #'(cl::lambda (name)
                      (cl::string
-                      (cl::funcall *swig-identifier-converter*
+                      (cl::funcall *alaqil-identifier-converter*
                                name
                                :type :namespace)))
                  namespace))
    "."))
 
-(cl::defmacro swig-defpackage (namespace)
+(cl::defmacro alaqil-defpackage (namespace)
   (cl::let* ((parent-namespaces (cl::maplist #'cl::reverse (cl::cdr (cl::reverse namespace))))
              (parent-strings (cl::mapcar #'package-name-for-namespace
                                  parent-namespaces))
              (string (package-name-for-namespace namespace)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
       (cl::defpackage ,string
-        (:use :swig :ff #+ignore '(:common-lisp :ff :excl)
-              ,@parent-strings ,*swig-module-name*)
+        (:use :alaqil :ff #+ignore '(:common-lisp :ff :excl)
+              ,@parent-strings ,*alaqil-module-name*)
 	(:import-from :cl :* :nil :t)))))
 
-(cl::defmacro swig-in-package (namespace)
+(cl::defmacro alaqil-in-package (namespace)
   `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
     (cl::in-package ,(package-name-for-namespace namespace))))
 
-(defswig2 swig-defvar (name mangled-name &key type (ftype :unsigned-natural))
+(defalaqil2 alaqil-defvar (name mangled-name &key type (ftype :unsigned-natural))
   (cl::let ((symbol (id-convert-and-export name :type type)))
     `(cl::eval-when (:compile-toplevel :load-toplevel :execute)
       (ff:def-foreign-variable (,symbol ,mangled-name) :type ,ftype))))
@@ -590,13 +590,13 @@ $body)"
               (cl::and (cl::>= (cl::length str) (cl::length prefix))
                 (cl::string= str prefix :end1 (cl::length prefix)))))
     (cl::export (cl::loop for sym being each present-symbol of cl::*package*
-                  when (cl::or (starts-with-p (cl::symbol-name sym) (cl::symbol-name :swig-))
+                  when (cl::or (starts-with-p (cl::symbol-name sym) (cl::symbol-name :alaqil-))
                            (starts-with-p (cl::symbol-name sym) (cl::symbol-name :identifier-convert-)))
                   collect sym))))
 
 %}
 
-typedef void *__SWIGACL_FwdReference;
+typedef void *__alaqilACL_FwdReference;
 
 %{
 
@@ -606,9 +606,9 @@ typedef void *__SWIGACL_FwdReference;
 #  define EXTERN   extern
 #endif
 
-#define EXPORT   EXTERN SWIGEXPORT
+#define EXPORT   EXTERN alaqilEXPORT
 
-typedef void *__SWIGACL_FwdReference;
+typedef void *__alaqilACL_FwdReference;
 
 #include <string.h>
 #include <stdlib.h>

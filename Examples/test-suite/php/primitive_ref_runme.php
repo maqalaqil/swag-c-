@@ -3,7 +3,7 @@
 require "tests.php";
 require "primitive_ref.php";
 
-# A large long long number is too big, so PHP makes treats it as a double, but SWIG opts to return it as a string.
+# A large long long number is too big, so PHP makes treats it as a double, but alaqil opts to return it as a string.
 # The conversion to double can lose precision so this isn't an exact comparison.
 function long_long_equal($a,$b,$message) {
   if (! ($a===$b))

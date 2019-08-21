@@ -1,0 +1,2 @@
+%include <typemaps/alaqilmacros.swg>
+

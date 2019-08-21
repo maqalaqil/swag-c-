@@ -4,8 +4,8 @@
 %include <std_wstring.i>
 
 %begin %{
-#define SWIG_PYTHON_STRICT_BYTE_CHAR
-#define SWIG_PYTHON_STRICT_UNICODE_WCHAR
+#define alaqil_PYTHON_STRICT_BYTE_CHAR
+#define alaqil_PYTHON_STRICT_UNICODE_WCHAR
 %}
 
 %inline %{

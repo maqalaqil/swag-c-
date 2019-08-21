@@ -6,7 +6,7 @@
 // instead of
 // Y< short >::YYY< short >::value_type >
 
-#if !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+#if !defined(alaqilCSHARP) && !defined(alaqilJAVA)
 %feature("flatnested") ZZZ;
 #endif
 

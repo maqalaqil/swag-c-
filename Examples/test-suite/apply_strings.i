@@ -3,11 +3,11 @@
    http://groups.google.com.ai/group/comp.lang.c++.moderated/browse_thread/thread/ad5873ce25d49324/0ae94552452366be?lnk=raot */
 %module(directors="1") apply_strings
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) DirectorTest;
-%warnfilter(SWIGWARN_TYPEMAP_VARIN_UNDEF) DigitsGlobalB;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK) DigitsGlobalC;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) DirectorTest;
+%warnfilter(alaqilWARN_TYPEMAP_VARIN_UNDEF) DigitsGlobalB;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK) DigitsGlobalC;
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(TNum) TNumber;
 %rename(DirTest) DirectorTest;
 #endif
@@ -29,9 +29,9 @@
   CSCharPtr CSCharFunction(CSCharPtr str) { return str; }
 %}
 
-%typemap(freearg) SWIGTYPE * ""
-%apply SWIGTYPE* {CharPtr};
-%apply SWIGTYPE* {CCharPtr};
+%typemap(freearg) alaqilTYPE * ""
+%apply alaqilTYPE* {CharPtr};
+%apply alaqilTYPE* {CCharPtr};
 
 %inline %{
   typedef char* CharPtr;
@@ -42,7 +42,7 @@
 %}
 
 // unsigned char* as strings
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 
 /* Note: Chicken does not allow unsigned char * in strings */
 
@@ -68,7 +68,7 @@ TAscii *DigitsGlobalC;
 // Director test
 %feature("director");
 
-#if defined(SWIGGO)
+#if defined(alaqilGO)
 %typemap(godirectorout) CharPtr, CCharPtr ""
 #endif
 

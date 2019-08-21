@@ -1,51 +1,51 @@
 /* -----------------------------------------------------------------------------
  * cdata.i
  *
- * SWIG library file containing macros for manipulating raw C data as strings.
+ * alaqil library file containing macros for manipulating raw C data as strings.
  * ----------------------------------------------------------------------------- */
 
 %{
-typedef struct SWIGCDATA {
+typedef struct alaqilCDATA {
     char *data;
     intgo len;
-} SWIGCDATA;
+} alaqilCDATA;
 %}
 
 %fragment("cdata", "header") %{
-struct swigcdata {
+struct alaqilcdata {
   intgo size;
   void *data;
 };
 %}
 
-%typemap(gotype) SWIGCDATA "[]byte"
+%typemap(gotype) alaqilCDATA "[]byte"
 
-%typemap(imtype) SWIGCDATA "uint64"
+%typemap(imtype) alaqilCDATA "uint64"
 
-%typemap(out, fragment="cdata") SWIGCDATA(struct swigcdata *swig_out) %{
-  swig_out = (struct swigcdata *)malloc(sizeof(*swig_out));
-  if (swig_out) {
-    swig_out->size = $1.len;
-    swig_out->data = malloc(swig_out->size);
-    if (swig_out->data) {
-      memcpy(swig_out->data, $1.data, swig_out->size);
+%typemap(out, fragment="cdata") alaqilCDATA(struct alaqilcdata *alaqil_out) %{
+  alaqil_out = (struct alaqilcdata *)malloc(sizeof(*alaqil_out));
+  if (alaqil_out) {
+    alaqil_out->size = $1.len;
+    alaqil_out->data = malloc(alaqil_out->size);
+    if (alaqil_out->data) {
+      memcpy(alaqil_out->data, $1.data, alaqil_out->size);
     }
   }
-  $result = *(long long *)(void **)&swig_out;
+  $result = *(long long *)(void **)&alaqil_out;
 %}
 
-%typemap(goout) SWIGCDATA %{
+%typemap(goout) alaqilCDATA %{
   {
-    type swigcdata struct { size int; data uintptr }
-    p := (*swigcdata)(unsafe.Pointer(uintptr($1)))
+    type alaqilcdata struct { size int; data uintptr }
+    p := (*alaqilcdata)(unsafe.Pointer(uintptr($1)))
     if p == nil || p.data == 0 {
       $result = nil
     } else {
       b := make([]byte, p.size)
       a := (*[0x7fffffff]byte)(unsafe.Pointer(p.data))[:p.size]
       copy(b, a)
-      Swig_free(p.data)
-      Swig_free(uintptr(unsafe.Pointer(p)))
+      alaqil_free(p.data)
+      alaqil_free(uintptr(unsafe.Pointer(p)))
       $result = b
     }
   }
@@ -61,11 +61,11 @@ struct swigcdata {
 
 %insert("header") {
 #if #NAME == ""
-static SWIGCDATA cdata_##TYPE(TYPE *ptr, int nelements) {
+static alaqilCDATA cdata_##TYPE(TYPE *ptr, int nelements) {
 #else
-static SWIGCDATA cdata_##NAME(TYPE *ptr, int nelements) {
+static alaqilCDATA cdata_##NAME(TYPE *ptr, int nelements) {
 #endif
-   SWIGCDATA d;
+   alaqilCDATA d;
    d.data = (char *) ptr;
 #if #TYPE != "void"
    d.len  = nelements*sizeof(TYPE);
@@ -79,9 +79,9 @@ static SWIGCDATA cdata_##NAME(TYPE *ptr, int nelements) {
 %typemap(default) int nelements "$1 = 1;"
 
 #if #NAME == ""
-SWIGCDATA cdata_##TYPE(TYPE *ptr, int nelements);
+alaqilCDATA cdata_##TYPE(TYPE *ptr, int nelements);
 #else
-SWIGCDATA cdata_##NAME(TYPE *ptr, int nelements);
+alaqilCDATA cdata_##NAME(TYPE *ptr, int nelements);
 #endif
 %enddef
 

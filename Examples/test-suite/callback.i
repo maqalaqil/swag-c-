@@ -1,7 +1,7 @@
 %module callback
 
 // Not specifying the callback name is only possible in Python.
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 %callback(1) foo;
 %callback(1) foof;
 %callback(1) A::bar;

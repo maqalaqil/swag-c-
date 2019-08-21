@@ -20,7 +20,7 @@ extern int    gcd(int x, int y);
   Tcl_Obj **listobjv = 0;
   int i;
   if (Tcl_ListObjGetElements(interp,$input, &$1, &listobjv) == TCL_ERROR) {
-    SWIG_exception(SWIG_ValueError,"Expected a list");
+    alaqil_exception(alaqil_ValueError,"Expected a list");
     return TCL_ERROR;
   }
   $2 = (char **) malloc(($1+1)*sizeof(char *));
@@ -72,7 +72,7 @@ extern void capitalize(char *str, int len);
 %typemap(check) (double cx, double cy) {
    double a = $1*$1 + $2*$2;
    if (a > 1.0) {
-	SWIG_exception(SWIG_ValueError,"$1_name and $2_name must be in unit circle");
+	alaqil_exception(alaqil_ValueError,"$1_name and $2_name must be in unit circle");
         return TCL_ERROR;
    }
 }

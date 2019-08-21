@@ -76,8 +76,8 @@ void main() {
 
     for (size_t i = 0; i < SIZE; i++) {
       // Make sure that a shallow copy has been made.
-      void* aPtr = Struct.swigGetCPtr(array[i]);
-      void* vPtr = Struct.swigGetCPtr(sVector[i]);
+      void* aPtr = Struct.alaqilGetCPtr(array[i]);
+      void* vPtr = Struct.alaqilGetCPtr(sVector[i]);
       if (aPtr != vPtr) {
 	throw new Exception("slice test 2 failed, i: " ~
 	  Integer.toString(i));
@@ -174,8 +174,8 @@ void main() {
 
     for (size_t i = 0; i < SIZE; i++) {
       // Make sure that a shallow copy has been made.
-      void* aPtr = Struct.swigGetCPtr(array[i]);
-      void* vPtr = Struct.swigGetCPtr(vector[i]);
+      void* aPtr = Struct.alaqilGetCPtr(array[i]);
+      void* vPtr = Struct.alaqilGetCPtr(vector[i]);
       if (aPtr != vPtr) {
 	throw new Exception("StructPtrVector test 1 failed, i: " ~
 	  Integer.toString(i));
@@ -194,8 +194,8 @@ void main() {
 
     for (size_t i = 0; i < SIZE; i++) {
       // Make sure that a shallow copy has been made.
-      void* aPtr = Struct.swigGetCPtr(array[i]);
-      void* vPtr = Struct.swigGetCPtr(vector[i]);
+      void* aPtr = Struct.alaqilGetCPtr(array[i]);
+      void* vPtr = Struct.alaqilGetCPtr(vector[i]);
       if (aPtr != vPtr) {
 	throw new Exception("StructConstPtrVector test 1 failed, i: " ~
 	  Integer.toString(i));

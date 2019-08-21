@@ -1,14 +1,14 @@
 %module overload_template
 
-#ifdef SWIGLUA
+#ifdef alaqilLUA
 // lua only has one numeric type, so most of the overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) foo;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) maximum;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) specialization;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) overload;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) space::nsoverload;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) fooT;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) barT;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) foo;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) maximum;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) specialization;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) overload;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) space::nsoverload;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) fooT;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) barT;
 #endif
 
 %inline %{

@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_unordered_set.i
  *
- * SWIG typemaps for std::unordered_set
+ * alaqil typemaps for std::unordered_set
  * The Java proxy class extends java.util.AbstractSet. The std::unordered_set
  * container looks and feels much like a java.util.HashSet from Java.
  * ----------------------------------------------------------------------------- */
@@ -17,9 +17,9 @@
 #include <stdexcept>
 %}
 
-%fragment("SWIG_UnorderedSetSize", "header", fragment="SWIG_JavaIntFromSize_t") {
-  SWIGINTERN jint SWIG_UnorderedSetSize(size_t size) {
-    jint sz = SWIG_JavaIntFromSize_t(size);
+%fragment("alaqil_UnorderedSetSize", "header", fragment="alaqil_JavaIntFromSize_t") {
+  alaqilINTERN jint alaqil_UnorderedSetSize(size_t size) {
+    jint sz = alaqil_JavaIntFromSize_t(size);
     if (sz == -1) {
       throw std::out_of_range("unordered_set size is too large to fit into a Java int");
     }
@@ -169,7 +169,7 @@ class unordered_set {
     iterator end();
 
     %extend {
-      %fragment("SWIG_UnorderedSetSize");
+      %fragment("alaqil_UnorderedSetSize");
 
       // Returns whether item was inserted.
       bool add(const Key& key) {
@@ -187,7 +187,7 @@ class unordered_set {
       }
 
       jint sizeImpl() const throw (std::out_of_range) {
-        return SWIG_UnorderedSetSize(self->size());
+        return alaqil_UnorderedSetSize(self->size());
       }
 
       bool hasNextImpl(const iterator& itr) const {

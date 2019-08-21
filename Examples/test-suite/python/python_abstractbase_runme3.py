@@ -12,8 +12,8 @@ import collections.abc
 if is_python_builtin():
     exit(0)
 
-# Python abc is only turned on when -py3 option is passed to SWIG
-if not is_swig_py3:
+# Python abc is only turned on when -py3 option is passed to alaqil
+if not is_alaqil_py3:
     exit(0)
 
 def check_issubclass(derived, base):

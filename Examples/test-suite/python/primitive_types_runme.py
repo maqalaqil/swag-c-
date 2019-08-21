@@ -407,7 +407,7 @@ if error:
 #
 t2 = p.vtest(t)
 if t.var_namet != t2.var_namet:
-    raise RuntimeError, "bad SWIGTYPE* typemap"
+    raise RuntimeError, "bad alaqilTYPE* typemap"
 
 
 if cvar.fixsize != 'ho\0la\0\0\0':

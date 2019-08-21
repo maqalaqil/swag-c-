@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Extend_typedef_class
 
 let test_obj o v =

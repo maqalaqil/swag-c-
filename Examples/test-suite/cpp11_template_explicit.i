@@ -1,10 +1,10 @@
-/* This unit tests whether SWIG correctly parses the code and makes wrappers
+/* This unit tests whether alaqil correctly parses the code and makes wrappers
    for the new C++11 extern templates (explicit template instantiation without
    using the translation unit).
 */
 %module cpp11_template_explicit
 
-#pragma SWIG nowarn=SWIGWARN_PARSE_EXPLICIT_TEMPLATE
+#pragma alaqil nowarn=alaqilWARN_PARSE_EXPLICIT_TEMPLATE
 
 %inline %{
 

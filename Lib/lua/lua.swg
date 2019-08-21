@@ -1,8 +1,8 @@
 /* -----------------------------------------------------------------------------
  * lua.swg
  *
- * SWIG Configuration File for Lua.
- * This file is parsed by SWIG before reading any other interface file.
+ * alaqil Configuration File for Lua.
+ * This file is parsed by alaqil before reading any other interface file.
  * ----------------------------------------------------------------------------- */
 
 /* -----------------------------------------------------------------------------
@@ -13,43 +13,43 @@
 %include <luaruntime.swg>          /* The runtime stuff */
 %include <luakw.swg>               /* Warnings for Lua keywords */
 
-//%include <typemaps/swigmacros.swg>
+//%include <typemaps/alaqilmacros.swg>
 /* -----------------------------------------------------------------------------
  *                          constants typemaps
  * ----------------------------------------------------------------------------- */
 // this basically adds to a table of constants
-%typemap(consttab) int, unsigned int, short, unsigned short, long, unsigned long, unsigned char, signed char, bool, enum SWIGTYPE
-       {SWIG_LUA_CONSTTAB_INT("$symname", $value)}
+%typemap(consttab) int, unsigned int, short, unsigned short, long, unsigned long, unsigned char, signed char, bool, enum alaqilTYPE
+       {alaqil_LUA_CONSTTAB_INT("$symname", $value)}
 
 %typemap(consttab) float, double
-       {SWIG_LUA_CONSTTAB_FLOAT("$symname", $value)}
+       {alaqil_LUA_CONSTTAB_FLOAT("$symname", $value)}
 
 %typemap(consttab) long long, unsigned long long, signed long long
-       {SWIG_LUA_CONSTTAB_FLOAT("$symname", $value)}
+       {alaqil_LUA_CONSTTAB_FLOAT("$symname", $value)}
 
 %typemap(consttab) const long long&, const unsigned long long&, const signed long long&
-       {SWIG_LUA_CONSTTAB_FLOAT("$symname", *$value)}
+       {alaqil_LUA_CONSTTAB_FLOAT("$symname", *$value)}
 
 %typemap(consttab) char *, const char *, char [], const char []
-       {SWIG_LUA_CONSTTAB_STRING("$symname", $value)}
+       {alaqil_LUA_CONSTTAB_STRING("$symname", $value)}
 
 // note: char is treated as a separate special type
 // signed char & unsigned char are numbers
 %typemap(consttab) char
-       {SWIG_LUA_CONSTTAB_CHAR("$symname", $value)}
+       {alaqil_LUA_CONSTTAB_CHAR("$symname", $value)}
 
 %typemap(consttab) long long, unsigned long long
-       {SWIG_LUA_CONSTTAB_STRING("$symname", "$value")}
+       {alaqil_LUA_CONSTTAB_STRING("$symname", "$value")}
 
-%typemap(consttab) SWIGTYPE *, SWIGTYPE *const, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE []
-       { SWIG_LUA_CONSTTAB_POINTER("$symname",$value, $1_descriptor) }
+%typemap(consttab) alaqilTYPE *, alaqilTYPE *const, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE []
+       { alaqil_LUA_CONSTTAB_POINTER("$symname",$value, $1_descriptor) }
 
-%typemap(consttab) SWIGTYPE
-       { SWIG_LUA_CONSTTAB_POINTER("$symname",&$value, $&1_descriptor) }
+%typemap(consttab) alaqilTYPE
+       { alaqil_LUA_CONSTTAB_POINTER("$symname",&$value, $&1_descriptor) }
 
 // member function pointers
-%typemap(consttab) SWIGTYPE (CLASS::*)
-       { SWIG_LUA_CONSTTAB_BINARY("$symname", sizeof($type),&$value, $1_descriptor) }
+%typemap(consttab) alaqilTYPE (CLASS::*)
+       { alaqil_LUA_CONSTTAB_BINARY("$symname", sizeof($type),&$value, $1_descriptor) }
 
 
 /* -----------------------------------------------------------------------------
@@ -57,12 +57,12 @@
  * ----------------------------------------------------------------------------- */
 // lua calls the + operator '__add'
 // python likes to call it '__add__'
-// Assuming most SWIGers will probably use the __add__ if they extend their classes
+// Assuming most alaqilers will probably use the __add__ if they extend their classes
 // we have two sets of renames
 // one to rename the operator+() to __add()
-//	(this lets SWIG rename the operator overloads)
+//	(this lets alaqil rename the operator overloads)
 // another is to rename __add__() to __add()
-//	(this means that people who wrote SWIG code to do that add will also work)
+//	(this means that people who wrote alaqil code to do that add will also work)
 
 #ifdef __cplusplus
 // this is extra renaming for lua
@@ -170,22 +170,22 @@ use %include <std_except.i> instead
 				float&,double&,
 				long long&,unsigned long long&,
 				unsigned char&, signed char&
-%{lua_pushnumber(L,(lua_Number)$1);SWIG_fail; %}
+%{lua_pushnumber(L,(lua_Number)$1);alaqil_fail; %}
 
 %typemap(throws) bool,bool& 
-%{lua_pushboolean(L,(int)($1==true));SWIG_fail; %}
+%{lua_pushboolean(L,(int)($1==true));alaqil_fail; %}
 
 // enum as number+error
-%typemap(throws) enum SWIGTYPE
-%{lua_pushnumber(L,(lua_Number)(int)$1);SWIG_fail; %}
+%typemap(throws) enum alaqilTYPE
+%{lua_pushnumber(L,(lua_Number)(int)$1);alaqil_fail; %}
 
 // strings are just sent as errors
 %typemap(throws) char *, const char *
-%{lua_pushstring(L,$1);SWIG_fail;%}
+%{lua_pushstring(L,$1);alaqil_fail;%}
 
 // char is changed to a string
 %typemap(throws) char
-%{lua_pushlstring(L,&$1,1);SWIG_fail;%}
+%{lua_pushlstring(L,&$1,1);alaqil_fail;%}
 
 /*
 Throwing object is a serious problem:
@@ -202,25 +202,25 @@ For a more useful solution: see std_except for more details
 
 // basic typemap for structs, classes, pointers & references
 // convert to string and error
-%typemap(throws) SWIGTYPE
+%typemap(throws) alaqilTYPE
 %{(void)$1; /* ignore it */
-lua_pushfstring(L,"object exception:%s",SWIG_TypePrettyName($1_descriptor));
-SWIG_fail;%}
+lua_pushfstring(L,"object exception:%s",alaqil_TypePrettyName($1_descriptor));
+alaqil_fail;%}
 
 // code to make a copy of the object and return this
-// if you have a function which throws a FooBar & you want SWIG to return a copy of the object as its error
+// if you have a function which throws a FooBar & you want alaqil to return a copy of the object as its error
 // then use one of the below
-//	%apply SWIGTYPE EXCEPTION_BY_VAL {FooBar};
-//	%apply SWIGTYPE& EXCEPTION_BY_VAL {FooBar&}; // note: need & twice
-%typemap(throws) SWIGTYPE EXCEPTION_BY_VAL
-%{SWIG_NewPointerObj(L,(void *)new $1_ltype(($1_ltype &) $1),$&1_descriptor,1);
-SWIG_fail;%}
+//	%apply alaqilTYPE EXCEPTION_BY_VAL {FooBar};
+//	%apply alaqilTYPE& EXCEPTION_BY_VAL {FooBar&}; // note: need & twice
+%typemap(throws) alaqilTYPE EXCEPTION_BY_VAL
+%{alaqil_NewPointerObj(L,(void *)new $1_ltype(($1_ltype &) $1),$&1_descriptor,1);
+alaqil_fail;%}
 
 // similar for object reference
-// note: swig typemaps seem a little confused around here, therefore we use $basetype
-%typemap(throws) SWIGTYPE& EXCEPTION_BY_VAL
-%{SWIG_NewPointerObj(L,(void *)new $basetype($1),$1_descriptor,1);
-SWIG_fail;%}
+// note: alaqil typemaps seem a little confused around here, therefore we use $basetype
+%typemap(throws) alaqilTYPE& EXCEPTION_BY_VAL
+%{alaqil_NewPointerObj(L,(void *)new $basetype($1),$1_descriptor,1);
+alaqil_fail;%}
 
 
 // note: no support for object pointers

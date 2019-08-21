@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Cpp_static
 
 let _ = _StaticFunctionTest_static_func (C_void)

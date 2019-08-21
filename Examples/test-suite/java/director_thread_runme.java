@@ -8,13 +8,13 @@ public class director_thread_runme {
     try {
       System.loadLibrary("director_thread");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
 
   public static void main(String argv[]) {
-    // This test used to hang the process. The solution is to call DetachCurrentThread in ~JNIEnvWrapper, however it causes seg faults in other JNI calls on older JDKs on Solaris. See SWIG_JAVA_NO_DETACH_CURRENT_THREAD in director.swg.
+    // This test used to hang the process. The solution is to call DetachCurrentThread in ~JNIEnvWrapper, however it causes seg faults in other JNI calls on older JDKs on Solaris. See alaqil_JAVA_NO_DETACH_CURRENT_THREAD in director.swg.
     director_thread_Derived d = new director_thread_Derived();
     d.run();
 

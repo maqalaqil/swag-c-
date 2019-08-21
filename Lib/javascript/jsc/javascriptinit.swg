@@ -1,20 +1,20 @@
 %insert(init) %{
-SWIGRUNTIME void
-SWIG_JSC_SetModule(swig_module_info *swig_module) {}
+alaqilRUNTIME void
+alaqil_JSC_SetModule(alaqil_module_info *alaqil_module) {}
 
-SWIGRUNTIME swig_module_info *
-SWIG_JSC_GetModule(void) {
+alaqilRUNTIME alaqil_module_info *
+alaqil_JSC_GetModule(void) {
   return 0;
 }
 
-#define SWIG_GetModule(clientdata)                SWIG_JSC_GetModule()
-#define SWIG_SetModule(clientdata, pointer)       SWIG_JSC_SetModule(pointer)
+#define alaqil_GetModule(clientdata)                alaqil_JSC_GetModule()
+#define alaqil_SetModule(clientdata, pointer)       alaqil_JSC_SetModule(pointer)
 %}
 
-%insert(init) "swiginit.swg"
+%insert(init) "alaqilinit.swg"
 
 %fragment ("js_initializer_define", "templates") %{
-#define SWIGJSC_INIT $jsname_initialize
+#define alaqilJSC_INIT $jsname_initialize
 %}
 
 // Open the initializer function
@@ -25,8 +25,8 @@ SWIG_JSC_GetModule(void) {
 extern "C" {
 #endif
 
-bool SWIGJSC_INIT (JSGlobalContextRef context, JSObjectRef *exports) {
-    SWIG_InitializeModule(0);
+bool alaqilJSC_INIT (JSGlobalContextRef context, JSObjectRef *exports) {
+    alaqil_InitializeModule(0);
 %}
 
 /* -----------------------------------------------------------------------------
@@ -37,16 +37,16 @@ bool SWIGJSC_INIT (JSGlobalContextRef context, JSObjectRef *exports) {
  *   - $jsregisternamespaces:     part with code for registration of namespaces
  * ----------------------------------------------------------------------------- */
 %fragment ("js_initializer", "templates") %{
-    /* Initialize the base swig type object */
-    _SwigObject_objectDefinition.staticFunctions = _SwigObject_functions;
-    _SwigObject_objectDefinition.staticValues = _SwigObject_values;
-    _SwigObject_classRef = JSClassCreate(&_SwigObject_objectDefinition);
+    /* Initialize the base alaqil type object */
+    _alaqilObject_objectDefinition.staticFunctions = _alaqilObject_functions;
+    _alaqilObject_objectDefinition.staticValues = _alaqilObject_values;
+    _alaqilObject_classRef = JSClassCreate(&_alaqilObject_objectDefinition);
 
     /* Initialize the PackedData class */
-    _SwigPackedData_objectDefinition.staticFunctions = _SwigPackedData_functions;
-    _SwigPackedData_objectDefinition.staticValues = _SwigPackedData_values;
-    _SwigPackedData_objectDefinition.finalize = _wrap_SwigPackedData_delete;
-    _SwigPackedData_classRef = JSClassCreate(&_SwigPackedData_objectDefinition);
+    _alaqilPackedData_objectDefinition.staticFunctions = _alaqilPackedData_functions;
+    _alaqilPackedData_objectDefinition.staticValues = _alaqilPackedData_values;
+    _alaqilPackedData_objectDefinition.finalize = _wrap_alaqilPackedData_delete;
+    _alaqilPackedData_classRef = JSClassCreate(&_alaqilPackedData_objectDefinition);
 
     /* Create objects for namespaces */
     $jscreatenamespaces

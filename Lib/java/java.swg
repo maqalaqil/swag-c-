@@ -12,9 +12,9 @@
  * The jstype typemap contains the Java type used in the Java proxy classes, type wrapper classes and module class. */
 
 /* Fragments */
-%fragment("SWIG_PackData", "header") {
+%fragment("alaqil_PackData", "header") {
 /* Pack binary data into a string */
-SWIGINTERN char * SWIG_PackData(char *c, void *ptr, size_t sz) {
+alaqilINTERN char * alaqil_PackData(char *c, void *ptr, size_t sz) {
   static const char hex[17] = "0123456789abcdef";
   const unsigned char *u = (unsigned char *) ptr;
   const unsigned char *eu =  u + sz;
@@ -27,9 +27,9 @@ SWIGINTERN char * SWIG_PackData(char *c, void *ptr, size_t sz) {
 }
 }
 
-%fragment("SWIG_UnPackData", "header") {
+%fragment("alaqil_UnPackData", "header") {
 /* Unpack binary data from a string */
-SWIGINTERN const char * SWIG_UnpackData(const char *c, void *ptr, size_t sz) {
+alaqilINTERN const char * alaqil_UnpackData(const char *c, void *ptr, size_t sz) {
   unsigned char *u = (unsigned char *) ptr;
   const unsigned char *eu = u + sz;
   for (; u != eu; ++u) {
@@ -54,9 +54,9 @@ SWIGINTERN const char * SWIG_UnpackData(const char *c, void *ptr, size_t sz) {
 }
 }
 
-%fragment("SWIG_JavaIntFromSize_t", "header") {
+%fragment("alaqil_JavaIntFromSize_t", "header") {
 /* Check for overflow converting to Java int (always signed 32-bit) from (unsigned variable-bit) size_t */
-SWIGINTERN jint SWIG_JavaIntFromSize_t(size_t size) {
+alaqilINTERN jint alaqil_JavaIntFromSize_t(size_t size) {
   static const jint JINT_MAX = 0x7FFFFFFF;
   return (size > (size_t)JINT_MAX) ? -1 : (jint)size;
 }
@@ -192,31 +192,31 @@ SWIGINTERN jint SWIG_JavaIntFromSize_t(size_t size) {
 %typemap(jstype) jobjectArray  "java.lang.Object[]"
 
 /* Non primitive types */
-%typemap(jni) SWIGTYPE "jlong"
-%typemap(jtype) SWIGTYPE "long"
-%typemap(jstype) SWIGTYPE "$&javaclassname"
-%typemap(jboxtype) SWIGTYPE "$typemap(jstype, $1_type)"
+%typemap(jni) alaqilTYPE "jlong"
+%typemap(jtype) alaqilTYPE "long"
+%typemap(jstype) alaqilTYPE "$&javaclassname"
+%typemap(jboxtype) alaqilTYPE "$typemap(jstype, $1_type)"
 
-%typemap(jni) SWIGTYPE [] "jlong"
-%typemap(jtype) SWIGTYPE [] "long"
-%typemap(jstype) SWIGTYPE [] "$javaclassname"
+%typemap(jni) alaqilTYPE [] "jlong"
+%typemap(jtype) alaqilTYPE [] "long"
+%typemap(jstype) alaqilTYPE [] "$javaclassname"
 
-%typemap(jni) SWIGTYPE * "jlong"
-%typemap(jtype) SWIGTYPE * "long"
-%typemap(jstype) SWIGTYPE * "$javaclassname"
+%typemap(jni) alaqilTYPE * "jlong"
+%typemap(jtype) alaqilTYPE * "long"
+%typemap(jstype) alaqilTYPE * "$javaclassname"
 
-%typemap(jni) SWIGTYPE & "jlong"
-%typemap(jtype) SWIGTYPE & "long"
-%typemap(jstype) SWIGTYPE & "$javaclassname"
+%typemap(jni) alaqilTYPE & "jlong"
+%typemap(jtype) alaqilTYPE & "long"
+%typemap(jstype) alaqilTYPE & "$javaclassname"
 
-%typemap(jni) SWIGTYPE && "jlong"
-%typemap(jtype) SWIGTYPE && "long"
-%typemap(jstype) SWIGTYPE && "$javaclassname"
+%typemap(jni) alaqilTYPE && "jlong"
+%typemap(jtype) alaqilTYPE && "long"
+%typemap(jstype) alaqilTYPE && "$javaclassname"
 
 /* pointer to a class member */
-%typemap(jni) SWIGTYPE (CLASS::*) "jstring"
-%typemap(jtype) SWIGTYPE (CLASS::*) "String"
-%typemap(jstype) SWIGTYPE (CLASS::*) "$javaclassname"
+%typemap(jni) alaqilTYPE (CLASS::*) "jstring"
+%typemap(jtype) alaqilTYPE (CLASS::*) "String"
+%typemap(jstype) alaqilTYPE (CLASS::*) "$javaclassname"
 
 /* The following are the in, out, freearg, argout typemaps. These are the JNI code generating typemaps for converting from Java to C and visa versa. */
 
@@ -325,7 +325,7 @@ SWIGINTERN jint SWIG_JavaIntFromSize_t(size_t size) {
   int i;
 
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "BigInteger null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "BigInteger null");
     return $null;
   }
   clazz = JCALL1(GetObjectClass, jenv, $input);
@@ -352,7 +352,7 @@ SWIGINTERN jint SWIG_JavaIntFromSize_t(size_t size) {
   int i;
 
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "BigInteger null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "BigInteger null");
     return $null;
   }
   clazz = JCALL1(GetObjectClass, jenv, $input);
@@ -399,11 +399,11 @@ SWIGINTERN jint SWIG_JavaIntFromSize_t(size_t size) {
   jclass clazz = JCALL1(FindClass, jenv, "java/math/BigInteger");
   jmethodID mid = JCALL3(GetMethodID, jenv, clazz, "<init>", "([B)V");
   jobject bigint;
-  int swig_i;
+  int alaqil_i;
 
   bae[0] = 0;
-  for(swig_i=1; swig_i<9; swig_i++ ) {
-    bae[swig_i] = (jbyte)($1>>8*(8-swig_i));
+  for(alaqil_i=1; alaqil_i<9; alaqil_i++ ) {
+    bae[alaqil_i] = (jbyte)($1>>8*(8-alaqil_i));
   }
 
   JCALL3(ReleaseByteArrayElements, jenv, ba, bae, 0);
@@ -411,7 +411,7 @@ SWIGINTERN jint SWIG_JavaIntFromSize_t(size_t size) {
   JCALL1(DeleteLocalRef, jenv, ba);
   $input = bigint;
 }
-Swig::LocalRefGuard $1_refguard(jenv, $input); }
+alaqil::LocalRefGuard $1_refguard(jenv, $input); }
 
 %typemap(javadirectorin) unsigned long long "$jniinput"
 %typemap(javadirectorout) unsigned long long "$javacall"
@@ -425,7 +425,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
   }
 }
 
-%typemap(directorout, noblock=1, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) char * {
+%typemap(directorout, noblock=1, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) char * {
   $1 = 0;
   if ($input) {
     $result = ($1_ltype)JCALL2(GetStringUTFChars, jenv, $input, 0);
@@ -439,7 +439,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
     $input = JCALL1(NewStringUTF, jenv, (const char *)$1);
     if (!$input) return $null;
   }
-  Swig::LocalRefGuard $1_refguard(jenv, $input);
+  alaqil::LocalRefGuard $1_refguard(jenv, $input);
 }
 
 %typemap(freearg, noblock=1) char * { if ($1) JCALL2(ReleaseStringUTFChars, jenv, $input, (const char *)$1); }
@@ -469,7 +469,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
 %{ temp = $input ? true : false; 
    $1 = &temp; %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const bool &
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const bool &
 %{ static $*1_ltype temp;
    temp = $input ? true : false; 
    $result = &temp; %}
@@ -492,7 +492,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
 %{ temp = ($*1_ltype)$input; 
    $1 = &temp; %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const char &,
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const char &,
              const signed char &,
              const unsigned char &,
              const short &,
@@ -576,7 +576,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
   int i;
 
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "BigInteger null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "BigInteger null");
     return $null;
   }
   clazz = JCALL1(GetObjectClass, jenv, $input);
@@ -595,7 +595,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
   JCALL3(ReleaseByteArrayElements, jenv, ba, bae, 0);
 }
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const unsigned long long & { 
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const unsigned long long & { 
   static $*1_ltype temp;
   jclass clazz;
   jmethodID mid;
@@ -605,7 +605,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
   int i;
 
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "BigInteger null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "BigInteger null");
     return $null;
   }
   clazz = JCALL1(GetObjectClass, jenv, $input);
@@ -647,23 +647,23 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
 %typemap(javadirectorout) const unsigned long long & "$javacall"
 
 /* Default handling. Object passed by value. Convert to a pointer */
-%typemap(in) SWIGTYPE ($&1_type argp)
+%typemap(in) alaqilTYPE ($&1_type argp)
 %{ argp = *($&1_ltype*)&$input; 
    if (!argp) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null $1_type");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "Attempt to dereference null $1_type");
      return $null;
    }
    $1 = *argp; %}
 
-%typemap(directorout) SWIGTYPE ($&1_type argp)
+%typemap(directorout) alaqilTYPE ($&1_type argp)
 %{ argp = *($&1_ltype*)&$input; 
    if (!argp) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Unexpected null return for type $1_type");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "Unexpected null return for type $1_type");
      return $null;
    }
    $result = *argp; %}
 
-%typemap(out) SWIGTYPE 
+%typemap(out) alaqilTYPE 
 #ifdef __cplusplus
 %{ *($&1_ltype*)&$result = new $1_ltype((const $1_ltype &)$1); %}
 #else
@@ -674,81 +674,81 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
 }
 #endif
 
-%typemap(directorin,descriptor="L$packagepath/$&javaclassname;") SWIGTYPE 
+%typemap(directorin,descriptor="L$packagepath/$&javaclassname;") alaqilTYPE 
 %{ $input = 0;
    *(($&1_ltype*)&$input) = new $1_ltype((const $1_ltype &)$1); %}
-%typemap(javadirectorin) SWIGTYPE "new $&javaclassname($jniinput, true)"
-%typemap(javadirectorout) SWIGTYPE "$&javaclassname.getCPtr($javacall)"
+%typemap(javadirectorin) alaqilTYPE "new $&javaclassname($jniinput, true)"
+%typemap(javadirectorout) alaqilTYPE "$&javaclassname.getCPtr($javacall)"
 
 /* Generic pointers and references */
-%typemap(in) SWIGTYPE * %{ $1 = *($&1_ltype)&$input; %}
-%typemap(in, fragment="SWIG_UnPackData") SWIGTYPE (CLASS::*) { 
+%typemap(in) alaqilTYPE * %{ $1 = *($&1_ltype)&$input; %}
+%typemap(in, fragment="alaqil_UnPackData") alaqilTYPE (CLASS::*) { 
   const char *temp = 0;
   if ($input) {
     temp = JCALL2(GetStringUTFChars, jenv, $input, 0);
     if (!temp) return $null;
   }
-  SWIG_UnpackData(temp, (void *)&$1, sizeof($1));
+  alaqil_UnpackData(temp, (void *)&$1, sizeof($1));
 }
-%typemap(in) SWIGTYPE & %{ $1 = *($&1_ltype)&$input;
+%typemap(in) alaqilTYPE & %{ $1 = *($&1_ltype)&$input;
   if (!$1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "$1_type reference is null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "$1_type reference is null");
     return $null;
   } %}
-%typemap(in) SWIGTYPE && %{ $1 = *($&1_ltype)&$input;
+%typemap(in) alaqilTYPE && %{ $1 = *($&1_ltype)&$input;
   if (!$1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "$1_type reference is null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "$1_type reference is null");
     return $null;
   } %}
-%typemap(out) SWIGTYPE *
+%typemap(out) alaqilTYPE *
 %{ *($&1_ltype)&$result = $1; %} 
-%typemap(out, fragment="SWIG_PackData", noblock=1) SWIGTYPE (CLASS::*) {
+%typemap(out, fragment="alaqil_PackData", noblock=1) alaqilTYPE (CLASS::*) {
   char buf[128];
-  char *data = SWIG_PackData(buf, (void *)&$1, sizeof($1));
+  char *data = alaqil_PackData(buf, (void *)&$1, sizeof($1));
   *data = '\0';
   $result = JCALL1(NewStringUTF, jenv, buf);
 }
-%typemap(out) SWIGTYPE &
+%typemap(out) alaqilTYPE &
 %{ *($&1_ltype)&$result = $1; %} 
-%typemap(out) SWIGTYPE &&
+%typemap(out) alaqilTYPE &&
 %{ *($&1_ltype)&$result = $1; %} 
 
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE *
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE *
 %{ $result = *($&1_ltype)&$input; %}
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE (CLASS::*)
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE (CLASS::*)
 %{ $result = *($&1_ltype)&$input; %}
 
-%typemap(directorin,descriptor="L$packagepath/$javaclassname;") SWIGTYPE *
+%typemap(directorin,descriptor="L$packagepath/$javaclassname;") alaqilTYPE *
 %{ *(($&1_ltype)&$input) = ($1_ltype) $1; %}
-%typemap(directorin,descriptor="L$packagepath/$javaclassname;") SWIGTYPE (CLASS::*)
+%typemap(directorin,descriptor="L$packagepath/$javaclassname;") alaqilTYPE (CLASS::*)
 %{ *(($&1_ltype)&$input) = ($1_ltype) $1; %}
 
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE &
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE &
 %{ if (!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Unexpected null return for type $1_type");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "Unexpected null return for type $1_type");
      return $null;
    }
    $result = *($&1_ltype)&$input; %}
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE &&
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE &&
 %{ if (!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Unexpected null return for type $1_type");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "Unexpected null return for type $1_type");
      return $null;
    }
    $result = *($&1_ltype)&$input; %}
-%typemap(directorin,descriptor="L$packagepath/$javaclassname;") SWIGTYPE &
+%typemap(directorin,descriptor="L$packagepath/$javaclassname;") alaqilTYPE &
 %{ *($&1_ltype)&$input = ($1_ltype) &$1; %}
-%typemap(directorin,descriptor="L$packagepath/$javaclassname;") SWIGTYPE &&
+%typemap(directorin,descriptor="L$packagepath/$javaclassname;") alaqilTYPE &&
 %{ *($&1_ltype)&$input = ($1_ltype) &$1; %}
 
-%typemap(javadirectorin) SWIGTYPE *, SWIGTYPE (CLASS::*) "($jniinput == 0) ? null : new $javaclassname($jniinput, false)"
-%typemap(javadirectorin) SWIGTYPE & "new $javaclassname($jniinput, false)"
-%typemap(javadirectorin) SWIGTYPE && "new $javaclassname($jniinput, false)"
-%typemap(javadirectorout) SWIGTYPE *, SWIGTYPE (CLASS::*), SWIGTYPE &, SWIGTYPE && "$javaclassname.getCPtr($javacall)"
+%typemap(javadirectorin) alaqilTYPE *, alaqilTYPE (CLASS::*) "($jniinput == 0) ? null : new $javaclassname($jniinput, false)"
+%typemap(javadirectorin) alaqilTYPE & "new $javaclassname($jniinput, false)"
+%typemap(javadirectorin) alaqilTYPE && "new $javaclassname($jniinput, false)"
+%typemap(javadirectorout) alaqilTYPE *, alaqilTYPE (CLASS::*), alaqilTYPE &, alaqilTYPE && "$javaclassname.getCPtr($javacall)"
 
 /* Default array handling */
-%typemap(in) SWIGTYPE [] %{ $1 = *($&1_ltype)&$input; %}
-%typemap(out) SWIGTYPE [] %{ *($&1_ltype)&$result = $1; %} 
-%typemap(freearg) SWIGTYPE [ANY], SWIGTYPE [] ""
+%typemap(in) alaqilTYPE [] %{ $1 = *($&1_ltype)&$input; %}
+%typemap(out) alaqilTYPE [] %{ *($&1_ltype)&$result = $1; %} 
+%typemap(freearg) alaqilTYPE [ANY], alaqilTYPE [] ""
 
 /* char arrays - treat as String */
 %typemap(in, noblock=1) char[ANY], char[] {
@@ -773,7 +773,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
     $input = JCALL1(NewStringUTF, jenv, (const char *)$1);
     if (!$input) return $null;
   }
-  Swig::LocalRefGuard $1_refguard(jenv, $input);
+  alaqil::LocalRefGuard $1_refguard(jenv, $input);
 }
 
 %typemap(argout) char[ANY], char[] ""
@@ -911,25 +911,25 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
 /* Typecheck typemaps - The purpose of these is merely to issue a warning for overloaded C++ functions 
  * that cannot be overloaded in Java as more than one C++ type maps to a single Java type */
 
-%typecheck(SWIG_TYPECHECK_BOOL) /* Java boolean */
+%typecheck(alaqil_TYPECHECK_BOOL) /* Java boolean */
     jboolean,
     bool,
     const bool &
     ""
 
-%typecheck(SWIG_TYPECHECK_CHAR) /* Java char */
+%typecheck(alaqil_TYPECHECK_CHAR) /* Java char */
     jchar,
     char, 
     const char &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT8) /* Java byte */
+%typecheck(alaqil_TYPECHECK_INT8) /* Java byte */
     jbyte,
     signed char,
     const signed char &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT16) /* Java short */
+%typecheck(alaqil_TYPECHECK_INT16) /* Java short */
     jshort,
     unsigned char, 
     short, 
@@ -937,7 +937,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
     const short &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT32) /* Java int */
+%typecheck(alaqil_TYPECHECK_INT32) /* Java int */
     jint,
     unsigned short, 
     int, 
@@ -947,7 +947,7 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
     const long &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT64) /* Java long */
+%typecheck(alaqil_TYPECHECK_INT64) /* Java long */
     jlong,
     unsigned int, 
     unsigned long, 
@@ -957,24 +957,24 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
     const long long &
     ""
 
-%typecheck(SWIG_TYPECHECK_INT128) /* Java BigInteger */
+%typecheck(alaqil_TYPECHECK_INT128) /* Java BigInteger */
     unsigned long long,
     const unsigned long long &
     ""
 
-%typecheck(SWIG_TYPECHECK_FLOAT) /* Java float */
+%typecheck(alaqil_TYPECHECK_FLOAT) /* Java float */
     jfloat,
     float,
     const float &
     ""
 
-%typecheck(SWIG_TYPECHECK_DOUBLE) /* Java double */
+%typecheck(alaqil_TYPECHECK_DOUBLE) /* Java double */
     jdouble,
     double,
     const double &
     ""
 
-%typecheck(SWIG_TYPECHECK_STRING) /* Java String */
+%typecheck(alaqil_TYPECHECK_STRING) /* Java String */
     jstring,
     char *,
     char *&,
@@ -982,50 +982,50 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
     char []
     ""
 
-%typecheck(SWIG_TYPECHECK_BOOL_ARRAY) /* Java boolean[] */
+%typecheck(alaqil_TYPECHECK_BOOL_ARRAY) /* Java boolean[] */
     jbooleanArray
     ""
 
-%typecheck(SWIG_TYPECHECK_CHAR_ARRAY) /* Java char[] */
+%typecheck(alaqil_TYPECHECK_CHAR_ARRAY) /* Java char[] */
     jcharArray
     ""
 
-%typecheck(SWIG_TYPECHECK_INT8_ARRAY) /* Java byte[] */
+%typecheck(alaqil_TYPECHECK_INT8_ARRAY) /* Java byte[] */
     jbyteArray
     ""
 
-%typecheck(SWIG_TYPECHECK_INT16_ARRAY) /* Java short[] */
+%typecheck(alaqil_TYPECHECK_INT16_ARRAY) /* Java short[] */
     jshortArray
     ""
 
-%typecheck(SWIG_TYPECHECK_INT32_ARRAY) /* Java int[] */
+%typecheck(alaqil_TYPECHECK_INT32_ARRAY) /* Java int[] */
     jintArray
     ""
 
-%typecheck(SWIG_TYPECHECK_INT64_ARRAY) /* Java long[] */
+%typecheck(alaqil_TYPECHECK_INT64_ARRAY) /* Java long[] */
     jlongArray
     ""
 
-%typecheck(SWIG_TYPECHECK_FLOAT_ARRAY) /* Java float[] */
+%typecheck(alaqil_TYPECHECK_FLOAT_ARRAY) /* Java float[] */
     jfloatArray
     ""
 
-%typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY) /* Java double[] */
+%typecheck(alaqil_TYPECHECK_DOUBLE_ARRAY) /* Java double[] */
     jdoubleArray
     ""
 
-%typecheck(SWIG_TYPECHECK_OBJECT_ARRAY) /* Java jobject[] */
+%typecheck(alaqil_TYPECHECK_OBJECT_ARRAY) /* Java jobject[] */
     jobjectArray
     ""
 
-%typecheck(SWIG_TYPECHECK_POINTER) /* Default */
-    SWIGTYPE, 
-    SWIGTYPE *, 
-    SWIGTYPE &, 
-    SWIGTYPE &&, 
-    SWIGTYPE *const&, 
-    SWIGTYPE [],
-    SWIGTYPE (CLASS::*)
+%typecheck(alaqil_TYPECHECK_POINTER) /* Default */
+    alaqilTYPE, 
+    alaqilTYPE *, 
+    alaqilTYPE &, 
+    alaqilTYPE &&, 
+    alaqilTYPE *const&, 
+    alaqilTYPE [],
+    alaqilTYPE (CLASS::*)
     ""
 
 
@@ -1039,26 +1039,26 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
                  unsigned short
 %{ char error_msg[256];
    sprintf(error_msg, "C++ $1_type exception thrown, value: %d", $1);
-   SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, error_msg);
+   alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, error_msg);
    return $null; %}
 
-%typemap(throws) SWIGTYPE, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE *, SWIGTYPE [], SWIGTYPE [ANY]
+%typemap(throws) alaqilTYPE, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE *, alaqilTYPE [], alaqilTYPE [ANY]
 %{ (void)$1;
-   SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, "C++ $1_type exception thrown");
+   alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, "C++ $1_type exception thrown");
    return $null; %}
 
 %typemap(throws) char *
-%{ SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, $1);
+%{ alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, $1);
    return $null; %}
 
 /* For methods to raise/throw the original Java exception thrown in a director method */
-%typemap(throws) Swig::DirectorException
+%typemap(throws) alaqil::DirectorException
 %{  $1.throwException(jenv);
     return $null; %}
 
 /* Java to C++ DirectorException should already be handled. Suppress warning and do nothing in the
-   event a user specifies a global: %catches(Swig::DirectorException); */
-%typemap(directorthrows) Swig::DirectorException ""
+   event a user specifies a global: %catches(alaqil::DirectorException); */
+%typemap(directorthrows) alaqil::DirectorException ""
 
 /* Typemaps for code generation in proxy classes and Java type wrapper classes */
 
@@ -1100,9 +1100,9 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
                  jdoubleArray,
                  jobjectArray
     "$javainput"
-%typemap(javain) SWIGTYPE "$&javaclassname.getCPtr($javainput)"
-%typemap(javain) SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE [] "$javaclassname.getCPtr($javainput)"
-%typemap(javain) SWIGTYPE (CLASS::*) "$javaclassname.getCMemberPtr($javainput)"
+%typemap(javain) alaqilTYPE "$&javaclassname.getCPtr($javainput)"
+%typemap(javain) alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE [] "$javaclassname.getCPtr($javainput)"
+%typemap(javain) alaqilTYPE (CLASS::*) "$javaclassname.getCMemberPtr($javainput)"
 
 /* The javaout typemap is used for converting function return types from the return type
  * used in the JNI class to the type returned by the proxy, module or type wrapper class. */
@@ -1149,130 +1149,130 @@ Swig::LocalRefGuard $1_refguard(jenv, $input); }
 %typemap(javaout) void {
     $jnicall;
   }
-%typemap(javaout) SWIGTYPE {
+%typemap(javaout) alaqilTYPE {
     return new $&javaclassname($jnicall, true);
   }
-%typemap(javaout) SWIGTYPE & {
+%typemap(javaout) alaqilTYPE & {
     return new $javaclassname($jnicall, $owner);
   }
-%typemap(javaout) SWIGTYPE && {
+%typemap(javaout) alaqilTYPE && {
     return new $javaclassname($jnicall, $owner);
   }
-%typemap(javaout) SWIGTYPE *, SWIGTYPE [] {
+%typemap(javaout) alaqilTYPE *, alaqilTYPE [] {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $javaclassname(cPtr, $owner);
   }
-%typemap(javaout) SWIGTYPE (CLASS::*) {
+%typemap(javaout) alaqilTYPE (CLASS::*) {
     String cMemberPtr = $jnicall;
     return (cMemberPtr == null) ? null : new $javaclassname(cMemberPtr, $owner);
   }
 
 /* Pointer reference typemaps */
-%typemap(jni) SWIGTYPE *const& "jlong"
-%typemap(jtype) SWIGTYPE *const& "long"
-%typemap(jstype) SWIGTYPE *const& "$*javaclassname"
-%typemap(javain) SWIGTYPE *const& "$*javaclassname.getCPtr($javainput)"
-%typemap(javaout) SWIGTYPE *const& {
+%typemap(jni) alaqilTYPE *const& "jlong"
+%typemap(jtype) alaqilTYPE *const& "long"
+%typemap(jstype) alaqilTYPE *const& "$*javaclassname"
+%typemap(javain) alaqilTYPE *const& "$*javaclassname.getCPtr($javainput)"
+%typemap(javaout) alaqilTYPE *const& {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $*javaclassname(cPtr, $owner);
   }
-%typemap(in) SWIGTYPE *const& ($*1_ltype temp = 0)
+%typemap(in) alaqilTYPE *const& ($*1_ltype temp = 0)
 %{ temp = *($1_ltype)&$input;
    $1 = ($1_ltype)&temp; %}
-%typemap(out) SWIGTYPE *const&
+%typemap(out) alaqilTYPE *const&
 %{ *($1_ltype)&$result = *$1; %} 
-%typemap(directorin,descriptor="L$packagepath/$*javaclassname;") SWIGTYPE *const&
+%typemap(directorin,descriptor="L$packagepath/$*javaclassname;") alaqilTYPE *const&
 %{ *(($1_ltype)&$input) = ($*1_ltype) $1; %}
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) SWIGTYPE *const&
-%{ static $*1_ltype swig_temp;
-   swig_temp = *($1_ltype)&$input;
-   $result = &swig_temp; %}
-%typemap(javadirectorin) SWIGTYPE *const& "($jniinput == 0) ? null : new $*javaclassname($jniinput, false)"
-%typemap(javadirectorout) SWIGTYPE *const& "$*javaclassname.getCPtr($javacall)"
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) alaqilTYPE *const&
+%{ static $*1_ltype alaqil_temp;
+   alaqil_temp = *($1_ltype)&$input;
+   $result = &alaqil_temp; %}
+%typemap(javadirectorin) alaqilTYPE *const& "($jniinput == 0) ? null : new $*javaclassname($jniinput, false)"
+%typemap(javadirectorout) alaqilTYPE *const& "$*javaclassname.getCPtr($javacall)"
 
 /* Typemaps used for the generation of proxy and type wrapper class code */
-%typemap(javabase)             SWIGTYPE, SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE [], SWIGTYPE (CLASS::*) ""
-%typemap(javaclassmodifiers)   SWIGTYPE, SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE [], SWIGTYPE (CLASS::*) "public class"
-%typemap(javacode)             SWIGTYPE, SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE [], SWIGTYPE (CLASS::*) ""
-%typemap(javaimports)          SWIGTYPE, SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE [], SWIGTYPE (CLASS::*) ""
-%typemap(javainterfaces)       SWIGTYPE, SWIGTYPE *, SWIGTYPE &, SWIGTYPE &&, SWIGTYPE [], SWIGTYPE (CLASS::*) ""
+%typemap(javabase)             alaqilTYPE, alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE [], alaqilTYPE (CLASS::*) ""
+%typemap(javaclassmodifiers)   alaqilTYPE, alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE [], alaqilTYPE (CLASS::*) "public class"
+%typemap(javacode)             alaqilTYPE, alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE [], alaqilTYPE (CLASS::*) ""
+%typemap(javaimports)          alaqilTYPE, alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE [], alaqilTYPE (CLASS::*) ""
+%typemap(javainterfaces)       alaqilTYPE, alaqilTYPE *, alaqilTYPE &, alaqilTYPE &&, alaqilTYPE [], alaqilTYPE (CLASS::*) ""
 
 /* javabody typemaps */
 
-%define SWIG_JAVABODY_METHODS(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE...) SWIG_JAVABODY_PROXY(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE) %enddef // legacy name
+%define alaqil_JAVABODY_METHODS(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE...) alaqil_JAVABODY_PROXY(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE) %enddef // legacy name
 
-%define SWIG_JAVABODY_PROXY(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE...)
+%define alaqil_JAVABODY_PROXY(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE...)
 // Base proxy classes
 %typemap(javabody) TYPE %{
-  private transient long swigCPtr;
-  protected transient boolean swigCMemOwn;
+  private transient long alaqilCPtr;
+  protected transient boolean alaqilCMemOwn;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
+    alaqilCMemOwn = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 // Derived proxy classes
 %typemap(javabody_derived) TYPE %{
-  private transient long swigCPtr;
+  private transient long alaqilCPtr;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, boolean cMemoryOwn) {
-    super($imclassname.$javaclazznameSWIGUpcast(cPtr), cMemoryOwn);
-    swigCPtr = cPtr;
+    super($imclassname.$javaclazznamealaqilUpcast(cPtr), cMemoryOwn);
+    alaqilCPtr = cPtr;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 %enddef
 
-%define SWIG_JAVABODY_TYPEWRAPPER(PTRCTOR_VISIBILITY, DEFAULTCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE...)
+%define alaqil_JAVABODY_TYPEWRAPPER(PTRCTOR_VISIBILITY, DEFAULTCTOR_VISIBILITY, CPTR_VISIBILITY, TYPE...)
 // Typewrapper classes
 %typemap(javabody) TYPE *, TYPE &, TYPE &&, TYPE [] %{
-  private transient long swigCPtr;
+  private transient long alaqilCPtr;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
-    swigCPtr = cPtr;
+    alaqilCPtr = cPtr;
   }
 
   DEFAULTCTOR_VISIBILITY $javaclassname() {
-    swigCPtr = 0;
+    alaqilCPtr = 0;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 %typemap(javabody) TYPE (CLASS::*) %{
-  private transient String swigCMemberPtr;
+  private transient String alaqilCMemberPtr;
 
   PTRCTOR_VISIBILITY $javaclassname(String cMemberPtr, @SuppressWarnings("unused") boolean futureUse) {
-    swigCMemberPtr = cMemberPtr;
+    alaqilCMemberPtr = cMemberPtr;
   }
 
   DEFAULTCTOR_VISIBILITY $javaclassname() {
-    swigCMemberPtr = null;
+    alaqilCMemberPtr = null;
   }
 
   CPTR_VISIBILITY static String getCMemberPtr($javaclassname obj) {
-    return obj.swigCMemberPtr;
+    return obj.alaqilCMemberPtr;
   }
 %}
 %enddef
 
 /* Set the default javabody typemaps to use protected visibility.
    Use the macros to change to public if using multiple modules. */
-SWIG_JAVABODY_PROXY(protected, protected, SWIGTYPE)
-SWIG_JAVABODY_TYPEWRAPPER(protected, protected, protected, SWIGTYPE)
+alaqil_JAVABODY_PROXY(protected, protected, alaqilTYPE)
+alaqil_JAVABODY_TYPEWRAPPER(protected, protected, protected, alaqilTYPE)
 
-%typemap(javafinalize) SWIGTYPE %{
+%typemap(javafinalize) alaqilTYPE %{
   @SuppressWarnings("deprecation")
   protected void finalize() {
     delete();
@@ -1286,71 +1286,71 @@ SWIG_JAVABODY_TYPEWRAPPER(protected, protected, protected, SWIGTYPE)
  * This typemap allows control over what code is executed in the constructor as
  * well as specifying who owns the underlying C/C++ object. Normally, Java has
  * ownership and the underlying C/C++ object is deallocated when the Java object
- * is finalized (swigCMemOwn is true.) If swigCMemOwn is false, C/C++ is
+ * is finalized (alaqilCMemOwn is true.) If alaqilCMemOwn is false, C/C++ is
  * ultimately responsible for deallocating the underlying object's memory.
  *
- * The SWIG_PROXY_CONSTRUCTOR macro defines the javaconstruct typemap for a proxy
+ * The alaqil_PROXY_CONSTRUCTOR macro defines the javaconstruct typemap for a proxy
  * class for a particular TYPENAME. OWNERSHIP is passed as the value of
- * swigCMemOwn to the pointer constructor method.  WEAKREF determines which kind
+ * alaqilCMemOwn to the pointer constructor method.  WEAKREF determines which kind
  * of Java object reference will be used by the C++ director class (WeakGlobalRef
  * vs. GlobalRef.)
  *
- * The SWIG_DIRECTOR_OWNED macro sets the ownership of director-based proxy
+ * The alaqil_DIRECTOR_OWNED macro sets the ownership of director-based proxy
  * classes and the weak reference flag to false, meaning that the underlying C++
  * object will be reclaimed by C++.
  */
 
-%define SWIG_PROXY_CONSTRUCTOR(OWNERSHIP, WEAKREF, TYPENAME...)
-%typemap(javaconstruct,directorconnect="\n    $imclassname.$javaclazznamedirector_connect(this, swigCPtr, OWNERSHIP, WEAKREF);") TYPENAME {
+%define alaqil_PROXY_CONSTRUCTOR(OWNERSHIP, WEAKREF, TYPENAME...)
+%typemap(javaconstruct,directorconnect="\n    $imclassname.$javaclazznamedirector_connect(this, alaqilCPtr, OWNERSHIP, WEAKREF);") TYPENAME {
     this($imcall, OWNERSHIP);$directorconnect
   }
 %enddef
 
-%define SWIG_DIRECTOR_OWNED(TYPENAME...)
-SWIG_PROXY_CONSTRUCTOR(true, false, TYPENAME)
+%define alaqil_DIRECTOR_OWNED(TYPENAME...)
+alaqil_PROXY_CONSTRUCTOR(true, false, TYPENAME)
 %enddef
 
-// Set the default for SWIGTYPE: Java owns the C/C++ object.
-SWIG_PROXY_CONSTRUCTOR(true, true, SWIGTYPE)
+// Set the default for alaqilTYPE: Java owns the C/C++ object.
+alaqil_PROXY_CONSTRUCTOR(true, true, alaqilTYPE)
 
-%typemap(javadestruct, methodname="delete", methodmodifiers="public synchronized") SWIGTYPE {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
+%typemap(javadestruct, methodname="delete", methodmodifiers="public synchronized") alaqilTYPE {
+    if (alaqilCPtr != 0) {
+      if (alaqilCMemOwn) {
+        alaqilCMemOwn = false;
         $jnicall;
       }
-      swigCPtr = 0;
+      alaqilCPtr = 0;
     }
   }
 
-%typemap(javadestruct_derived, methodname="delete", methodmodifiers="public synchronized") SWIGTYPE {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
+%typemap(javadestruct_derived, methodname="delete", methodmodifiers="public synchronized") alaqilTYPE {
+    if (alaqilCPtr != 0) {
+      if (alaqilCMemOwn) {
+        alaqilCMemOwn = false;
         $jnicall;
       }
-      swigCPtr = 0;
+      alaqilCPtr = 0;
     }
     super.delete();
   }
 
-%typemap(directordisconnect, methodname="swigDirectorDisconnect") SWIGTYPE %{
+%typemap(directordisconnect, methodname="alaqilDirectorDisconnect") alaqilTYPE %{
   protected void $methodname() {
-    swigCMemOwn = false;
+    alaqilCMemOwn = false;
     $jnicall;
   }
 %}
 
-%typemap(directorowner_release, methodname="swigReleaseOwnership") SWIGTYPE %{
+%typemap(directorowner_release, methodname="alaqilReleaseOwnership") alaqilTYPE %{
   public void $methodname() {
-    swigCMemOwn = false;
+    alaqilCMemOwn = false;
     $jnicall;
   }
 %}
 
-%typemap(directorowner_take, methodname="swigTakeOwnership") SWIGTYPE %{
+%typemap(directorowner_take, methodname="alaqilTakeOwnership") alaqilTYPE %{
   public void $methodname() {
-    swigCMemOwn = true;
+    alaqilCMemOwn = true;
     $jnicall;
   }
 %}
@@ -1374,13 +1374,13 @@ SWIG_PROXY_CONSTRUCTOR(true, true, SWIGTYPE)
 %apply const unsigned long & { const size_t & };
 
 /* Array reference typemaps */
-%apply SWIGTYPE & { SWIGTYPE ((&)[ANY]) }
-%apply SWIGTYPE && { SWIGTYPE ((&&)[ANY]) }
+%apply alaqilTYPE & { alaqilTYPE ((&)[ANY]) }
+%apply alaqilTYPE && { alaqilTYPE ((&&)[ANY]) }
 
 /* const pointers */
-%apply SWIGTYPE * { SWIGTYPE *const }
-%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
-%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
+%apply alaqilTYPE * { alaqilTYPE *const }
+%apply alaqilTYPE (CLASS::*) { alaqilTYPE (CLASS::*const) }
+%apply alaqilTYPE & { alaqilTYPE (CLASS::*const&) }
 
 /* String & length */
 %typemap(jni)     (const char *STRING, size_t LENGTH) "jbyteArray"
@@ -1407,7 +1407,7 @@ SWIG_PROXY_CONSTRUCTOR(true, true, SWIGTYPE)
     if (!$input) return $null;
     JCALL4(SetByteArrayRegion, jenv, $input, 0, (jsize)$2, (jbyte *)$1);
   }
-  Swig::LocalRefGuard $1_refguard(jenv, $input);
+  alaqil::LocalRefGuard $1_refguard(jenv, $input);
 }
 %typemap(javadirectorin, descriptor="[B") (const char *STRING, size_t LENGTH) "$jniinput"
 %apply (const char *STRING, size_t LENGTH) { (char *STRING, size_t LENGTH) }

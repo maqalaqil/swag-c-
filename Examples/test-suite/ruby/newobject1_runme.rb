@@ -17,8 +17,8 @@
 # 
 #
 
-require 'swig_assert'
-require 'swig_gc'
+require 'alaqil_assert'
+require 'alaqil_gc'
 require 'newobject1'
 
 include Newobject1
@@ -27,7 +27,7 @@ GC.track_class = Foo
 GC.start
 100.times { foo1 = Foo.makeFoo; foo2 = foo1.makeMore }
 GC.stats if $VERBOSE
-swig_assert( 'Foo.fooCount == 200', binding, "but is #{Foo.fooCount}" )
+alaqil_assert( 'Foo.fooCount == 200', binding, "but is #{Foo.fooCount}" )
 GC.start
-swig_assert( 'Foo.fooCount <= 2', binding, "but is #{Foo.fooCount}" )
+alaqil_assert( 'Foo.fooCount <= 2', binding, "but is #{Foo.fooCount}" )
 

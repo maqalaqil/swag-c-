@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Newobject2
 
 let _ =

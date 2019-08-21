@@ -13,7 +13,7 @@ if string.sub(_VERSION,1,7)=='Lua 5.1' then
         assert(the_module.hi_mom() == "hi mom!")
 
         -- But it should not end up in the global table _G, subject to
-        -- the -nomoduleglobal swig option.
+        -- the -nomoduleglobal alaqil option.
         assert(_G["lua_no_module_global"] == nil)
 
         -- According to the Lua 5.1 reference manual, require should also

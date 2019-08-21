@@ -28,7 +28,7 @@ class string;
 
 %typemap(in) string 
 %{ if(!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null string");
      return $null;
     } 
     const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0); 
@@ -39,7 +39,7 @@ class string;
 %typemap(directorout) string 
 %{ if(!$input) {
      if (!jenv->ExceptionCheck()) {
-       SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+       alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null string");
      }
      return $null;
    } 
@@ -50,7 +50,7 @@ class string;
 
 %typemap(directorin,descriptor="Ljava/lang/String;") string 
 %{ $input = jenv->NewStringUTF($1.c_str());
-   Swig::LocalRefGuard $1_refguard(jenv, $input); %}
+   alaqil::LocalRefGuard $1_refguard(jenv, $input); %}
 
 %typemap(out) string 
 %{ $result = jenv->NewStringUTF($1.c_str()); %}
@@ -64,7 +64,7 @@ class string;
 %typemap(typecheck) string = char *;
 
 %typemap(throws) string
-%{ SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, $1.c_str());
+%{ alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, $1.c_str());
    return $null; %}
 
 // const string &
@@ -76,7 +76,7 @@ class string;
 
 %typemap(in) const string &
 %{ if(!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null string");
      return $null;
    }
    const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0); 
@@ -85,9 +85,9 @@ class string;
    $1 = &$1_str;
    jenv->ReleaseStringUTFChars($input, $1_pstr); %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
 %{ if(!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+     alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null string");
      return $null;
    }
    const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0); 
@@ -100,7 +100,7 @@ class string;
 
 %typemap(directorin,descriptor="Ljava/lang/String;") const string &
 %{ $input = jenv->NewStringUTF($1.c_str());
-   Swig::LocalRefGuard $1_refguard(jenv, $input); %}
+   alaqil::LocalRefGuard $1_refguard(jenv, $input); %}
 
 %typemap(out) const string & 
 %{ $result = jenv->NewStringUTF($1->c_str()); %}
@@ -114,7 +114,7 @@ class string;
 %typemap(typecheck) const string & = char *;
 
 %typemap(throws) const string &
-%{ SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, $1.c_str());
+%{ alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, $1.c_str());
    return $null; %}
 
 }

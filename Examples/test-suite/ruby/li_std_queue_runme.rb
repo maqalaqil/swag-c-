@@ -7,12 +7,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'li_std_queue'
 include Li_std_queue
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 a = IntQueue.new
 a << 1
 a << 2

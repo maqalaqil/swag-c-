@@ -1,4 +1,4 @@
-// This file tests SWIG pass/return by value for
+// This file tests alaqil pass/return by value for
 // a class with no default constructor
 
 %module cpp_nodefault

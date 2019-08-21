@@ -1,6 +1,6 @@
 (* runme.ml *)
 
-open Swig
+open alaqil
 open Example
 
 (* Call our gcd() function *)

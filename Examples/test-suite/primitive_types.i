@@ -1,17 +1,17 @@
 // Massive primitive datatype test.
 %module(directors="1") primitive_types
 
-#if defined(SWIGSCILAB)
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) ovr_str;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) ovr_val;
+#if defined(alaqilSCILAB)
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) ovr_str;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) ovr_val;
 %rename(TestDir) TestDirector;
 #endif
 
 // Ruby constant names
-#pragma SWIG nowarn=SWIGWARN_RUBY_WRONG_NAME
+#pragma alaqil nowarn=alaqilWARN_RUBY_WRONG_NAME
 
 // Using thread unsafe wrapping
-#pragma SWIG nowarn=SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR
+#pragma alaqil nowarn=alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR
  /*
 
  if your language has problems with MyInt* and/or Hello*,
@@ -48,7 +48,7 @@
              const double & ($basetype temp)
   %{ temp = ($basetype)$input;  $1 = &temp; %}
 
-  the other typical change is to add the enum SWIGTYPE to the
+  the other typical change is to add the enum alaqilTYPE to the
   integer throws typemaps:
 
   %typemap(throws) int, 
@@ -57,35 +57,35 @@
                   unsigned int, 
                   unsigned long, 
                   unsigned short,
-                  enum SWIGTYPE {
+                  enum alaqilTYPE {
     Tcl_SetObjResult(interp, Tcl_NewIntObj((long) $1));
-    SWIG_fail;
+    alaqil_fail;
   }
 
   or just add the %apply directive after all the typemaps declaration
 
-  %apply int { enum SWIGTYPE };
+  %apply int { enum alaqilTYPE };
 
 
   Also note that this test should not only compile, if you run the
   program
 
-     grep 'resultobj = SWIG_NewPointerObj' primitive_types_wrap.cxx 
+     grep 'resultobj = alaqil_NewPointerObj' primitive_types_wrap.cxx 
  
   you should get only two calls:
 
-    resultobj = SWIG_NewPointerObj((void *) result, SWIGTYPE_p_Test, 1);
-    resultobj = SWIG_NewPointerObj((void *) result, SWIGTYPE_p_TestDirector, 1);
+    resultobj = alaqil_NewPointerObj((void *) result, alaqilTYPE_p_Test, 1);
+    resultobj = alaqil_NewPointerObj((void *) result, alaqilTYPE_p_TestDirector, 1);
 
   if you get a lot more, some typemap could be not defined.
 
   The same with
 
-     grep SWIG_ConvertPtr primitive_types_wrap.cxx| egrep -v 'Test'
+     grep alaqil_ConvertPtr primitive_types_wrap.cxx| egrep -v 'Test'
 
   you should only get
 
-    #define SWIG_ConvertPtr(obj, pp, type, flags)
+    #define alaqil_ConvertPtr(obj, pp, type, flags)
 
  */
 
@@ -93,7 +93,7 @@
 // Try your language module with and without 
 // these nowarn flags.
 //
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK);
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK);
 
 %{
 #include <stddef.h>
@@ -142,7 +142,7 @@
 
 
 //
-// adding applies for incomplete swig type MyInt
+// adding applies for incomplete alaqil type MyInt
 //
 %apply int { MyInt };
 %apply const int& {  const MyInt& };
@@ -276,7 +276,7 @@ macro(size_t,             pfx, sizet)
   static const type pfx##_##name = def##_##name;
 %enddef
 
-/* Swig constant declaration */
+/* alaqil constant declaration */
 %define sct_decl(type, pfx, name)
   %constant type pfx##_##name = def##_##name;
 %enddef
@@ -637,7 +637,7 @@ macro(size_t,             pfx, sizet)
 %}
 
 
-%apply SWIGTYPE* { char *};
+%apply alaqilTYPE* { char *};
   
 %include "carrays.i"
 %array_functions(char,pchar);

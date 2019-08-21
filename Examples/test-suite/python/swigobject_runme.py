@@ -1,5 +1,5 @@
 
-from swigobject import *
+from alaqilobject import *
 
 a = A()
 

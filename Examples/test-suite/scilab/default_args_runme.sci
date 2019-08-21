@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 checkequal(anonymous(), 7771, "anonymous()");
 checkequal(anonymous(1234), 1234, "anonymous(1234)");
@@ -63,5 +63,5 @@ checkequal(cfunc1(1), 2, "cfunc1(1)");
 checkequal(cfunc2(1), 3, "cfunc2(1)");
 checkequal(cfunc3(1), 4, "cfunc3(1)");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

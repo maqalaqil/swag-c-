@@ -47,12 +47,12 @@ INCLUDES = -I$(abs_top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)
 # Rules for the different types of tests
 %.cpptest:
 	$(setup)
-	+$(swig_and_compile_cpp)
+	+$(alaqil_and_compile_cpp)
 	$(run_testcase_cpp)
 	if ! $(GO15); then \
 	  $(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	  SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	  INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	  alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	  INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	  TARGET='$(TARGETPREFIX)$*$(TARGETSUFFIX)' INTERFACEDIR='$(INTERFACEDIR)' INTERFACE='$*.i' \
 	  $(LANGUAGE)$(VARIANT)_cpp_nocgo && \
 	  $(run_testcase_cpp); \
@@ -60,12 +60,12 @@ INCLUDES = -I$(abs_top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)
 
 %.ctest:
 	$(setup)
-	+$(swig_and_compile_c)
+	+$(alaqil_and_compile_c)
 	$(run_testcase)
 	if ! $(GO15); then \
 	  $(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CSRCS='$(CSRCS)' \
-	  SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	  INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	  alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	  INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	  TARGET='$(TARGETPREFIX)$*$(TARGETSUFFIX)' INTERFACEDIR='$(INTERFACEDIR)' INTERFACE='$*.i' \
 	  $(LANGUAGE)$(VARIANT)_nocgo && \
 	  $(run_testcase); \
@@ -73,7 +73,7 @@ INCLUDES = -I$(abs_top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)
 
 %.multicpptest:
 	$(setup)
-	+$(swig_and_compile_multi_cpp)
+	+$(alaqil_and_compile_multi_cpp)
 	$(run_multi_testcase)
 
 li_windows.cpptest:
@@ -84,8 +84,8 @@ multi_import.multicpptest:
 	$(setup)
 	for f in multi_import_b multi_import_a; do \
 	  $(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	  SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	  LIBS='$(LIBS)' INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	  alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	  LIBS='$(LIBS)' INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	  TARGET="$(TARGETPREFIX)$${f}$(TARGETSUFFIX)" INTERFACEDIR='$(INTERFACEDIR)' INTERFACE="$$f.i" \
 	  $(LANGUAGE)$(VARIANT)_cpp; \
 	done
@@ -96,16 +96,16 @@ go_subdir_import.multicpptest:
 	mkdir -p testdir/go_subdir_import/
 	mkdir -p gopath/src/testdir/go_subdir_import/
 	$(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
 	LIBS='$(LIBS)' INTERFACEPATH='$(SRCDIR)$(INTERFACEDIR)go_subdir_import_b.i' \
-	INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT) -outdir .' NOLINK=true \
+	INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT) -outdir .' NOLINK=true \
 	TARGET='$(TARGETPREFIX)go_subdir_import_b$(TARGETSUFFIX)' INTERFACEDIR='$(INTERFACEDIR)' \
 	INTERFACE='testdir/go_subdir_import/go_subdir_import_b.i' \
 	$(LANGUAGE)$(VARIANT)_cpp;
 	for f in testdir/go_subdir_import/go_subdir_import_c go_subdir_import_a ; do \
 	  $(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	  SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	  LIBS='$(LIBS)' INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	  alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	  LIBS='$(LIBS)' INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	  TARGET="$(TARGETPREFIX)$${f}$(TARGETSUFFIX)" INTERFACEDIR='$(INTERFACEDIR)' INTERFACE="$$f.i" \
 	  $(LANGUAGE)$(VARIANT)_cpp; \
 	done

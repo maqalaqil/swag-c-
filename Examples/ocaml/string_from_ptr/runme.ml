@@ -1,10 +1,10 @@
-open Swig    (* Give access to the swig library *)
-open Example (* This is the name of your swig output *)
+open alaqil    (* Give access to the alaqil library *)
+open Example (* This is the name of your alaqil output *)
 
 let results = _foo '()  (* Function names are prefixed with _ in order to make
 			   them lex as identifiers in ocaml.  Consider that
 			   uppercase identifiers are module names in ocaml.
-			   NOTE: the '() syntax is part of swigp4.  You can do:
+			   NOTE: the '() syntax is part of alaqilp4.  You can do:
 		           let results = _foo C_void *)
 
 (* Since your function has a return value in addition to the string output,

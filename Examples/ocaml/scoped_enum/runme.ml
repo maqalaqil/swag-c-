@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Example
 
 let arg = if Array.length Sys.argv > 1 then Sys.argv.(1) else "Tag1"

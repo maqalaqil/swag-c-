@@ -75,7 +75,7 @@
     <Compile Include="runme.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SWIGTYPE_p_f_int_int__int.cs" />
+    <Compile Include="alaqilTYPE_p_f_int_int__int.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

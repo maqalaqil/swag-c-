@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Director_pass_by_value
 
 let passByVal = ref [| |]

@@ -130,7 +130,7 @@ namespace AA {  // thinks X is in AA namespace
 namespace Space {
 }
 template<typename T> struct Vector {
-#ifdef SWIG
+#ifdef alaqil
   %template() Space::VectorHelper<T>;
 #endif
   void gook(T i) {}

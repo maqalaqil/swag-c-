@@ -39,7 +39,7 @@ public class runme
         // that none of these cases are slipping through.
         //
         
-        SWIGTYPE_p_std__string stringPtr = null;
+        alaqilTYPE_p_std__string stringPtr = null;
         
         stringPtr = li_std_string.test_pointer_out();
 

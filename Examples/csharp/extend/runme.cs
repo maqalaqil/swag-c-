@@ -10,9 +10,9 @@ class CEO : Manager {
   public override String getPosition() {
     return "CEO";
   }
-  // Public method to stop the SWIG proxy base class from thinking it owns the underlying C++ memory.
+  // Public method to stop the alaqil proxy base class from thinking it owns the underlying C++ memory.
   public void disownMemory() {
-    swigCMemOwn = false; 
+    alaqilCMemOwn = false; 
   } 
 }
 

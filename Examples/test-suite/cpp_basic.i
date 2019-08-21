@@ -1,8 +1,8 @@
 /* This is a basic test of proxy classes, used by chicken */
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) global_cint;       /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) global_cint;       /* Ruby, wrong constant name */
 
 %module cpp_basic
 

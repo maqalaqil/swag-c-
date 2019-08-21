@@ -1,6 +1,6 @@
 %module template_keyword_in_type
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) YYY;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) YYY;
 
 %inline %{
   template<typename T> struct XXX;
@@ -12,7 +12,7 @@
     int xxx(int h) { return h; }
   };
 
-#if defined(SWIG) || defined(__clang__)
+#if defined(alaqil) || defined(__clang__)
   // gcc doesn't parse this (tested with gcc-4.8)
   template<typename X> void testXXX1(::template XXX<int>::template YYY<int>::type xx) {}
 #else

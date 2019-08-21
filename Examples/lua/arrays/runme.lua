@@ -60,7 +60,7 @@ print ""
 
 --[[ version 3: use a typemap
 this is the best way
-it uses the SWIG-Lua typemaps to do the work
+it uses the alaqil-Lua typemaps to do the work
 one item of note: the typemap creates a copy, rather than edit-in-place]]
 t={}
 for i=1,ARRAY_SIZE do

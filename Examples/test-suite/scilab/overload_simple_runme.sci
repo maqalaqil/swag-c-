@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 f = new_Foo();
 b = new_Bar();
@@ -72,4 +72,4 @@ b = ClassA_method1(a, 1);
 delete_ClassA(a);
 
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

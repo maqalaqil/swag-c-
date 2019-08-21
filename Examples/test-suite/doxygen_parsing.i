@@ -132,7 +132,7 @@ struct SomeAnotherStruct
 	}
 };
 
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

@@ -1,4 +1,4 @@
-// Tests SWIG's *default* handling of overloading varargs (function varargs, not preprocessor varargs).
+// Tests alaqil's *default* handling of overloading varargs (function varargs, not preprocessor varargs).
 // The default behavior is to simply ignore the varargs.
 %module varargs_overload
 

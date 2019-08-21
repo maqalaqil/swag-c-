@@ -1,19 +1,19 @@
-/* This interface tests whether SWIG supports the new "constexpr" keyword
+/* This interface tests whether alaqil supports the new "constexpr" keyword
    introduced by C++11.
 */
 %module cpp11_constexpr
 
 
 %inline %{
-#ifdef SWIG
-#define SWIGTESTCONST const
+#ifdef alaqil
+#define alaqilTESTCONST const
 #else
-#define SWIGTESTCONST
+#define alaqilTESTCONST
 #endif
 constexpr int AAA = 10;
 constexpr const int BBB = 20;
 constexpr int CCC() { return 30; }
-constexpr SWIGTESTCONST int DDD() { return 40; }
+constexpr alaqilTESTCONST int DDD() { return 40; }
 
 constexpr int XXX() { return 10; }
 constexpr int YYY = XXX() + 100;
@@ -23,11 +23,11 @@ struct ConstExpressions {
   static constexpr int KKK = 200;
   static const int LLL = 300;
   constexpr int MMM() { return 400; }
-  constexpr SWIGTESTCONST int NNN() { return 500; }
-  // Regression tests for support added in SWIG 3.0.4:
+  constexpr alaqilTESTCONST int NNN() { return 500; }
+  // Regression tests for support added in alaqil 3.0.4:
   static constexpr const int JJJ1 = 101;
   constexpr static int KKK1 = 201;
-  // Regression tests for https://github.com/swig/swig/issues/284 :
+  // Regression tests for https://github.com/alaqil/alaqil/issues/284 :
   explicit constexpr ConstExpressions(int) { }
   constexpr explicit ConstExpressions(double) { }
 };

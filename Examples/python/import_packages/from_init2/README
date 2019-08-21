@@ -1,6 +1,6 @@
 This example tests the %import directive and python import from __init__.py.
 
-This case is not correctly handled by swig 2.
+This case is not correctly handled by alaqil 2.
 
 The issue was reported as Source Forge bug #1297 and later as GitHub issue #7.
 
@@ -25,7 +25,7 @@ follows
     from bar import Pkg2_Bar                      # [1]
 
 Such cases doesn't work when fully qualified python module names are used by
-swig to generate python import directives (SF bug #1297). The generated file
+alaqil to generate python import directives (SF bug #1297). The generated file
 "py2/pkg2/bar.py" has following lines:
 
     import py2.pkg2.pkg3.foo                     # [2]
@@ -48,13 +48,13 @@ AttributeError: 'module' object has no attribute 'pkg2'
 
 It seems like during the import [1], the subpackage pkg2 is not yet fully
 initialized, so pyX.pkg2 is not known. The above exception is raised at line [3].
-The problem disappears, for example, if we force swig to use relative package
+The problem disappears, for example, if we force alaqil to use relative package
 names.
 
 The difference between this ('from_init2') case and the case
 'from_init1' is that here it's not sufficient to import relative module
 by just ignoring the package part of the fully qualified module name. IOW
-it is not correct to force swig to put:
+it is not correct to force alaqil to put:
 
     import foo
     class Pkg2_Bar(foo.Pkg3_Foo)

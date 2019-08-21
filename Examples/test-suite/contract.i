@@ -1,16 +1,16 @@
 %module contract
 
-%warnfilter(SWIGWARN_RUBY_MULTIPLE_INHERITANCE,
-	    SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) C; /* Ruby, C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_RUBY_MULTIPLE_INHERITANCE,
+	    alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) C; /* Ruby, C#, D, Java, PHP multiple inheritance */
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %ignore B::bar; // otherwise get a warning: `C.bar' no suitable methods found to override
 #endif
 
-#ifdef SWIGD
+#ifdef alaqilD
 %ignore B::bar; // Prevents getting an error that C.bar does not override any function because multiple inheritance is not supported.
 #endif
 

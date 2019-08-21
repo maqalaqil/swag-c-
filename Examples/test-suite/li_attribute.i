@@ -2,11 +2,11 @@
 
 %include <exception.i>
 
-//#define SWIG_ATTRIBUTE_TEMPLATE
+//#define alaqil_ATTRIBUTE_TEMPLATE
 %include <attribute.i>
 
 %{
-// forward reference needed if using SWIG_ATTRIBUTE_TEMPLATE
+// forward reference needed if using alaqil_ATTRIBUTE_TEMPLATE
 struct A;
 struct MyFoo; // %attribute2 does not work with templates
 %}

@@ -1,8 +1,8 @@
 %module enum_template
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) eTest0;        /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) eTest1;        /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) eTest2;        /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) eTest0;        /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) eTest1;        /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) eTest2;        /* Ruby, wrong class name */
 
 /*
 From bug report 992329:

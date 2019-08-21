@@ -81,33 +81,33 @@ Base x -this [$d toBase]
 puts  "Spam -> Base -> Foo : "
 set y [Foo_fromBase [x cget -this]]
 if {$y != "NULL"} {
-      puts "bad swig"
+      puts "bad alaqil"
 } {
-      puts "good swig"
+      puts "good alaqil"
 }
 
 puts  "Spam -> Base -> Bar : "
 set y [Bar_fromBase [x cget -this]]
 if {$y != "NULL"} {
-      puts "good swig"
+      puts "good alaqil"
 } {
-      puts "bad swig"
+      puts "bad alaqil"
 }
       
 puts  "Spam -> Base -> Spam : "
 set y [Spam_fromBase [x cget -this]]
 if {$y != "NULL"} {
-      puts "good swig"
+      puts "good alaqil"
 } {
-      puts "bad swig"
+      puts "bad alaqil"
 }
 
 puts  "Foo -> Spam : "
 set y [Spam_fromBase $b]
 if {$y != "NULL"} {
-      puts "bad swig"
+      puts "bad alaqil"
 } {
-      puts "good swig"
+      puts "good alaqil"
 }
 
 

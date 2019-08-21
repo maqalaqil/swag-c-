@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_list.i
  *
- * SWIG typemaps for std::list types
+ * alaqil typemaps for std::list types
  * 
  * To use, add:
  * 

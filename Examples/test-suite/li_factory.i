@@ -6,7 +6,7 @@
 %newobject Geometry::clone;
 %factory(Geometry *Geometry::create, Point, Circle);
 %factory(Geometry *Geometry::clone, Point, Circle);
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 %rename(clone_) clone;
 #endif
 %factory(Geometry *Point::clone, Point, Circle);

@@ -3,7 +3,7 @@
 %include <std_wstring.i>
 
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)
@@ -102,7 +102,7 @@ size_t size_wstring(const std::wstring& s) {
   return s.size();
 }
 
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

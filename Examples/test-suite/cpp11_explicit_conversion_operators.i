@@ -1,9 +1,9 @@
-/* This interface checks whether SWIG correctly compiles the new
+/* This interface checks whether alaqil correctly compiles the new
    explicit conversion operators feature introduced in C++11.
 */
 %module cpp11_explicit_conversion_operators
 
-%warnfilter(SWIGWARN_LANG_IDENTIFIER) Testable::operator bool;
+%warnfilter(alaqilWARN_LANG_IDENTIFIER) Testable::operator bool;
 %rename(AsInteger) Testable::operator int;
 
 %inline %{

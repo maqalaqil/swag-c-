@@ -16,11 +16,11 @@
 /* C complex constructor */
 #define CCplxConst(r, i) ((r) + I*(i))
 
-%swig_cplxflt_convn(float complex, CCplxConst, creal, cimag);
-%swig_cplxdbl_convn(double complex, CCplxConst, creal, cimag);
-%swig_cplxdbl_convn(complex, CCplxConst, creal, cimag);
+%alaqil_cplxflt_convn(float complex, CCplxConst, creal, cimag);
+%alaqil_cplxdbl_convn(double complex, CCplxConst, creal, cimag);
+%alaqil_cplxdbl_convn(complex, CCplxConst, creal, cimag);
 
 /* declaring the typemaps */
-%typemaps_primitive(SWIG_TYPECHECK_CPLXFLT, float complex);
-%typemaps_primitive(SWIG_TYPECHECK_CPLXDBL, double complex);
-%typemaps_primitive(SWIG_TYPECHECK_CPLXDBL, complex);
+%typemaps_primitive(alaqil_TYPECHECK_CPLXFLT, float complex);
+%typemaps_primitive(alaqil_TYPECHECK_CPLXDBL, double complex);
+%typemaps_primitive(alaqil_TYPECHECK_CPLXDBL, complex);

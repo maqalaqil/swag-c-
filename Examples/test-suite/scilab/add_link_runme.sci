@@ -1,27 +1,27 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     foo = new_Foo();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     foo2 = Foo_blah(foo);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     delete_Foo(foo);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     delete_Foo(foo2);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

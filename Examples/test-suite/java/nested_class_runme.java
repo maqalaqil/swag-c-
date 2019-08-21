@@ -7,7 +7,7 @@ public class nested_class_runme {
     try {
 	System.loadLibrary("nested_class");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -58,12 +58,12 @@ public class nested_class_runme {
     {
       Outer.InnerMultipleAnonTypedef1 mat1 = outer.makeInnerMultipleAnonTypedef1();
       Outer.InnerMultipleAnonTypedef1 mat2 = outer.makeInnerMultipleAnonTypedef2();
-      SWIGTYPE_p_p_Outer__InnerMultipleAnonTypedef1 mat3 = outer.makeInnerMultipleAnonTypedef3();
+      alaqilTYPE_p_p_Outer__InnerMultipleAnonTypedef1 mat3 = outer.makeInnerMultipleAnonTypedef3();
 
       Outer.InnerMultipleNamedTypedef1 mnt = outer.makeInnerMultipleNamedTypedef();
       Outer.InnerMultipleNamedTypedef1 mnt1 = outer.makeInnerMultipleNamedTypedef1();
       Outer.InnerMultipleNamedTypedef1 mnt2 = outer.makeInnerMultipleNamedTypedef2();
-      SWIGTYPE_p_p_Outer__InnerMultipleNamedTypedef mnt3 = outer.makeInnerMultipleNamedTypedef3();
+      alaqilTYPE_p_p_Outer__InnerMultipleNamedTypedef mnt3 = outer.makeInnerMultipleNamedTypedef3();
     }
     {
       Outer.InnerSameName isn = outer.makeInnerSameName();

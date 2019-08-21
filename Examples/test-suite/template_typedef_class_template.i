@@ -1,7 +1,7 @@
 %module template_typedef_class_template
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %inline %{

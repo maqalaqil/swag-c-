@@ -57,7 +57,7 @@ std::basic_string<char,std::char_traits<char>,std::allocator<char> > test_value_
    return "int";
 }
 
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

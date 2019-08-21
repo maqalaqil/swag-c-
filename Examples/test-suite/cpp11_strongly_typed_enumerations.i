@@ -1,11 +1,11 @@
-// This testcase checks whether SWIG produces the correct wrappers for strongly typed enums.
+// This testcase checks whether alaqil produces the correct wrappers for strongly typed enums.
 
 %module cpp11_strongly_typed_enumerations
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) Class1::Struct1;
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) Class2::Struct1;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) Class1::Struct1;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) Class2::Struct1;
 
-/* Forward declarations (illegally accepted by SWIG - oh well!) */
+/* Forward declarations (illegally accepted by alaqil - oh well!) */
 enum Enum1 : short;
 enum Enum3;
 enum ;
@@ -31,7 +31,7 @@ enum class Enum2 : short {
 };
 %}
 
-// SWIG should fail this one
+// alaqil should fail this one
 enum Enum2 : unsigned short;     // Illegal in C++11, because Enum2 was previously declared with a different type.
 
 %inline %{

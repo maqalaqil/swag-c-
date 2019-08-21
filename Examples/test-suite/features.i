@@ -1,9 +1,9 @@
 %module features
 
-%warnfilter(SWIGWARN_LANG_IDENTIFIER,SWIGWARN_IGNORE_OPERATOR_PLUSEQ);
+%warnfilter(alaqilWARN_LANG_IDENTIFIER,alaqilWARN_IGNORE_OPERATOR_PLUSEQ);
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 // This testcase checks that %feature is working for templates and non user supplied constructors/destructors and is just generally working
@@ -86,7 +86,7 @@ public:
   ~Template(){}
   void foo(){}
   void bar(const int &t) const {}
-#ifdef SWIG
+#ifdef alaqil
     %extend {
       T& get(int i) const {
         throw 1;

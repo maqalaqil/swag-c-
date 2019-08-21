@@ -1,6 +1,6 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
-NULL = SWIG_ptr(0);
+NULL = alaqil_ptr(0);
 
 o = new_Overload();
 x = new_X();
@@ -41,5 +41,5 @@ checkequal(21, Overload_byval1forwardref(o, x), "test 21");
 
 checkequal(22, Overload_byval2forwardref(o, x), "test 22");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Rename_predicates
 
 let _ =

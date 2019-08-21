@@ -8,7 +8,7 @@
 #include <exception>
 #include <map>
 
-namespace Swig {
+namespace alaqil {
 
   class DirectorException : public std::exception {
   };
@@ -58,23 +58,23 @@ namespace {
   };
 }
 
-class Swig_memory {
+class alaqil_memory {
 public:
   template <typename Type>
-  void swig_acquire_pointer(Type* vptr) {
+  void alaqil_acquire_pointer(Type* vptr) {
     if (vptr) {
-      swig_owner[vptr] = new GCItem_T<Type>(vptr);
+      alaqil_owner[vptr] = new GCItem_T<Type>(vptr);
     }
   }
 private:
-  typedef std::map<void *, GCItem_var> swig_ownership_map;
-  swig_ownership_map swig_owner;
+  typedef std::map<void *, GCItem_var> alaqil_ownership_map;
+  alaqil_ownership_map alaqil_owner;
 };
 
 template <typename Type>
-static void swig_acquire_pointer(Swig_memory** pmem, Type* ptr) {
+static void alaqil_acquire_pointer(alaqil_memory** pmem, Type* ptr) {
   if (!pmem) {
-    *pmem = new Swig_memory;
+    *pmem = new alaqil_memory;
   }
-  (*pmem)->swig_acquire_pointer(ptr);
+  (*pmem)->alaqil_acquire_pointer(ptr);
 }

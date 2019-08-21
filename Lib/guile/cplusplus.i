@@ -1,14 +1,14 @@
 /* -----------------------------------------------------------------------------
  * cplusplus.i
  *
- * SWIG typemaps for C++
+ * alaqil typemaps for C++
  * ----------------------------------------------------------------------------- */
 
 %typemap(guile,out) string, std::string {
-  $result = SWIG_str02scm(const_cast<char*>($1.c_str()));
+  $result = alaqil_str02scm(const_cast<char*>($1.c_str()));
 }
 %typemap(guile,in) string, std::string {
-  $1 = SWIG_scm2str($input);
+  $1 = alaqil_scm2str($input);
 }
 
 %typemap(guile,out) complex, complex<double>, std::complex<double> {

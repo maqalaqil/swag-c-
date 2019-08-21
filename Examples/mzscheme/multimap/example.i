@@ -69,7 +69,7 @@ extern int charcount(char *bytes, int len, char c);
 %typemap(argout) (char *str, int len) {
    Scheme_Object *s;
    s = scheme_make_sized_string($1,$2);
-   SWIG_APPEND_VALUE(s);
+   alaqil_APPEND_VALUE(s);
    free($1);
 }   
 
@@ -81,7 +81,7 @@ extern void capitalize(char *str, int len);
 %typemap(check) (double cx, double cy) {
    double a = $1*$1 + $2*$2;
    if (a > 1.0) {
-	SWIG_exception(SWIG_ValueError,"$1_name and $2_name must be in unit circle");
+	alaqil_exception(alaqil_ValueError,"$1_name and $2_name must be in unit circle");
         return NULL;
    }
 }

@@ -1,4 +1,4 @@
-/* This test checks whether SWIG correctly parses the new constructor
+/* This test checks whether alaqil correctly parses the new constructor
    inheritance.
 */
 %module cpp11_inheriting_constructors

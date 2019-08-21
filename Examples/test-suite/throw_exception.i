@@ -1,6 +1,6 @@
 %module throw_exception
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 #define TESTCASE_THROW3(T1, T2, T3) throw(T1, T2, T3)
 %{
@@ -8,13 +8,13 @@
 #define TESTCASE_THROW3(T1, T2, T3)
 %}
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Namespace::enum1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Namespace::enum2;
-#ifdef SWIGPHP
-%warnfilter(SWIGWARN_PARSE_KEYWORD) Namespace;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Namespace::enum1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Namespace::enum2;
+#ifdef alaqilPHP
+%warnfilter(alaqilWARN_PARSE_KEYWORD) Namespace;
 #endif
 
-// Tests SWIG's automatic exception mechanism
+// Tests alaqil's automatic exception mechanism
 
 %inline %{
 

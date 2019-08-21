@@ -1,10 +1,10 @@
 %module using_pointers
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %csmethodmodifiers x "public new"
 #endif
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW2(T1, T2) throw(T1, T2)
 %{
 #define TESTCASE_THROW2(T1, T2)

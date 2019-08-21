@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Director_exception_nothrow
 
 let _MyBar ob meth args =

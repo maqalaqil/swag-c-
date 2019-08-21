@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open String_simple
 
 let str = "olé"

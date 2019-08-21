@@ -1,18 +1,18 @@
 <html>
 <head>
-<title>SWIG:Examples:go:funcptr</title>
+<title>alaqil:Examples:go:funcptr</title>
 </head>
 
 <body bgcolor="#ffffff">
 
 
-<tt>SWIG/Examples/go/funcptr/</tt>
+<tt>alaqil/Examples/go/funcptr/</tt>
 <hr>
 
 <H2>Pointers to Functions</H2>
 
 <p>
-Okay, just what in the heck does SWIG do with a declaration like this?
+Okay, just what in the heck does alaqil do with a declaration like this?
 
 <blockquote>
 <pre>
@@ -24,7 +24,7 @@ Well, it creates a wrapper as usual.  Of course, that does raise some
 questions about the third argument (the pointer to a function). 
 
 <p>
-In this case, SWIG will wrap the function pointer as it does for all
+In this case, alaqil will wrap the function pointer as it does for all
 other pointers.  However, in order to actually call this function from
 a Go program, you will need to pass some kind of C function pointer
 object.  In C, this is easy, you just supply a function name as an
@@ -41,7 +41,7 @@ int r = do_op(x,y,add);
 </pre>
 </blockquote>
 
-To make this work with SWIG, you will need to do a little extra work.
+To make this work with alaqil, you will need to do a little extra work.
 Specifically, you need to create some function pointer objects using
 the %constant directive like this:
 
@@ -67,7 +67,7 @@ Here are some files that illustrate this with a simple example:
 <ul>
 <li><a href="example.c">example.c</a>
 <li><a href="example.h">example.h</a>
-<li><a href="example.i">example.i</a> (SWIG interface)
+<li><a href="example.i">example.i</a> (alaqil interface)
 <li><a href="runme.go">runme.go</a> (Sample program)
 </ul>
 

@@ -12,9 +12,9 @@
 
 %module li_boost_intrusive_ptr
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);
-%warnfilter(SWIGWARN_LANG_SMARTPTR_MISSING) KlassDerived;
-%warnfilter(SWIGWARN_LANG_SMARTPTR_MISSING) KlassDerivedDerived;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);
+%warnfilter(alaqilWARN_LANG_SMARTPTR_MISSING) KlassDerived;
+%warnfilter(alaqilWARN_LANG_SMARTPTR_MISSING) KlassDerivedDerived;
 
 %ignore intrusive_ptr_add_ref;
 %ignore intrusive_ptr_release;
@@ -35,17 +35,17 @@
 
 %{
 #ifndef INTRUSIVE_PTR_WRAPPER
-# define SwigBoost boost
+# define alaqilBoost boost
 #endif
 %}
 
 %include "std_string.i"
 #ifndef INTRUSIVE_PTR_WRAPPER
-# define SWIG_INTRUSIVE_PTR_NAMESPACE SwigBoost
-# define SWIG_SHARED_PTR_NAMESPACE SwigBoost
+# define alaqil_INTRUSIVE_PTR_NAMESPACE alaqilBoost
+# define alaqil_SHARED_PTR_NAMESPACE alaqilBoost
 #endif
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 #define INTRUSIVE_PTR_WRAPPERS_IMPLEMENTED
 #endif
 
@@ -58,32 +58,32 @@
 %intrusive_ptr(Space::KlassDerivedDerived)
 
 //For the use_count shared_ptr functions
-#if defined(SWIGJAVA)
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & ($*1_ltype tempnull) %{ 
+#if defined(alaqilJAVA)
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & ($*1_ltype tempnull) %{ 
   $1 = $input ? *($&1_ltype)&$input : &tempnull; 
 %}
-%typemap (jni) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "jlong"
-%typemap (jtype) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "long"
-%typemap (jstype) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "Klass"
-%typemap(javain) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "Klass.getCPtr($javainput)"
+%typemap (jni) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "jlong"
+%typemap (jtype) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "long"
+%typemap (jstype) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "Klass"
+%typemap(javain) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::Klass > & "Klass.getCPtr($javainput)"
   
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & ($*1_ltype tempnull) %{ 
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & ($*1_ltype tempnull) %{ 
   $1 = $input ? *($&1_ltype)&$input : &tempnull; 
 %}
-%typemap (jni) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "jlong"
-%typemap (jtype) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "long"
-%typemap (jstype) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "KlassDerived"
-%typemap(javain) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "KlassDerived.getCPtr($javainput)"
+%typemap (jni) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "jlong"
+%typemap (jtype) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "long"
+%typemap (jstype) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "KlassDerived"
+%typemap(javain) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerived > & "KlassDerived.getCPtr($javainput)"
   
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & ($*1_ltype tempnull) %{ 
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & ($*1_ltype tempnull) %{ 
   $1 = $input ? *($&1_ltype)&$input : &tempnull; 
 %}
-%typemap (jni) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "jlong"
-%typemap (jtype) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "long"
-%typemap (jstype) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "KlassDerivedDerived"
-%typemap(javain) SWIG_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "KlassDerivedDerived.getCPtr($javainput)"
+%typemap (jni) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "jlong"
+%typemap (jtype) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "long"
+%typemap (jstype) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "KlassDerivedDerived"
+%typemap(javain) alaqil_INTRUSIVE_PTR_QNAMESPACE::shared_ptr< Space::KlassDerivedDerived > & "KlassDerivedDerived.getCPtr($javainput)"
 
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 // TODO!
 #endif
 
@@ -241,59 +241,59 @@ KlassDerived& derivedreftest(KlassDerived& kd) {
   kd.append(" derivedreftest");
   return kd;
 }
-SwigBoost::intrusive_ptr<KlassDerived> derivedsmartptrtest(SwigBoost::intrusive_ptr<KlassDerived> kd) {
+alaqilBoost::intrusive_ptr<KlassDerived> derivedsmartptrtest(alaqilBoost::intrusive_ptr<KlassDerived> kd) {
   if (kd)
     kd->append(" derivedsmartptrtest");
   return kd;
 }
-SwigBoost::intrusive_ptr<KlassDerived>* derivedsmartptrpointertest(SwigBoost::intrusive_ptr<KlassDerived>* kd) {
+alaqilBoost::intrusive_ptr<KlassDerived>* derivedsmartptrpointertest(alaqilBoost::intrusive_ptr<KlassDerived>* kd) {
   if (kd && *kd)
     (*kd)->append(" derivedsmartptrpointertest");
   return kd;
 }
-SwigBoost::intrusive_ptr<KlassDerived>* derivedsmartptrreftest(SwigBoost::intrusive_ptr<KlassDerived>* kd) {
+alaqilBoost::intrusive_ptr<KlassDerived>* derivedsmartptrreftest(alaqilBoost::intrusive_ptr<KlassDerived>* kd) {
   if (kd && *kd)
     (*kd)->append(" derivedsmartptrreftest");
   return kd;
 }
-SwigBoost::intrusive_ptr<KlassDerived>*& derivedsmartptrpointerreftest(SwigBoost::intrusive_ptr<KlassDerived>*& kd) {
+alaqilBoost::intrusive_ptr<KlassDerived>*& derivedsmartptrpointerreftest(alaqilBoost::intrusive_ptr<KlassDerived>*& kd) {
   if (kd && *kd)
     (*kd)->append(" derivedsmartptrpointerreftest");
   return kd;
 }
 
-SwigBoost::intrusive_ptr<Klass> factorycreate() {
-  return SwigBoost::intrusive_ptr<Klass>(new Klass("factorycreate"));
+alaqilBoost::intrusive_ptr<Klass> factorycreate() {
+  return alaqilBoost::intrusive_ptr<Klass>(new Klass("factorycreate"));
 }
 // smart pointer
-SwigBoost::intrusive_ptr<Klass> smartpointertest(SwigBoost::intrusive_ptr<Klass> k) {
+alaqilBoost::intrusive_ptr<Klass> smartpointertest(alaqilBoost::intrusive_ptr<Klass> k) {
   if (k)
     k->append(" smartpointertest");
-  return SwigBoost::intrusive_ptr<Klass>(k);
+  return alaqilBoost::intrusive_ptr<Klass>(k);
 }
-SwigBoost::intrusive_ptr<Klass>* smartpointerpointertest(SwigBoost::intrusive_ptr<Klass>* k) {
+alaqilBoost::intrusive_ptr<Klass>* smartpointerpointertest(alaqilBoost::intrusive_ptr<Klass>* k) {
   if (k && *k)
     (*k)->append(" smartpointerpointertest");
   return k;
 }
-SwigBoost::intrusive_ptr<Klass>& smartpointerreftest(SwigBoost::intrusive_ptr<Klass>& k) {
+alaqilBoost::intrusive_ptr<Klass>& smartpointerreftest(alaqilBoost::intrusive_ptr<Klass>& k) {
   if (k)
     k->append(" smartpointerreftest");
   return k;
 }
-SwigBoost::intrusive_ptr<Klass>*& smartpointerpointerreftest(SwigBoost::intrusive_ptr<Klass>*& k) {
+alaqilBoost::intrusive_ptr<Klass>*& smartpointerpointerreftest(alaqilBoost::intrusive_ptr<Klass>*& k) {
   if (k && *k)
     (*k)->append(" smartpointerpointerreftest");
   return k;
 }
 // const
-SwigBoost::intrusive_ptr<const Klass> constsmartpointertest(SwigBoost::intrusive_ptr<const Klass> k) {
-  return SwigBoost::intrusive_ptr<const Klass>(k);
+alaqilBoost::intrusive_ptr<const Klass> constsmartpointertest(alaqilBoost::intrusive_ptr<const Klass> k) {
+  return alaqilBoost::intrusive_ptr<const Klass>(k);
 }
-SwigBoost::intrusive_ptr<const Klass>* constsmartpointerpointertest(SwigBoost::intrusive_ptr<const Klass>* k) {
+alaqilBoost::intrusive_ptr<const Klass>* constsmartpointerpointertest(alaqilBoost::intrusive_ptr<const Klass>* k) {
   return k;
 }
-SwigBoost::intrusive_ptr<const Klass>& constsmartpointerreftest(SwigBoost::intrusive_ptr<const Klass>& k) {
+alaqilBoost::intrusive_ptr<const Klass>& constsmartpointerreftest(alaqilBoost::intrusive_ptr<const Klass>& k) {
   return k;
 }
 // plain pointer
@@ -315,7 +315,7 @@ Klass *const& pointerreftest(Klass *const& k) {
   return k;
 }
 // null
-std::string nullsmartpointerpointertest(SwigBoost::intrusive_ptr<Klass>* k) {
+std::string nullsmartpointerpointertest(alaqilBoost::intrusive_ptr<Klass>* k) {
   if (k && *k)
     return "not null";
   else if (!k)
@@ -329,12 +329,12 @@ std::string nullsmartpointerpointertest(SwigBoost::intrusive_ptr<Klass>* k) {
 Klass *pointerownertest() {
   return new Klass("pointerownertest");
 }
-SwigBoost::intrusive_ptr<Klass>* smartpointerpointerownertest() {
-  return new SwigBoost::intrusive_ptr<Klass>(new Klass("smartpointerpointerownertest"));
+alaqilBoost::intrusive_ptr<Klass>* smartpointerpointerownertest() {
+  return new alaqilBoost::intrusive_ptr<Klass>(new Klass("smartpointerpointerownertest"));
 }
 
-const SwigBoost::intrusive_ptr<Klass>& ref_1() { 
-  static SwigBoost::intrusive_ptr<Klass> sptr;
+const alaqilBoost::intrusive_ptr<Klass>& ref_1() { 
+  static alaqilBoost::intrusive_ptr<Klass> sptr;
   return sptr;
 }
 
@@ -354,16 +354,16 @@ std::string overload_rawbyptrref(Klass *const&k) { return "rawbyptrref"; }
 
 
 std::string overload_smartbyval(int i) { return "int"; }
-std::string overload_smartbyval(SwigBoost::intrusive_ptr<Klass> k) { return "smartbyval"; }
+std::string overload_smartbyval(alaqilBoost::intrusive_ptr<Klass> k) { return "smartbyval"; }
 
 std::string overload_smartbyref(int i) { return "int"; }
-std::string overload_smartbyref(SwigBoost::intrusive_ptr<Klass> &k) { return "smartbyref"; }
+std::string overload_smartbyref(alaqilBoost::intrusive_ptr<Klass> &k) { return "smartbyref"; }
 
 std::string overload_smartbyptr(int i) { return "int"; }
-std::string overload_smartbyptr(SwigBoost::intrusive_ptr<Klass> *k) { return "smartbyptr"; }
+std::string overload_smartbyptr(alaqilBoost::intrusive_ptr<Klass> *k) { return "smartbyptr"; }
 
 std::string overload_smartbyptrref(int i) { return "int"; }
-std::string overload_smartbyptrref(SwigBoost::intrusive_ptr<Klass> *&k) { return "smartbyptrref"; }
+std::string overload_smartbyptrref(alaqilBoost::intrusive_ptr<Klass> *&k) { return "smartbyptrref"; }
 
 } // namespace Space
 
@@ -380,21 +380,21 @@ std::string overload_smartbyptrref(SwigBoost::intrusive_ptr<Klass> *&k) { return
 
 %inline %{
 struct MemberVariables {
-  MemberVariables() : SmartMemberPointer(new SwigBoost::intrusive_ptr<Space::Klass>()), SmartMemberReference(*(new SwigBoost::intrusive_ptr<Space::Klass>())), MemberPointer(0), MemberReference(MemberValue) {}
+  MemberVariables() : SmartMemberPointer(new alaqilBoost::intrusive_ptr<Space::Klass>()), SmartMemberReference(*(new alaqilBoost::intrusive_ptr<Space::Klass>())), MemberPointer(0), MemberReference(MemberValue) {}
   virtual ~MemberVariables() {
     delete SmartMemberPointer;
     delete &SmartMemberReference;
   }
-  SwigBoost::intrusive_ptr<Space::Klass> SmartMemberValue;
-  SwigBoost::intrusive_ptr<Space::Klass> * SmartMemberPointer;
-  SwigBoost::intrusive_ptr<Space::Klass> & SmartMemberReference;
+  alaqilBoost::intrusive_ptr<Space::Klass> SmartMemberValue;
+  alaqilBoost::intrusive_ptr<Space::Klass> * SmartMemberPointer;
+  alaqilBoost::intrusive_ptr<Space::Klass> & SmartMemberReference;
   Space::Klass MemberValue;
   Space::Klass * MemberPointer;
   Space::Klass & MemberReference;
 };
 
 // Global variables
-SwigBoost::intrusive_ptr<Space::Klass> GlobalSmartValue;
+alaqilBoost::intrusive_ptr<Space::Klass> GlobalSmartValue;
 Space::Klass GlobalValue;
 Space::Klass * GlobalPointer = 0;
 Space::Klass & GlobalReference = GlobalValue;
@@ -438,15 +438,15 @@ template <class T1, class T2> struct Pair : Base<T1, T2> {
 };
 
 Pair<int, double> pair_id2(Pair<int, double> p) { return p; }
-SwigBoost::intrusive_ptr< Pair<int, double> > pair_id1(SwigBoost::intrusive_ptr< Pair<int, double> > p) { return p; }
+alaqilBoost::intrusive_ptr< Pair<int, double> > pair_id1(alaqilBoost::intrusive_ptr< Pair<int, double> > p) { return p; }
 
-long use_count(const SwigBoost::shared_ptr<Space::Klass>& sptr) {
+long use_count(const alaqilBoost::shared_ptr<Space::Klass>& sptr) {
   return sptr.use_count();
 }
-long use_count(const SwigBoost::shared_ptr<Space::KlassDerived>& sptr) {
+long use_count(const alaqilBoost::shared_ptr<Space::KlassDerived>& sptr) {
   return sptr.use_count();
 }
-long use_count(const SwigBoost::shared_ptr<Space::KlassDerivedDerived>& sptr) {
+long use_count(const alaqilBoost::shared_ptr<Space::KlassDerivedDerived>& sptr) {
   return sptr.use_count();
 }
 %}
@@ -456,11 +456,11 @@ long use_count(const SwigBoost::shared_ptr<Space::KlassDerivedDerived>& sptr) {
 // For counting the instances of intrusive_ptr (all of which are created on the heap)
 // intrusive_ptr_wrapper_count() gives overall count
 %inline %{
-namespace SwigBoost {
+namespace alaqilBoost {
   const int NOT_COUNTING = -123456;
   int intrusive_ptr_wrapper_count() { 
   #ifdef INTRUSIVE_PTR_WRAPPER
-    return SwigBoost::IntrusivePtrWrapper::getTotalCount(); 
+    return alaqilBoost::IntrusivePtrWrapper::getTotalCount(); 
   #else
     return NOT_COUNTING;
   #endif

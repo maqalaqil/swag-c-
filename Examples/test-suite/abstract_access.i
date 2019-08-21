@@ -1,6 +1,6 @@
 %module abstract_access
 
-%warnfilter(SWIGWARN_LANG_DIRECTOR_ABSTRACT) A;
+%warnfilter(alaqilWARN_LANG_DIRECTOR_ABSTRACT) A;
 
 %inline %{
 class A {

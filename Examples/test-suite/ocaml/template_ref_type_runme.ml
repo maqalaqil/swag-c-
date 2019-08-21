@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Template_ref_type
 
 let xr = new_XC '()

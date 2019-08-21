@@ -1,26 +1,26 @@
 %module typemap_array_qualifiers
 
-%define CLEAR_SWIGTYPE_TYPEMAPS
+%define CLEAR_alaqilTYPE_TYPEMAPS
 %typemap(in)
-   SWIGTYPE,
-   SWIGTYPE *,
-   SWIGTYPE *const,
-   SWIGTYPE *const&,
-   const SWIGTYPE *,
-   const SWIGTYPE *const,
-   const SWIGTYPE *const&,
-   const volatile SWIGTYPE *,
-   const volatile SWIGTYPE *const,
-   const volatile SWIGTYPE *const&,
-   SWIGTYPE [],
-   SWIGTYPE [ANY],
-   const SWIGTYPE [],
-   const SWIGTYPE [ANY],
-   const volatile SWIGTYPE [],
-   const volatile SWIGTYPE [ANY],
-   SWIGTYPE &,
-   const SWIGTYPE &,
-   const volatile SWIGTYPE &
+   alaqilTYPE,
+   alaqilTYPE *,
+   alaqilTYPE *const,
+   alaqilTYPE *const&,
+   const alaqilTYPE *,
+   const alaqilTYPE *const,
+   const alaqilTYPE *const&,
+   const volatile alaqilTYPE *,
+   const volatile alaqilTYPE *const,
+   const volatile alaqilTYPE *const&,
+   alaqilTYPE [],
+   alaqilTYPE [ANY],
+   const alaqilTYPE [],
+   const alaqilTYPE [ANY],
+   const volatile alaqilTYPE [],
+   const volatile alaqilTYPE [ANY],
+   alaqilTYPE &,
+   const alaqilTYPE &,
+   const volatile alaqilTYPE &
 {
 %#error Incorrect typemap for $symname: $type
 }
@@ -39,8 +39,8 @@
   }
 %}
 
-CLEAR_SWIGTYPE_TYPEMAPS;
-%typemap(in) SWIGTYPE [ANY] {
+CLEAR_alaqilTYPE_TYPEMAPS;
+%typemap(in) alaqilTYPE [ANY] {
 $1 = 0;
 /* Correct typemap for $symname: $type */
 }
@@ -49,12 +49,12 @@ $1 = 0;
   void func1b(volatile myarray x) {}
 %}
 
-CLEAR_SWIGTYPE_TYPEMAPS;
-%typemap(in) const SWIGTYPE [ANY] {
+CLEAR_alaqilTYPE_TYPEMAPS;
+%typemap(in) const alaqilTYPE [ANY] {
 $1 = 0;
 /* Correct typemap for $symname: $type */
 }
-%typemap(in) const volatile SWIGTYPE [ANY] {
+%typemap(in) const volatile alaqilTYPE [ANY] {
 $1 = 0;
 /* Correct typemap for $symname: $type */
 }
@@ -64,12 +64,12 @@ $1 = 0;
   void func2c(const volatile myconstarray x) {}
 %}
 
-CLEAR_SWIGTYPE_TYPEMAPS;
-%typemap(in) volatile SWIGTYPE **const [ANY] {
+CLEAR_alaqilTYPE_TYPEMAPS;
+%typemap(in) volatile alaqilTYPE **const [ANY] {
 $1 = 0;
 /* Correct typemap for $symname: $type */
 }
-%typemap(in) volatile SWIGTYPE **const [ANY][ANY] {
+%typemap(in) volatile alaqilTYPE **const [ANY][ANY] {
 $1 = 0;
 /* Correct typemap for $symname: $type */
 }
@@ -77,8 +77,8 @@ $1 = 0;
   void func3a(const mycrazyarray x, const mycrazyarray y[7]) {}
 %}
 
-CLEAR_SWIGTYPE_TYPEMAPS;
-%typemap(in) SWIGTYPE (*const) (ANY) {
+CLEAR_alaqilTYPE_TYPEMAPS;
+%typemap(in) alaqilTYPE (*const) (ANY) {
 $1 = 0;
 /* Correct typemap for $symname: $type */
 }

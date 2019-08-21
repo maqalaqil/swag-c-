@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 testString = "Scilab test string";
 
@@ -12,7 +12,7 @@ checkequal(CSCharFunction(testString), testString, "CSCharFunction(testString)")
 try
   tNum = new_TNum();
 catch
-  swigtesterror();
+  alaqiltesterror();
 end
 //TNumber_DigitsMemberA_get()
 //TNumber_DigitsMemberA_set
@@ -21,13 +21,13 @@ end
 try
   delete_TNum(tNum);
 catch
-  swigtesterror();
+  alaqiltesterror();
 end
 
 try
   dirTest = new_DirTest();
 catch
-  swigtesterror();
+  alaqiltesterror();
 end
 
 checkequal(DirTest_UCharFunction(dirTest, testString), testString, "DirTest_UCharFunction");
@@ -39,7 +39,7 @@ checkequal(DirTest_CSCharFunction(dirTest, testString), testString, "DirTest_CSh
 try
   delete_DirTest(dirTest);
 catch
-  swigtesterror();
+  alaqiltesterror();
 end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

@@ -4,7 +4,7 @@
 %{
 #include <boost/shared_ptr.hpp>
 
-#ifdef SWIGR
+#ifdef alaqilR
   // remove naming conflict with R symbol
 #define INTEGER MYINTEGER
 #endif
@@ -30,7 +30,7 @@
 
 %}
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGPYTHON) || defined(SWIGD) || defined(SWIGOCTAVE) || defined(SWIGRUBY)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilPYTHON) || defined(alaqilD) || defined(alaqilOCTAVE) || defined(alaqilRUBY)
 #define SHARED_PTR_WRAPPERS_IMPLEMENTED
 #endif
 

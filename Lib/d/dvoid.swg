@@ -13,6 +13,6 @@
 %typemap(ddirectorout) void "$dcall"
 %typemap(directorin) void ""
 
-%typemap(dout, excode=SWIGEXCODE) void {
+%typemap(dout, excode=alaqilEXCODE) void {
   $imcall;$excode
 }

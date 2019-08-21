@@ -1,7 +1,7 @@
 %module functors
 
 // Rename operator() only if the language does not already do this by default
-#if defined(SWIGCSHARP) || defined(SWIGGO) || defined(SWIGGUILE) || defined(SWIGJAVA) || defined(SWIGJAVASCRIPT) || defined(SWIGPHP) || defined(SWIGSCILAB) || defined(SWIGTCL)
+#if defined(alaqilCSHARP) || defined(alaqilGO) || defined(alaqilGUILE) || defined(alaqilJAVA) || defined(alaqilJAVASCRIPT) || defined(alaqilPHP) || defined(alaqilSCILAB) || defined(alaqilTCL)
 %rename(Funktor) operator();
 #endif
 

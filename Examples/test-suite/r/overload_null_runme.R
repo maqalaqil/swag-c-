@@ -27,7 +27,7 @@ unittest(11, o$byconstref2(NULL))
 unittest(12, o$byconstref2(x))
 
 # const pointer references
-# No SWIGTYPE *const& typemaps for R yet
+# No alaqilTYPE *const& typemaps for R yet
 #unittest(13, o$byval1cpr(x))
 #unittest(14, o$byval1cpr(NULL))
 

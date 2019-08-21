@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_map.i
  *
- * SWIG typemaps for std::map
+ * alaqil typemaps for std::map
  * ----------------------------------------------------------------------------- */
 
 %include <std_common.i>
@@ -53,23 +53,23 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
-                    k = (K*) SWIG_MustGetPtr(key,$descriptor(K *),$argnum, 0);
-                    if (SWIG_ConvertPtr(val,(void**) &x,
+                    k = (K*) alaqil_MustGetPtr(key,$descriptor(K *),$argnum, 0);
+                    if (alaqil_ConvertPtr(val,(void**) &x,
                                     $descriptor(T *), 0) != 0) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
-                        x = (T*) SWIG_MustGetPtr(val,$descriptor(T *),$argnum, 0);
+                        x = (T*) alaqil_MustGetPtr(val,$descriptor(T *),$argnum, 0);
                     }
                     (($1_type &)$1)[*k] = *x;
                     alist = SCM_CDR(alist);
                 }
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         }
         %typemap(in) const map< K, T, C >& (std::map< K, T, C > temp),
@@ -87,22 +87,22 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
-                    k = (K*) SWIG_MustGetPtr(key,$descriptor(K *),$argnum, 0);
-                    if (SWIG_ConvertPtr(val,(void**) &x,
+                    k = (K*) alaqil_MustGetPtr(key,$descriptor(K *),$argnum, 0);
+                    if (alaqil_ConvertPtr(val,(void**) &x,
                                     $descriptor(T *), 0) != 0) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
-                        x = (T*) SWIG_MustGetPtr(val,$descriptor(T *),$argnum, 0);
+                        x = (T*) alaqil_MustGetPtr(val,$descriptor(T *),$argnum, 0);
                     }
                     temp[*k] = *x;
                     alist = SCM_CDR(alist);
                 }
             } else {
-                $1 = ($1_ltype) SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                $1 = ($1_ltype) alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         }
         %typemap(out) map< K, T, C > {
@@ -110,14 +110,14 @@ namespace std {
             for (std::map< K, T, C >::reverse_iterator i=$1.rbegin(); i!=$1.rend(); ++i) {
                 K* key = new K(i->first);
                 T* val = new T(i->second);
-                SCM k = SWIG_NewPointerObj(key,$descriptor(K *), 1);
-                SCM x = SWIG_NewPointerObj(val,$descriptor(T *), 1);
+                SCM k = alaqil_NewPointerObj(key,$descriptor(K *), 1);
+                SCM x = alaqil_NewPointerObj(val,$descriptor(T *), 1);
                 SCM entry = scm_cons(k,x);
                 alist = scm_cons(entry,alist);
             }
             $result = alist;
         }
-        %typecheck(SWIG_TYPECHECK_MAP) map< K, T, C > {
+        %typecheck(alaqil_TYPECHECK_MAP) map< K, T, C > {
             /* native sequence? */
             if (scm_is_null($input)) {
                 /* an empty sequence can be of any type */
@@ -130,16 +130,16 @@ namespace std {
                 if (scm_is_pair(head)) {
                     SCM key = SCM_CAR(head);
                     SCM val = SCM_CDR(head);
-                    if (SWIG_ConvertPtr(key,(void**) &k,
+                    if (alaqil_ConvertPtr(key,(void**) &k,
                                     $descriptor(K *), 0) != 0) {
                         $1 = 0;
                     } else {
-                        if (SWIG_ConvertPtr(val,(void**) &x,
+                        if (alaqil_ConvertPtr(val,(void**) &x,
                                         $descriptor(T *), 0) == 0) {
                             $1 = 1;
                         } else if (scm_is_pair(val)) {
                             val = SCM_CAR(val);
-                            if (SWIG_ConvertPtr(val,(void**) &x,
+                            if (alaqil_ConvertPtr(val,(void**) &x,
                                             $descriptor(T *), 0) == 0)
                                 $1 = 1;
                             else
@@ -154,14 +154,14 @@ namespace std {
             } else {
                 /* wrapped map? */
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_MAP) const map< K, T, C >&,
+        %typecheck(alaqil_TYPECHECK_MAP) const map< K, T, C >&,
                                        const map< K, T, C >* {
             /* native sequence? */
             if (scm_is_null($input)) {
@@ -175,16 +175,16 @@ namespace std {
                 if (scm_is_pair(head)) {
                     SCM key = SCM_CAR(head);
                     SCM val = SCM_CDR(head);
-                    if (SWIG_ConvertPtr(key,(void**) &k,
+                    if (alaqil_ConvertPtr(key,(void**) &k,
                                     $descriptor(K *), 0) != 0) {
                         $1 = 0;
                     } else {
-                        if (SWIG_ConvertPtr(val,(void**) &x,
+                        if (alaqil_ConvertPtr(val,(void**) &x,
                                         $descriptor(T *), 0) == 0) {
                             $1 = 1;
                         } else if (scm_is_pair(val)) {
                             val = SCM_CAR(val);
-                            if (SWIG_ConvertPtr(val,(void**) &x,
+                            if (alaqil_ConvertPtr(val,(void**) &x,
                                             $descriptor(T *), 0) == 0)
                                 $1 = 1;
                             else
@@ -199,7 +199,7 @@ namespace std {
             } else {
                 /* wrapped map? */
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -256,7 +256,7 @@ namespace std {
                 SCM result = SCM_EOL;
                 for (std::map< K, T, C >::reverse_iterator i=self->rbegin(); i!=self->rend(); ++i) {
                     K* key = new K(i->first);
-                    SCM k = SWIG_NewPointerObj(key,$descriptor(K *), 1);
+                    SCM k = alaqil_NewPointerObj(key,$descriptor(K *), 1);
                     result = scm_cons(k,result);
                 }
                 return result;
@@ -281,25 +281,25 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
                     if (!CHECK(key))
-                        SWIG_exception(SWIG_TypeError,
+                        alaqil_exception(alaqil_TypeError,
                                        "map<" #K "," #T "," #C "> expected");
-                    if (SWIG_ConvertPtr(val,(void**) &x,
+                    if (alaqil_ConvertPtr(val,(void**) &x,
                                     $descriptor(T *), 0) != 0) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
-                        x = (T*) SWIG_MustGetPtr(val,$descriptor(T *),$argnum, 0);
+                        x = (T*) alaqil_MustGetPtr(val,$descriptor(T *),$argnum, 0);
                     }
                     (($1_type &)$1)[CONVERT_FROM(key)] = *x;
                     alist = SCM_CDR(alist);
                 }
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         }
         %typemap(in) const map< K, T, C >& (std::map< K, T, C > temp),
@@ -316,24 +316,24 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
                     if (!CHECK(key))
-                        SWIG_exception(SWIG_TypeError,
+                        alaqil_exception(alaqil_TypeError,
                                        "map<" #K "," #T "," #C "> expected");
-                    if (SWIG_ConvertPtr(val,(void**) &x,
+                    if (alaqil_ConvertPtr(val,(void**) &x,
                                     $descriptor(T *), 0) != 0) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
-                        x = (T*) SWIG_MustGetPtr(val,$descriptor(T *),$argnum, 0);
+                        x = (T*) alaqil_MustGetPtr(val,$descriptor(T *),$argnum, 0);
                     }
                     temp[CONVERT_FROM(key)] = *x;
                     alist = SCM_CDR(alist);
                 }
             } else {
-                $1 = ($1_ltype) SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                $1 = ($1_ltype) alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         }
         %typemap(out) map< K, T, C > {
@@ -341,13 +341,13 @@ namespace std {
             for (std::map< K, T, C >::reverse_iterator i=$1.rbegin(); i!=$1.rend(); ++i) {
                 T* val = new T(i->second);
                 SCM k = CONVERT_TO(i->first);
-                SCM x = SWIG_NewPointerObj(val,$descriptor(T *), 1);
+                SCM x = alaqil_NewPointerObj(val,$descriptor(T *), 1);
                 SCM entry = scm_cons(k,x);
                 alist = scm_cons(entry,alist);
             }
             $result = alist;
         }
-        %typecheck(SWIG_TYPECHECK_MAP) map< K, T, C > {
+        %typecheck(alaqil_TYPECHECK_MAP) map< K, T, C > {
             // native sequence?
             if (scm_is_null($input)) {
                 /* an empty sequence can be of any type */
@@ -362,12 +362,12 @@ namespace std {
                     if (!CHECK(key)) {
                         $1 = 0;
                     } else {
-                        if (SWIG_ConvertPtr(val,(void**) &x,
+                        if (alaqil_ConvertPtr(val,(void**) &x,
                                         $descriptor(T *), 0) == 0) {
                             $1 = 1;
                         } else if (scm_is_pair(val)) {
                             val = SCM_CAR(val);
-                            if (SWIG_ConvertPtr(val,(void**) &x,
+                            if (alaqil_ConvertPtr(val,(void**) &x,
                                             $descriptor(T *), 0) == 0)
                                 $1 = 1;
                             else
@@ -382,14 +382,14 @@ namespace std {
             } else {
                 // wrapped map?
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_MAP) const map< K, T, C >&,
+        %typecheck(alaqil_TYPECHECK_MAP) const map< K, T, C >&,
                                        const map< K, T, C >* {
             // native sequence?
             if (scm_is_null($input)) {
@@ -405,12 +405,12 @@ namespace std {
                     if (!CHECK(key)) {
                         $1 = 0;
                     } else {
-                        if (SWIG_ConvertPtr(val,(void**) &x,
+                        if (alaqil_ConvertPtr(val,(void**) &x,
                                         $descriptor(T *), 0) == 0) {
                             $1 = 1;
                         } else if (scm_is_pair(val)) {
                             val = SCM_CAR(val);
-                            if (SWIG_ConvertPtr(val,(void**) &x,
+                            if (alaqil_ConvertPtr(val,(void**) &x,
                                             $descriptor(T *), 0) == 0)
                                 $1 = 1;
                             else
@@ -425,7 +425,7 @@ namespace std {
             } else {
                 // wrapped map?
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -503,16 +503,16 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
-                    k = (K*) SWIG_MustGetPtr(key,$descriptor(K *),$argnum, 0);
+                    k = (K*) alaqil_MustGetPtr(key,$descriptor(K *),$argnum, 0);
                     if (!CHECK(val)) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
                         if (!CHECK(val))
-                            SWIG_exception(SWIG_TypeError,
+                            alaqil_exception(alaqil_TypeError,
                                            "map<" #K "," #T "," #C "> expected");
                     }
                     (($1_type &)$1)[*k] = CONVERT_FROM(val);
@@ -520,7 +520,7 @@ namespace std {
                 }
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         }
         %typemap(in) const map< K, T, C >& (std::map< K, T, C > temp),
@@ -537,37 +537,37 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
-                    k = (K*) SWIG_MustGetPtr(key,$descriptor(K *),$argnum, 0);
+                    k = (K*) alaqil_MustGetPtr(key,$descriptor(K *),$argnum, 0);
                     if (!CHECK(val)) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
                         if (!CHECK(val))
-                            SWIG_exception(SWIG_TypeError,
+                            alaqil_exception(alaqil_TypeError,
                                            "map<" #K "," #T "," #C "> expected");
                     }
                     temp[*k] = CONVERT_FROM(val);
                     alist = SCM_CDR(alist);
                 }
             } else {
-                $1 = ($1_ltype) SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                $1 = ($1_ltype) alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         }
         %typemap(out) map< K, T, C > {
             SCM alist = SCM_EOL;
             for (std::map< K, T, C >::reverse_iterator i=$1.rbegin(); i!=$1.rend(); ++i) {
                 K* key = new K(i->first);
-                SCM k = SWIG_NewPointerObj(key,$descriptor(K *), 1);
+                SCM k = alaqil_NewPointerObj(key,$descriptor(K *), 1);
                 SCM x = CONVERT_TO(i->second);
                 SCM entry = scm_cons(k,x);
                 alist = scm_cons(entry,alist);
             }
             $result = alist;
         }
-        %typecheck(SWIG_TYPECHECK_MAP) map< K, T, C > {
+        %typecheck(alaqil_TYPECHECK_MAP) map< K, T, C > {
             // native sequence?
             if (scm_is_null($input)) {
                 /* an empty sequence can be of any type */
@@ -578,7 +578,7 @@ namespace std {
                 SCM head = SCM_CAR($input);
                 if (scm_is_pair(head)) {
                     SCM val = SCM_CDR(head);
-                    if (SWIG_ConvertPtr(val,(void **) &k,
+                    if (alaqil_ConvertPtr(val,(void **) &k,
                                     $descriptor(K *), 0) != 0) {
                         $1 = 0;
                     } else {
@@ -600,14 +600,14 @@ namespace std {
             } else {
                 // wrapped map?
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_MAP) const map< K, T, C >&,
+        %typecheck(alaqil_TYPECHECK_MAP) const map< K, T, C >&,
                                        const map< K, T, C >* {
             // native sequence?
             if (scm_is_null($input)) {
@@ -619,7 +619,7 @@ namespace std {
                 SCM head = SCM_CAR($input);
                 if (scm_is_pair(head)) {
                     SCM val = SCM_CDR(head);
-                    if (SWIG_ConvertPtr(val,(void **) &k,
+                    if (alaqil_ConvertPtr(val,(void **) &k,
                                     $descriptor(K *), 0) != 0) {
                         $1 = 0;
                     } else {
@@ -641,7 +641,7 @@ namespace std {
             } else {
                 // wrapped map?
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -698,7 +698,7 @@ namespace std {
                 SCM result = SCM_EOL;
                 for (std::map< K, T, C >::reverse_iterator i=self->rbegin(); i!=self->rend(); ++i) {
                     K* key = new K(i->first);
-                    SCM k = SWIG_NewPointerObj(key,$descriptor(K *), 1);
+                    SCM k = alaqil_NewPointerObj(key,$descriptor(K *), 1);
                     result = scm_cons(k,result);
                 }
                 return result;
@@ -720,18 +720,18 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
                     if (!CHECK_K(key))
-                        SWIG_exception(SWIG_TypeError,
+                        alaqil_exception(alaqil_TypeError,
                                            "map<" #K "," #T "," #C "> expected");
                     if (!CHECK_T(val)) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
                         if (!CHECK_T(val))
-                            SWIG_exception(SWIG_TypeError,
+                            alaqil_exception(alaqil_TypeError,
                                            "map<" #K "," #T "," #C "> expected");
                     }
                     (($1_type &)$1)[CONVERT_K_FROM(key)] = 
@@ -740,7 +740,7 @@ namespace std {
                 }
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         }
         %typemap(in) const map< K, T, C >& (std::map< K, T, C > temp),
@@ -756,25 +756,25 @@ namespace std {
                     SCM entry, key, val;
                     entry = SCM_CAR(alist);
                     if (!scm_is_pair(entry))
-                        SWIG_exception(SWIG_TypeError,"alist expected");
+                        alaqil_exception(alaqil_TypeError,"alist expected");
                     key = SCM_CAR(entry);
                     val = SCM_CDR(entry);
                     if (!CHECK_K(key))
-                        SWIG_exception(SWIG_TypeError,
+                        alaqil_exception(alaqil_TypeError,
                                            "map<" #K "," #T "," #C "> expected");
                     if (!CHECK_T(val)) {
                         if (!scm_is_pair(val))
-                            SWIG_exception(SWIG_TypeError,"alist expected");
+                            alaqil_exception(alaqil_TypeError,"alist expected");
                         val = SCM_CAR(val);
                         if (!CHECK_T(val))
-                            SWIG_exception(SWIG_TypeError,
+                            alaqil_exception(alaqil_TypeError,
                                            "map<" #K "," #T "," #C "> expected");
                     }
                     temp[CONVERT_K_FROM(key)] = CONVERT_T_FROM(val);
                     alist = SCM_CDR(alist);
                 }
             } else {
-                $1 = ($1_ltype) SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                $1 = ($1_ltype) alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         }
         %typemap(out) map< K, T, C > {
@@ -787,7 +787,7 @@ namespace std {
             }
             $result = alist;
         }
-        %typecheck(SWIG_TYPECHECK_MAP) map< K, T, C > {
+        %typecheck(alaqil_TYPECHECK_MAP) map< K, T, C > {
             // native sequence?
             if (scm_is_null($input)) {
                 /* an empty sequence can be of any type */
@@ -819,14 +819,14 @@ namespace std {
             } else {
                 // wrapped map?
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_MAP) const map< K, T, C >&,
+        %typecheck(alaqil_TYPECHECK_MAP) const map< K, T, C >&,
                                        const map< K, T, C >* {
             // native sequence?
             if (scm_is_null($input)) {
@@ -859,7 +859,7 @@ namespace std {
             } else {
                 // wrapped map?
                 std::map< K, T, C >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                 $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -926,7 +926,7 @@ namespace std {
 
 
     specialize_std_map_on_key(bool,scm_is_bool,
-                              scm_is_true,SWIG_bool2scm);
+                              scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_key(int,scm_is_number,
                               scm_to_long,scm_from_long);
     specialize_std_map_on_key(short,scm_is_number,
@@ -944,10 +944,10 @@ namespace std {
     specialize_std_map_on_key(float,scm_is_number,
                               scm_to_double,scm_from_double);
     specialize_std_map_on_key(std::string,scm_is_string,
-                              SWIG_scm2string,SWIG_string2scm);
+                              alaqil_scm2string,alaqil_string2scm);
 
     specialize_std_map_on_value(bool,scm_is_bool,
-                                scm_is_true,SWIG_bool2scm);
+                                scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_value(int,scm_is_number,
                                 scm_to_long,scm_from_long);
     specialize_std_map_on_value(short,scm_is_number,
@@ -965,52 +965,52 @@ namespace std {
     specialize_std_map_on_value(float,scm_is_number,
                                 scm_to_double,scm_from_double);
     specialize_std_map_on_value(std::string,scm_is_string,
-                                SWIG_scm2string,SWIG_string2scm);
+                                alaqil_scm2string,alaqil_string2scm);
 
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                int,scm_is_number,
-                               scm_to_long,scm_from_long);
-    specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
-                               short,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
+                               short,scm_is_number,
+                               scm_to_long,scm_from_long);
+    specialize_std_map_on_both(bool,scm_is_bool,
+                               scm_is_true,alaqil_bool2scm,
                                long,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                double,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                float,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_map_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(int,scm_is_number,
                                scm_to_long,scm_from_long,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(int,scm_is_number,
                                scm_to_long,scm_from_long,
                                int,scm_is_number,
@@ -1046,11 +1046,11 @@ namespace std {
     specialize_std_map_on_both(int,scm_is_number,
                                scm_to_long,scm_from_long,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(short,scm_is_number,
                                scm_to_long,scm_from_long,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(short,scm_is_number,
                                scm_to_long,scm_from_long,
                                int,scm_is_number,
@@ -1086,11 +1086,11 @@ namespace std {
     specialize_std_map_on_both(short,scm_is_number,
                                scm_to_long,scm_from_long,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(long,scm_is_number,
                                scm_to_long,scm_from_long,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(long,scm_is_number,
                                scm_to_long,scm_from_long,
                                int,scm_is_number,
@@ -1126,11 +1126,11 @@ namespace std {
     specialize_std_map_on_both(long,scm_is_number,
                                scm_to_long,scm_from_long,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                int,scm_is_number,
@@ -1166,11 +1166,11 @@ namespace std {
     specialize_std_map_on_both(unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                int,scm_is_number,
@@ -1206,11 +1206,11 @@ namespace std {
     specialize_std_map_on_both(unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                int,scm_is_number,
@@ -1246,11 +1246,11 @@ namespace std {
     specialize_std_map_on_both(unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(double,scm_is_number,
                                scm_to_double,scm_from_double,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(double,scm_is_number,
                                scm_to_double,scm_from_double,
                                int,scm_is_number,
@@ -1286,11 +1286,11 @@ namespace std {
     specialize_std_map_on_both(double,scm_is_number,
                                scm_to_double,scm_from_double,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(float,scm_is_number,
                                scm_to_double,scm_from_double,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(float,scm_is_number,
                                scm_to_double,scm_from_double,
                                int,scm_is_number,
@@ -1326,45 +1326,45 @@ namespace std {
     specialize_std_map_on_both(float,scm_is_number,
                                scm_to_double,scm_from_double,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                int,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                short,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                long,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                double,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                float,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_map_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
 }

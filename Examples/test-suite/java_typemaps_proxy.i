@@ -3,7 +3,7 @@
 %module java_typemaps_proxy
 
 
-%typemap(javaimports) SWIGTYPE "import java.math.*;";
+%typemap(javaimports) alaqilTYPE "import java.math.*;";
 %typemap(javacode) NS::Farewell %{
   public void saybye(BigDecimal num_times) {
     // BigDecimal requires the java.math library
@@ -31,31 +31,31 @@ import java.lang.*; // for Exception
 
 // Create a new getCPtr() function which takes Java null and is public
 %typemap(javabody) NS::Greeting %{
-  private transient long swigCPtr;
-  protected transient boolean swigCMemOwn;
+  private transient long alaqilCPtr;
+  protected transient boolean alaqilCMemOwn;
 
   protected $javaclassname(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
+    alaqilCMemOwn = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   public static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 // Make the pointer constructor public
 %typemap(javabody) NS::Farewell %{
-  private transient long swigCPtr;
-  protected transient boolean swigCMemOwn;
+  private transient long alaqilCPtr;
+  protected transient boolean alaqilCMemOwn;
 
   public $javaclassname(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
+    alaqilCMemOwn = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   protected static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 

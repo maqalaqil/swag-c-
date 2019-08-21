@@ -1,7 +1,7 @@
 %module using_inherit
 
-#ifdef SWIGLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) Foo::test;
+#ifdef alaqilLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) Foo::test;
 #endif
 
 %inline %{

@@ -1,10 +1,10 @@
 // Throw a lot of exceptions
 
-// The Python runtime tests were previously failing with the -threads option on Windows due to SWIG_PYTHON_THREAD_BEGIN_ALLOW not being within the try block.
+// The Python runtime tests were previously failing with the -threads option on Windows due to alaqil_PYTHON_THREAD_BEGIN_ALLOW not being within the try block.
 
 %module(threads="1") threads_exception
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 #define TESTCASE_THROW3(T1, T2, T3) throw(T1, T2, T3)
 %{
@@ -57,7 +57,7 @@ public:
   }
 };
 
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

@@ -1,196 +1,196 @@
-// Users can provide their own SWIG_INTRUSIVE_PTR_TYPEMAPS or SWIG_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP macros before including this file to change the
+// Users can provide their own alaqil_INTRUSIVE_PTR_TYPEMAPS or alaqil_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP macros before including this file to change the
 // visibility of the constructor and getCPtr method if desired to public if using multiple modules.
-#ifndef SWIG_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP
-#define SWIG_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP(CONST, TYPE...) SWIG_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP_IMPLEMENTATION(protected, protected, CONST, TYPE)
+#ifndef alaqil_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP
+#define alaqil_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP(CONST, TYPE...) alaqil_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP_IMPLEMENTATION(protected, protected, CONST, TYPE)
 #endif
-#ifndef SWIG_INTRUSIVE_PTR_TYPEMAPS
-#define SWIG_INTRUSIVE_PTR_TYPEMAPS(CONST, TYPE...) SWIG_INTRUSIVE_PTR_TYPEMAPS_IMPLEMENTATION(protected, protected, CONST, TYPE)
+#ifndef alaqil_INTRUSIVE_PTR_TYPEMAPS
+#define alaqil_INTRUSIVE_PTR_TYPEMAPS(CONST, TYPE...) alaqil_INTRUSIVE_PTR_TYPEMAPS_IMPLEMENTATION(protected, protected, CONST, TYPE)
 #endif
 
 
 %include <intrusive_ptr.i>
 
 // Language specific macro implementing all the customisations for handling the smart pointer
-%define SWIG_INTRUSIVE_PTR_TYPEMAPS_IMPLEMENTATION(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, CONST, TYPE...)
+%define alaqil_INTRUSIVE_PTR_TYPEMAPS_IMPLEMENTATION(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, CONST, TYPE...)
 
 // %naturalvar is as documented for member variables
 %naturalvar TYPE;
-%naturalvar SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >;
+%naturalvar alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >;
 
 // destructor wrapper customisation
 %feature("unref") TYPE "(void)arg1; delete smartarg1;"
 
 // Typemap customisations...
 
-%typemap(in) CONST TYPE ($&1_type argp = 0, SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
+%typemap(in) CONST TYPE ($&1_type argp = 0, alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
   // plain value
-  argp = (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0;
+  argp = (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0;
   if (!argp) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null $1_type");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "Attempt to dereference null $1_type");
     return $null;
   }
   $1 = *argp;
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter") CONST TYPE %{
+%typemap(out, fragment="alaqil_intrusive_deleter") CONST TYPE %{
   //plain value(out)
   $1_ltype* resultp = new $1_ltype(($1_ltype &)$1);
   intrusive_ptr_add_ref(resultp);
-  *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(resultp, SWIG_intrusive_deleter< CONST TYPE >());
+  *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(resultp, alaqil_intrusive_deleter< CONST TYPE >());
 %}
 
-%typemap(in) CONST TYPE * (SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
+%typemap(in) CONST TYPE * (alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
   // plain pointer
-  smartarg = *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input;
+  smartarg = *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input;
   $1 = (TYPE *)(smartarg ? smartarg->get() : 0);
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter,SWIG_null_deleter") CONST TYPE * %{
+%typemap(out, fragment="alaqil_intrusive_deleter,alaqil_null_deleter") CONST TYPE * %{
   //plain pointer(out)
   #if ($owner)
   if ($1) {
     intrusive_ptr_add_ref($1);
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1, SWIG_intrusive_deleter< CONST TYPE >());
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1, alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
   #else
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = $1 ? new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 SWIG_NO_NULL_DELETER_0) : 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = $1 ? new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 alaqil_NO_NULL_DELETER_0) : 0;
   #endif
 %}
 
-%typemap(in) CONST TYPE & (SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
+%typemap(in) CONST TYPE & (alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
   // plain reference
-  $1 = ($1_ltype)((*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
+  $1 = ($1_ltype)((*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
   if(!$1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "$1_type reference is null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "$1_type reference is null");
     return $null;
   }
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter,SWIG_null_deleter") CONST TYPE & %{
+%typemap(out, fragment="alaqil_intrusive_deleter,alaqil_null_deleter") CONST TYPE & %{
   //plain reference(out)
   #if ($owner)
   if ($1) {
     intrusive_ptr_add_ref($1);
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1, SWIG_intrusive_deleter< CONST TYPE >());
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1, alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
   #else
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = $1 ? new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 SWIG_NO_NULL_DELETER_0) : 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = $1 ? new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 alaqil_NO_NULL_DELETER_0) : 0;
   #endif
 %}
 
-%typemap(in) TYPE *CONST& ($*1_ltype temp = 0, SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
+%typemap(in) TYPE *CONST& ($*1_ltype temp = 0, alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
   // plain pointer by reference
-  temp = ($*1_ltype)((*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
+  temp = ($*1_ltype)((*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
   $1 = &temp;
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter,SWIG_null_deleter") TYPE *CONST& %{
+%typemap(out, fragment="alaqil_intrusive_deleter,alaqil_null_deleter") TYPE *CONST& %{
   // plain pointer by reference(out)
   #if ($owner)
   if (*$1) {
     intrusive_ptr_add_ref(*$1);
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(*$1, SWIG_intrusive_deleter< CONST TYPE >());
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(*$1, alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
   #else
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(*$1 SWIG_NO_NULL_DELETER_0);
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(*$1 alaqil_NO_NULL_DELETER_0);
   #endif
 %}
 
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > ($&1_type argp, SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > ($&1_type argp, alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
   // intrusive_ptr by value
-  smartarg = *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
+  smartarg = *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
   if (smartarg) {
-  	$1 = SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
+  	$1 = alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
   }
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter") SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > %{
+%typemap(out, fragment="alaqil_intrusive_deleter") alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > %{
   if ($1) {
   	intrusive_ptr_add_ref(result.get());
-  	*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(result.get(), SWIG_intrusive_deleter< CONST TYPE >());
+  	*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(result.get(), alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-   	*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+   	*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
 %}
 
-%typemap(in) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > swigSharedPtrUpcast ($&1_type smartarg) %{
+%typemap(in) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > alaqilSharedPtrUpcast ($&1_type smartarg) %{
   // shared_ptr by value
   smartarg = *($&1_ltype*)&$input;
   if (smartarg) $1 = *smartarg;
 %}
-%typemap(out) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > ANY_TYPE_SWIGSharedPtrUpcast %{
+%typemap(out) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > ANY_TYPE_alaqilSharedPtrUpcast %{
   *($&1_ltype*)&$result = $1 ? new $1_ltype($1) : 0;
 %}
 
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & ($*1_ltype tempnull, $*1_ltype temp, SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & ($*1_ltype tempnull, $*1_ltype temp, alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
   // intrusive_ptr by reference
   if ( $input ) {
-  	smartarg = *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
-  	temp = SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
+  	smartarg = *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
+  	temp = alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
   	$1 = &temp;
   } else {
 	$1 = &tempnull;
   }
 %}
-%typemap(memberin) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & %{
+%typemap(memberin) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & %{
   delete &($1);
   if ($self) {
-    SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * temp = new SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(*$input);
+    alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * temp = new alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(*$input);
     $1 = *temp;
   }
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter") SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & %{
+%typemap(out, fragment="alaqil_intrusive_deleter") alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & %{
   if (*$1) {
     intrusive_ptr_add_ref($1->get());
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1->get(), SWIG_intrusive_deleter< CONST TYPE >());
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1->get(), alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
 %}
 
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * ($*1_ltype tempnull, $*1_ltype temp, SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * ($*1_ltype tempnull, $*1_ltype temp, alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
   // intrusive_ptr by pointer
   if ( $input ) {
-  	smartarg = *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
-  	temp = SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
+  	smartarg = *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
+  	temp = alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
   	$1 = &temp;
   } else {
 	$1 = &tempnull;
   }
 %}
-%typemap(memberin) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * %{
+%typemap(memberin) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * %{
   delete $1;
-  if ($self) $1 = new SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(*$input);
+  if ($self) $1 = new alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(*$input);
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter") SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * %{
+%typemap(out, fragment="alaqil_intrusive_deleter") alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * %{
   if ($1 && *$1) {
     intrusive_ptr_add_ref($1->get());
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1->get(), SWIG_intrusive_deleter< CONST TYPE >());
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1->get(), alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
   if ($owner) delete $1;
 %}
 
-%typemap(in) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& (SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > temp, $*1_ltype tempp = 0, SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
+%typemap(in) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& (alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > temp, $*1_ltype tempp = 0, alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > * smartarg) %{
   // intrusive_ptr by pointer reference
-  smartarg = *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
+  smartarg = *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >**)&$input;
   if ($input) {
-    temp = SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
+    temp = alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >(smartarg->get(), true);
   }
   tempp = &temp;
   $1 = &tempp;
 %}
-%typemap(memberin) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& %{
+%typemap(memberin) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& %{
   if ($self) $1 = *$input;
 %}
-%typemap(out, fragment="SWIG_intrusive_deleter") SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& %{
+%typemap(out, fragment="alaqil_intrusive_deleter") alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& %{
   if (*$1 && **$1) {
     intrusive_ptr_add_ref((*$1)->get());
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >((*$1)->get(), SWIG_intrusive_deleter< CONST TYPE >());
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >((*$1)->get(), alaqil_intrusive_deleter< CONST TYPE >());
   } else {
-    *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
+    *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = 0;
   }
 %}
 
@@ -203,44 +203,44 @@
 %}
 
 
-%typemap (jni)    SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
-                  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "jlong"
-%typemap (jtype)  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
-                  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "long"
-%typemap (jstype) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
-                  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
-                  SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "$typemap(jstype, TYPE)"
-%typemap(javain) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
-                 SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-                 SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
-                 SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
-                 SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "$typemap(jstype, TYPE).getCPtr($javainput)"
+%typemap (jni)    alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
+                  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "jlong"
+%typemap (jtype)  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
+                  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "long"
+%typemap (jstype) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
+                  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
+                  alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "$typemap(jstype, TYPE)"
+%typemap(javain) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >,
+                 alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+                 alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > &,
+                 alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *,
+                 alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& "$typemap(jstype, TYPE).getCPtr($javainput)"
 
-%typemap(javaout) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > {
+%typemap(javaout) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $typemap(jstype, TYPE)(cPtr, true);
   }
-%typemap(javaout) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > {
+%typemap(javaout) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $typemap(jstype, TYPE)(cPtr, true);
   }
-%typemap(javaout) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & {
+%typemap(javaout) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > & {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $typemap(jstype, TYPE)(cPtr, true);
   }
-%typemap(javaout) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * {
+%typemap(javaout) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > * {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $typemap(jstype, TYPE)(cPtr, true);
   }
-%typemap(javaout) SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& {
+%typemap(javaout) alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE > *& {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $typemap(jstype, TYPE)(cPtr, true);
   }
@@ -263,59 +263,59 @@
 
 // Base proxy classes
 %typemap(javabody) TYPE %{
-  private transient long swigCPtr;
-  private transient boolean swigCMemOwnBase;
+  private transient long alaqilCPtr;
+  private transient boolean alaqilCMemOwnBase;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwnBase = cMemoryOwn;
-    swigCPtr = cPtr;
+    alaqilCMemOwnBase = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 // Derived proxy classes
 %typemap(javabody_derived) TYPE %{
-  private transient long swigCPtr;
-  private transient boolean swigCMemOwnDerived;
+  private transient long alaqilCPtr;
+  private transient boolean alaqilCMemOwnDerived;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, boolean cMemoryOwn) {
-    super($imclassname.$javaclazznameSWIGSmartPtrUpcast(cPtr), true);
-    swigCMemOwnDerived = cMemoryOwn;
-    swigCPtr = cPtr;
+    super($imclassname.$javaclazznamealaqilSmartPtrUpcast(cPtr), true);
+    alaqilCMemOwnDerived = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 %typemap(javadestruct, methodname="delete", methodmodifiers="public synchronized") TYPE {
-    if(swigCPtr != 0 && swigCMemOwnBase) {
-      swigCMemOwnBase = false;
+    if(alaqilCPtr != 0 && alaqilCMemOwnBase) {
+      alaqilCMemOwnBase = false;
       $jnicall;
     }
-    swigCPtr = 0;
+    alaqilCPtr = 0;
   }
 
 %typemap(javadestruct_derived, methodname="delete", methodmodifiers="public synchronized") TYPE {
-    if(swigCPtr != 0 && swigCMemOwnDerived) {
-      swigCMemOwnDerived = false;
+    if(alaqilCPtr != 0 && alaqilCMemOwnDerived) {
+      alaqilCMemOwnDerived = false;
       $jnicall;
     }
-    swigCPtr = 0;
+    alaqilCPtr = 0;
     super.delete();
   }
 
 // CONST version needed ???? also for C#
-%typemap(jtype, nopgcpp="1") SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< TYPE > swigSharedPtrUpcast "long"
-%typemap(jtype, nopgcpp="1") SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > swigSharedPtrUpcast "long"
+%typemap(jtype, nopgcpp="1") alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< TYPE > alaqilSharedPtrUpcast "long"
+%typemap(jtype, nopgcpp="1") alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > alaqilSharedPtrUpcast "long"
 
 
-%template() SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >;
-%template() SWIG_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >;
+%template() alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >;
+%template() alaqil_INTRUSIVE_PTR_QNAMESPACE::intrusive_ptr< CONST TYPE >;
 %enddef
 
 
@@ -324,10 +324,10 @@
 
 %include <shared_ptr.i>
 
-%define SWIG_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP_IMPLEMENTATION(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, CONST, TYPE...)
+%define alaqil_INTRUSIVE_PTR_TYPEMAPS_NO_WRAP_IMPLEMENTATION(PTRCTOR_VISIBILITY, CPTR_VISIBILITY, CONST, TYPE...)
 
 %naturalvar TYPE;
-%naturalvar SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >;
+%naturalvar alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >;
 
 // destructor mods
 %feature("unref") TYPE "(void)arg1; delete smartarg1;"
@@ -335,46 +335,46 @@
 
 // plain value
 %typemap(in) CONST TYPE ($&1_type argp = 0) %{
-  argp = (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0;
+  argp = (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0;
   if (!argp) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null $1_type");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "Attempt to dereference null $1_type");
     return $null;
   }
   $1 = *argp; %}
 %typemap(out) CONST TYPE
-%{ *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(new $1_ltype(($1_ltype &)$1)); %}
+%{ *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(new $1_ltype(($1_ltype &)$1)); %}
 
 // plain pointer
-%typemap(in) CONST TYPE * (SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
-  smartarg = *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input;
+%typemap(in) CONST TYPE * (alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *smartarg = 0) %{
+  smartarg = *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input;
   $1 = (TYPE *)(smartarg ? smartarg->get() : 0); %}
-%typemap(out, fragment="SWIG_null_deleter") CONST TYPE * %{
-  *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = $1 ? new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 SWIG_NO_NULL_DELETER_$owner) : 0;
+%typemap(out, fragment="alaqil_null_deleter") CONST TYPE * %{
+  *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = $1 ? new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 alaqil_NO_NULL_DELETER_$owner) : 0;
 %}
 
 // plain reference
 %typemap(in) CONST TYPE & %{
-  $1 = ($1_ltype)((*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
+  $1 = ($1_ltype)((*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
   if (!$1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "$1_type reference is null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "$1_type reference is null");
     return $null;
   } %}
-%typemap(out, fragment="SWIG_null_deleter") CONST TYPE &
-%{ *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 SWIG_NO_NULL_DELETER_$owner); %}
+%typemap(out, fragment="alaqil_null_deleter") CONST TYPE &
+%{ *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >($1 alaqil_NO_NULL_DELETER_$owner); %}
 
 // plain pointer by reference
 %typemap(in) TYPE *CONST& ($*1_ltype temp = 0)
-%{ temp = ($*1_ltype)((*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
+%{ temp = ($*1_ltype)((*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input) ? (*(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$input)->get() : 0);
    $1 = &temp; %}
-%typemap(out, fragment="SWIG_null_deleter") TYPE *CONST&
-%{ *(SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(*$1 SWIG_NO_NULL_DELETER_$owner); %}
+%typemap(out, fragment="alaqil_null_deleter") TYPE *CONST&
+%{ *(alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > **)&$result = new alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >(*$1 alaqil_NO_NULL_DELETER_$owner); %}
 
-%typemap(in) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > swigSharedPtrUpcast ($&1_type smartarg) %{
+%typemap(in) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > alaqilSharedPtrUpcast ($&1_type smartarg) %{
   // shared_ptr by value
   smartarg = *($&1_ltype*)&$input;
   if (smartarg) $1 = *smartarg;
 %}
-%typemap(out) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > ANY_TYPE_SWIGSharedPtrUpcast %{
+%typemap(out) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > ANY_TYPE_alaqilSharedPtrUpcast %{
   *($&1_ltype*)&$result = $1 ? new $1_ltype($1) : 0;
 %}
 
@@ -387,11 +387,11 @@
 %}
 
 
-%typemap (jni)    SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "jlong"
-%typemap (jtype)  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "long"
-%typemap (jstype) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "$typemap(jstype, TYPE)"
-%typemap (javain) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "$typemap(jstype, TYPE).getCPtr($javainput)"
-%typemap(javaout) SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > {
+%typemap (jni)    alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "jlong"
+%typemap (jtype)  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "long"
+%typemap (jstype) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "$typemap(jstype, TYPE)"
+%typemap (javain) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > "$typemap(jstype, TYPE).getCPtr($javainput)"
+%typemap(javaout) alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > {
     long cPtr = $jnicall;
     return (cPtr == 0) ? null : new $typemap(jstype, TYPE)(cPtr, true);
   }
@@ -413,72 +413,72 @@
 
 // Base proxy classes
 %typemap(javabody) TYPE %{
-  private transient long swigCPtr;
-  private transient boolean swigCMemOwnBase;
+  private transient long alaqilCPtr;
+  private transient boolean alaqilCMemOwnBase;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwnBase = cMemoryOwn;
-    swigCPtr = cPtr;
+    alaqilCMemOwnBase = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 // Derived proxy classes
 %typemap(javabody_derived) TYPE %{
-  private transient long swigCPtr;
-  private transient boolean swigCMemOwnDerived;
+  private transient long alaqilCPtr;
+  private transient boolean alaqilCMemOwnDerived;
 
   PTRCTOR_VISIBILITY $javaclassname(long cPtr, boolean cMemoryOwn) {
-    super($imclassname.$javaclazznameSWIGSmartPtrUpcast(cPtr), true);
-    swigCMemOwnDerived = cMemoryOwn;
-    swigCPtr = cPtr;
+    super($imclassname.$javaclazznamealaqilSmartPtrUpcast(cPtr), true);
+    alaqilCMemOwnDerived = cMemoryOwn;
+    alaqilCPtr = cPtr;
   }
 
   CPTR_VISIBILITY static long getCPtr($javaclassname obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
+    return (obj == null) ? 0 : obj.alaqilCPtr;
   }
 %}
 
 %typemap(javadestruct, methodname="delete", methodmodifiers="public synchronized") TYPE {
-    if (swigCPtr != 0) {
-      if (swigCMemOwnBase) {
-        swigCMemOwnBase = false;
+    if (alaqilCPtr != 0) {
+      if (alaqilCMemOwnBase) {
+        alaqilCMemOwnBase = false;
         $jnicall;
       }
-      swigCPtr = 0;
+      alaqilCPtr = 0;
     }
   }
 
 %typemap(javadestruct_derived, methodname="delete", methodmodifiers="public synchronized") TYPE {
-    if (swigCPtr != 0) {
-      if (swigCMemOwnDerived) {
-        swigCMemOwnDerived = false;
+    if (alaqilCPtr != 0) {
+      if (alaqilCMemOwnDerived) {
+        alaqilCMemOwnDerived = false;
         $jnicall;
       }
-      swigCPtr = 0;
+      alaqilCPtr = 0;
     }
     super.delete();
   }
 
 // CONST version needed ???? also for C#
-%typemap(jtype, nopgcpp="1") SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< TYPE > swigSharedPtrUpcast "long"
-%typemap(jtype, nopgcpp="1") SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > swigSharedPtrUpcast "long"
+%typemap(jtype, nopgcpp="1") alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< TYPE > alaqilSharedPtrUpcast "long"
+%typemap(jtype, nopgcpp="1") alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > alaqilSharedPtrUpcast "long"
 
 // Typecheck typemaps
-%typemap(typecheck, precedence=SWIG_TYPECHECK_POINTER, equivalent="TYPE *")
+%typemap(typecheck, precedence=alaqil_TYPECHECK_POINTER, equivalent="TYPE *")
   TYPE CONST,
   TYPE CONST &,
   TYPE CONST *,
   TYPE *CONST&,
-  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
-  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
-  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
-  SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *&
+  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >,
+  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > &,
+  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *,
+  alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE > *&
   ""
 
-%template() SWIG_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >;
+%template() alaqil_SHARED_PTR_QNAMESPACE::shared_ptr< CONST TYPE >;
 %enddef
 

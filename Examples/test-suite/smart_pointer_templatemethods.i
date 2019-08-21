@@ -37,7 +37,7 @@ public:
   void DisposeObjct (void) {}
 };
  
-#ifdef SWIG
+#ifdef alaqil
 %template(PtrObjct) Ptr<Objct>;
 %template(PtrInt) Ptr<int>;
 %template(ObjektInt) Objekt<int>;

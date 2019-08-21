@@ -1,24 +1,24 @@
 /* -----------------------------------------------------------------------------
  * std_vector.i
  *
- * SWIG typemaps for std::vector<T>
+ * alaqil typemaps for std::vector<T>
  * C# implementation
  * The C# wrapper is made to look and feel like a C# System.Collections.Generic.List<> collection.
  *
  * Note that IEnumerable<> is implemented in the proxy class which is useful for using LINQ with
  * C++ std::vector wrappers. The IList<> interface is also implemented to provide enhanced functionality
  * whenever we are confident that the required C++ operator== is available. This is the case for when
- * T is a primitive type or a pointer. If T does define an operator==, then use the SWIG_STD_VECTOR_ENHANCED
+ * T is a primitive type or a pointer. If T does define an operator==, then use the alaqil_STD_VECTOR_ENHANCED
  * macro to obtain this enhanced functionality, for example:
  *
- *   SWIG_STD_VECTOR_ENHANCED(SomeNamespace::Klass)
+ *   alaqil_STD_VECTOR_ENHANCED(SomeNamespace::Klass)
  *   %template(VectKlass) std::vector<SomeNamespace::Klass>;
  * ----------------------------------------------------------------------------- */
 
 %include <std_common.i>
 
 // MACRO for use within the std::vector class body
-%define SWIG_STD_VECTOR_MINIMUM_INTERNAL(CSINTERFACE, CONST_REFERENCE, CTYPE...)
+%define alaqil_STD_VECTOR_MINIMUM_INTERNAL(CSINTERFACE, CONST_REFERENCE, CTYPE...)
 %typemap(csinterfaces) std::vector< CTYPE > "global::System.IDisposable, global::System.Collections.IEnumerable, global::System.Collections.Generic.CSINTERFACE<$typemap(cstype, CTYPE)>\n";
 %proxycode %{
   public $csclassname(global::System.Collections.IEnumerable c) : this() {
@@ -317,7 +317,7 @@
 
 // Extra methods added to the collection class if operator== is defined for the class being wrapped
 // The class will then implement IList<>, which adds extra functionality
-%define SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE...)
+%define alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE...)
     %extend {
       bool Contains(CTYPE const& value) {
         return std::find($self->begin(), $self->end(), value) != $self->end();
@@ -348,23 +348,23 @@
 %enddef
 
 // Macros for std::vector class specializations/enhancements
-%define SWIG_STD_VECTOR_ENHANCED(CTYPE...)
+%define alaqil_STD_VECTOR_ENHANCED(CTYPE...)
 namespace std {
   template<> class vector< CTYPE > {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(IList, %arg(CTYPE const&), %arg(CTYPE))
-    SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(IList, %arg(CTYPE const&), %arg(CTYPE))
+    alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE)
   };
 }
 %enddef
 
 // Legacy macros
-%define SWIG_STD_VECTOR_SPECIALIZE(CSTYPE, CTYPE...)
-#warning SWIG_STD_VECTOR_SPECIALIZE macro deprecated, please see csharp/std_vector.i and switch to SWIG_STD_VECTOR_ENHANCED
-SWIG_STD_VECTOR_ENHANCED(CTYPE)
+%define alaqil_STD_VECTOR_SPECIALIZE(CSTYPE, CTYPE...)
+#warning alaqil_STD_VECTOR_SPECIALIZE macro deprecated, please see csharp/std_vector.i and switch to alaqil_STD_VECTOR_ENHANCED
+alaqil_STD_VECTOR_ENHANCED(CTYPE)
 %enddef
 
-%define SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(CSTYPE, CTYPE...)
-#warning SWIG_STD_VECTOR_SPECIALIZE_MINIMUM macro deprecated, it is no longer required
+%define alaqil_STD_VECTOR_SPECIALIZE_MINIMUM(CSTYPE, CTYPE...)
+#warning alaqil_STD_VECTOR_SPECIALIZE_MINIMUM macro deprecated, it is no longer required
 %enddef
 
 %{
@@ -384,35 +384,35 @@ namespace std {
   // primary (unspecialized) class template for std::vector
   // does not require operator== to be defined
   template<class T> class vector {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(IEnumerable, T const&, T)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(IEnumerable, T const&, T)
   };
   // specialization for pointers
   template<class T> class vector<T *> {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(IList, T *const&, T *)
-    SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(T *)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(IList, T *const&, T *)
+    alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(T *)
   };
   // bool is specialized in the C++ standard - const_reference in particular
   template<> class vector<bool> {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(IList, bool, bool)
-    SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(bool)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(IList, bool, bool)
+    alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(bool)
   };
 }
 
 // template specializations for std::vector
 // these provide extra collections methods as operator== is defined
-SWIG_STD_VECTOR_ENHANCED(char)
-SWIG_STD_VECTOR_ENHANCED(signed char)
-SWIG_STD_VECTOR_ENHANCED(unsigned char)
-SWIG_STD_VECTOR_ENHANCED(short)
-SWIG_STD_VECTOR_ENHANCED(unsigned short)
-SWIG_STD_VECTOR_ENHANCED(int)
-SWIG_STD_VECTOR_ENHANCED(unsigned int)
-SWIG_STD_VECTOR_ENHANCED(long)
-SWIG_STD_VECTOR_ENHANCED(unsigned long)
-SWIG_STD_VECTOR_ENHANCED(long long)
-SWIG_STD_VECTOR_ENHANCED(unsigned long long)
-SWIG_STD_VECTOR_ENHANCED(float)
-SWIG_STD_VECTOR_ENHANCED(double)
-SWIG_STD_VECTOR_ENHANCED(std::string) // also requires a %include <std_string.i>
-SWIG_STD_VECTOR_ENHANCED(std::wstring) // also requires a %include <std_wstring.i>
+alaqil_STD_VECTOR_ENHANCED(char)
+alaqil_STD_VECTOR_ENHANCED(signed char)
+alaqil_STD_VECTOR_ENHANCED(unsigned char)
+alaqil_STD_VECTOR_ENHANCED(short)
+alaqil_STD_VECTOR_ENHANCED(unsigned short)
+alaqil_STD_VECTOR_ENHANCED(int)
+alaqil_STD_VECTOR_ENHANCED(unsigned int)
+alaqil_STD_VECTOR_ENHANCED(long)
+alaqil_STD_VECTOR_ENHANCED(unsigned long)
+alaqil_STD_VECTOR_ENHANCED(long long)
+alaqil_STD_VECTOR_ENHANCED(unsigned long long)
+alaqil_STD_VECTOR_ENHANCED(float)
+alaqil_STD_VECTOR_ENHANCED(double)
+alaqil_STD_VECTOR_ENHANCED(std::string) // also requires a %include <std_string.i>
+alaqil_STD_VECTOR_ENHANCED(std::wstring) // also requires a %include <std_wstring.i>
 

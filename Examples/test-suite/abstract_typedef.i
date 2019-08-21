@@ -24,7 +24,7 @@
       // This works always
       // bool write(Engine& archive) const;
 
-      // This doesn't with Swig 1.3.17.
+      // This doesn't with alaqil 1.3.17.
       // But it works fine with 1.3.16
       bool write(PersEngine& archive) const
       {

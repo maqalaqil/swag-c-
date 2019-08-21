@@ -6,14 +6,14 @@ public class preproc_line_file_runme {
     try {
         System.loadLibrary("preproc_line_file");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
 
   private static void test_file(String file, String suffix) throws Throwable
   {
-// For swig-3.0.1 and earlier
+// For alaqil-3.0.1 and earlier
 //      String FILENAME_WINDOWS = "Examples\\test-suite\\preproc_line_file.i";
 //      String FILENAME_UNIX = "Examples/test-suite/preproc_line_file.i";
 

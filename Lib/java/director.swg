@@ -11,17 +11,17 @@
 
 #include <exception>
 
-#if defined(SWIG_JAVA_USE_THREAD_NAME)
+#if defined(alaqil_JAVA_USE_THREAD_NAME)
 
-#if !defined(SWIG_JAVA_GET_THREAD_NAME)
-namespace Swig {
-  SWIGINTERN int GetThreadName(char *name, size_t len);
+#if !defined(alaqil_JAVA_GET_THREAD_NAME)
+namespace alaqil {
+  alaqilINTERN int GetThreadName(char *name, size_t len);
 }
 
 #if defined(__linux__)
 
 #include <sys/prctl.h>
-SWIGINTERN int Swig::GetThreadName(char *name, size_t len) {
+alaqilINTERN int alaqil::GetThreadName(char *name, size_t len) {
   (void)len;
 #if defined(PR_GET_NAME)
   return prctl(PR_GET_NAME, (unsigned long)name, 0, 0, 0);
@@ -34,13 +34,13 @@ SWIGINTERN int Swig::GetThreadName(char *name, size_t len) {
 #elif defined(__unix__) || defined(__APPLE__)
 
 #include <pthread.h>
-SWIGINTERN int Swig::GetThreadName(char *name, size_t len) {
+alaqilINTERN int alaqil::GetThreadName(char *name, size_t len) {
   return pthread_getname_np(pthread_self(), name, len);
 }
 
 #else
 
-SWIGINTERN int Swig::GetThreadName(char *name, size_t len) {
+alaqilINTERN int alaqil::GetThreadName(char *name, size_t len) {
   (void)len;
   (void)name;
   return 1;
@@ -51,7 +51,7 @@ SWIGINTERN int Swig::GetThreadName(char *name, size_t len) {
 
 #endif
 
-namespace Swig {
+namespace alaqil {
 
   /* Java object wrapper */
   class JObjectWrapper {
@@ -159,7 +159,7 @@ namespace Swig {
   /* director base class */
   class Director {
     /* pointer to Java virtual machine */
-    JavaVM *swig_jvm_;
+    JavaVM *alaqil_jvm_;
 
   protected:
 #if defined (_MSC_VER) && (_MSC_VER<1300)
@@ -178,14 +178,14 @@ namespace Swig {
 #else
         void **jenv = (void **)&jenv_;
 #endif
-        env_status = director_->swig_jvm_->GetEnv((void **)&jenv_, JNI_VERSION_1_2);
+        env_status = director_->alaqil_jvm_->GetEnv((void **)&jenv_, JNI_VERSION_1_2);
         JavaVMAttachArgs args;
         args.version = JNI_VERSION_1_2;
         args.group = NULL;
         args.name = NULL;
-#if defined(SWIG_JAVA_USE_THREAD_NAME)
+#if defined(alaqil_JAVA_USE_THREAD_NAME)
         char thread_name[64];  // MAX_TASK_COMM_LEN=16 is hard-coded in the Linux kernel and MacOS has MAXTHREADNAMESIZE=64.
-        if (Swig::GetThreadName(thread_name, sizeof(thread_name)) == 0) {
+        if (alaqil::GetThreadName(thread_name, sizeof(thread_name)) == 0) {
           args.name = thread_name;
 #if defined(DEBUG_DIRECTOR_THREAD_NAME)
           std::cout << "JNIEnvWrapper: thread name: " << thread_name << std::endl;
@@ -194,20 +194,20 @@ namespace Swig {
 #endif
         }
 #endif
-#if defined(SWIG_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON)
+#if defined(alaqil_JAVA_ATTACH_CURRENT_THREAD_AS_DAEMON)
         // Attach a daemon thread to the JVM. Useful when the JVM should not wait for
         // the thread to exit upon shutdown. Only for jdk-1.4 and later.
-        director_->swig_jvm_->AttachCurrentThreadAsDaemon(jenv, &args);
+        director_->alaqil_jvm_->AttachCurrentThreadAsDaemon(jenv, &args);
 #else
-        director_->swig_jvm_->AttachCurrentThread(jenv, &args);
+        director_->alaqil_jvm_->AttachCurrentThread(jenv, &args);
 #endif
       }
       ~JNIEnvWrapper() {
-#if !defined(SWIG_JAVA_NO_DETACH_CURRENT_THREAD)
+#if !defined(alaqil_JAVA_NO_DETACH_CURRENT_THREAD)
         // Some JVMs, eg jdk-1.4.2 and lower on Solaris have a bug and crash with the DetachCurrentThread call.
         // However, without this call, the JVM hangs on exit when the thread was not created by the JVM and creates a memory leak.
         if (env_status == JNI_EDETACHED)
-          director_->swig_jvm_->DetachCurrentThread();
+          director_->alaqil_jvm_->DetachCurrentThread();
 #endif
       }
       JNIEnv *getJNIEnv() const {
@@ -216,22 +216,22 @@ namespace Swig {
     };
 
     /* Java object wrapper */
-    JObjectWrapper swig_self_;
+    JObjectWrapper alaqil_self_;
 
     /* Disconnect director from Java object */
-    void swig_disconnect_director_self(const char *disconn_method) {
+    void alaqil_disconnect_director_self(const char *disconn_method) {
       JNIEnvWrapper jnienv(this) ;
       JNIEnv *jenv = jnienv.getJNIEnv() ;
-      jobject jobj = swig_self_.get(jenv);
+      jobject jobj = alaqil_self_.get(jenv);
       LocalRefGuard ref_deleter(jenv, jobj);
 #if defined(DEBUG_DIRECTOR_OWNED)
-      std::cout << "Swig::Director::disconnect_director_self(" << jobj << ")" << std::endl;
+      std::cout << "alaqil::Director::disconnect_director_self(" << jobj << ")" << std::endl;
 #endif
       if (jobj && jenv->IsSameObject(jobj, NULL) == JNI_FALSE) {
         jmethodID disconn_meth = jenv->GetMethodID(jenv->GetObjectClass(jobj), disconn_method, "()V");
         if (disconn_meth) {
 #if defined(DEBUG_DIRECTOR_OWNED)
-          std::cout << "Swig::Director::disconnect_director_self upcall to " << disconn_method << std::endl;
+          std::cout << "alaqil::Director::disconnect_director_self upcall to " << disconn_method << std::endl;
 #endif
           jenv->CallVoidMethod(jobj, disconn_meth);
         }
@@ -239,28 +239,28 @@ namespace Swig {
     }
 
   public:
-    Director(JNIEnv *jenv) : swig_jvm_((JavaVM *) NULL), swig_self_() {
+    Director(JNIEnv *jenv) : alaqil_jvm_((JavaVM *) NULL), alaqil_self_() {
       /* Acquire the Java VM pointer */
-      jenv->GetJavaVM(&swig_jvm_);
+      jenv->GetJavaVM(&alaqil_jvm_);
     }
 
     virtual ~Director() {
       JNIEnvWrapper jnienv(this) ;
       JNIEnv *jenv = jnienv.getJNIEnv() ;
-      swig_self_.release(jenv);
+      alaqil_self_.release(jenv);
     }
 
-    bool swig_set_self(JNIEnv *jenv, jobject jself, bool mem_own, bool weak_global) {
-      return swig_self_.set(jenv, jself, mem_own, weak_global);
+    bool alaqil_set_self(JNIEnv *jenv, jobject jself, bool mem_own, bool weak_global) {
+      return alaqil_self_.set(jenv, jself, mem_own, weak_global);
     }
 
-    jobject swig_get_self(JNIEnv *jenv) const {
-      return swig_self_.get(jenv);
+    jobject alaqil_get_self(JNIEnv *jenv) const {
+      return alaqil_self_.get(jenv);
     }
 
     // Change C++ object's ownership, relative to Java
-    void swig_java_change_ownership(JNIEnv *jenv, jobject jself, bool take_or_release) {
-      swig_self_.java_change_ownership(jenv, jself, take_or_release);
+    void alaqil_java_change_ownership(JNIEnv *jenv, jobject jself, bool take_or_release) {
+      alaqil_self_.java_change_ownership(jenv, jself, take_or_release);
     }
   };
 
@@ -420,7 +420,7 @@ namespace Swig {
           if (ctorMethodID) {
             jenv->ThrowNew(throwableclass, what());
           } else {
-            SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, what());
+            alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, what());
           }
         }
       }
@@ -464,7 +464,7 @@ namespace Swig {
 
   // Helper method to determine if a Java throwable matches a particular Java class type
   // Note side effect of clearing any pending exceptions
-  SWIGINTERN bool ExceptionMatches(JNIEnv *jenv, jthrowable throwable, const char *classname) {
+  alaqilINTERN bool ExceptionMatches(JNIEnv *jenv, jthrowable throwable, const char *classname) {
     bool matches = false;
 
     if (throwable && jenv && classname) {

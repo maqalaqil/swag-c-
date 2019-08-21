@@ -39,7 +39,7 @@ if is_python_builtin():
   if not passed:
     raise RuntimeError("did not catch exception in hash()")
 
-  # Test 4 for tp_dealloc (which is handled differently to other slots in the SWIG source)
+  # Test 4 for tp_dealloc (which is handled differently to other slots in the alaqil source)
   d = Dealloc1()
   if cvar.Dealloc1CalledCount != 0:
     raise RuntimeError("count should be 0")

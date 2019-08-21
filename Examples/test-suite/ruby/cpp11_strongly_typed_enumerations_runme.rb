@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'cpp11_strongly_typed_enumerations'
 

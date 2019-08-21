@@ -1,6 +1,6 @@
 %module xxx
 
 
-#pragma SWIG rubbish()
+#pragma alaqil rubbish()
 
 

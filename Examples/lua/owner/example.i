@@ -5,7 +5,7 @@
 #include "example.h"
 %}
 
-// before we grab the header file, we must warn SWIG about some of these functions.
+// before we grab the header file, we must warn alaqil about some of these functions.
 
 // these functions create data, so must be managed
 %newobject createCircle;
@@ -25,7 +25,7 @@ void add_Shape(Shape* s,ShapeOwner* own){own->add(s);}
 %}*/
 
 // or a better solution is a typemap
-%apply SWIGTYPE *DISOWN {Shape* ptr};
+%apply alaqilTYPE *DISOWN {Shape* ptr};
 
 // now we can grab the header file
 %include "example.h"

@@ -33,14 +33,14 @@ except:
 
 
 # the old large format
-if not SWIG_TypeQuery("vfncs::ArithUnaryFunction<vfncs::arith_traits<float,double>::argument_type,vfncs::arith_traits<float,double >::result_type > *"):
+if not alaqil_TypeQuery("vfncs::ArithUnaryFunction<vfncs::arith_traits<float,double>::argument_type,vfncs::arith_traits<float,double >::result_type > *"):
     raise RuntimeError
 
 
 # the reduced format
-if not SWIG_TypeQuery("vfncs::ArithUnaryFunction<double,double> *"):
+if not alaqil_TypeQuery("vfncs::ArithUnaryFunction<double,double> *"):
     raise RuntimeError
 
 # this is a bad name
-if SWIG_TypeQuery("vfncs::ArithUnaryFunction<double,doublex> *"):
+if alaqil_TypeQuery("vfncs::ArithUnaryFunction<double,doublex> *"):
     raise RuntimeError

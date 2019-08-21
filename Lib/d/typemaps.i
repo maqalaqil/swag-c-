@@ -38,7 +38,7 @@ To use these, suppose you had a C function like this :
                return *a+*b;
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double fadd(double *INPUT, double *INPUT);
@@ -74,15 +74,15 @@ INPUT_TYPEMAP(short,              short,                short)
 INPUT_TYPEMAP(unsigned short,     unsigned short,       ushort)
 INPUT_TYPEMAP(int,                int,                  int)
 INPUT_TYPEMAP(unsigned int,       unsigned int,         uint)
-INPUT_TYPEMAP(long,               long,                 SWIG_LONG_DTYPE)
-INPUT_TYPEMAP(unsigned long,      unsigned long,        SWIG_ULONG_DTYPE)
+INPUT_TYPEMAP(long,               long,                 alaqil_LONG_DTYPE)
+INPUT_TYPEMAP(unsigned long,      unsigned long,        alaqil_ULONG_DTYPE)
 INPUT_TYPEMAP(long long,          long long,            long)
 INPUT_TYPEMAP(unsigned long long, unsigned long long,   ulong)
 INPUT_TYPEMAP(float,              float,                float)
 INPUT_TYPEMAP(double,             double,               double)
 
-INPUT_TYPEMAP(enum SWIGTYPE,      unsigned int,         int)
-%typemap(dtype) enum SWIGTYPE *INPUT, enum SWIGTYPE &INPUT "$*dclassname"
+INPUT_TYPEMAP(enum alaqilTYPE,      unsigned int,         int)
+%typemap(dtype) enum alaqilTYPE *INPUT, enum alaqilTYPE &INPUT "$*dclassname"
 
 #undef INPUT_TYPEMAP
 
@@ -119,7 +119,7 @@ returns the integer part in one of its parameters):
 
         double modf(double x, double *ip);
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double modf(double x, double *OUTPUT);
@@ -146,7 +146,7 @@ value returned in the second output parameter. In D you would use it like this:
 %typemap(in) TYPE *OUTPUT, TYPE &OUTPUT
 %{ $1 = ($1_ltype)$input; %}
 
-%typecheck(SWIG_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *OUTPUT, TYPE &OUTPUT ""
+%typecheck(alaqil_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *OUTPUT, TYPE &OUTPUT ""
 %enddef
 
 OUTPUT_TYPEMAP(bool,               unsigned int,         bool,     BOOL_PTR)
@@ -157,15 +157,15 @@ OUTPUT_TYPEMAP(short,              short,                short,    INT16_PTR)
 OUTPUT_TYPEMAP(unsigned short,     unsigned short,       ushort,   UINT16_PTR)
 OUTPUT_TYPEMAP(int,                int,                  int,      INT32_PTR)
 OUTPUT_TYPEMAP(unsigned int,       unsigned int,         uint,     UINT32_PTR)
-OUTPUT_TYPEMAP(long,               long,           SWIG_LONG_DTYPE,INT32_PTR)
-OUTPUT_TYPEMAP(unsigned long,      unsigned long, SWIG_ULONG_DTYPE,UINT32_PTR)
+OUTPUT_TYPEMAP(long,               long,           alaqil_LONG_DTYPE,INT32_PTR)
+OUTPUT_TYPEMAP(unsigned long,      unsigned long, alaqil_ULONG_DTYPE,UINT32_PTR)
 OUTPUT_TYPEMAP(long long,          long long,            long,     INT64_PTR)
 OUTPUT_TYPEMAP(unsigned long long, unsigned long long,   ulong,    UINT64_PTR)
 OUTPUT_TYPEMAP(float,              float,                float,    FLOAT_PTR)
 OUTPUT_TYPEMAP(double,             double,               double,   DOUBLE_PTR)
 
-OUTPUT_TYPEMAP(enum SWIGTYPE,      unsigned int,         int,      INT32_PTR)
-%typemap(dtype) enum SWIGTYPE *OUTPUT, enum SWIGTYPE &OUTPUT "out $*dclassname"
+OUTPUT_TYPEMAP(enum alaqilTYPE,      unsigned int,         int,      INT32_PTR)
+%typemap(dtype) enum alaqilTYPE *OUTPUT, enum alaqilTYPE &OUTPUT "out $*dclassname"
 
 #undef OUTPUT_TYPEMAP
 
@@ -205,7 +205,7 @@ For example, suppose you were trying to wrap the following function :
              *x = -(*x);
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         void neg(double *INOUT);
@@ -237,7 +237,7 @@ of the function return value.
 %typemap(in) TYPE *INOUT, TYPE &INOUT
 %{ $1 = ($1_ltype)$input; %}
 
-%typecheck(SWIG_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *INOUT, TYPE &INOUT ""
+%typecheck(alaqil_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *INOUT, TYPE &INOUT ""
 %enddef
 
 INOUT_TYPEMAP(bool,               unsigned int,         bool,     BOOL_PTR)
@@ -248,14 +248,14 @@ INOUT_TYPEMAP(short,              short,                short,    INT16_PTR)
 INOUT_TYPEMAP(unsigned short,     unsigned short,       ushort,   UINT16_PTR)
 INOUT_TYPEMAP(int,                int,                  int,      INT32_PTR)
 INOUT_TYPEMAP(unsigned int,       unsigned int,         uint,     UINT32_PTR)
-INOUT_TYPEMAP(long,               long,           SWIG_LONG_DTYPE,INT32_PTR)
-INOUT_TYPEMAP(unsigned long,      unsigned long, SWIG_ULONG_DTYPE,UINT32_PTR)
+INOUT_TYPEMAP(long,               long,           alaqil_LONG_DTYPE,INT32_PTR)
+INOUT_TYPEMAP(unsigned long,      unsigned long, alaqil_ULONG_DTYPE,UINT32_PTR)
 INOUT_TYPEMAP(long long,          long long,            long,     INT64_PTR)
 INOUT_TYPEMAP(unsigned long long, unsigned long long,   ulong,    UINT64_PTR)
 INOUT_TYPEMAP(float,              float,                float,    FLOAT_PTR)
 INOUT_TYPEMAP(double,             double,               double,   DOUBLE_PTR)
 
-INOUT_TYPEMAP(enum SWIGTYPE,      unsigned int,         int,      INT32_PTR)
-%typemap(dtype) enum SWIGTYPE *INOUT, enum SWIGTYPE &INOUT "ref $*dclassname"
+INOUT_TYPEMAP(enum alaqilTYPE,      unsigned int,         int,      INT32_PTR)
+%typemap(dtype) enum alaqilTYPE *INOUT, enum alaqilTYPE &INOUT "ref $*dclassname"
 
 #undef INOUT_TYPEMAP

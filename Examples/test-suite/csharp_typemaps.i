@@ -8,15 +8,15 @@
 
 %typemap(out) char * %{
   // return the 0th element rather than the whole string
-  $result = SWIG_csharp_string_callback($1)[0];
+  $result = alaqil_csharp_string_callback($1)[0];
 %}
 
-%typemap(csout, excode=SWIGEXCODE) char * {
+%typemap(csout, excode=alaqilEXCODE) char * {
     char ret = $imcall;$excode
     return ret;
   }
 
-%typemap(csvarout, excode=SWIGEXCODE2) char * %{
+%typemap(csvarout, excode=alaqilEXCODE2) char * %{
     get {
       char ret = $imcall;$excode
       return ret;
@@ -91,7 +91,7 @@ Number times12(const Number* num) {
 %}
 
 // Test $csinput expansion
-%typemap(csvarin, excode=SWIGEXCODE2) int %{
+%typemap(csvarin, excode=alaqilEXCODE2) int %{
     set {
       if ($csinput < 0)
         throw new global::System.ApplicationException("number too small!");

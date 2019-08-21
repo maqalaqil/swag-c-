@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * interpreter.i
  *
- * SWIG file for a simple Guile interpreter
+ * alaqil file for a simple Guile interpreter
  * ----------------------------------------------------------------------------- */
 
 %{

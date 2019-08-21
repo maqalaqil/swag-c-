@@ -2,7 +2,7 @@
    introduced in C++11. */
 %module cpp11_initializer_list
 
-%warnfilter(SWIGWARN_TYPEMAP_INITIALIZER_LIST) B::B;
+%warnfilter(alaqilWARN_TYPEMAP_INITIALIZER_LIST) B::B;
 %ignore A::A(std::initializer_list<int>);
 %ignore B::method;
 

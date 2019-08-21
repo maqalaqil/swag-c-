@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * carrays.i
  *
- * SWIG library file containing macros that can be used to manipulate simple
+ * alaqil library file containing macros that can be used to manipulate simple
  * pointers as arrays.
  * ----------------------------------------------------------------------------- */
 

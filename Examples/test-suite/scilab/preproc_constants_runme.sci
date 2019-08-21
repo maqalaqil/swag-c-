@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 checkequal(CONST_INT1_get(), 10, "CONST_INT1");
 checkequal(CONST_DOUBLE3_get(), 12.3, "CONST_DOUBLE3");
@@ -27,4 +27,4 @@ test_global();
 // Test assignement in enums
 checkequal(kValue_get(), 4, "kValue");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

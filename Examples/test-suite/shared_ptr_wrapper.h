@@ -1,16 +1,16 @@
-// defines SwigBoost::shared_ptr, a wrapper around boost::shared_ptr
+// defines alaqilBoost::shared_ptr, a wrapper around boost::shared_ptr
 // Use this shared_ptr wrapper for testing memory leaks of shared_ptr.
 // getTotalCount() should return zero at end of test
 
 #include <iostream>
 
-struct SWIG_null_deleter; // forward reference, definition is in shared_ptr.i
-namespace SwigBoost {
+struct alaqil_null_deleter; // forward reference, definition is in shared_ptr.i
+namespace alaqilBoost {
 // This template can be specialized for better debugging information
 template <typename T> std::string show_message(boost::shared_ptr<T>*t) {
   if (!t)
     return "null shared_ptr!!!";
-  if (boost::get_deleter<SWIG_null_deleter>(*t))
+  if (boost::get_deleter<alaqil_null_deleter>(*t))
     return std::string(typeid(t).name()) + " NULL DELETER";
   if (*t)
     return std::string(typeid(t).name()) + " object";
@@ -19,16 +19,16 @@ template <typename T> std::string show_message(boost::shared_ptr<T>*t) {
 }
 
 namespace SharedPtrWrapper {
-  static SwigExamples::CriticalSection critical_section;
+  static alaqilExamples::CriticalSection critical_section;
   static int total_count = 0;
 
   template<typename T> void increment(boost::shared_ptr<T>* ptr) { 
-    SwigExamples::Lock lock(critical_section); 
+    alaqilExamples::Lock lock(critical_section); 
     std::cout << "====SharedPtrWrapper==== + " << ptr << " " << show_message(ptr) << " " <<  std::endl << std::flush;
     total_count++;
   }
   template<typename T> void decrement(boost::shared_ptr<T>* ptr) {
-    SwigExamples::Lock lock(critical_section); 
+    alaqilExamples::Lock lock(critical_section); 
     std::cout << "====SharedPtrWrapper==== - " << ptr << " " << show_message(ptr) << " " <<  std::endl << std::flush;
     total_count--;
   }

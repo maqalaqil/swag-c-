@@ -5,13 +5,13 @@ endif
 
 # This file illustrates the manipulation of C++ references in Octave
 
-swigexample
+alaqilexample
 
 # ----- Object creation -----
 
 printf("Creating some objects:\n");
-a = swigexample.Vector(3,4,5)
-b = swigexample.Vector(10,11,12)
+a = alaqilexample.Vector(3,4,5)
+b = alaqilexample.Vector(10,11,12)
 
 printf("    Created %s\n",a.cprint());
 printf("    Created %s\n",b.cprint());
@@ -25,7 +25,7 @@ printf("    Created %s\n",b.cprint());
 # It returns a new allocated object.
 
 printf("Adding a+b\n");
-c = swigexample.addv(a,b);
+c = alaqilexample.addv(a,b);
 printf("    a+b = %s\n", c.cprint());
 
 clear c
@@ -34,7 +34,7 @@ clear c
 
 # Note: Using the high-level interface here
 printf("Creating an array of vectors\n");
-va = swigexample.VectorArray(10)
+va = alaqilexample.VectorArray(10)
 
 # ----- Set some values in the array -----
 
@@ -42,7 +42,7 @@ va = swigexample.VectorArray(10)
 va.set(0,a);
 va.set(1,b);
 
-va.set(2,swigexample.addv(a,b))
+va.set(2,alaqilexample.addv(a,b))
 
 # Get some values from the array
 

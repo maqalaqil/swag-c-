@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Extend_template
 
 let f = new_Foo_0 '()

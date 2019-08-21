@@ -13,45 +13,45 @@ def compare_sequences(a, b):
         if a[i] != b[i]:
             failed(a, b, "elements are different")
 
-def compare_containers(pythonlist, swigarray):
-    compare_sequences(pythonlist, swigarray)
+def compare_containers(pythonlist, alaqilarray):
+    compare_sequences(pythonlist, alaqilarray)
 
-def steps_exception(swigarray, i, j, step):
+def steps_exception(alaqilarray, i, j, step):
     try:
         if i == None and j == None:
-            a = swigarray[::step]
+            a = alaqilarray[::step]
         elif i == None:
-            a = swigarray[:j:step]
+            a = alaqilarray[:j:step]
         elif j == None:
-            a = swigarray[i::step]
+            a = alaqilarray[i::step]
         else:
-            a = swigarray[i:j:step]
-        raise RuntimeError, "swigarray[" + str(i) + ":" + str(j) + ":" + str(step) + "] missed steps exception for " + str(list(swigarray))
+            a = alaqilarray[i:j:step]
+        raise RuntimeError, "alaqilarray[" + str(i) + ":" + str(j) + ":" + str(step) + "] missed steps exception for " + str(list(alaqilarray))
     except ValueError, e:
 #        print("exception: {}".format(e))
         pass
 
-def del_exception(swigarray, i, j, step):
+def del_exception(alaqilarray, i, j, step):
     try:
         if i == None and j == None:
-            del swigarray[::step]
+            del alaqilarray[::step]
         elif j == None and step == None:
-            del swigarray[i]
+            del alaqilarray[i]
         elif i == None:
-            del swigarray[:j:step]
+            del alaqilarray[:j:step]
         elif j == None:
-            del swigarray[i::step]
+            del alaqilarray[i::step]
         else:
-            del swigarray[i:j:step]
-        raise RuntimeError, "swigarray[" + str(i) + ":" + str(j) + ":" + str(step) + "] missed del exception for " + str(list(swigarray))
+            del alaqilarray[i:j:step]
+        raise RuntimeError, "alaqilarray[" + str(i) + ":" + str(j) + ":" + str(step) + "] missed del exception for " + str(list(alaqilarray))
     except ValueError, e:
 #        print("exception: {}".format(e))
         pass
 
-def setslice_exception(swigarray, newval):
+def setslice_exception(alaqilarray, newval):
     try:
-        swigarray[::] = newval
-        raise RuntimeError, "swigarray[::] = " + str(newval) + " missed set exception for swigarray:" + str(list(swigarray))
+        alaqilarray[::] = newval
+        raise RuntimeError, "alaqilarray[::] = " + str(newval) + " missed set exception for alaqilarray:" + str(list(alaqilarray))
     except TypeError, e:
 #        print("exception: {}".format(e))
         pass

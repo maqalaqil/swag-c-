@@ -3,12 +3,12 @@
 %module "enums"
 
 /* Suppress warning messages from the Ruby module for all of the following.. */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) boo;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) hoo;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) globalinstance1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) globalinstance2;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) globalinstance3;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) boo;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) hoo;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) globalinstance1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) globalinstance2;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) globalinstance3;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);
 
 %inline %{
 
@@ -62,9 +62,9 @@ typedef struct _Foo {
 %}
 
   
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) _iFoo;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) _iFoo;
 
-#ifdef SWIGD
+#ifdef alaqilD
 /* Work around missing support for proper char quoting due to parser shortcomings. */
 %dconstvalue("'a'") _iFoo::Char;
 #endif

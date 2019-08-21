@@ -15,16 +15,16 @@
   typedef LineObj MultipointObj;
   
   typedef struct {
-#ifdef SWIG
+#ifdef alaqil
     %immutable;
 #endif
     char *filename; 
     int numfonts;
-#ifdef SWIG
+#ifdef alaqil
     %mutable;
 #endif
     int* fonts;
-#ifndef SWIG
+#ifndef alaqil
     void* map;
 #endif
   } FontSetObj;

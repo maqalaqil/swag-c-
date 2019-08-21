@@ -8,7 +8,7 @@ public class doxygen_basic_translate_runme {
     try {
       System.loadLibrary("doxygen_basic_translate");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -75,7 +75,7 @@ public class doxygen_basic_translate_runme {
     		" Test for default args \n" +
     		" \n" +
     		"");
-    wantedComments.put("doxygen_basic_translate.doxygen_basic_translate.function7(doxygen_basic_translate.SWIGTYPE_p_p_p_Shape)",
+    wantedComments.put("doxygen_basic_translate.doxygen_basic_translate.function7(doxygen_basic_translate.alaqilTYPE_p_p_p_Shape)",
     		" Test for a parameter with difficult type \n" +
     		" (mostly for python) \n" +
     		" @param a Very strange param \n" +

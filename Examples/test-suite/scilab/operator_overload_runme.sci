@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 function checktrue(value, msg)
   checkequal(value, %T, msg)
@@ -78,5 +78,5 @@ delete_Op(i);
 
 delete_Op(expop);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

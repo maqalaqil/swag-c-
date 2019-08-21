@@ -1,4 +1,4 @@
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 %module("templatereduce") template_typedef
 #else
 %module template_typedef
@@ -117,7 +117,7 @@
 	                   typename arith_traits< RF, RG >::result_type>();
     }
 
-#ifndef SWIG
+#ifndef alaqil
 
     // Initialize these static class members
 
@@ -174,6 +174,6 @@ namespace vfncs {
 
 }
 
-#ifdef SWIGPYTHON
-swig_type_info *SWIG_TypeQuery(const char* name);
+#ifdef alaqilPYTHON
+alaqil_type_info *alaqil_TypeQuery(const char* name);
 #endif

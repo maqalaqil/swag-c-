@@ -1,4 +1,4 @@
-// This example illustrates how C++ classes can be used from D using SWIG.
+// This example illustrates how C++ classes can be used from D using alaqil.
 // The D class gets mapped onto the C++ class and behaves as if it is a D class.
 module runme;
 

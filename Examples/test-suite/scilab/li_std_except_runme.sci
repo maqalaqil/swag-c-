@@ -1,9 +1,9 @@
-exec('swigtest.start', -1);
+exec('alaqiltest.start', -1);
 
 function checkException(cmd, expected_ierr, expected_error_msg)
   ierr = execstr(cmd, 'errcatch');
   checkequal(ierr, expected_ierr, cmd + ': ierr');
-  checkequal(lasterror(), 'SWIG/Scilab: ' + expected_error_msg, cmd + ': msg');
+  checkequal(lasterror(), 'alaqil/Scilab: ' + expected_error_msg, cmd + ': msg');
 endfunction
 
 t = new_Test();
@@ -30,4 +30,4 @@ checkException('Test_throw_runtime_error(t)', 20003, 'RuntimeError: oops');
 
 delete_Test(t);
 
-exec('swigtest.quit', -1);
+exec('alaqiltest.quit', -1);

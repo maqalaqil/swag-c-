@@ -1,6 +1,6 @@
 %module template_ns3
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) foo::bar<int>; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) foo::bar<int>; /* Ruby, wrong class name */
 
 %inline %{
 namespace foo {

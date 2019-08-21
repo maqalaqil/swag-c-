@@ -1,6 +1,6 @@
 <?php
 
-require("swig_exception.php");
+require("alaqil_exception.php");
 require("tests.php");
 
 $c = new Circle(10);

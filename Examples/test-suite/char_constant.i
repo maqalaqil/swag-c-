@@ -11,35 +11,35 @@
 
 #define ESC_CONST  '\1'
 #define NULL_CONST '\0'
-#define SPECIALCHAR 'á'
+#define SPECIALCHAR 'ï¿½'
 #define SPECIALCHAR2 '\n'
 #define SPECIALCHARA 'A'
 #define SPECIALCHARB '\102' // B
 #define SPECIALCHARC '\x43' // C
 #define SPECIALCHARD 0x44 // D
 #define SPECIALCHARE 69 // E
-#define SPECIALCHARAE1 'Æ' // AE (latin1 encoded)
+#define SPECIALCHARAE1 'ï¿½' // AE (latin1 encoded)
 #define SPECIALCHARAE2 '\306' // AE (latin1 encoded)
 #define SPECIALCHARAE3 '\xC6' // AE (latin1 encoded)
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javaconst(1);
-#elif SWIGCSHARP
+#elif alaqilCSHARP
 %csconst(1);
-#elif SWIGD
+#elif alaqilD
 %dmanifestconst;
 #endif
 
 #define X_ESC_CONST  '\1'
 #define X_NULL_CONST '\0'
-#define X_SPECIALCHAR 'á'
+#define X_SPECIALCHAR 'ï¿½'
 #define X_SPECIALCHAR2 '\n'
 #define X_SPECIALCHARA 'A'
 #define X_SPECIALCHARB '\102' // B
 #define X_SPECIALCHARC '\x43' // C
 #define X_SPECIALCHARD 0x44 // D
 #define X_SPECIALCHARE 69 // E
-#define X_SPECIALCHARAE1 'Æ' // AE (latin1 encoded)
+#define X_SPECIALCHARAE1 'ï¿½' // AE (latin1 encoded)
 #define X_SPECIALCHARAE2 '\306' // AE (latin1 encoded)
 #define X_SPECIALCHARAE3 '\xC6' // AE (latin1 encoded)
 

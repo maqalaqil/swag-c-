@@ -6,7 +6,7 @@
 
 %feature("kwargs");
 
-#pragma SWIG nowarn=SWIGWARN_PARSE_KEYWORD
+#pragma alaqil nowarn=alaqilWARN_PARSE_KEYWORD
 
 %inline %{
 

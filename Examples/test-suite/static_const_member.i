@@ -1,17 +1,17 @@
-/* Swig 1.3.6 does not understand initialization of static class
+/* alaqil 1.3.6 does not understand initialization of static class
    constants like this.  SF Bug #445221, reported by Krzysztof
    Kozminski <kozminski@users.sf.net>. 
 */
 
 %module static_const_member
 
-#if SWIGJAVA
+#if alaqilJAVA
 %javaconst(1) EN;
 %javaconst(1) CHARTEST;
-#elif SWIGCSHARP
+#elif alaqilCSHARP
 %csconst(1) EN;
 %csconst(1) CHARTEST;
-#elif SWIGD
+#elif alaqilD
 %dmanifestconst EN;
 %dmanifestconst CHARTEST;
 #endif

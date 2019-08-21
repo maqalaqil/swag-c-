@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'template_extend1'
 

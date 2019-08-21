@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 
 // double
@@ -113,4 +113,4 @@ checkequal(inoutr_float(2.5), 2.5, "inoutr_float");
 //f,i = out_foo(10)
 //checkequal(f.a, 10 || i, 20), "");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

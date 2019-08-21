@@ -7,12 +7,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'argout'
 
 include Argout
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 
 t = new_intp
 intp_assign(t, 5)

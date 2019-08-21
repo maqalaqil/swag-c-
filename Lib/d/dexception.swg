@@ -6,7 +6,7 @@
 
 // Code which is inserted into the dout typemaps and class constructors via
 // excode if exceptions can be thrown.
-%define SWIGEXCODE "\n  if ($imdmodule.SwigPendingException.isPending) throw $imdmodule.SwigPendingException.retrieve();" %enddef
+%define alaqilEXCODE "\n  if ($imdmodule.alaqilPendingException.isPending) throw $imdmodule.alaqilPendingException.retrieve();" %enddef
 
 %typemap(throws, canthrow=1) int,
                  long,
@@ -16,15 +16,15 @@
                  unsigned short
 %{ char error_msg[256];
    sprintf(error_msg, "C++ $1_type exception thrown, value: %d", $1);
-   SWIG_DSetPendingException(SWIG_DException, error_msg);
+   alaqil_DSetPendingException(alaqil_DException, error_msg);
    return $null; %}
 
-%typemap(throws, canthrow=1) SWIGTYPE, SWIGTYPE &, SWIGTYPE *, SWIGTYPE [ANY],
-  enum SWIGTYPE, const enum SWIGTYPE &
+%typemap(throws, canthrow=1) alaqilTYPE, alaqilTYPE &, alaqilTYPE *, alaqilTYPE [ANY],
+  enum alaqilTYPE, const enum alaqilTYPE &
 %{ (void)$1;
-   SWIG_DSetPendingException(SWIG_DException, "C++ $1_type exception thrown");
+   alaqil_DSetPendingException(alaqil_DException, "C++ $1_type exception thrown");
    return $null; %}
 
 %typemap(throws, canthrow=1) char *
-%{ SWIG_DSetPendingException(SWIG_DException, $1);
+%{ alaqil_DSetPendingException(alaqil_DException, $1);
    return $null; %}

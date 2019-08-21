@@ -4,10 +4,10 @@ srcdir		= @srcdir@
 top_srcdir	= @top_srcdir@
 top_builddir	= @top_builddir@
 
-SWIGEXE         = $(top_builddir)/swig
-SWIG_LIB_DIR    = $(top_srcdir)/Lib
-SWIG_LIB_SET    = @SWIG_LIB_SET@
-SWIGINVOKE      = $(SWIG_LIB_SET) $(SWIGTOOL) $(SWIGEXE)
+alaqilEXE         = $(top_builddir)/alaqil
+alaqil_LIB_DIR    = $(top_srcdir)/Lib
+alaqil_LIB_SET    = @alaqil_LIB_SET@
+alaqilINVOKE      = $(alaqil_LIB_SET) $(alaqilTOOL) $(alaqilEXE)
 
 cleanup		= tail +2 \
 		  | sed -e 's/ident="ID[0-9A-F]*"//g' \
@@ -30,7 +30,7 @@ check:
 	for f in $(all-dot-i-files) ; do				\
 	  base=`basename $$f .i` ;					\
 	  xml=$$base.xml ;						\
-	  $(SWIGINVOKE) -xml $$xml ${srcdir}/$$f ;	\
+	  $(alaqilINVOKE) -xml $$xml ${srcdir}/$$f ;	\
 	  cat $$xml | $(cleanup) | diff -c ${srcdir}/$$base.expected-xml - ;	\
 	done
 
@@ -43,7 +43,7 @@ distclean: clean
 # from here on, non-developers beware!
 
 %.expected-xml : %.i
-	$(SWIGINVOKE) -xml tmp-file $^
+	$(alaqilINVOKE) -xml tmp-file $^
 	cat tmp-file | $(cleanup) > $@
 	rm -f tmp-file
 

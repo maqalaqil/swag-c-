@@ -1,7 +1,7 @@
 /* File : example.i */
 %module example
 
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_EQ);
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_EQ);
 
 
 %{

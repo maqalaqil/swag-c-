@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // OUTPUT
 
@@ -83,5 +83,5 @@ checkequal(d, 3, "[c, d] = ClassA_inout2Input2(a, 1, 2): d");
 delete_ClassA(a);
 
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

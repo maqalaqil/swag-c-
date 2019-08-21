@@ -2,7 +2,7 @@
 
 This file illustrates cross-language polymorphism using directors. *)
 
-open Swig
+open alaqil
 open Example
 
 let new_OCamlCallback ob meth args =

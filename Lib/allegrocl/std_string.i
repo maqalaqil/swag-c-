@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_string.i
  *
- * SWIG typemaps for std::string
+ * alaqil typemaps for std::string
  * ----------------------------------------------------------------------------- */
 
 // ------------------------------------------------------------------------
@@ -118,7 +118,7 @@ namespace std {
 //             $1.assign((char *)caml_ptr_val($input,0),
 // 			 caml_string_len($input));
 //         else
-//             SWIG_exception(SWIG_TypeError, "string expected");
+//             alaqil_exception(alaqil_TypeError, "string expected");
 //     }
 
 //     %typemap(in) const string & ($*1_ltype temp) {
@@ -127,7 +127,7 @@ namespace std {
 // 			   caml_string_len($input));
 //             $1 = &temp;
 //         } else {
-//             SWIG_exception(SWIG_TypeError, "string expected");
+//             alaqil_exception(alaqil_TypeError, "string expected");
 //         }
 //     }
 
@@ -137,7 +137,7 @@ namespace std {
 // 			   caml_string_len($input));
 //             $1 = &temp;
 //         } else {
-//             SWIG_exception(SWIG_TypeError, "string expected");
+//             alaqil_exception(alaqil_TypeError, "string expected");
 //         }
 //     }
 
@@ -147,7 +147,7 @@ namespace std {
 // 				   caml_string_len($input));
 //             $1 = temp;
 //         } else {
-//             SWIG_exception(SWIG_TypeError, "string expected");
+//             alaqil_exception(alaqil_TypeError, "string expected");
 //         }
 //     }
 
@@ -156,7 +156,7 @@ namespace std {
 //     }
 
 //    %typemap(argout) string & {
-//	caml_list_append(swig_result,caml_val_string_len((*$1).c_str(),
+//	caml_list_append(alaqil_result,caml_val_string_len((*$1).c_str(),
 //							 (*$1).size()));
 //    }
 
@@ -178,7 +178,7 @@ namespace std {
 // char **c_charptr_array( const std::vector <string > &str_v );
 
 // %{
-//   SWIGEXT char **c_charptr_array( const std::vector <string > &str_v ) {
+//   alaqilEXT char **c_charptr_array( const std::vector <string > &str_v ) {
 //     char **out = new char *[str_v.size() + 1];
 //     out[str_v.size()] = 0;
 //     for( int i = 0; i < str_v.size(); i++ ) {

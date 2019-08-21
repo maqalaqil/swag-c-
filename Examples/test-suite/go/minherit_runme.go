@@ -33,12 +33,12 @@ func main() {
 		panic(fmt.Sprintf("6 Bad attribute value %d", minherit.Yget(b)))
 	}
 
-	if minherit.Xget(c) != 1 || minherit.Yget(c.SwigGetBar()) != 2 || minherit.Zget(c) != 3 {
-		panic(fmt.Sprintf("7 Bad attribute value %d %d %d", minherit.Xget(c), minherit.Yget(c.SwigGetBar()), minherit.Zget(c)))
+	if minherit.Xget(c) != 1 || minherit.Yget(c.alaqilGetBar()) != 2 || minherit.Zget(c) != 3 {
+		panic(fmt.Sprintf("7 Bad attribute value %d %d %d", minherit.Xget(c), minherit.Yget(c.alaqilGetBar()), minherit.Zget(c)))
 	}
 
-	if minherit.Xget(d) != 1 || minherit.Yget(d.SwigGetBar()) != 2 || minherit.Zget(d) != 3 || minherit.Wget(d) != 4 {
-		panic(fmt.Sprintf("8 Bad attribute value %d %d %d %d", minherit.Xget(d), minherit.Yget(d.SwigGetBar()), minherit.Zget(d), minherit.Wget(d)))
+	if minherit.Xget(d) != 1 || minherit.Yget(d.alaqilGetBar()) != 2 || minherit.Zget(d) != 3 || minherit.Wget(d) != 4 {
+		panic(fmt.Sprintf("8 Bad attribute value %d %d %d %d", minherit.Xget(d), minherit.Yget(d.alaqilGetBar()), minherit.Zget(d), minherit.Wget(d)))
 	}
 
 	// Cleanse all of the pointers and see what happens
@@ -72,11 +72,11 @@ func main() {
 		panic(fmt.Sprintf("14 Bad attribute value %d", minherit.Yget(bb)))
 	}
 
-	if minherit.Xget(cc) != 1 || minherit.Yget(cc.SwigGetBar()) != 2 || minherit.Zget(cc) != 3 {
-		panic(fmt.Sprintf("15 Bad attribute value %d %d %d", minherit.Xget(cc), minherit.Yget(cc.SwigGetBar()), minherit.Zget(cc)))
+	if minherit.Xget(cc) != 1 || minherit.Yget(cc.alaqilGetBar()) != 2 || minherit.Zget(cc) != 3 {
+		panic(fmt.Sprintf("15 Bad attribute value %d %d %d", minherit.Xget(cc), minherit.Yget(cc.alaqilGetBar()), minherit.Zget(cc)))
 	}
 
-	if minherit.Xget(dd) != 1 || minherit.Yget(dd.SwigGetBar()) != 2 || minherit.Zget(dd) != 3 || minherit.Wget(dd) != 4 {
-		panic(fmt.Sprintf("16 Bad attribute value %d %d %d %d", minherit.Xget(dd), minherit.Yget(dd.SwigGetBar()), minherit.Zget(dd), minherit.Wget(dd)))
+	if minherit.Xget(dd) != 1 || minherit.Yget(dd.alaqilGetBar()) != 2 || minherit.Zget(dd) != 3 || minherit.Wget(dd) != 4 {
+		panic(fmt.Sprintf("16 Bad attribute value %d %d %d %d", minherit.Xget(dd), minherit.Yget(dd.alaqilGetBar()), minherit.Zget(dd), minherit.Wget(dd)))
 	}
 }

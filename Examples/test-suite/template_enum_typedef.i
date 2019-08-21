@@ -1,6 +1,6 @@
 %module template_enum_typedef
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) oss::etraits; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) oss::etraits; /* Ruby, wrong class name */
 
 %inline %{
  

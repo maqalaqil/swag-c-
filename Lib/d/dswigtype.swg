@@ -1,35 +1,35 @@
 /* -----------------------------------------------------------------------------
- * dswigtype.swg
+ * dalaqiltype.swg
  *
  * Typemaps for non-primitive types (C/C++ classes and structs).
  * ----------------------------------------------------------------------------- */
 
-%typemap(ctype) SWIGTYPE "void *"
-%typemap(imtype) SWIGTYPE "void*"
-%typemap(dtype) SWIGTYPE "$&dclassname"
+%typemap(ctype) alaqilTYPE "void *"
+%typemap(imtype) alaqilTYPE "void*"
+%typemap(dtype) alaqilTYPE "$&dclassname"
 
-%typemap(ctype) SWIGTYPE [] "void *"
-%typemap(imtype) SWIGTYPE [] "void*"
-%typemap(dtype) SWIGTYPE [] "$dclassname"
+%typemap(ctype) alaqilTYPE [] "void *"
+%typemap(imtype) alaqilTYPE [] "void*"
+%typemap(dtype) alaqilTYPE [] "$dclassname"
 
-%typemap(ctype) SWIGTYPE * "void *"
-%typemap(imtype) SWIGTYPE * "void*"
-%typemap(dtype, nativepointer="$dtype") SWIGTYPE * "$dclassname"
+%typemap(ctype) alaqilTYPE * "void *"
+%typemap(imtype) alaqilTYPE * "void*"
+%typemap(dtype, nativepointer="$dtype") alaqilTYPE * "$dclassname"
 
-%typemap(ctype) SWIGTYPE & "void *"
-%typemap(imtype) SWIGTYPE & "void*"
-%typemap(dtype, nativepointer="$dtype") SWIGTYPE & "$dclassname"
+%typemap(ctype) alaqilTYPE & "void *"
+%typemap(imtype) alaqilTYPE & "void*"
+%typemap(dtype, nativepointer="$dtype") alaqilTYPE & "$dclassname"
 
-%typemap(ctype) SWIGTYPE *const& "void *"
-%typemap(imtype) SWIGTYPE *const& "void*"
-%typemap(dtype) SWIGTYPE *const& "$*dclassname"
+%typemap(ctype) alaqilTYPE *const& "void *"
+%typemap(imtype) alaqilTYPE *const& "void*"
+%typemap(dtype) alaqilTYPE *const& "$*dclassname"
 
-%typecheck(SWIG_TYPECHECK_POINTER)
-    SWIGTYPE,
-    SWIGTYPE *,
-    SWIGTYPE &,
-    SWIGTYPE [],
-    SWIGTYPE *const&
+%typecheck(alaqil_TYPECHECK_POINTER)
+    alaqilTYPE,
+    alaqilTYPE *,
+    alaqilTYPE &,
+    alaqilTYPE [],
+    alaqilTYPE *const&
   ""
 
 
@@ -37,15 +37,15 @@
  * By-value conversion typemaps (parameter is converted to a pointer).
  */
 
-%typemap(in, canthrow=1) SWIGTYPE ($&1_type argp)
+%typemap(in, canthrow=1) alaqilTYPE ($&1_type argp)
 %{ argp = ($&1_ltype)$input;
    if (!argp) {
-     SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "Attempt to dereference null $1_type");
+     alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "Attempt to dereference null $1_type");
      return $null;
    }
    $1 = *argp; %}
 
-%typemap(out) SWIGTYPE
+%typemap(out) alaqilTYPE
 #ifdef __cplusplus
 %{ $result = new $1_ltype((const $1_ltype &)$1); %}
 #else
@@ -56,20 +56,20 @@
 }
 #endif
 
-%typemap(directorin) SWIGTYPE
+%typemap(directorin) alaqilTYPE
   "$input = (void *)new $1_ltype((const $1_ltype &)$1);"
-%typemap(directorout) SWIGTYPE
+%typemap(directorout) alaqilTYPE
 %{ if (!$input) {
-     SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "Unexpected null return for type $1_type");
+     alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "Unexpected null return for type $1_type");
      return $null;
    }
    $result = *($&1_ltype)$input; %}
 
-%typemap(ddirectorin) SWIGTYPE "new $&dclassname($winput, true)"
-%typemap(ddirectorout) SWIGTYPE "$&dclassname.swigGetCPtr($dcall)"
+%typemap(ddirectorin) alaqilTYPE "new $&dclassname($winput, true)"
+%typemap(ddirectorout) alaqilTYPE "$&dclassname.alaqilGetCPtr($dcall)"
 
-%typemap(din) SWIGTYPE "$&dclassname.swigGetCPtr($dinput)"
-%typemap(dout, excode=SWIGEXCODE) SWIGTYPE {
+%typemap(din) alaqilTYPE "$&dclassname.alaqilGetCPtr($dinput)"
+%typemap(dout, excode=alaqilEXCODE) alaqilTYPE {
   $&dclassname ret = new $&dclassname($imcall, true);$excode
   return ret;
 }
@@ -79,70 +79,70 @@
  * Pointer conversion typemaps.
  */
 
-%typemap(in) SWIGTYPE * "$1 = ($1_ltype)$input;"
-%typemap(out) SWIGTYPE * "$result = (void *)$1;"
+%typemap(in) alaqilTYPE * "$1 = ($1_ltype)$input;"
+%typemap(out) alaqilTYPE * "$result = (void *)$1;"
 
-%typemap(directorin) SWIGTYPE *
+%typemap(directorin) alaqilTYPE *
   "$input = (void *) $1;"
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE *
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE *
   "$result = ($1_ltype)$input;"
 
 %typemap(ddirectorin,
   nativepointer="cast($dtype)$winput"
-) SWIGTYPE * "($winput is null) ? null : new $dclassname($winput, false)"
+) alaqilTYPE * "($winput is null) ? null : new $dclassname($winput, false)"
 
 %typemap(ddirectorout,
   nativepointer="cast(void*)$dcall"
-) SWIGTYPE * "$dclassname.swigGetCPtr($dcall)"
+) alaqilTYPE * "$dclassname.alaqilGetCPtr($dcall)"
 
 %typemap(din,
   nativepointer="cast(void*)$dinput"
-) SWIGTYPE * "$dclassname.swigGetCPtr($dinput)"
+) alaqilTYPE * "$dclassname.alaqilGetCPtr($dinput)"
 
-%typemap(dout, excode=SWIGEXCODE,
+%typemap(dout, excode=alaqilEXCODE,
   nativepointer="{\n  auto ret = cast($dtype)$imcall;$excode\n  return ret;\n}"
-) SWIGTYPE * {
+) alaqilTYPE * {
   void* cPtr = $imcall;
   $dclassname ret = (cPtr is null) ? null : new $dclassname(cPtr, $owner);$excode
   return ret;
 }
 
 // Use the same typemaps for const pointers.
-%apply SWIGTYPE * { SWIGTYPE *const }
+%apply alaqilTYPE * { alaqilTYPE *const }
 
 
 /*
  * Reference conversion typemaps.
  */
 
-%typemap(in, canthrow=1) SWIGTYPE & %{ $1 = ($1_ltype)$input;
+%typemap(in, canthrow=1) alaqilTYPE & %{ $1 = ($1_ltype)$input;
   if (!$1) {
-    SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "$1_type type is null");
+    alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "$1_type type is null");
     return $null;
   } %}
-%typemap(out) SWIGTYPE & "$result = (void *)$1;"
+%typemap(out) alaqilTYPE & "$result = (void *)$1;"
 
-%typemap(directorin) SWIGTYPE &
+%typemap(directorin) alaqilTYPE &
   "$input = ($1_ltype) &$1;"
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE &
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE &
 %{ if (!$input) {
-     SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "Unexpected null return for type $1_type");
+     alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "Unexpected null return for type $1_type");
      return $null;
    }
    $result = ($1_ltype)$input; %}
 
 %typemap(ddirectorin,
   nativepointer="cast($dtype)$winput"
-) SWIGTYPE & "new $dclassname($winput, false)"
+) alaqilTYPE & "new $dclassname($winput, false)"
 %typemap(ddirectorout,
   nativepointer="cast(void*)$dcall"
-) SWIGTYPE & "$dclassname.swigGetCPtr($dcall)"
+) alaqilTYPE & "$dclassname.alaqilGetCPtr($dcall)"
 
 %typemap(din,
   nativepointer="cast(void*)$dinput"
-) SWIGTYPE & "$dclassname.swigGetCPtr($dinput)"
-%typemap(dout, excode=SWIGEXCODE,
-  nativepointer="{\n  auto ret = cast($dtype)$imcall;$excode\n  return ret;\n}") SWIGTYPE & {
+) alaqilTYPE & "$dclassname.alaqilGetCPtr($dinput)"
+%typemap(dout, excode=alaqilEXCODE,
+  nativepointer="{\n  auto ret = cast($dtype)$imcall;$excode\n  return ret;\n}") alaqilTYPE & {
   $dclassname ret = new $dclassname($imcall, $owner);$excode
   return ret;
 }
@@ -152,46 +152,46 @@
  * Array conversion typemaps.
  */
 
-%typemap(in) SWIGTYPE [] %{ $1 = ($1_ltype)$input; %}
-%typemap(out) SWIGTYPE [] %{ $result = $1; %}
+%typemap(in) alaqilTYPE [] %{ $1 = ($1_ltype)$input; %}
+%typemap(out) alaqilTYPE [] %{ $result = $1; %}
 
-%typemap(din) SWIGTYPE [] "$dclassname.swigGetCPtr($dinput)"
-%typemap(dout, excode=SWIGEXCODE) SWIGTYPE [] {
+%typemap(din) alaqilTYPE [] "$dclassname.alaqilGetCPtr($dinput)"
+%typemap(dout, excode=alaqilEXCODE) alaqilTYPE [] {
   void* cPtr = $imcall;
   $dclassname ret = (cPtr is null) ? null : new $dclassname(cPtr, $owner);$excode
   return ret;
 }
 
 // Treat references to arrays like references to a single element.
-%apply SWIGTYPE & { SWIGTYPE ((&)[ANY]) }
+%apply alaqilTYPE & { alaqilTYPE ((&)[ANY]) }
 
 
 /*
  * Pointer reference conversion typemaps.
  */
 
-%typemap(in) SWIGTYPE *const& ($*1_ltype temp = 0)
+%typemap(in) alaqilTYPE *const& ($*1_ltype temp = 0)
 %{ temp = ($*1_ltype)$input;
    $1 = ($1_ltype)&temp; %}
-%typemap(out) SWIGTYPE *const&
+%typemap(out) alaqilTYPE *const&
 %{ $result = (void *)*$1; %}
 
-%typemap(din) SWIGTYPE *const& "$*dclassname.swigGetCPtr($dinput)"
-%typemap(dout, excode=SWIGEXCODE) SWIGTYPE *const& {
+%typemap(din) alaqilTYPE *const& "$*dclassname.alaqilGetCPtr($dinput)"
+%typemap(dout, excode=alaqilEXCODE) alaqilTYPE *const& {
   void* cPtr = $imcall;
   $*dclassname ret = (cPtr is null) ? null : new $*dclassname(cPtr, $owner);$excode
   return ret;
 }
-%typemap(directorin) SWIGTYPE *const&
+%typemap(directorin) alaqilTYPE *const&
   "$input = (void *) $1;"
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE *const&
-%{ static $*1_ltype swig_temp;
-   swig_temp = ($*1_ltype)$input;
-   $result = &swig_temp; %}
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE *const&
+%{ static $*1_ltype alaqil_temp;
+   alaqil_temp = ($*1_ltype)$input;
+   $result = &alaqil_temp; %}
 %typemap(ddirectorin,
   nativepointer="cast($dtype)$winput"
-) SWIGTYPE *const& "($winput is null) ? null : new $*dclassname($winput, false)"
+) alaqilTYPE *const& "($winput is null) ? null : new $*dclassname($winput, false)"
 %typemap(ddirectorout,
   nativepointer="cast(void*)$dcall"
-) SWIGTYPE *const& "$*dclassname.swigGetCPtr($dcall)"
+) alaqilTYPE *const& "$*dclassname.alaqilGetCPtr($dcall)"
 

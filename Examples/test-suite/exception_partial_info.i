@@ -2,7 +2,7 @@
 
 // This produced compilable code for Tcl, Python in 1.3.27, fails in 1.3.29
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)
@@ -28,9 +28,9 @@ class ex2 : public myException
 };
 %}
 
-#if !defined(SWIGUTL)
+#if !defined(alaqilUTL)
 
-#if !defined(SWIGCHICKEN)
+#if !defined(alaqilCHICKEN)
 
 %inline %{
 class Impl

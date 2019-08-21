@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 nums = new_Nums();
 
@@ -12,5 +12,5 @@ Nums_doublebounce(nums, %nan);
 
 delete_Nums(nums);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

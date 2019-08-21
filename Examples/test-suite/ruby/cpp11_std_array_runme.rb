@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'cpp11_std_array'
 
@@ -27,14 +27,14 @@ def compare_sequences(a, b)
     end
 end
 
-def compare_containers(rubyarray, swigarray)
-    compare_sequences(rubyarray, swigarray)
+def compare_containers(rubyarray, alaqilarray)
+    compare_sequences(rubyarray, alaqilarray)
 end
 
-def setslice_exception(swigarray, newval)
+def setslice_exception(alaqilarray, newval)
     begin
-        swigarray[0..swigarray.size] = newval
-        raise RuntimeError, "swigarray[] = #{newval} missed set exception for swigarray: #{swigarray}"
+        alaqilarray[0..alaqilarray.size] = newval
+        raise RuntimeError, "alaqilarray[] = #{newval} missed set exception for alaqilarray: #{alaqilarray}"
     rescue ArgumentError => e
 #        print "exception: #{e}"
     end
@@ -110,10 +110,10 @@ compare_containers(ai, [90, 80, 70, 60, 50, 40])
 
 # indexing
 ai = ArrayInt6.new([9, 8, 7, 6, 5, 4])
-swig_assert_equal(ai[0], 9, binding)
-swig_assert_equal(ai[5], 4, binding)
-swig_assert_equal(ai[6], nil, binding)
-swig_assert_equal(ai[-7], nil, binding)
+alaqil_assert_equal(ai[0], 9, binding)
+alaqil_assert_equal(ai[5], 4, binding)
+alaqil_assert_equal(ai[6], nil, binding)
+alaqil_assert_equal(ai[-7], nil, binding)
 
 # fill
 ai.fill(111)
@@ -121,14 +121,14 @@ compare_containers(ai, [111, 111, 111, 111, 111, 111])
 
 # various
 ai = ArrayInt6.new([9, 8, 7, 6, 5, 4])
-swig_assert(ai.include? 9)
-swig_assert(!ai.include?(99))
-swig_assert(ai.kind_of? ArrayInt6)
-swig_assert(ai.find {|x| x == 6 } == 6)
-swig_assert(ai.find {|x| x == 66 } == nil)
-swig_assert(ai.respond_to?(:each))
-swig_assert(ai.respond_to?(:each_with_index))
+alaqil_assert(ai.include? 9)
+alaqil_assert(!ai.include?(99))
+alaqil_assert(ai.kind_of? ArrayInt6)
+alaqil_assert(ai.find {|x| x == 6 } == 6)
+alaqil_assert(ai.find {|x| x == 66 } == nil)
+alaqil_assert(ai.respond_to?(:each))
+alaqil_assert(ai.respond_to?(:each_with_index))
 
 ai = [0, 10, 20, 30, 40, 50]
-ai.each_with_index { |e,i| swig_assert(e/10 == i) }
+ai.each_with_index { |e,i| alaqil_assert(e/10 == i) }
 

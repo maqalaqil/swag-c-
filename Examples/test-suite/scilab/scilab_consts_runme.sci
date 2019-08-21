@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 checkequal(ICONST0_get(), 42, "ICONST0_get()");
 checkequal(FCONST0_get(), 2.1828, "FCONST0_get()");
@@ -14,7 +14,7 @@ checkequal(UNSIGNED0_get(), hex2dec("5FFF"), "UNSIGNED0_get()");
 checkequal(LONG0_get(), hex2dec("3FFF0000"), "LONG0_get()");
 checkequal(ULONG0_get(), hex2dec("5FF0000"), "ULONG0_get()");
 
-if isdef('BAR0') then swigtesterror("BAR0"); end
+if isdef('BAR0') then alaqiltesterror("BAR0"); end
 
 checkequal(ICONST1, int32(42), "ICONST1");
 checkequal(FCONST1, 2.1828, "FCONST1");
@@ -30,6 +30,6 @@ checkequal(UNSIGNED1, uint32(hex2dec("5FFF")), "UNSIGNED1");
 checkequal(LONG1, int32(hex2dec("3FFF0000")), "LONG1");
 checkequal(ULONG1, uint32(hex2dec("5FF0000")), "ULONG1");
 
-if isdef('BAR1') then swigtesterror("BAR1"); end
+if isdef('BAR1') then alaqiltesterror("BAR1"); end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

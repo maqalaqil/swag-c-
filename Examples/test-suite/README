@@ -1,10 +1,10 @@
-SWIG testsuite README file
+alaqil testsuite README file
 --------------------------
 
-This testsuite is here to ensure SWIG can handle a wide range of c/c++
+This testsuite is here to ensure alaqil can handle a wide range of c/c++
 syntax. The testsuite comprises many testcases in this directory. Each
 test case is tested under each of the language modules thereby
-thoroughly testing all of SWIG. It ensures that each of the language
+thoroughly testing all of alaqil. It ensures that each of the language
 modules are at a similar standard.
 
 Those modules that support shadow classes run the tests producing
@@ -32,7 +32,7 @@ modified. An individual testcase may be run by going to the language
 module test-suite directory and using make testcasename.xxx where xxx
 is the type of test (eg cpptest). See common.mk. make -s doesn't print
 any junk on the screen and is useful for emulating the way make check
-works from the SWIG root directory.
+works from the alaqil root directory.
 
 If there are runtime tests needed, don't print anything unless there
 is an error in which case stderr is suggested.
@@ -48,5 +48,5 @@ Further Documentation
 ---------------------
 
 There is documentation about the test-suite and how to use it in
-the SWIG documentation - Doc/Manual/Extending.html#Extending_test_suite.
+the alaqil documentation - Doc/Manual/Extending.html#Extending_test_suite.
 

@@ -38,7 +38,7 @@ To use these, suppose you had a C function like this :
                return *a+*b;
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
         
         %include <typemaps.i>
         double fadd(double *INPUT, double *INPUT);
@@ -132,7 +132,7 @@ returns the integer part in one of its parameters):
 
         double modf(double x, double *ip);
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double modf(double x, double *OUTPUT);
@@ -162,7 +162,7 @@ char * typemaps instead:
 %typemap(in) TYPE *OUTPUT($*1_ltype temp), TYPE &OUTPUT($*1_ltype temp)
 {
   if ($input.len == 0) {
-    _swig_gopanic("array must contain at least 1 element");
+    _alaqil_gopanic("array must contain at least 1 element");
   }
   $1 = &temp;
 }
@@ -229,7 +229,7 @@ For example, suppose you were trying to wrap the following function :
              *x = -(*x);
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         void neg(double *INOUT);
@@ -265,7 +265,7 @@ char * typemaps instead:
 
 %typemap(in) TYPE *INOUT, TYPE &INOUT {
   if ($input.len == 0) {
-    _swig_gopanic("array must contain at least 1 element");
+    _alaqil_gopanic("array must contain at least 1 element");
   }
   $1 = ($1_ltype) $input.array;
 }

@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly uses the sizeof() on the
+/* This testcase checks whether alaqil correctly uses the sizeof() on the
    concrete objects and not only types introduced in C++11. */
 %module cpp11_sizeof_object
 

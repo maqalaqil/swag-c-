@@ -31,7 +31,7 @@ namespace Space {
   };
 }
 
-#if defined(SWIG)
+#if defined(alaqil)
 %exception Space::ABC::operator ABC %{
 #if defined(__clang__)
   // Workaround for: warning: conversion function converting 'Space::ABC' to itself will never be used

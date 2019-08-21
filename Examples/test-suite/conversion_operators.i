@@ -3,7 +3,7 @@
 // Test bug #401 where the conversion operator name incorrectly included the newline character
 // Also test comments around conversion operators due to special handling in the scanner for conversion operators
 
-// These one line ignores should match the conversion operator names to suppress Warning 503 - SWIGWARN_LANG_IDENTIFIER
+// These one line ignores should match the conversion operator names to suppress Warning 503 - alaqilWARN_LANG_IDENTIFIER
 %ignore operator const EcReal;
 %ignore operator EcImaginary const;
 %ignore operator EcComplex const;

@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Typemap_delete
 
 let r = new_Rect '(123)

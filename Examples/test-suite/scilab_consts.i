@@ -21,7 +21,7 @@
 /* This shouldn't do anything, bar is not defined */
 #define BAR0 bar
 
-/* SWIG directive %constant produces constants too */
+/* alaqil directive %constant produces constants too */
 %constant int iconst0 = 37;
 %constant double fconst0 = 42.2;
 
@@ -47,6 +47,6 @@
 /* This shouldn't do anything, bar is not defined */
 #define BAR1 bar
 
-/* SWIG directive %constant produces constants too */
+/* alaqil directive %constant produces constants too */
 %constant int iconst1 = 37;
 %constant double fconst1 = 42.2;

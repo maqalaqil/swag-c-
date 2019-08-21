@@ -10,9 +10,9 @@ class CEO extends Manager {
   public String getPosition() {
     return "CEO";
     }
-  // Public method to stop the SWIG proxy base class from thinking it owns the underlying C++ memory.
+  // Public method to stop the alaqil proxy base class from thinking it owns the underlying C++ memory.
   public void disownMemory() {
-    swigCMemOwn = false; 
+    alaqilCMemOwn = false; 
   } 
 }
 
@@ -22,7 +22,7 @@ public class runme {
     try {
         System.loadLibrary("example");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }

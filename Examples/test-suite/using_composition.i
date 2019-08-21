@@ -1,19 +1,19 @@
 %module(ruby_minherit="1") using_composition
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) FooBar;   // C#, D, Java, PHP multiple inheritance
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) FooBar2;   // C#, D, Java, PHP multiple inheritance
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) FooBar3;   // C#, D, Java, PHP multiple inheritance
-#ifdef SWIGLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) blah;
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) FooBar;   // C#, D, Java, PHP multiple inheritance
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) FooBar2;   // C#, D, Java, PHP multiple inheritance
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) FooBar3;   // C#, D, Java, PHP multiple inheritance
+#ifdef alaqilLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) blah;
 #endif
 
 %inline %{

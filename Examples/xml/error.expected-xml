@@ -1,24 +1,24 @@
-<swigxml:swig name="namespaces" xmlns:swigxml="http://jniplusplus.sourceforge.net" xmlns:swig="http://swig.sourceforge.net" xmlns:c="http://www.ansi.org" >
-  <swig:top >
-    <swigxml:child >
-      <swig:file name="../../Lib/swig.swg" >
-        <swigxml:type string="include"  />
-      </swig:file>
-      <swig:file name="error.i" >
-        <swigxml:child >
-          <swig:module name="error"  />
+<alaqilxml:alaqil name="namespaces" xmlns:alaqilxml="http://jniplusplus.sourceforge.net" xmlns:alaqil="http://alaqil.sourceforge.net" xmlns:c="http://www.ansi.org" >
+  <alaqil:top >
+    <alaqilxml:child >
+      <alaqil:file name="../../Lib/alaqil.swg" >
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+      <alaqil:file name="error.i" >
+        <alaqilxml:child >
+          <alaqil:module name="error"  />
           <c:enum >
-            <swigxml:child >
+            <alaqilxml:child >
               <c:enumvalue name="RED" >
-                <swigxml:value string="RED"  />
+                <alaqilxml:value string="RED"  />
               </c:enumvalue>
               <c:enumvalue name="GREEN"  />
               <c:enumvalue name="BLUE"  />
-            </swigxml:child>
+            </alaqilxml:child>
           </c:enum>
-        </swigxml:child>
-        <swigxml:type string="include"  />
-      </swig:file>
-    </swigxml:child>
-  </swig:top>
-</swigxml:swig>
+        </alaqilxml:child>
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+    </alaqilxml:child>
+  </alaqil:top>
+</alaqilxml:alaqil>

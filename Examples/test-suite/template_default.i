@@ -1,6 +1,6 @@
 %module template_default
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) ns1::Traits::c; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) ns1::Traits::c; /* Ruby, wrong constant name */
 
 namespace ns1 {
   namespace ns2 {
@@ -50,9 +50,9 @@ namespace ns1 {
       class A
       {
 	
-#ifdef SWIG      
+#ifdef alaqil      
 	%typemap(in) A *  { /* in A */ }
-  #ifdef SWIGCSHARP
+  #ifdef alaqilCSHARP
 	%typemap(out) A *  { /* out A */ $result=0; }
   #else
 	%typemap(out) A *  { /* out A */ }
@@ -70,9 +70,9 @@ namespace ns1 {
       class N
       {
 	
-#ifdef SWIG      
+#ifdef alaqil      
 	%typemap(in) N *  { /* in N */ }
-  #ifdef SWIGCSHARP
+  #ifdef alaqilCSHARP
 	%typemap(out) N *  { /* out N */ $result=0; }
   #else
 	%typemap(out) N *  { /* out N */ }
@@ -196,7 +196,7 @@ namespace ns1 {
 %}
 
 
-#ifndef SWIGCHICKEN
+#ifndef alaqilCHICKEN
 %include std_vector.i
 
 %{

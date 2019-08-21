@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_vector.i
  *
- * SWIG typemaps for std::vector.
+ * alaqil typemaps for std::vector.
  * The Java proxy class extends java.util.AbstractList and implements
  * java.util.RandomAccess. The std::vector container looks and feels much like a
  * java.util.ArrayList from Java.
@@ -14,16 +14,16 @@
 #include <stdexcept>
 %}
 
-%fragment("SWIG_VectorSize", "header", fragment="SWIG_JavaIntFromSize_t") {
-SWIGINTERN jint SWIG_VectorSize(size_t size) {
-  jint sz = SWIG_JavaIntFromSize_t(size);
+%fragment("alaqil_VectorSize", "header", fragment="alaqil_JavaIntFromSize_t") {
+alaqilINTERN jint alaqil_VectorSize(size_t size) {
+  jint sz = alaqil_JavaIntFromSize_t(size);
   if (sz == -1)
     throw std::out_of_range("vector size is too large to fit into a Java int");
   return sz;
 }
 }
 
-%define SWIG_STD_VECTOR_MINIMUM_INTERNAL(CTYPE, CONST_REFERENCE)
+%define alaqil_STD_VECTOR_MINIMUM_INTERNAL(CTYPE, CONST_REFERENCE)
 %typemap(javabase) std::vector< CTYPE > "java.util.AbstractList<$typemap(jboxtype, CTYPE)>"
 %typemap(javainterfaces) std::vector< CTYPE > "java.util.RandomAccess"
 %proxycode %{
@@ -93,7 +93,7 @@ SWIGINTERN jint SWIG_VectorSize(size_t size) {
     bool empty() const;
     void clear();
     %extend {
-      %fragment("SWIG_VectorSize");
+      %fragment("alaqil_VectorSize");
 
       vector(jint count, const CTYPE &value) throw (std::out_of_range) {
         if (count < 0)
@@ -102,7 +102,7 @@ SWIGINTERN jint SWIG_VectorSize(size_t size) {
       }
 
       jint doSize() const throw (std::out_of_range) {
-        return SWIG_VectorSize(self->size());
+        return alaqil_VectorSize(self->size());
       }
 
       void doAdd(const value_type& value) {
@@ -169,12 +169,12 @@ SWIGINTERN jint SWIG_VectorSize(size_t size) {
 namespace std {
 
     template<class T> class vector {
-        SWIG_STD_VECTOR_MINIMUM_INTERNAL(T, const T&)
+        alaqil_STD_VECTOR_MINIMUM_INTERNAL(T, const T&)
     };
 
     // bool specialization
     template<> class vector<bool> {
-        SWIG_STD_VECTOR_MINIMUM_INTERNAL(bool, bool)
+        alaqil_STD_VECTOR_MINIMUM_INTERNAL(bool, bool)
     };
 }
 

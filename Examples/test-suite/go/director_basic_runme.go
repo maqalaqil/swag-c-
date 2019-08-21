@@ -62,7 +62,7 @@ func f2() {
 	bc = cc.Cmethod(b)
 	bd := dd.Cmethod(b)
 
-	cc.Method(b.Swigcptr())
+	cc.Method(b.alaqilcptr())
 	if pc.cmethod != 7 {
 		panic(pc.cmethod)
 	}

@@ -1,206 +1,206 @@
-<swigxml:swig name="namespaces" xmlns:swigxml="http://jniplusplus.sourceforge.net" xmlns:swig="http://swig.sourceforge.net" xmlns:c="http://www.ansi.org" >
-  <swig:top >
-    <swigxml:child >
-      <swig:file name="../../Lib/swig.swg" >
-        <swigxml:type string="include"  />
-      </swig:file>
-      <swig:file name="gnarly.i" >
-        <swigxml:child >
-          <swig:module name="my_check"  />
+<alaqilxml:alaqil name="namespaces" xmlns:alaqilxml="http://jniplusplus.sourceforge.net" xmlns:alaqil="http://alaqil.sourceforge.net" xmlns:c="http://www.ansi.org" >
+  <alaqil:top >
+    <alaqilxml:child >
+      <alaqil:file name="../../Lib/alaqil.swg" >
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+      <alaqil:file name="gnarly.i" >
+        <alaqilxml:child >
+          <alaqil:module name="my_check"  />
           <c:enum name="color" >
-            <swigxml:child >
+            <alaqilxml:child >
               <c:enumvalue name="RED" >
-                <swigxml:value string="RED"  />
+                <alaqilxml:value string="RED"  />
               </c:enumvalue>
               <c:enumvalue name="BLUE"  />
               <c:enumvalue name="GREEN"  />
-            </swigxml:child>
+            </alaqilxml:child>
           </c:enum>
           <c:class name="Foo" >
-            <swigxml:child >
+            <alaqilxml:child >
               <c:access name="public"  />
               <c:function name="Foo" >
-                <swigxml:code >
-{ }                </swigxml:code>
-                <swigxml:type string="int"  />
+                <alaqilxml:code >
+{ }                </alaqilxml:code>
+                <alaqilxml:type string="int"  />
               </c:function>
               <c:enum name="speed" >
-                <swigxml:child >
+                <alaqilxml:child >
                   <c:enumvalue name="IMPULSE"  />
                   <c:enumvalue name="WARP"  />
                   <c:enumvalue name="LUDICROUS"  />
-                </swigxml:child>
+                </alaqilxml:child>
               </c:enum>
               <c:function name="enum_test" >
-                <swigxml:parms >
-                  <swigxml:parm name="s" >
-                    <swigxml:type string="speed"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:type string="void"  />
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="s" >
+                    <alaqilxml:type string="speed"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:type string="void"  />
               </c:function>
-            </swigxml:child>
-            <swigxml:classtype string="class"  />
-            <swigxml:namespace string="Foo"  />
+            </alaqilxml:child>
+            <alaqilxml:classtype string="class"  />
+            <alaqilxml:namespace string="Foo"  />
           </c:class>
           <c:function name="enum_test" >
-            <swigxml:parms >
-              <swigxml:parm name="c" >
-                <swigxml:type string="color"  />
-              </swigxml:parm>
-              <swigxml:parm name="s" >
-                <swigxml:type string="Foo::speed"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:type string="void"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="c" >
+                <alaqilxml:type string="color"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="s" >
+                <alaqilxml:type string="Foo::speed"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:type string="void"  />
           </c:function>
-          <swig:typemap >
-            <swigxml:code >
+          <alaqil:typemap >
+            <alaqilxml:code >
 {
     WHATEVER  MAKES YOU HAPPY AS RESULT
-}            </swigxml:code>
-            <swigxml:method string="out"  />
-            <swigxml:type string="p.int"  />
-          </swig:typemap>
-          <swig:typemap >
-            <swigxml:code >
+}            </alaqilxml:code>
+            <alaqilxml:method string="out"  />
+            <alaqilxml:type string="p.int"  />
+          </alaqil:typemap>
+          <alaqil:typemap >
+            <alaqilxml:code >
 {
     WHATEVER  MAKES YOU HAPPY AS PARAMETER
-}            </swigxml:code>
-            <swigxml:method string="in"  />
-            <swigxml:type string="p.int"  />
-          </swig:typemap>
-          <swig:pragma name="DEBUG" >
-            <swigxml:value string="false"  />
-            <swigxml:lang string="xml"  />
-          </swig:pragma>
+}            </alaqilxml:code>
+            <alaqilxml:method string="in"  />
+            <alaqilxml:type string="p.int"  />
+          </alaqil:typemap>
+          <alaqil:pragma name="DEBUG" >
+            <alaqilxml:value string="false"  />
+            <alaqilxml:lang string="xml"  />
+          </alaqil:pragma>
           <c:function name="my_gcd" >
-            <swigxml:parms >
-              <swigxml:parm name="x" >
-                <swigxml:type string="p.q(const).char"  />
-              </swigxml:parm>
-              <swigxml:parm name="y" >
-                <swigxml:type string="a().p.int"  />
-              </swigxml:parm>
-              <swigxml:parm name="r" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-              <swigxml:parm name="op" >
-                <swigxml:type string="p.f(int,int).int"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="p.int"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="x" >
+                <alaqilxml:type string="p.q(const).char"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="y" >
+                <alaqilxml:type string="a().p.int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="r" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="op" >
+                <alaqilxml:type string="p.f(int,int).int"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="p.int"  />
           </c:function>
           <c:variable name="my_foo" >
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="double"  />
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="double"  />
           </c:variable>
           <c:function name="my_void" >
-            <swigxml:type string="void"  />
+            <alaqilxml:type string="void"  />
           </c:function>
           <c:function name="my_empty" >
-            <swigxml:type string="int"  />
+            <alaqilxml:type string="int"  />
           </c:function>
           <c:variable name="my_dutch" >
-            <swigxml:value string="1.0"  />
-            <swigxml:type string="q(const).double"  />
+            <alaqilxml:value string="1.0"  />
+            <alaqilxml:type string="q(const).double"  />
           </c:variable>
           <c:class name="my_union" >
-            <swigxml:child >
+            <alaqilxml:child >
               <c:variable name="my_iii" >
-                <swigxml:type string="int"  />
+                <alaqilxml:type string="int"  />
               </c:variable>
               <c:variable name="my_ccc" >
-                <swigxml:type string="char"  />
+                <alaqilxml:type string="char"  />
               </c:variable>
-            </swigxml:child>
-            <swigxml:classtype string="union"  />
-            <swigxml:namespace string="my_union"  />
+            </alaqilxml:child>
+            <alaqilxml:classtype string="union"  />
+            <alaqilxml:namespace string="my_union"  />
           </c:class>
           <c:class name="my_struct" >
-            <swigxml:child >
+            <alaqilxml:child >
               <c:access name="public"  />
               <c:destructor name="my_struct" >
-                <swigxml:storage string="virtual"  />
+                <alaqilxml:storage string="virtual"  />
               </c:destructor>
               <c:function name="my_foo" >
-                <swigxml:type string="int"  />
+                <alaqilxml:type string="int"  />
               </c:function>
               <c:access name="protected"  />
               <c:variable name="my_bar" >
-                <swigxml:type string="int"  />
+                <alaqilxml:type string="int"  />
               </c:variable>
               <c:variable name="x" >
-                <swigxml:type string="double"  />
+                <alaqilxml:type string="double"  />
               </c:variable>
               <c:variable name="y" >
-                <swigxml:type string="double"  />
+                <alaqilxml:type string="double"  />
               </c:variable>
               <c:function name="area" >
-                <swigxml:abstract string="1"  />
-                <swigxml:storage string="virtual"  />
-                <swigxml:type string="double"  />
+                <alaqilxml:abstract string="1"  />
+                <alaqilxml:storage string="virtual"  />
+                <alaqilxml:type string="double"  />
               </c:function>
               <c:variable name="nshapes" >
-                <swigxml:storage string="static"  />
-                <swigxml:type string="int"  />
+                <alaqilxml:storage string="static"  />
+                <alaqilxml:type string="int"  />
               </c:variable>
-            </swigxml:child>
-            <swigxml:classtype string="struct"  />
-            <swigxml:namespace string="my_struct"  />
+            </alaqilxml:child>
+            <alaqilxml:classtype string="struct"  />
+            <alaqilxml:namespace string="my_struct"  />
           </c:class>
           <c:class name="my_class" >
-            <swigxml:child >
+            <alaqilxml:child >
               <c:access name="public"  />
               <c:function name="my_class" >
-                <swigxml:parms >
-                  <swigxml:parm name="c" >
-                    <swigxml:type string="char"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:type string="int"  />
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="c" >
+                    <alaqilxml:type string="char"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:type string="int"  />
               </c:function>
               <c:access name="private"  />
               <c:destructor name="my_class"  />
               <c:function name="my_func" >
-                <swigxml:parms >
-                  <swigxml:parm >
-                    <swigxml:type string="my_class"  />
-                  </swigxml:parm>
-                  <swigxml:parm name="x" >
-                    <swigxml:type string="p.p.char"  />
-                  </swigxml:parm>
-                  <swigxml:parm name="y" >
-                    <swigxml:type string="a().int"  />
-                  </swigxml:parm>
-                  <swigxml:parm name="r" >
-                    <swigxml:type string="r.q(const).int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:storage string="virtual"  />
-                <swigxml:type string="p.q(const).int"  />
+                <alaqilxml:parms >
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="my_class"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm name="x" >
+                    <alaqilxml:type string="p.p.char"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm name="y" >
+                    <alaqilxml:type string="a().int"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm name="r" >
+                    <alaqilxml:type string="r.q(const).int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:storage string="virtual"  />
+                <alaqilxml:type string="p.q(const).int"  />
               </c:function>
               <c:variable name="my_foo" >
-                <swigxml:type string="a(128).double"  />
+                <alaqilxml:type string="a(128).double"  />
               </c:variable>
               <c:variable name="i" >
-                <swigxml:type string="q(const).my_int"  />
+                <alaqilxml:type string="q(const).my_int"  />
               </c:variable>
-            </swigxml:child>
-            <swigxml:classtype string="class"  />
-            <swigxml:bases >
-                <swigxml:item name="my_struct"  />
-                <swigxml:item name="my_union"  />
-            </swigxml:bases>
-            <swigxml:namespace string="my_class"  />
+            </alaqilxml:child>
+            <alaqilxml:classtype string="class"  />
+            <alaqilxml:bases >
+                <alaqilxml:item name="my_struct"  />
+                <alaqilxml:item name="my_union"  />
+            </alaqilxml:bases>
+            <alaqilxml:namespace string="my_class"  />
           </c:class>
           <c:typedef name="my_int" >
-            <swigxml:type string="int"  />
+            <alaqilxml:type string="int"  />
           </c:typedef>
-        </swigxml:child>
-        <swigxml:type string="include"  />
-      </swig:file>
-    </swigxml:child>
-  </swig:top>
-</swigxml:swig>
+        </alaqilxml:child>
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+    </alaqilxml:child>
+  </alaqil:top>
+</alaqilxml:alaqil>

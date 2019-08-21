@@ -36,5 +36,5 @@ int inserted_wrapper(int i) { return inserted_header4(i); }
 
 %init %{
 // %inserted code %init
-int SWIGUNUSED inserted_init_value = inserted_wrapper(0);
+int alaqilUNUSED inserted_init_value = inserted_wrapper(0);
 %}

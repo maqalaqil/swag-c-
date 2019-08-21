@@ -1,6 +1,6 @@
 %module(directors="1") director_exception
 
-%warnfilter(SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) return_const_char_star;
+%warnfilter(alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) return_const_char_star;
 
 %{
 #include <string>
@@ -8,53 +8,53 @@
 // define dummy director exception classes to prevent spurious errors 
 // in target languages that do not support directors.
 
-#ifndef SWIG_DIRECTORS
-namespace Swig {
+#ifndef alaqil_DIRECTORS
+namespace alaqil {
   class DirectorException {};
-  class DirectorMethodException: public Swig::DirectorException {};
+  class DirectorMethodException: public alaqil::DirectorException {};
 }
-#endif /* !SWIG_DIRECTORS */
+#endif /* !alaqil_DIRECTORS */
 %}
 
 %include "std_string.i"
 
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 
 %feature("director:except") {
   if ($error == FAILURE) {
-    Swig::DirectorMethodException::raise("$symname");
+    alaqil::DirectorMethodException::raise("$symname");
   }
 }
 
 %exception {
   try { $action }
-  catch (Swig::DirectorException &) { SWIG_fail; }
+  catch (alaqil::DirectorException &) { alaqil_fail; }
 }
 
 #endif
 
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 
 %feature("director:except") {
   if ($error != NULL) {
-    Swig::DirectorMethodException::raise("$symname");
+    alaqil::DirectorMethodException::raise("$symname");
   }
 }
 
 %exception {
   try { $action }
-  catch (Swig::DirectorException &) { SWIG_fail; }
+  catch (alaqil::DirectorException &) { alaqil_fail; }
 }
 
 #endif
 
-#ifdef SWIGJAVA
+#ifdef alaqilJAVA
 
 // Default for director exception warns about unmapped exceptions now in java
 // Suppress warnings for this older test
 // %warnfilter(476) Bar;
 
-// Default for java is to throw Swig::DirectorException if no
+// Default for java is to throw alaqil::DirectorException if no
 // direct:except feature.  Since methods below have exception specification
 // cannot throw director exception.
 
@@ -71,15 +71,15 @@ namespace Swig {
 
 #endif
 
-#ifdef SWIGRUBY
+#ifdef alaqilRUBY
 
 %feature("director:except") {
-  Swig::DirectorMethodException::raise($error);
+  alaqil::DirectorMethodException::raise($error);
 }
 
 %exception {
   try { $action }
-  catch (Swig::DirectorException &e) { rb_exc_raise(e.getError()); }
+  catch (alaqil::DirectorException &e) { rb_exc_raise(e.getError()); }
 }
 
 #endif
@@ -150,7 +150,7 @@ Foo *launder(Foo *f) {
     virtual std::string pong() throw(Unknown1, int, Unknown2&) { return "Bar::pong();" + ping(); }
   };
   
-  // Class to allow regression testing SWIG/PHP not checking if an exception
+  // Class to allow regression testing alaqil/PHP not checking if an exception
   // had been thrown in directorout typemaps.
   class ReturnAllTypes
   {
@@ -169,7 +169,7 @@ Foo *launder(Foo *f) {
     virtual ~ReturnAllTypes() {}
   };
 
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

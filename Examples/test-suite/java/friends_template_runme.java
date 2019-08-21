@@ -7,7 +7,7 @@ public class friends_template_runme {
     try {
 	System.loadLibrary("friends_template");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -21,7 +21,7 @@ public class friends_template_runme {
     friends_template.TemplateFriendHiddenInt(0);
     friends_template.TemplateFriendSeenInt(0, 0);
 
-    SWIGTYPE_p_MyClassT_int_t myClassInt = friends_template.makeMyClassInt();
+    alaqilTYPE_p_MyClassT_int_t myClassInt = friends_template.makeMyClassInt();
     friends_template.OperatorInputInt(1, myClassInt);
     friends_template.OperatorFunkSeenInt(1.1, myClassInt);
   }

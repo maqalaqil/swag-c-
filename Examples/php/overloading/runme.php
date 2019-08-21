@@ -1,7 +1,7 @@
 <?php
 
 # This file illustrates the low-level C++ interface
-# created by SWIG.  In this case, all of our C++ classes
+# created by alaqil.  In this case, all of our C++ classes
 # get converted into function calls.
 
 include("example.php");

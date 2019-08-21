@@ -9,7 +9,7 @@ public class apply_strings_runme {
   public static void Main() {
     if (apply_strings.UCharFunction(TEST_MESSAGE) != TEST_MESSAGE) throw new Exception("UCharFunction failed");
     if (apply_strings.SCharFunction(TEST_MESSAGE) != TEST_MESSAGE) throw new Exception("SCharFunction failed");
-    SWIGTYPE_p_char pChar = apply_strings.CharFunction(null);
+    alaqilTYPE_p_char pChar = apply_strings.CharFunction(null);
     if (pChar != null) throw new Exception("CharFunction failed");
   }
 }

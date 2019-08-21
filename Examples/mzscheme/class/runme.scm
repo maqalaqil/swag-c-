@@ -1,7 +1,7 @@
 ; file: runme.scm
 
 ; This file illustrates the proxy class C++ interface generated
-; by SWIG.
+; by alaqil.
 
 (load-extension "example.so")
 

@@ -18,7 +18,7 @@ template<class T> class vector {
   void set(int index, T &val) {
     v[index] = val;
   }
-#ifdef SWIG
+#ifdef alaqil
   %extend {
     T getitem(int index) {
       return $self->get(index);

@@ -1,9 +1,9 @@
 // test STL containers typemaps
 
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 function checkerror(ierr, cmd)
-  if ierr <> 0 then swigtesterror("error " + string(ierr) + " in """ + cmd + """"); end
+  if ierr <> 0 then alaqiltesterror("error " + string(ierr) + " in """ + cmd + """"); end
 endfunction
 
 // test container of pointers returned from function (expected a list)
@@ -13,9 +13,9 @@ function [classAPtr_list, classAPtr1, classAPtr2] = testCreateContainerPtr(conta
   func = msprintf("ret_ClassAPtr_%s", container);
   cmd = msprintf("classAPtr_list = %s(classAPtr1, classAPtr2);", func);
   ierr = execstr(cmd, "errcatch");
-  if ierr <> 0 then swigtesterror("error in " + cmd); end
+  if ierr <> 0 then alaqiltesterror("error in " + cmd); end
   if ~exists('classAPtr_list') | (size(classAPtr_list) <> 2) then
-    swigtesterror(func);
+    alaqiltesterror(func);
   end
 
   checkequal(ClassA_a_get(classAPtr_list(1)), value1, "ClassA_a_get(classAPtr_list(1))");
@@ -103,6 +103,6 @@ testContainer("deque");
 testContainer("set");
 testContainer("multiset");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 
 

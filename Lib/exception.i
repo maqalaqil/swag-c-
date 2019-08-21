@@ -1,262 +1,262 @@
 /* -----------------------------------------------------------------------------
  * exception.i
  *
- * SWIG library file providing language independent exception handling
+ * alaqil library file providing language independent exception handling
  * ----------------------------------------------------------------------------- */
 
-#if defined(SWIGUTL)
+#if defined(alaqilUTL)
 #error "This version of exception.i should not be used"
 #endif
 
 
-%insert("runtime") "swigerrors.swg"
+%insert("runtime") "alaqilerrors.swg"
 
 
-#ifdef SWIGPHP7
+#ifdef alaqilPHP7
 %{
 #include "zend_exceptions.h"
-#define SWIG_exception(code, msg) do { zend_throw_exception(NULL, (char*)msg, code); goto thrown; } while (0)
+#define alaqil_exception(code, msg) do { zend_throw_exception(NULL, (char*)msg, code); goto thrown; } while (0)
 %}
 #endif
 
-#ifdef SWIGGUILE
+#ifdef alaqilGUILE
 %{
-  SWIGINTERN void SWIG_exception_ (int code, const char *msg,
+  alaqilINTERN void alaqil_exception_ (int code, const char *msg,
                                const char *subr) {
 #define ERROR(scmerr)					\
 	scm_error(scm_from_locale_string((char *) (scmerr)),	\
 		  (char *) subr, (char *) msg,		\
 		  SCM_EOL, SCM_BOOL_F)
-#define MAP(swigerr, scmerr)			\
-	case swigerr:				\
+#define MAP(alaqilerr, scmerr)			\
+	case alaqilerr:				\
 	  ERROR(scmerr);			\
 	  break
     switch (code) {
-      MAP(SWIG_MemoryError,	"swig-memory-error");
-      MAP(SWIG_IOError,		"swig-io-error");
-      MAP(SWIG_RuntimeError,	"swig-runtime-error");
-      MAP(SWIG_IndexError,	"swig-index-error");
-      MAP(SWIG_TypeError,	"swig-type-error");
-      MAP(SWIG_DivisionByZero,	"swig-division-by-zero");
-      MAP(SWIG_OverflowError,	"swig-overflow-error");
-      MAP(SWIG_SyntaxError,	"swig-syntax-error");
-      MAP(SWIG_ValueError,	"swig-value-error");
-      MAP(SWIG_SystemError,	"swig-system-error");
+      MAP(alaqil_MemoryError,	"alaqil-memory-error");
+      MAP(alaqil_IOError,		"alaqil-io-error");
+      MAP(alaqil_RuntimeError,	"alaqil-runtime-error");
+      MAP(alaqil_IndexError,	"alaqil-index-error");
+      MAP(alaqil_TypeError,	"alaqil-type-error");
+      MAP(alaqil_DivisionByZero,	"alaqil-division-by-zero");
+      MAP(alaqil_OverflowError,	"alaqil-overflow-error");
+      MAP(alaqil_SyntaxError,	"alaqil-syntax-error");
+      MAP(alaqil_ValueError,	"alaqil-value-error");
+      MAP(alaqil_SystemError,	"alaqil-system-error");
     default:
-      ERROR("swig-error");
+      ERROR("alaqil-error");
     }
 #undef ERROR
 #undef MAP
   }
 
-#define SWIG_exception(a,b) SWIG_exception_(a, b, FUNC_NAME)
+#define alaqil_exception(a,b) alaqil_exception_(a, b, FUNC_NAME)
 %}
 #endif
 
-#ifdef SWIGMZSCHEME
+#ifdef alaqilMZSCHEME
 
 %{
-SWIGINTERN void SWIG_exception_ (int code, const char *msg) {
+alaqilINTERN void alaqil_exception_ (int code, const char *msg) {
 #define ERROR(errname)				\
 	scheme_signal_error(errname " (%s)", msg);
-#define MAP(swigerr, errname)			\
-	case swigerr:				\
+#define MAP(alaqilerr, errname)			\
+	case alaqilerr:				\
 	  ERROR(errname);			\
 	  break
     switch (code) {
-      MAP(SWIG_MemoryError,	"swig-memory-error");
-      MAP(SWIG_IOError,		"swig-io-error");
-      MAP(SWIG_RuntimeError,	"swig-runtime-error");
-      MAP(SWIG_IndexError,	"swig-index-error");
-      MAP(SWIG_TypeError,	"swig-type-error");
-      MAP(SWIG_DivisionByZero,	"swig-division-by-zero");
-      MAP(SWIG_OverflowError,	"swig-overflow-error");
-      MAP(SWIG_SyntaxError,	"swig-syntax-error");
-      MAP(SWIG_ValueError,	"swig-value-error");
-      MAP(SWIG_SystemError,	"swig-system-error");
+      MAP(alaqil_MemoryError,	"alaqil-memory-error");
+      MAP(alaqil_IOError,		"alaqil-io-error");
+      MAP(alaqil_RuntimeError,	"alaqil-runtime-error");
+      MAP(alaqil_IndexError,	"alaqil-index-error");
+      MAP(alaqil_TypeError,	"alaqil-type-error");
+      MAP(alaqil_DivisionByZero,	"alaqil-division-by-zero");
+      MAP(alaqil_OverflowError,	"alaqil-overflow-error");
+      MAP(alaqil_SyntaxError,	"alaqil-syntax-error");
+      MAP(alaqil_ValueError,	"alaqil-value-error");
+      MAP(alaqil_SystemError,	"alaqil-system-error");
     default:
-      ERROR("swig-error");
+      ERROR("alaqil-error");
     }
 #undef ERROR
 #undef MAP
   }
 
-#define SWIG_exception(a,b) SWIG_exception_(a, b)
+#define alaqil_exception(a,b) alaqil_exception_(a, b)
 %}
 #endif
 
-#ifdef SWIGJAVA
+#ifdef alaqilJAVA
 %{
-SWIGINTERN void SWIG_JavaException(JNIEnv *jenv, int code, const char *msg) {
-  SWIG_JavaExceptionCodes exception_code = SWIG_JavaUnknownError;
+alaqilINTERN void alaqil_JavaException(JNIEnv *jenv, int code, const char *msg) {
+  alaqil_JavaExceptionCodes exception_code = alaqil_JavaUnknownError;
   switch(code) {
-  case SWIG_MemoryError:
-    exception_code = SWIG_JavaOutOfMemoryError;
+  case alaqil_MemoryError:
+    exception_code = alaqil_JavaOutOfMemoryError;
     break;
-  case SWIG_IOError:
-    exception_code = SWIG_JavaIOException;
+  case alaqil_IOError:
+    exception_code = alaqil_JavaIOException;
     break;
-  case SWIG_SystemError:
-  case SWIG_RuntimeError:
-    exception_code = SWIG_JavaRuntimeException;
+  case alaqil_SystemError:
+  case alaqil_RuntimeError:
+    exception_code = alaqil_JavaRuntimeException;
     break;
-  case SWIG_OverflowError:
-  case SWIG_IndexError:
-    exception_code = SWIG_JavaIndexOutOfBoundsException;
+  case alaqil_OverflowError:
+  case alaqil_IndexError:
+    exception_code = alaqil_JavaIndexOutOfBoundsException;
     break;
-  case SWIG_DivisionByZero:
-    exception_code = SWIG_JavaArithmeticException;
+  case alaqil_DivisionByZero:
+    exception_code = alaqil_JavaArithmeticException;
     break;
-  case SWIG_SyntaxError:
-  case SWIG_ValueError:
-  case SWIG_TypeError:
-    exception_code = SWIG_JavaIllegalArgumentException;
+  case alaqil_SyntaxError:
+  case alaqil_ValueError:
+  case alaqil_TypeError:
+    exception_code = alaqil_JavaIllegalArgumentException;
     break;
-  case SWIG_UnknownError:
+  case alaqil_UnknownError:
   default:
-    exception_code = SWIG_JavaUnknownError;
+    exception_code = alaqil_JavaUnknownError;
     break;
   }
-  SWIG_JavaThrowException(jenv, exception_code, msg);
+  alaqil_JavaThrowException(jenv, exception_code, msg);
 }
 %}
 
-#define SWIG_exception(code, msg)\
-{ SWIG_JavaException(jenv, code, msg); return $null; }
-#endif // SWIGJAVA
+#define alaqil_exception(code, msg)\
+{ alaqil_JavaException(jenv, code, msg); return $null; }
+#endif // alaqilJAVA
 
-#ifdef SWIGOCAML
+#ifdef alaqilOCAML
 %{
-SWIGINTERN void SWIG_OCamlException(int code, const char *msg) {
+alaqilINTERN void alaqil_OCamlException(int code, const char *msg) {
   CAMLparam0();
 
-  SWIG_OCamlExceptionCodes exception_code = SWIG_OCamlUnknownError;
+  alaqil_OCamlExceptionCodes exception_code = alaqil_OCamlUnknownError;
   switch (code) {
-  case SWIG_DivisionByZero:
-    exception_code = SWIG_OCamlArithmeticException;
+  case alaqil_DivisionByZero:
+    exception_code = alaqil_OCamlArithmeticException;
     break;
-  case SWIG_IndexError:
-    exception_code = SWIG_OCamlIndexOutOfBoundsException;
+  case alaqil_IndexError:
+    exception_code = alaqil_OCamlIndexOutOfBoundsException;
     break;
-  case SWIG_IOError:
-  case SWIG_SystemError:
-    exception_code = SWIG_OCamlSystemException;
+  case alaqil_IOError:
+  case alaqil_SystemError:
+    exception_code = alaqil_OCamlSystemException;
     break;
-  case SWIG_MemoryError:
-    exception_code = SWIG_OCamlOutOfMemoryError;
+  case alaqil_MemoryError:
+    exception_code = alaqil_OCamlOutOfMemoryError;
     break;
-  case SWIG_OverflowError:
-    exception_code = SWIG_OCamlOverflowException;
+  case alaqil_OverflowError:
+    exception_code = alaqil_OCamlOverflowException;
     break;
-  case SWIG_RuntimeError:
-    exception_code = SWIG_OCamlRuntimeException;
+  case alaqil_RuntimeError:
+    exception_code = alaqil_OCamlRuntimeException;
     break;
-  case SWIG_SyntaxError:
-  case SWIG_TypeError:
-  case SWIG_ValueError:
-    exception_code = SWIG_OCamlIllegalArgumentException;
+  case alaqil_SyntaxError:
+  case alaqil_TypeError:
+  case alaqil_ValueError:
+    exception_code = alaqil_OCamlIllegalArgumentException;
     break;
-  case SWIG_UnknownError:
+  case alaqil_UnknownError:
   default:
-    exception_code = SWIG_OCamlUnknownError;
+    exception_code = alaqil_OCamlUnknownError;
     break;
   }
-  SWIG_OCamlThrowException(exception_code, msg);
+  alaqil_OCamlThrowException(exception_code, msg);
   CAMLreturn0;
 }
-#define SWIG_exception(code, msg) SWIG_OCamlException(code, msg)
+#define alaqil_exception(code, msg) alaqil_OCamlException(code, msg)
 %}
 #endif
 
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %{
-SWIGINTERN void SWIG_CSharpException(int code, const char *msg) {
-  if (code == SWIG_ValueError) {
-    SWIG_CSharpExceptionArgumentCodes exception_code = SWIG_CSharpArgumentOutOfRangeException;
-    SWIG_CSharpSetPendingExceptionArgument(exception_code, msg, 0);
+alaqilINTERN void alaqil_CSharpException(int code, const char *msg) {
+  if (code == alaqil_ValueError) {
+    alaqil_CSharpExceptionArgumentCodes exception_code = alaqil_CSharpArgumentOutOfRangeException;
+    alaqil_CSharpSetPendingExceptionArgument(exception_code, msg, 0);
   } else {
-    SWIG_CSharpExceptionCodes exception_code = SWIG_CSharpApplicationException;
+    alaqil_CSharpExceptionCodes exception_code = alaqil_CSharpApplicationException;
     switch(code) {
-    case SWIG_MemoryError:
-      exception_code = SWIG_CSharpOutOfMemoryException;
+    case alaqil_MemoryError:
+      exception_code = alaqil_CSharpOutOfMemoryException;
       break;
-    case SWIG_IndexError:
-      exception_code = SWIG_CSharpIndexOutOfRangeException;
+    case alaqil_IndexError:
+      exception_code = alaqil_CSharpIndexOutOfRangeException;
       break;
-    case SWIG_DivisionByZero:
-      exception_code = SWIG_CSharpDivideByZeroException;
+    case alaqil_DivisionByZero:
+      exception_code = alaqil_CSharpDivideByZeroException;
       break;
-    case SWIG_IOError:
-      exception_code = SWIG_CSharpIOException;
+    case alaqil_IOError:
+      exception_code = alaqil_CSharpIOException;
       break;
-    case SWIG_OverflowError:
-      exception_code = SWIG_CSharpOverflowException;
+    case alaqil_OverflowError:
+      exception_code = alaqil_CSharpOverflowException;
       break;
-    case SWIG_RuntimeError:
-    case SWIG_TypeError:
-    case SWIG_SyntaxError:
-    case SWIG_SystemError:
-    case SWIG_UnknownError:
+    case alaqil_RuntimeError:
+    case alaqil_TypeError:
+    case alaqil_SyntaxError:
+    case alaqil_SystemError:
+    case alaqil_UnknownError:
     default:
-      exception_code = SWIG_CSharpApplicationException;
+      exception_code = alaqil_CSharpApplicationException;
       break;
     }
-    SWIG_CSharpSetPendingException(exception_code, msg);
+    alaqil_CSharpSetPendingException(exception_code, msg);
   }
 }
 %}
 
-#define SWIG_exception(code, msg)\
-{ SWIG_CSharpException(code, msg); return $null; }
-#endif // SWIGCSHARP
+#define alaqil_exception(code, msg)\
+{ alaqil_CSharpException(code, msg); return $null; }
+#endif // alaqilCSHARP
 
-#ifdef SWIGLUA
+#ifdef alaqilLUA
 
 %{
-#define SWIG_exception(a,b)\
-{ lua_pushfstring(L,"%s:%s",#a,b);SWIG_fail; }
+#define alaqil_exception(a,b)\
+{ lua_pushfstring(L,"%s:%s",#a,b);alaqil_fail; }
 %}
 
-#endif // SWIGLUA
+#endif // alaqilLUA
 
-#ifdef SWIGD
+#ifdef alaqilD
 %{
-SWIGINTERN void SWIG_DThrowException(int code, const char *msg) {
-  SWIG_DExceptionCodes exception_code;
+alaqilINTERN void alaqil_DThrowException(int code, const char *msg) {
+  alaqil_DExceptionCodes exception_code;
   switch(code) {
-  case SWIG_IndexError:
-    exception_code = SWIG_DNoSuchElementException;
+  case alaqil_IndexError:
+    exception_code = alaqil_DNoSuchElementException;
     break;
-  case SWIG_IOError:
-    exception_code = SWIG_DIOException;
+  case alaqil_IOError:
+    exception_code = alaqil_DIOException;
     break;
-  case SWIG_ValueError:
-    exception_code = SWIG_DIllegalArgumentException;
+  case alaqil_ValueError:
+    exception_code = alaqil_DIllegalArgumentException;
     break;
-  case SWIG_DivisionByZero:
-  case SWIG_MemoryError:
-  case SWIG_OverflowError:
-  case SWIG_RuntimeError:
-  case SWIG_TypeError:
-  case SWIG_SyntaxError:
-  case SWIG_SystemError:
-  case SWIG_UnknownError:
+  case alaqil_DivisionByZero:
+  case alaqil_MemoryError:
+  case alaqil_OverflowError:
+  case alaqil_RuntimeError:
+  case alaqil_TypeError:
+  case alaqil_SyntaxError:
+  case alaqil_SystemError:
+  case alaqil_UnknownError:
   default:
-    exception_code = SWIG_DException;
+    exception_code = alaqil_DException;
     break;
   }
-  SWIG_DSetPendingException(exception_code, msg);
+  alaqil_DSetPendingException(exception_code, msg);
 }
 %}
 
-#define SWIG_exception(code, msg)\
-{ SWIG_DThrowException(code, msg); return $null; }
-#endif // SWIGD
+#define alaqil_exception(code, msg)\
+{ alaqil_DThrowException(code, msg); return $null; }
+#endif // alaqilD
 
 #ifdef __cplusplus
 /*
-  You can use the SWIG_CATCH_STDEXCEPT macro with the %exception
+  You can use the alaqil_CATCH_STDEXCEPT macro with the %exception
   directive as follows:
 
   %exception {
@@ -266,9 +266,9 @@ SWIGINTERN void SWIG_DThrowException(int code, const char *msg) {
     catch (my_except& e) {
       ...
     }
-    SWIG_CATCH_STDEXCEPT // catch std::exception
+    alaqil_CATCH_STDEXCEPT // catch std::exception
     catch (...) {
-     SWIG_exception(SWIG_UnknownError, "Unknown exception");
+     alaqil_exception(alaqil_UnknownError, "Unknown exception");
     }
   }
 */
@@ -276,44 +276,44 @@ SWIGINTERN void SWIG_DThrowException(int code, const char *msg) {
 #include <typeinfo>
 #include <stdexcept>
 %}
-%define SWIG_CATCH_STDEXCEPT
+%define alaqil_CATCH_STDEXCEPT
   /* catching std::exception  */
   catch (std::invalid_argument& e) {
-    SWIG_exception(SWIG_ValueError, e.what() );
+    alaqil_exception(alaqil_ValueError, e.what() );
   } catch (std::domain_error& e) {
-    SWIG_exception(SWIG_ValueError, e.what() );
+    alaqil_exception(alaqil_ValueError, e.what() );
   } catch (std::overflow_error& e) {
-    SWIG_exception(SWIG_OverflowError, e.what() );
+    alaqil_exception(alaqil_OverflowError, e.what() );
   } catch (std::out_of_range& e) {
-    SWIG_exception(SWIG_IndexError, e.what() );
+    alaqil_exception(alaqil_IndexError, e.what() );
   } catch (std::length_error& e) {
-    SWIG_exception(SWIG_IndexError, e.what() );
+    alaqil_exception(alaqil_IndexError, e.what() );
   } catch (std::runtime_error& e) {
-    SWIG_exception(SWIG_RuntimeError, e.what() );
+    alaqil_exception(alaqil_RuntimeError, e.what() );
   } catch (std::bad_cast& e) {
-    SWIG_exception(SWIG_TypeError, e.what() );
+    alaqil_exception(alaqil_TypeError, e.what() );
   } catch (std::exception& e) {
-    SWIG_exception(SWIG_SystemError, e.what() );
+    alaqil_exception(alaqil_SystemError, e.what() );
   }
 %enddef
-%define SWIG_CATCH_UNKNOWN
+%define alaqil_CATCH_UNKNOWN
   catch (std::exception& e) {
-    SWIG_exception(SWIG_SystemError, e.what() );
+    alaqil_exception(alaqil_SystemError, e.what() );
   }
   catch (...) {
-    SWIG_exception(SWIG_UnknownError, "unknown exception");
+    alaqil_exception(alaqil_UnknownError, "unknown exception");
   }
 %enddef
 
 /* rethrow the unknown exception */
 
-#if defined(SWIGCSHARP) || defined(SWIGD)
+#if defined(alaqilCSHARP) || defined(alaqilD)
 %typemap(throws,noblock=1, canthrow=1) (...) {
-  SWIG_exception(SWIG_RuntimeError,"unknown exception");
+  alaqil_exception(alaqil_RuntimeError,"unknown exception");
 }
 #else
 %typemap(throws,noblock=1) (...) {
-  SWIG_exception(SWIG_RuntimeError,"unknown exception");
+  alaqil_exception(alaqil_RuntimeError,"unknown exception");
 }
 #endif
 

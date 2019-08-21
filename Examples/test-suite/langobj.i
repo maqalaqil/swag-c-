@@ -1,27 +1,27 @@
 %module langobj
 
 
-#ifndef SWIG_Object
-#define SWIG_Object void *
+#ifndef alaqil_Object
+#define alaqil_Object void *
 #endif
 
 
 %inline %{
 
-#ifdef SWIGTCL
-#define SWIG_Object Tcl_Obj *
+#ifdef alaqilTCL
+#define alaqil_Object Tcl_Obj *
 #endif
 
-#ifdef SWIGPYTHON
-#define SWIG_Object PyObject *
+#ifdef alaqilPYTHON
+#define alaqil_Object PyObject *
 #endif
 
-#ifdef SWIGRUBY
-#define SWIG_Object VALUE
+#ifdef alaqilRUBY
+#define alaqil_Object VALUE
 #endif
 
-#ifndef SWIG_Object
-#define SWIG_Object void *
+#ifndef alaqil_Object
+#define alaqil_Object void *
 #endif
 
 %}
@@ -29,8 +29,8 @@
 
 %inline {
 
-  SWIG_Object identity(SWIG_Object x) {
-#ifdef SWIGPYTHON
+  alaqil_Object identity(alaqil_Object x) {
+#ifdef alaqilPYTHON
     Py_XINCREF(x);
 #endif
     return x;    

@@ -7,66 +7,66 @@
  * typesafe as they are all integers.
  * ----------------------------------------------------------------------------- */
 
-// const enum SWIGTYPE & typemaps
-%typemap(jni) const enum SWIGTYPE & "jint"
-%typemap(jtype) const enum SWIGTYPE & "int"
-%typemap(jstype) const enum SWIGTYPE & "int"
+// const enum alaqilTYPE & typemaps
+%typemap(jni) const enum alaqilTYPE & "jint"
+%typemap(jtype) const enum alaqilTYPE & "int"
+%typemap(jstype) const enum alaqilTYPE & "int"
 
-%typemap(in) const enum SWIGTYPE & ($*1_ltype temp)
+%typemap(in) const enum alaqilTYPE & ($*1_ltype temp)
 %{ temp = ($*1_ltype)$input; 
    $1 = &temp; %}
-%typemap(out) const enum SWIGTYPE &  %{ $result = (jint)*$1; %}
+%typemap(out) const enum alaqilTYPE &  %{ $result = (jint)*$1; %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const enum SWIGTYPE &
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const enum alaqilTYPE &
 %{ static $*1_ltype temp = ($*1_ltype)$input; 
    $result = &temp; %}
-%typemap(directorin, descriptor="I") const enum SWIGTYPE & "$input = (jint)$1;"
-%typemap(javadirectorin) const enum SWIGTYPE & "$jniinput"
-%typemap(javadirectorout) const enum SWIGTYPE & "$javacall"
+%typemap(directorin, descriptor="I") const enum alaqilTYPE & "$input = (jint)$1;"
+%typemap(javadirectorin) const enum alaqilTYPE & "$jniinput"
+%typemap(javadirectorout) const enum alaqilTYPE & "$javacall"
 
-%typecheck(SWIG_TYPECHECK_INT32) const enum SWIGTYPE & ""
+%typecheck(alaqil_TYPECHECK_INT32) const enum alaqilTYPE & ""
 
-%typemap(throws) const enum SWIGTYPE &
+%typemap(throws) const enum alaqilTYPE &
 %{ (void)$1;
-   SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, "C++ $1_type exception thrown"); %}
+   alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, "C++ $1_type exception thrown"); %}
 
-%typemap(javain) const enum SWIGTYPE & "$javainput"
-%typemap(javaout) const enum SWIGTYPE & {
+%typemap(javain) const enum alaqilTYPE & "$javainput"
+%typemap(javaout) const enum alaqilTYPE & {
     return $jnicall;
   }
 
 
-// enum SWIGTYPE typemaps
-%typemap(jni) enum SWIGTYPE "jint"
-%typemap(jtype) enum SWIGTYPE "int"
-%typemap(jstype) enum SWIGTYPE "int"
+// enum alaqilTYPE typemaps
+%typemap(jni) enum alaqilTYPE "jint"
+%typemap(jtype) enum alaqilTYPE "int"
+%typemap(jstype) enum alaqilTYPE "int"
 
-%typemap(in) enum SWIGTYPE  %{ $1 = ($1_ltype)$input; %}
-%typemap(out) enum SWIGTYPE  %{ $result = (jint)$1; %}
+%typemap(in) enum alaqilTYPE  %{ $1 = ($1_ltype)$input; %}
+%typemap(out) enum alaqilTYPE  %{ $result = (jint)$1; %}
 
-%typemap(directorout) enum SWIGTYPE  %{ $result = ($1_ltype)$input; %}
-%typemap(directorin, descriptor="I") enum SWIGTYPE "$input = (jint) $1;"
-%typemap(javadirectorin) enum SWIGTYPE "$jniinput"
-%typemap(javadirectorout) enum SWIGTYPE "$javacall"
+%typemap(directorout) enum alaqilTYPE  %{ $result = ($1_ltype)$input; %}
+%typemap(directorin, descriptor="I") enum alaqilTYPE "$input = (jint) $1;"
+%typemap(javadirectorin) enum alaqilTYPE "$jniinput"
+%typemap(javadirectorout) enum alaqilTYPE "$javacall"
 
-%typecheck(SWIG_TYPECHECK_INT32) enum SWIGTYPE ""
+%typecheck(alaqil_TYPECHECK_INT32) enum alaqilTYPE ""
 
-%typemap(throws) enum SWIGTYPE
+%typemap(throws) enum alaqilTYPE
 %{ (void)$1;
-   SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, "C++ $1_type exception thrown"); %}
+   alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, "C++ $1_type exception thrown"); %}
 
-%typemap(javain) enum SWIGTYPE "$javainput"
-%typemap(javaout) enum SWIGTYPE {
+%typemap(javain) enum alaqilTYPE "$javainput"
+%typemap(javaout) enum alaqilTYPE {
     return $jnicall;
   }
 
 // '$static' will be replaced with either 'static' or nothing depending on whether the enum is an inner Java class or not
-%typemap(javaclassmodifiers) enum SWIGTYPE "public final $static class"
-%typemap(javabase)           enum SWIGTYPE ""
-%typemap(javacode)           enum SWIGTYPE ""
-%typemap(javaimports)        enum SWIGTYPE ""
-%typemap(javainterfaces)     enum SWIGTYPE ""
-%typemap(javabody)           enum SWIGTYPE ""
+%typemap(javaclassmodifiers) enum alaqilTYPE "public final $static class"
+%typemap(javabase)           enum alaqilTYPE ""
+%typemap(javacode)           enum alaqilTYPE ""
+%typemap(javaimports)        enum alaqilTYPE ""
+%typemap(javainterfaces)     enum alaqilTYPE ""
+%typemap(javabody)           enum alaqilTYPE ""
 
 %javaenum(typeunsafe);
 

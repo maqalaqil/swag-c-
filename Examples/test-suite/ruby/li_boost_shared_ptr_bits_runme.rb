@@ -1,5 +1,5 @@
 require 'li_boost_shared_ptr_bits'
-require 'swig_gc'
+require 'alaqil_gc'
 
 v = Li_boost_shared_ptr_bits::VectorIntHolder.new()
 v.push(Li_boost_shared_ptr_bits::IntHolder.new(11))

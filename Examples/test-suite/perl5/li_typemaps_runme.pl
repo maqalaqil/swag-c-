@@ -49,7 +49,7 @@ batch('schar', -0x80, 0, 1, 12, 0x7f);
 	  (2 - 2 ** -23) * 2 ** 127,
 	  $nan);
 	{ local $TODO = "float typemaps don't pass infinity";
-	  # it seems as though SWIG is unwilling to pass infinity around
+	  # it seems as though alaqil is unwilling to pass infinity around
 	  # because that value always fails bounds checking.  I think that
 	  # is a bug.
 	  batch('float', $inf);

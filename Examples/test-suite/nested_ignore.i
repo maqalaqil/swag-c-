@@ -1,5 +1,5 @@
 %module nested_ignore
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) B::C::D;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) B::C::D;
 
 %rename($ignore) B::C;
 

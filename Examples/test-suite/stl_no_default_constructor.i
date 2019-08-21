@@ -9,11 +9,11 @@ struct NoDefaultCtor {
 };
 %}
 
-#if defined(SWIGCSHARP) || defined(SWIGJAVA) || defined(SWIGD)
+#if defined(alaqilCSHARP) || defined(alaqilJAVA) || defined(alaqilD)
 %template(VectorNoDefaultCtor) std::vector<NoDefaultCtor>;
 #endif
 
-#if defined(SWIGJAVA) || defined(SWIGJAVA)
+#if defined(alaqilJAVA) || defined(alaqilJAVA)
 %include <std_list.i>
 %template(ListNoDefaultCtor) std::list<NoDefaultCtor>;
 #endif

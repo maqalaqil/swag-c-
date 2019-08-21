@@ -2,7 +2,7 @@
  * longlongs.i
  *
  * Typemap addition for support of 'long long' type and 'unsigned long long 
- * Makes use of swig-def-foreign-class, so this header should be loaded
+ * Makes use of alaqil-def-foreign-class, so this header should be loaded
  * after allegrocl.swg and after any custom user identifier-conversion
  * functions have been defined.
  * ----------------------------------------------------------------------------- */
@@ -23,11 +23,11 @@
 %typemap(ffitype) unsigned long long "(:struct (l1 :unsigned-long) (l2 :unsigned-long))";
 
 %typemap(lout) long long 
-"  (cl::setq ACL_ffresult (make-instance '#.(swig-insert-id \"longlong\" () :type :class)
+"  (cl::setq ACL_ffresult (make-instance '#.(alaqil-insert-id \"longlong\" () :type :class)
                   :foreign-address $body))";
 
 %typemap(lout) unsigned long long
-"  (cl:setq ACL_ffresult (make-instance '#.(swig-insert-id \"ulonglong\" () :type :class)
+"  (cl:setq ACL_ffresult (make-instance '#.(alaqil-insert-id \"ulonglong\" () :type :class)
                   :foreign-address $body))";
 
 #endif
@@ -38,12 +38,12 @@
 %insert("lisphead") %{
 
 #-64bit
-(swig-def-foreign-class "longlong"
+(alaqil-def-foreign-class "longlong"
  (ff:foreign-pointer)
  (:struct (l1 :long) (l2 :long)))
 
 #-64bit
-(swig-def-foreign-class "ulonglong"
+(alaqil-def-foreign-class "ulonglong"
  (ff:foreign-pointer)
  (:struct (l1 :unsigned-long) (l2 :unsigned-long)))
 %}

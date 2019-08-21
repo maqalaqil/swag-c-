@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Using_inherit
 
 let _ =

@@ -1,6 +1,6 @@
 (* This example was mostly lifted from the guile example directory *)
 
-open Swig
+open alaqil
 open Example
 
 let with_vector v f =

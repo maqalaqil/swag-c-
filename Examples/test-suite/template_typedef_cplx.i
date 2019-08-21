@@ -117,7 +117,7 @@ typedef std::complex<double> cmplx;
 	                   typename arith_traits< RF, RG >::result_type>();
     }
 
-#ifndef SWIG
+#ifndef alaqil
 
     // Initialize these static class members
 

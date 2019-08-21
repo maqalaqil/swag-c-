@@ -11,7 +11,7 @@
 #include <string>
 #include <exception>
 
-namespace Swig {
+namespace alaqil {
 
   // Director base class – not used in D directors.
   class Director {
@@ -20,17 +20,17 @@ namespace Swig {
   // Base class for director exceptions.
   class DirectorException : public std::exception {
   protected:
-    std::string swig_msg;
+    std::string alaqil_msg;
 
   public:
-    DirectorException(const std::string &msg) : swig_msg(msg) {
+    DirectorException(const std::string &msg) : alaqil_msg(msg) {
     }
 
     virtual ~DirectorException() throw() {
     }
 
     const char *what() const throw() {
-      return swig_msg.c_str();
+      return alaqil_msg.c_str();
     }
   };
 

@@ -1,52 +1,52 @@
-<swigxml:swig name="namespaces" xmlns:swigxml="http://jniplusplus.sourceforge.net" xmlns:swig="http://swig.sourceforge.net" xmlns:c="http://www.ansi.org" >
-  <swig:top >
-    <swigxml:child >
-      <swig:file name="../../Lib/swig.swg" >
-        <swigxml:type string="include"  />
-      </swig:file>
-      <swig:file name="example_inl.i" >
-        <swigxml:child >
-          <swig:module name="example"  />
-          <swig:insert >
-            <swigxml:code >
+<alaqilxml:alaqil name="namespaces" xmlns:alaqilxml="http://jniplusplus.sourceforge.net" xmlns:alaqil="http://alaqil.sourceforge.net" xmlns:c="http://www.ansi.org" >
+  <alaqil:top >
+    <alaqilxml:child >
+      <alaqil:file name="../../Lib/alaqil.swg" >
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+      <alaqil:file name="example_inl.i" >
+        <alaqilxml:child >
+          <alaqil:module name="example"  />
+          <alaqil:insert >
+            <alaqilxml:code >
 
 #include "example.h"
-            </swigxml:code>
-          </swig:insert>
+            </alaqilxml:code>
+          </alaqil:insert>
           <c:function name="dot_product" >
-            <swigxml:parms >
-              <swigxml:parm name="a" >
-                <swigxml:type string="Vector"  />
-              </swigxml:parm>
-              <swigxml:parm name="b" >
-                <swigxml:type string="Vector"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="double"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="a" >
+                <alaqilxml:type string="Vector"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="b" >
+                <alaqilxml:type string="Vector"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="double"  />
           </c:function>
           <c:function name="vector_add" >
-            <swigxml:parms >
-              <swigxml:parm name="a" >
-                <swigxml:type string="Vector"  />
-              </swigxml:parm>
-              <swigxml:parm name="b" >
-                <swigxml:type string="Vector"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="Vector"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="a" >
+                <alaqilxml:type string="Vector"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="b" >
+                <alaqilxml:type string="Vector"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="Vector"  />
           </c:function>
           <c:function name="free" >
-            <swigxml:parms >
-              <swigxml:parm >
-                <swigxml:type string="p.void"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:type string="void"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm >
+                <alaqilxml:type string="p.void"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:type string="void"  />
           </c:function>
-          <swig:insert >
-            <swigxml:code >
+          <alaqil:insert >
+            <alaqilxml:code >
 
 
 Vector *new_Vector(double x, double y, double z) {
@@ -60,45 +60,45 @@ Vector *new_Vector(double x, double y, double z) {
 void vector_print(Vector *v) {
   printf("Vector %x = (%g, %g, %g)\n", v, v->x, v->y, v->z);
 }
-            </swigxml:code>
-          </swig:insert>
+            </alaqilxml:code>
+          </alaqil:insert>
           <c:function name="new_Vector" >
-            <swigxml:parms >
-              <swigxml:parm name="x" >
-                <swigxml:type string="double"  />
-              </swigxml:parm>
-              <swigxml:parm name="y" >
-                <swigxml:type string="double"  />
-              </swigxml:parm>
-              <swigxml:parm name="z" >
-                <swigxml:type string="double"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:code >
+            <alaqilxml:parms >
+              <alaqilxml:parm name="x" >
+                <alaqilxml:type string="double"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="y" >
+                <alaqilxml:type string="double"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="z" >
+                <alaqilxml:type string="double"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:code >
 {
    Vector *v = (Vector *) malloc(sizeof(Vector));
    v->x = x;
    v->y = y;
    v->z = z;
    return v;
-}            </swigxml:code>
-            <swigxml:type string="p.Vector"  />
+}            </alaqilxml:code>
+            <alaqilxml:type string="p.Vector"  />
           </c:function>
           <c:function name="vector_print" >
-            <swigxml:parms >
-              <swigxml:parm name="v" >
-                <swigxml:type string="p.Vector"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:code >
+            <alaqilxml:parms >
+              <alaqilxml:parm name="v" >
+                <alaqilxml:type string="p.Vector"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:code >
 {
   printf("Vector %x = (%g, %g, %g)\n", v, v->x, v->y, v->z);
-}            </swigxml:code>
-            <swigxml:type string="void"  />
+}            </alaqilxml:code>
+            <alaqilxml:type string="void"  />
           </c:function>
-        </swigxml:child>
-        <swigxml:type string="include"  />
-      </swig:file>
-    </swigxml:child>
-  </swig:top>
-</swigxml:swig>
+        </alaqilxml:child>
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+    </alaqilxml:child>
+  </alaqil:top>
+</alaqilxml:alaqil>

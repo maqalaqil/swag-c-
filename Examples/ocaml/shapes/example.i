@@ -1,6 +1,6 @@
 /* File : example.i */
 %module(directors="1") example
-#ifndef SWIGSEXP
+#ifndef alaqilSEXP
 %{
 	#include "example.h"
 %}

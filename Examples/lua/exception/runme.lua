@@ -54,7 +54,7 @@ for i=1,3 do
     if ok then
         print "  that worked! Funny"
     else
-        if swig_type(res)=="Exc *" then
+        if alaqil_type(res)=="Exc *" then
             print("  call failed with Exc exception:",res.code,res.msg)
         else
             print("  call failed with error:",res)

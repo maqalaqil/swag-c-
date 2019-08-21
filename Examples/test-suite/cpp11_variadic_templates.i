@@ -1,12 +1,12 @@
-/* This testcase checks whether SWIG correctly parses and generates the code
+/* This testcase checks whether alaqil correctly parses and generates the code
    for variadic templates. This covers the variadic number of arguments inside
    the template brackets, new functions sizeof... and multiple inheritance
    using variadic number of classes.
 */
 %module cpp11_variadic_templates
-%warnfilter(SWIGWARN_CPP11_VARIADIC_TEMPLATE) MultiArgs;
-%warnfilter(SWIGWARN_CPP11_VARIADIC_TEMPLATE) SizeOf;
-%warnfilter(SWIGWARN_CPP11_VARIADIC_TEMPLATE) MultiInherit;
+%warnfilter(alaqilWARN_CPP11_VARIADIC_TEMPLATE) MultiArgs;
+%warnfilter(alaqilWARN_CPP11_VARIADIC_TEMPLATE) SizeOf;
+%warnfilter(alaqilWARN_CPP11_VARIADIC_TEMPLATE) MultiInherit;
 
 ////////////////////////
 // Variadic templates //

@@ -22,7 +22,7 @@ int CountAlphas(const char *instring) {
 
 // Languages that support %native should code up language specific implementations below
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %native(CountAlphaCharacters) int alpha_count(const char *inputString);
 %{
 extern "C" JNIEXPORT jint JNICALL Java_native_1directive_native_1directiveJNI_CountAlphaCharacters(JNIEnv *jenv, jclass jcls, jstring instring) {

@@ -8,20 +8,20 @@
  * ----------------------------------------------------------------------------- */
 
 %fragment("js_ctor", "templates") %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
   
   v8::Handle<v8::Object> self = args.Holder();
   $jslocals
-  if(args.Length() != $jsargcount) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for $jswrapper.");
+  if(args.Length() != $jsargcount) alaqil_exception_fail(alaqil_ERROR, "Illegal number of arguments for $jswrapper.");
   $jscode
 
-  SWIGV8_SetPrivateData(self, result, SWIGTYPE_$jsmangledtype, SWIG_POINTER_OWN);
-  SWIGV8_RETURN(self);
+  alaqilV8_SetPrivateData(self, result, alaqilTYPE_$jsmangledtype, alaqil_POINTER_OWN);
+  alaqilV8_RETURN(self);
 
   goto fail;
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -32,12 +32,12 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment ("js_veto_ctor", "templates")
 %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
   
-  SWIG_exception(SWIG_ERROR, "Class $jsname can not be instantiated");
+  alaqil_exception(alaqil_ERROR, "Class $jsname can not be instantiated");
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -49,8 +49,8 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment ("js_ctor_dispatcher", "templates")
 %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
   
   OverloadErrorHandler errorHandler;
   v8::Handle<v8::Value> self;
@@ -59,10 +59,10 @@ static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args) {
   $jsdispatchcases
 
   // default:
-  SWIG_exception_fail(SWIG_ERROR, "Illegal arguments for construction of $jsmangledname");
+  alaqil_exception_fail(alaqil_ERROR, "Illegal arguments for construction of $jsmangledname");
 
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -75,20 +75,20 @@ fail:
  *   - $jsmangledtype:    mangled type of class
  * ----------------------------------------------------------------------------- */
 %fragment("js_overloaded_ctor", "templates") %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args, V8ErrorHandler &SWIGV8_ErrorHandler) {
-  SWIGV8_HANDLESCOPE();
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args, V8ErrorHandler &alaqilV8_ErrorHandler) {
+  alaqilV8_HANDLESCOPE();
   
   v8::Handle<v8::Object> self = args.Holder();
   $jslocals
-  if(args.Length() != $jsargcount) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for $jswrapper.");
+  if(args.Length() != $jsargcount) alaqil_exception_fail(alaqil_ERROR, "Illegal number of arguments for $jswrapper.");
   $jscode
 
-  SWIGV8_SetPrivateData(self, result, SWIGTYPE_$jsmangledtype, SWIG_POINTER_OWN);
-  SWIGV8_RETURN(self);
+  alaqilV8_SetPrivateData(self, result, alaqilTYPE_$jsmangledtype, alaqil_POINTER_OWN);
+  alaqilV8_RETURN(self);
 
   goto fail;
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -103,10 +103,10 @@ fail:
 %{
   if(args.Length() == $jsargcount) {
     errorHandler.err.Clear();
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031903)
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031903)
     self = $jswrapper(args, errorHandler);
     if(errorHandler.err.IsEmpty()) {
-      SWIGV8_ESCAPE(self);
+      alaqilV8_ESCAPE(self);
     }
 #else
     $jswrapper(args, errorHandler);
@@ -125,28 +125,28 @@ fail:
 %fragment ("js_dtor", "templates")
 %{
 
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031710)
 static void $jswrapper(v8::Persistent< v8::Value > object, void *parameter) {
-  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+  alaqilV8_Proxy *proxy = static_cast<alaqilV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031900)
 static void $jswrapper(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
-  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
-static void $jswrapper(v8::Isolate *isolate, v8::Persistent<v8::Object> *object, SWIGV8_Proxy *proxy) {
+  alaqilV8_Proxy *proxy = static_cast<alaqilV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < alaqilV8_SETWEAK_VERSION)
+static void $jswrapper(v8::Isolate *isolate, v8::Persistent<v8::Object> *object, alaqilV8_Proxy *proxy) {
 #elif (V8_MAJOR_VERSION-0) < 5
-static void $jswrapper(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
+static void $jswrapper(const v8::WeakCallbackData<v8::Object, alaqilV8_Proxy> &data) {
   v8::Local<v8::Object> object = data.GetValue();
-  SWIGV8_Proxy *proxy = data.GetParameter();
+  alaqilV8_Proxy *proxy = data.GetParameter();
 #else
-  static void $jswrapper(const v8::WeakCallbackInfo<SWIGV8_Proxy> &data) {
-  SWIGV8_Proxy *proxy = data.GetParameter();
+  static void $jswrapper(const v8::WeakCallbackInfo<alaqilV8_Proxy> &data) {
+  alaqilV8_Proxy *proxy = data.GetParameter();
 #endif
 
-  if(proxy->swigCMemOwn && proxy->swigCObject) {
-#ifdef SWIGRUNTIME_DEBUG
+  if(proxy->alaqilCMemOwn && proxy->alaqilCObject) {
+#ifdef alaqilRUNTIME_DEBUG
     printf("Deleting wrapped instance: %s\n", proxy->info->name);
 #endif
-    $jsfree proxy->swigCObject;
+    $jsfree proxy->alaqilCObject;
   }
   delete proxy;
 
@@ -154,11 +154,11 @@ static void $jswrapper(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &dat
   object.Clear();
 #endif
   
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031710)
   object.Dispose();
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031900)
   object.Dispose(isolate);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x032100)
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x032100)
   object->Dispose(isolate);
 #elif (V8_MAJOR_VERSION-0) < 5
   object->Dispose();
@@ -174,36 +174,36 @@ static void $jswrapper(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &dat
  * ----------------------------------------------------------------------------- */
 %fragment ("js_dtoroverride", "templates")
 %{
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031710)
 static void $jswrapper(v8::Persistent<v8::Value> object, void *parameter) {
-  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+  alaqilV8_Proxy *proxy = static_cast<alaqilV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031900)
 static void $jswrapper(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
-  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
-static void $jswrapper(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, SWIGV8_Proxy *proxy) {
+  alaqilV8_Proxy *proxy = static_cast<alaqilV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < alaqilV8_SETWEAK_VERSION)
+static void $jswrapper(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, alaqilV8_Proxy *proxy) {
 #elif (V8_MAJOR_VERSION-0) < 5
-static void $jswrapper(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
+static void $jswrapper(const v8::WeakCallbackData<v8::Object, alaqilV8_Proxy> &data) {
   v8::Local<v8::Object> object = data.GetValue();
-  SWIGV8_Proxy *proxy = data.GetParameter();
+  alaqilV8_Proxy *proxy = data.GetParameter();
 #else
-static void $jswrapper(const v8::WeakCallbackInfo<SWIGV8_Proxy> &data) {
-  SWIGV8_Proxy *proxy = data.GetParameter();
+static void $jswrapper(const v8::WeakCallbackInfo<alaqilV8_Proxy> &data) {
+  alaqilV8_Proxy *proxy = data.GetParameter();
 #endif
 
-  if(proxy->swigCMemOwn && proxy->swigCObject) {
-    $jstype arg1 = ($jstype)proxy->swigCObject;
+  if(proxy->alaqilCMemOwn && proxy->alaqilCObject) {
+    $jstype arg1 = ($jstype)proxy->alaqilCObject;
     ${destructor_action}
   }
   delete proxy;
 
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031710)
   object.Dispose();
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031900)
   object.Dispose(isolate);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x032100)
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x032100)
   object->Dispose(isolate);
-#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+#elif (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < alaqilV8_SETWEAK_VERSION)
   object->Dispose();
 #elif (V8_MAJOR_VERSION-0) < 5
   object.Clear();
@@ -220,20 +220,20 @@ static void $jswrapper(const v8::WeakCallbackInfo<SWIGV8_Proxy> &data) {
 %fragment("js_getter", "templates")
 %{
 #if (V8_MAJOR_VERSION-0) < 5
-static SwigV8ReturnValue $jswrapper(v8::Local<v8::String> property, const SwigV8PropertyCallbackInfo &info) {
+static alaqilV8ReturnValue $jswrapper(v8::Local<v8::String> property, const alaqilV8PropertyCallbackInfo &info) {
 #else
-static SwigV8ReturnValue $jswrapper(v8::Local<v8::Name> property, const SwigV8PropertyCallbackInfo &info) {
+static alaqilV8ReturnValue $jswrapper(v8::Local<v8::Name> property, const alaqilV8PropertyCallbackInfo &info) {
 #endif
-  SWIGV8_HANDLESCOPE();
+  alaqilV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
   $jslocals
   $jscode
-  SWIGV8_RETURN_INFO(jsresult, info);
+  alaqilV8_RETURN_INFO(jsresult, info);
 
   goto fail;
 fail:
-  SWIGV8_RETURN_INFO(SWIGV8_UNDEFINED(), info);
+  alaqilV8_RETURN_INFO(alaqilV8_UNDEFINED(), info);
 }
 %}
 
@@ -246,11 +246,11 @@ fail:
 %fragment("js_setter", "templates")
 %{
 #if (V8_MAJOR_VERSION-0) < 5
-static void $jswrapper(v8::Local<v8::String> property, v8::Local<v8::Value> value, const SwigV8PropertyCallbackInfoVoid &info) {
+static void $jswrapper(v8::Local<v8::String> property, v8::Local<v8::Value> value, const alaqilV8PropertyCallbackInfoVoid &info) {
 #else
-static void $jswrapper(v8::Local<v8::Name> property, v8::Local<v8::Value> value, const SwigV8PropertyCallbackInfoVoid &info) {
+static void $jswrapper(v8::Local<v8::Name> property, v8::Local<v8::Value> value, const alaqilV8PropertyCallbackInfoVoid &info) {
 #endif
-  SWIGV8_HANDLESCOPE();
+  alaqilV8_HANDLESCOPE();
   
   $jslocals
   $jscode
@@ -268,19 +268,19 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("js_function", "templates")
 %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
   $jslocals
-  if(args.Length() != $jsargcount) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for $jswrapper.");
+  if(args.Length() != $jsargcount) alaqil_exception_fail(alaqil_ERROR, "Illegal number of arguments for $jswrapper.");
 
   $jscode
-  SWIGV8_RETURN(jsresult);
+  alaqilV8_RETURN(jsresult);
 
   goto fail;
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -293,18 +293,18 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("js_function_dispatcher", "templates")
 %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
   OverloadErrorHandler errorHandler;
   $jscode
 
-  SWIG_exception_fail(SWIG_ERROR, "Illegal arguments for function $jsname.");
+  alaqil_exception_fail(alaqil_ERROR, "Illegal arguments for function $jsname.");
 
   goto fail;
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -316,18 +316,18 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment ("js_overloaded_function", "templates")
 %{
-static SwigV8ReturnValue $jswrapper(const SwigV8Arguments &args, V8ErrorHandler &SWIGV8_ErrorHandler)
+static alaqilV8ReturnValue $jswrapper(const alaqilV8Arguments &args, V8ErrorHandler &alaqilV8_ErrorHandler)
 {
-  SWIGV8_HANDLESCOPE();
+  alaqilV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
   $jslocals
   $jscode
-  SWIGV8_RETURN(jsresult);
+  alaqilV8_RETURN(jsresult);
 
   goto fail;
 fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 %}
 
@@ -342,10 +342,10 @@ fail:
 
   if(args.Length() == $jsargcount) {
     errorHandler.err.Clear();
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031903)
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031903)
     jsresult = $jswrapper(args, errorHandler);
     if(errorHandler.err.IsEmpty()) {
-      SWIGV8_ESCAPE(jsresult);
+      alaqilV8_ESCAPE(jsresult);
     }
 #else
     $jswrapper(args, errorHandler);
@@ -362,7 +362,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_declare_class_template", "templates")
 %{
-  SWIGV8_ClientData $jsmangledname_clientData;
+  alaqilV8_ClientData $jsmangledname_clientData;
 %}
 
 /* -----------------------------------------------------------------------------
@@ -374,11 +374,11 @@ fail:
 %fragment("jsv8_define_class_template", "templates")
 %{
   /* Name: $jsmangledname, Type: $jsmangledtype, Dtor: $jsdtor */
-  v8::Handle<v8::FunctionTemplate> $jsmangledname_class = SWIGV8_CreateClassTemplate("$jsmangledname");
-  SWIGV8_SET_CLASS_TEMPL($jsmangledname_clientData.class_templ, $jsmangledname_class);
+  v8::Handle<v8::FunctionTemplate> $jsmangledname_class = alaqilV8_CreateClassTemplate("$jsmangledname");
+  alaqilV8_SET_CLASS_TEMPL($jsmangledname_clientData.class_templ, $jsmangledname_class);
   $jsmangledname_clientData.dtor = $jsdtor;
-  if (SWIGTYPE_$jsmangledtype->clientdata == 0) {
-    SWIGTYPE_$jsmangledtype->clientdata = &$jsmangledname_clientData;
+  if (alaqilTYPE_$jsmangledtype->clientdata == 0) {
+    alaqilTYPE_$jsmangledtype->clientdata = &$jsmangledname_clientData;
   }
 %}
 
@@ -390,23 +390,23 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_inherit", "templates")
 %{
-  if (SWIGTYPE_p$jsbaseclass->clientdata && !(static_cast<SWIGV8_ClientData *>(SWIGTYPE_p$jsbaseclass->clientdata)->class_templ.IsEmpty()))
+  if (alaqilTYPE_p$jsbaseclass->clientdata && !(static_cast<alaqilV8_ClientData *>(alaqilTYPE_p$jsbaseclass->clientdata)->class_templ.IsEmpty()))
   {
-#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031903)
-    $jsmangledname_class->Inherit(static_cast<SWIGV8_ClientData *>(SWIGTYPE_p$jsbaseclass->clientdata)->class_templ);
+#if (V8_MAJOR_VERSION-0) < 4 && (alaqil_V8_VERSION < 0x031903)
+    $jsmangledname_class->Inherit(static_cast<alaqilV8_ClientData *>(alaqilTYPE_p$jsbaseclass->clientdata)->class_templ);
 #else
     $jsmangledname_class->Inherit(
       v8::Local<v8::FunctionTemplate>::New(
         v8::Isolate::GetCurrent(),
-        static_cast<SWIGV8_ClientData *>(SWIGTYPE_p$jsbaseclass->clientdata)->class_templ)
+        static_cast<alaqilV8_ClientData *>(alaqilTYPE_p$jsbaseclass->clientdata)->class_templ)
      );
 #endif
 
-#ifdef SWIGRUNTIME_DEBUG
+#ifdef alaqilRUNTIME_DEBUG
     printf("Inheritance successful $jsmangledname $jsbaseclass\n");
 #endif
   } else {
-#ifdef SWIGRUNTIME_DEBUG
+#ifdef alaqilRUNTIME_DEBUG
     printf("Unable to inherit baseclass, it didn't exist $jsmangledname $jsbaseclass\n");
 #endif
   }
@@ -420,7 +420,7 @@ fail:
 %fragment("jsv8_create_class_instance", "templates")
 %{
   /* Class: $jsname ($jsmangledname) */
-  v8::Handle<v8::FunctionTemplate> $jsmangledname_class_0 = SWIGV8_CreateClassTemplate("$jsname");
+  v8::Handle<v8::FunctionTemplate> $jsmangledname_class_0 = alaqilV8_CreateClassTemplate("$jsname");
   $jsmangledname_class_0->SetCallHandler($jsctor);
   $jsmangledname_class_0->Inherit($jsmangledname_class);
   $jsmangledname_class_0->SetHiddenPrototype(true);
@@ -435,7 +435,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_register_class", "templates")
 %{
-  $jsparent_obj->Set(SWIGV8_SYMBOL_NEW("$jsname"), $jsmangledname_obj);
+  $jsparent_obj->Set(alaqilV8_SYMBOL_NEW("$jsname"), $jsmangledname_obj);
 %}
 
 /* -----------------------------------------------------------------------------
@@ -444,7 +444,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_create_namespace", "templates")
 %{
-  v8::Handle<v8::Object> $jsmangledname_obj = SWIGV8_OBJECT_NEW();
+  v8::Handle<v8::Object> $jsmangledname_obj = alaqilV8_OBJECT_NEW();
 %}
 
 /* -----------------------------------------------------------------------------
@@ -455,7 +455,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_register_namespace", "templates")
 %{
-  $jsparent_obj->Set(SWIGV8_SYMBOL_NEW("$jsname"), $jsmangledname_obj);
+  $jsparent_obj->Set(alaqilV8_SYMBOL_NEW("$jsname"), $jsmangledname_obj);
 %}
 
 /* -----------------------------------------------------------------------------
@@ -466,7 +466,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_register_member_function", "templates")
 %{
-  SWIGV8_AddMemberFunction($jsmangledname_class, "$jsname", $jswrapper);
+  alaqilV8_AddMemberFunction($jsmangledname_class, "$jsname", $jswrapper);
 %}
 
 /* -----------------------------------------------------------------------------
@@ -478,7 +478,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_register_member_variable", "templates")
 %{
-  SWIGV8_AddMemberVariable($jsmangledname_class, "$jsname", $jsgetter, $jssetter);
+  alaqilV8_AddMemberVariable($jsmangledname_class, "$jsname", $jsgetter, $jssetter);
 %}
 
 /* -----------------------------------------------------------------------------
@@ -491,7 +491,7 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_register_static_function", "templates")
 %{
-  SWIGV8_AddStaticFunction($jsparent_obj, "$jsname", $jswrapper);
+  alaqilV8_AddStaticFunction($jsparent_obj, "$jsname", $jswrapper);
 %}
 
 /* -----------------------------------------------------------------------------
@@ -505,5 +505,5 @@ fail:
  * ----------------------------------------------------------------------------- */
 %fragment("jsv8_register_static_variable", "templates")
 %{
-  SWIGV8_AddStaticVariable($jsparent_obj, "$jsname", $jsgetter, $jssetter);
+  alaqilV8_AddStaticVariable($jsparent_obj, "$jsname", $jsgetter, $jssetter);
 %}

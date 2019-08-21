@@ -1,6 +1,6 @@
 %module doxygen_nested_class
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) DoxOuter::DoxInner;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) DoxOuter::DoxInner;
 
 %inline %{
 

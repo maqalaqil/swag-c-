@@ -1,10 +1,10 @@
 %module php_namewarn_rename
 
-#ifdef SWIGPHP
-%warnfilter(SWIGWARN_PARSE_KEYWORD) Empty();
-%warnfilter(SWIGWARN_PARSE_KEYWORD) stdClass;
-%warnfilter(SWIGWARN_PARSE_KEYWORD) directory;
-%warnfilter(SWIGWARN_PARSE_KEYWORD) Hello::empty();
+#ifdef alaqilPHP
+%warnfilter(alaqilWARN_PARSE_KEYWORD) Empty();
+%warnfilter(alaqilWARN_PARSE_KEYWORD) stdClass;
+%warnfilter(alaqilWARN_PARSE_KEYWORD) directory;
+%warnfilter(alaqilWARN_PARSE_KEYWORD) Hello::empty();
 #endif
 
 %ignore prev::operator++;

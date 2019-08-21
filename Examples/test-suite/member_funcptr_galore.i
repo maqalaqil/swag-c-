@@ -1,16 +1,16 @@
 %module member_funcptr_galore
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) extra2;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) extra3;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) pp2;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) pp3;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) pp5;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) extra2;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) extra3;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) pp2;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) pp3;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) pp5;
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) ccextra2;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) ccextra3;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) cc2;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) cc3;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) cc5;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) ccextra2;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) ccextra3;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) cc2;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) cc3;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) cc5;
 
 %{
 #if defined(__SUNPRO_CC)

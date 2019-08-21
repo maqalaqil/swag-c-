@@ -29,23 +29,23 @@ class string;
 
 %typemap(in, canthrow=1) string 
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null string", 0);
     return $null;
    }
    $1.assign($input); %}
-%typemap(out) string %{ $result = SWIG_csharp_string_callback($1.c_str()); %}
+%typemap(out) string %{ $result = alaqil_csharp_string_callback($1.c_str()); %}
 
 %typemap(directorout, canthrow=1) string 
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null string", 0);
     return $null;
    }
    $result.assign($input); %}
 
-%typemap(directorin) string %{ $input = SWIG_csharp_string_callback($1.c_str()); %}
+%typemap(directorin) string %{ $input = alaqil_csharp_string_callback($1.c_str()); %}
 
 %typemap(csin) string "$csinput"
-%typemap(csout, excode=SWIGEXCODE) string {
+%typemap(csout, excode=alaqilEXCODE) string {
     string ret = $imcall;$excode
     return ret;
   }
@@ -53,7 +53,7 @@ class string;
 %typemap(typecheck) string = char *;
 
 %typemap(throws, canthrow=1) string
-%{ SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, $1.c_str());
+%{ alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, $1.c_str());
    return $null; %}
 
 // const string &
@@ -66,22 +66,22 @@ class string;
 
 %typemap(in, canthrow=1) const string &
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null string", 0);
     return $null;
    }
    $*1_ltype $1_str($input);
    $1 = &$1_str; %}
-%typemap(out) const string & %{ $result = SWIG_csharp_string_callback($1->c_str()); %}
+%typemap(out) const string & %{ $result = alaqil_csharp_string_callback($1->c_str()); %}
 
 %typemap(csin) const string & "$csinput"
-%typemap(csout, excode=SWIGEXCODE) const string & {
+%typemap(csout, excode=alaqilEXCODE) const string & {
     string ret = $imcall;$excode
     return ret;
   }
 
-%typemap(directorout, canthrow=1, warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
+%typemap(directorout, canthrow=1, warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
 %{ if (!$input) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null string", 0);
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException, "null string", 0);
     return $null;
    }
    /* possible thread/reentrant code problem */
@@ -89,13 +89,13 @@ class string;
    $1_str = $input;
    $result = &$1_str; %}
 
-%typemap(directorin) const string & %{ $input = SWIG_csharp_string_callback($1.c_str()); %}
+%typemap(directorin) const string & %{ $input = alaqil_csharp_string_callback($1.c_str()); %}
 
-%typemap(csvarin, excode=SWIGEXCODE2) const string & %{
+%typemap(csvarin, excode=alaqilEXCODE2) const string & %{
     set {
       $imcall;$excode
     } %}
-%typemap(csvarout, excode=SWIGEXCODE2) const string & %{
+%typemap(csvarout, excode=alaqilEXCODE2) const string & %{
     get {
       string ret = $imcall;$excode
       return ret;
@@ -104,7 +104,7 @@ class string;
 %typemap(typecheck) const string & = char *;
 
 %typemap(throws, canthrow=1) const string &
-%{ SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, $1.c_str());
+%{ alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, $1.c_str());
    return $null; %}
 
 }

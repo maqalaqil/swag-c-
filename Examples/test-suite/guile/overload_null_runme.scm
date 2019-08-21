@@ -1,4 +1,4 @@
-;; The SWIG modules have "passive" Linkage, i.e., they don't generate
+;; The alaqil modules have "passive" Linkage, i.e., they don't generate
 ;; Guile modules (namespaces) but simply put all the bindings into the
 ;; current module.  That's enough for such a simple test.
 (dynamic-call "scm_init_overload_null_module" (dynamic-link "./liboverload_null"))
@@ -32,7 +32,7 @@
 (check (=~ 12 (Overload-byconstref2 o x)))
 
 ; const pointer references
-; No SWIGTYPE *const& typemaps for Guile yet
+; No alaqilTYPE *const& typemaps for Guile yet
 ;(check (=~ 13 (Overload-byval1cpr o x)))
 ;(check (=~ 14 (Overload-byval1cpr o #nil)))
 

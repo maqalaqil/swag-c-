@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 checkequal(vararg_over1("Hello"), "Hello", "vararg_over1(""Hello"")");
 
@@ -38,4 +38,4 @@ checkequal(vararg_over9("Hello"), "Hello", "vararg_over9(""Hello"")");
 checkequal(vararg_over9(123), "123", "vararg_over9(123)");
 
 checkequal(vararg_over9("Hello", 123), "Hello", "vararg_over9(""Hello"", 123)");
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

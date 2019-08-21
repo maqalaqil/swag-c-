@@ -4,50 +4,50 @@
  * Typemaps for the wchar_t type
  * These are mapped to a C# String and are passed around by value.
  *
- * Support code for wide strings can be turned off by defining SWIG_CSHARP_NO_WSTRING_HELPER
+ * Support code for wide strings can be turned off by defining alaqil_CSHARP_NO_WSTRING_HELPER
  *
  * ----------------------------------------------------------------------------- */
 
-#if !defined(SWIG_CSHARP_NO_WSTRING_HELPER)
-#if !defined(SWIG_CSHARP_WSTRING_HELPER_)
-#define SWIG_CSHARP_WSTRING_HELPER_
+#if !defined(alaqil_CSHARP_NO_WSTRING_HELPER)
+#if !defined(alaqil_CSHARP_WSTRING_HELPER_)
+#define alaqil_CSHARP_WSTRING_HELPER_
 %insert(runtime) %{
 /* Callback for returning strings to C# without leaking memory */
-typedef void * (SWIGSTDCALL* SWIG_CSharpWStringHelperCallback)(const wchar_t *);
-static SWIG_CSharpWStringHelperCallback SWIG_csharp_wstring_callback = NULL;
+typedef void * (alaqilSTDCALL* alaqil_CSharpWStringHelperCallback)(const wchar_t *);
+static alaqil_CSharpWStringHelperCallback alaqil_csharp_wstring_callback = NULL;
 %}
 
 %pragma(csharp) imclasscode=%{
-  protected class SWIGWStringHelper {
+  protected class alaqilWStringHelper {
 
-    public delegate string SWIGWStringDelegate(global::System.IntPtr message);
-    static SWIGWStringDelegate wstringDelegate = new SWIGWStringDelegate(CreateWString);
+    public delegate string alaqilWStringDelegate(global::System.IntPtr message);
+    static alaqilWStringDelegate wstringDelegate = new alaqilWStringDelegate(CreateWString);
 
-    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="SWIGRegisterWStringCallback_$module")]
-    public static extern void SWIGRegisterWStringCallback_$module(SWIGWStringDelegate wstringDelegate);
+    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="alaqilRegisterWStringCallback_$module")]
+    public static extern void alaqilRegisterWStringCallback_$module(alaqilWStringDelegate wstringDelegate);
 
     static string CreateWString([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPWStr)]global::System.IntPtr cString) {
       return global::System.Runtime.InteropServices.Marshal.PtrToStringUni(cString);
     }
 
-    static SWIGWStringHelper() {
-      SWIGRegisterWStringCallback_$module(wstringDelegate);
+    static alaqilWStringHelper() {
+      alaqilRegisterWStringCallback_$module(wstringDelegate);
     }
   }
 
-  static protected SWIGWStringHelper swigWStringHelper = new SWIGWStringHelper();
+  static protected alaqilWStringHelper alaqilWStringHelper = new alaqilWStringHelper();
 %}
 
 %insert(runtime) %{
 #ifdef __cplusplus
 extern "C"
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterWStringCallback_$module(SWIG_CSharpWStringHelperCallback callback) {
-  SWIG_csharp_wstring_callback = callback;
+alaqilEXPORT void alaqilSTDCALL alaqilRegisterWStringCallback_$module(alaqil_CSharpWStringHelperCallback callback) {
+  alaqil_csharp_wstring_callback = callback;
 }
 %}
-#endif // SWIG_CSHARP_WSTRING_HELPER_
-#endif // SWIG_CSHARP_NO_WSTRING_HELPER
+#endif // alaqil_CSHARP_WSTRING_HELPER_
+#endif // alaqil_CSHARP_NO_WSTRING_HELPER
 
 
 // wchar_t
@@ -56,15 +56,15 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterWStringCallback_$module(SWIG_CSharpWStri
 %typemap(cstype) wchar_t "char"
 
 %typemap(csin) wchar_t "$csinput"
-%typemap(csout, excode=SWIGEXCODE) wchar_t {
+%typemap(csout, excode=alaqilEXCODE) wchar_t {
     char ret = $imcall;$excode
     return ret;
   }
-%typemap(csvarin, excode=SWIGEXCODE2) wchar_t %{
+%typemap(csvarin, excode=alaqilEXCODE2) wchar_t %{
     set {
       $imcall;$excode
     } %}
-%typemap(csvarout, excode=SWIGEXCODE2) wchar_t %{
+%typemap(csvarout, excode=alaqilEXCODE2) wchar_t %{
     get {
       char ret = $imcall;$excode
       return ret;
@@ -81,15 +81,15 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterWStringCallback_$module(SWIG_CSharpWStri
 %typemap(cstype) wchar_t * "string"
 
 %typemap(csin) wchar_t * "$csinput"
-%typemap(csout, excode=SWIGEXCODE) wchar_t * {
+%typemap(csout, excode=alaqilEXCODE) wchar_t * {
     string ret = global::System.Runtime.InteropServices.Marshal.PtrToStringUni($imcall);$excode
     return ret;
   }
-%typemap(csvarin, excode=SWIGEXCODE2) wchar_t * %{
+%typemap(csvarin, excode=alaqilEXCODE2) wchar_t * %{
     set {
       $imcall;$excode
     } %}
-%typemap(csvarout, excode=SWIGEXCODE2) wchar_t * %{
+%typemap(csvarout, excode=alaqilEXCODE2) wchar_t * %{
     get {
       string ret = $imcall;$excode
       return ret;

@@ -80,13 +80,13 @@ extern int count(char *bytes, int len, char c);
     _gostring_ *a;
 
     a = (_gostring_*) $input.array;
-    a[0] = Swig_AllocateString($1, $2);
+    a[0] = alaqil_AllocateString($1, $2);
   }
 %}
 
 %typemap(goargout,fragment="CopyString") (char *str, int len)
 %{
-	$input[0] = swigCopyString($input[0])
+	$input[0] = alaqilCopyString($input[0])
 %}
 
 %typemap(freearg) (char *str, int len)
@@ -104,7 +104,7 @@ extern void capitalize(char *str, int len);
   {
      double a = $1*$1 + $2*$2;
      if (a > 1.0) {
-       _swig_gopanic("$1_name and $2_name must be in unit circle");
+       _alaqil_gopanic("$1_name and $2_name must be in unit circle");
        return;
      }
   }

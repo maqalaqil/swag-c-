@@ -1,7 +1,7 @@
 /* embed2.c some more tests for an embedded interpreter
  
 This will go a bit further as it will pass values to and from the lua code.
-It uses less of the SWIG code, and more of the raw lua API's
+It uses less of the alaqil code, and more of the raw lua API's
  
 What it will do is load the wrapped lib, load runme.lua and then call some functions.
 To make life easier, all the printf's have either [C] or [Lua] at the start
@@ -12,12 +12,12 @@ We will be using the luaL_dostring()/lua_dostring() function to call into lua
 */
 
 /* Deal with Microsoft's attempt at deprecating C standard runtime functions */
-#if !defined(SWIG_NO_CRT_SECURE_NO_DEPRECATE) && defined(_MSC_VER) && !defined(_CRT_SECURE_NO_DEPRECATE)
+#if !defined(alaqil_NO_CRT_SECURE_NO_DEPRECATE) && defined(_MSC_VER) && !defined(_CRT_SECURE_NO_DEPRECATE)
 # define _CRT_SECURE_NO_DEPRECATE
 #endif
 
 /* Deal with Microsoft's attempt at deprecating methods in the standard C++ library */
-#if !defined(SWIG_NO_SCL_SECURE_NO_DEPRECATE) && defined(_MSC_VER) && !defined(_SCL_SECURE_NO_DEPRECATE)
+#if !defined(alaqil_NO_SCL_SECURE_NO_DEPRECATE) && defined(_MSC_VER) && !defined(_SCL_SECURE_NO_DEPRECATE)
 # define _SCL_SECURE_NO_DEPRECATE
 #endif
 
@@ -36,7 +36,7 @@ We will be using the luaL_dostring()/lua_dostring() function to call into lua
 #define lua_open luaL_newstate
 #endif
 
-/* the SWIG wrapped library */
+/* the alaqil wrapped library */
 extern int luaopen_example(lua_State*L);
 
 /* This is an example of how to call the Lua function
@@ -186,7 +186,7 @@ int main(int argc,char* argv[]) {
   luaopen_base(L);
   luaopen_string(L);
   luaopen_math(L);
-  printf("[C] now loading the SWIG wrappered library\n");
+  printf("[C] now loading the alaqil wrappered library\n");
   luaopen_example(L);
   printf("[C] all looks ok\n");
   printf("\n");

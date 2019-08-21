@@ -1,18 +1,18 @@
 <html>
 <head>
-<title>SWIG:Examples:java:pointer</title>
+<title>alaqil:Examples:java:pointer</title>
 </head>
 
 <body bgcolor="#ffffff">
 
-<tt>SWIG/Examples/java/pointer/</tt>
+<tt>alaqil/Examples/java/pointer/</tt>
 <hr>
 
 <H2>Simple Pointer Handling</H2>
 
 <p>
 This example illustrates a couple of techniques for handling
-simple pointers in SWIG.  The prototypical example is a C function
+simple pointers in alaqil.  The prototypical example is a C function
 that operates on pointers such as this:
 
 <blockquote>
@@ -23,9 +23,9 @@ void add(int *x, int *y, int *r) {
 </pre>
 </blockquote>
 
-By default, SWIG wraps this function exactly as specified and creates
+By default, alaqil wraps this function exactly as specified and creates
 an interface that expects pointer objects for arguments.  
-SWIG wraps a C pointer with a type wrapper class, for example, SWIGTYPE_p_int for an int*.
+alaqil wraps a C pointer with a type wrapper class, for example, alaqilTYPE_p_int for an int*.
 The only problem is how does one go about creating these objects from a Java program?
 <p>
 
@@ -54,7 +54,7 @@ void delete_int(int *i) {
 </blockquote>
 
 <p>
-<li>The SWIG pointer library provides an easier way. <br> 
+<li>The alaqil pointer library provides an easier way. <br> 
 For example, in the interface file 
 you would do this:
 
@@ -69,16 +69,16 @@ and from Java you would use pointers like this:
 
 <blockquote>
 <pre>
-SWIGTYPE_p_int a = example.new_intp();
-SWIGTYPE_p_int b = example.new_intp();
-SWIGTYPE_p_int c = example.new_intp();
+alaqilTYPE_p_int a = example.new_intp();
+alaqilTYPE_p_int b = example.new_intp();
+alaqilTYPE_p_int c = example.new_intp();
 example.intp_assign(a,37);
 example.intp_assign(b,42);
 
 // Note that getCPtr() has package access by default
-System.out.println("     a =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(a)));
-System.out.println("     b =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(b)));
-System.out.println("     c =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(c)));
+System.out.println("     a =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(a)));
+System.out.println("     b =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(b)));
+System.out.println("     c =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(c)));
 
 // Call the add() function with some pointers
 example.add(a,b,c);
@@ -95,8 +95,8 @@ example.delete_intp(c);
 </blockquote>
 
 <p>
-<li>Use the SWIG typemap library.  This library allows you to completely
-change the way arguments are processed by SWIG.  For example:
+<li>Use the alaqil typemap library.  This library allows you to completely
+change the way arguments are processed by alaqil.  For example:
 
 <blockquote>
 <pre>
@@ -143,7 +143,7 @@ extraction.
 
 <ul>
 <li> <a href="example.c">example.c</a>  (C Source)
-<li> <a href="example.i">example.i</a>  (SWIG interface)
+<li> <a href="example.i">example.i</a>  (alaqil interface)
 <li> <a href="runme.java">runme.java</a>  (Java program)
 </ul>
 
@@ -156,7 +156,7 @@ make it.
 
 <p>
 <li>More documentation on the typemaps.i and cpointer.i library files can be
-found in the SWIG user manual.  The files also contain documentation.
+found in the alaqil user manual.  The files also contain documentation.
 
 </ul>
 

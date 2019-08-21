@@ -20,11 +20,11 @@ void main() {
     throw new Exception("test failed");
   }
 
-  if (testMary(name) != "SWIGTYPE_p_NameWrap") {
+  if (testMary(name) != "alaqilTYPE_p_NameWrap") {
     throw new Exception("test failed");
   }
 
-  if (testJames(name) != "SWIGTYPE_Name") {
+  if (testJames(name) != "alaqilTYPE_Name") {
     throw new Exception("test failed");
   }
 

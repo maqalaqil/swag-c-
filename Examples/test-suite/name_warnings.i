@@ -2,7 +2,7 @@
 /*
   This test should produce no warnings at all.
 
-  It just show the cases where swig was showing unintended warnings
+  It just show the cases where alaqil was showing unintended warnings
   before.
 
   Right now the test includes some cases for python, java and csharp.
@@ -10,7 +10,7 @@
 */
 
 /* activate all the name warnings */
-%warnfilter(+SWIGWARN_PARSE_KEYWORD,+SWIGWARN_PARSE_BUILTIN_NAME,-SWIGWARN_TYPE_ABSTRACT);
+%warnfilter(+alaqilWARN_PARSE_KEYWORD,+alaqilWARN_PARSE_BUILTIN_NAME,-alaqilWARN_TYPE_ABSTRACT);
 
 %{
 #ifdef max
@@ -35,7 +35,7 @@ namespace std
   {
     typedef complex None;
     
-#ifndef SWIGPHP // clone() *is* an invalid method name in PHP.
+#ifndef alaqilPHP // clone() *is* an invalid method name in PHP.
     A* clone(int) { return NULL; }
 #endif
     
@@ -62,7 +62,7 @@ namespace std
 
 %inline {
   /* silently rename the parameter names in csharp/java */
-#ifdef SWIGR
+#ifdef alaqilR
   double foo(double inparam, double out) { return 1.0; }
 #else
   double foo(double abstract, double out) { return 1.0; }

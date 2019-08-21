@@ -8,7 +8,7 @@ public class doxygen_basic_notranslate_runme {
     try {
       System.loadLibrary("doxygen_basic_notranslate");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -62,7 +62,7 @@ public class doxygen_basic_notranslate_runme {
     		"");
     wantedComments.put("doxygen_basic_notranslate.doxygen_basic_notranslate.function5(int)",
     		"  This is a post comment. ");
-    wantedComments.put("doxygen_basic_notranslate.doxygen_basic_notranslate.function7(doxygen_basic_notranslate.SWIGTYPE_p_p_p_Shape)",
+    wantedComments.put("doxygen_basic_notranslate.doxygen_basic_notranslate.function7(doxygen_basic_notranslate.alaqilTYPE_p_p_p_Shape)",
     		" \n" +
     		"  Test for a parameter with difficult type\n" +
     		"  (mostly for python)\n" +

@@ -1,6 +1,6 @@
 %module class_scope_weird
 
-// Use this version with extra qualifiers to test SWIG as some compilers accept this
+// Use this version with extra qualifiers to test alaqil as some compilers accept this
 class Foo {
 public:
   Foo::Foo(void) {}
@@ -28,7 +28,7 @@ class matrix4;
 class tacka3;
 %}
 
-// Use this version with extra qualifiers to test SWIG as some compilers accept this
+// Use this version with extra qualifiers to test alaqil as some compilers accept this
 class Quat {
 public:
   Quat::Quat(void){}  

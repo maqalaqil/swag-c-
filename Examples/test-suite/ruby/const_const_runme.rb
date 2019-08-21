@@ -2,12 +2,12 @@
 #
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'const_const'
 include Const_const
 
-swig_assert_each_line <<EOF
+alaqil_assert_each_line <<EOF
 foo(1)  # 1 is unused
 EOF
 

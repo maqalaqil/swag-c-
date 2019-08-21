@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly uses the new 'decltype()'
+/* This testcase checks whether alaqil correctly uses the new 'decltype()'
    introduced in C++11.
 */
 %module cpp11_decltype

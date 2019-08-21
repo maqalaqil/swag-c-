@@ -1,5 +1,5 @@
 /*
-This module tests whether SWIG sets the '$lextype' variable
+This module tests whether alaqil sets the '$lextype' variable
 correctly.  This variable maintains the literal base name of the
 type in the wrapper code - it's therefore usually the same
 as '$basetype', but NOT ALWAYS.

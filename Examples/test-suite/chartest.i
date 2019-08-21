@@ -25,7 +25,7 @@ static const char globcharB = '\102'; // B
 static const char globcharC = '\x43'; // C
 static const char globcharD = 0x44; // D
 static const char globcharE = 69; // E
-static const char globcharAE1 = 'Æ'; // AE (latin1 encoded)
+static const char globcharAE1 = 'ï¿½'; // AE (latin1 encoded)
 static const char globcharAE2 = '\306'; // AE (latin1 encoded)
 static const char globcharAE3 = '\xC6'; // AE (latin1 encoded)
 
@@ -38,17 +38,17 @@ struct CharTestClass {
   static const char membercharC = '\x43'; // C
   static const char membercharD = 0x44; // D
   static const char membercharE = 69; // E
-  static const char membercharAE1 = 'Æ'; // AE (latin1 encoded)
+  static const char membercharAE1 = 'ï¿½'; // AE (latin1 encoded)
   static const char membercharAE2 = '\306'; // AE (latin1 encoded)
   static const char membercharAE3 = '\xC6'; // AE (latin1 encoded)
 };
 %}
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javaconst(1);
-#elif SWIGCSHARP
+#elif alaqilCSHARP
 %csconst(1);
-#elif SWIGD
+#elif alaqilD
 %dmanifestconst;
 #endif
 
@@ -61,7 +61,7 @@ static const char x_globcharB = '\102'; // B
 static const char x_globcharC = '\x43'; // C
 static const char x_globcharD = 0x44; // D
 static const char x_globcharE = 69; // E
-static const char x_globcharAE1 = 'Æ'; // AE (latin1 encoded)
+static const char x_globcharAE1 = 'ï¿½'; // AE (latin1 encoded)
 static const char x_globcharAE2 = '\306'; // AE (latin1 encoded)
 static const char x_globcharAE3 = '\xC6'; // AE (latin1 encoded)
 
@@ -74,7 +74,7 @@ struct X_CharTestClass {
   static const char membercharC = '\x43'; // C
   static const char membercharD = 0x44; // D
   static const char membercharE = 69; // E
-  static const char membercharAE1 = 'Æ'; // AE (latin1 encoded)
+  static const char membercharAE1 = 'ï¿½'; // AE (latin1 encoded)
   static const char membercharAE2 = '\306'; // AE (latin1 encoded)
   static const char membercharAE3 = '\xC6'; // AE (latin1 encoded)
 };

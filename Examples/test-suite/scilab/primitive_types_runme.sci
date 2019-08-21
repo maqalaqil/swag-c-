@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // Check passing by value
 
@@ -54,4 +54,4 @@ checkequal(ref_bool(%t), %t, "ref_bool() test fails.");
 //checkequal(ref_llong(int64(42)), 42, "ref_llong() test fails.");
 //checkequal(ref_ullong(uint64(42)), 42, "ref_ullong() test fails.");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

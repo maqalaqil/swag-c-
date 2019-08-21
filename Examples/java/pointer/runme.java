@@ -5,7 +5,7 @@ public class runme {
     try {
 	System.loadLibrary("example");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -14,16 +14,16 @@ public class runme {
 
     // First create some objects using the pointer library.
     System.out.println("Testing the pointer library");
-    SWIGTYPE_p_int a = example.new_intp();
-    SWIGTYPE_p_int b = example.new_intp();
-    SWIGTYPE_p_int c = example.new_intp();
+    alaqilTYPE_p_int a = example.new_intp();
+    alaqilTYPE_p_int b = example.new_intp();
+    alaqilTYPE_p_int c = example.new_intp();
     example.intp_assign(a,37);
     example.intp_assign(b,42);
 
     // Note that getCPtr() has package access by default
-    System.out.println("     a =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(a)));
-    System.out.println("     b =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(b)));
-    System.out.println("     c =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(c)));
+    System.out.println("     a =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(a)));
+    System.out.println("     b =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(b)));
+    System.out.println("     c =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(c)));
 
     // Call the add() function with some pointers
     example.add(a,b,c);

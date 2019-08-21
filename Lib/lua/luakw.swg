@@ -3,7 +3,7 @@
 */
 
 #define LUAKW(x) %keywordwarn("'" `x` "' is a Lua keyword, renaming to 'c_" `x` "'", rename="c_%s")  `x`
-#define LUABN(x) %namewarn(%warningmsg(SWIGWARN_PARSE_BUILTIN_NAME, "'" `x` "' conflicts with a basic function in Lua"), %$not %$ismember)  `x`
+#define LUABN(x) %namewarn(%warningmsg(alaqilWARN_PARSE_BUILTIN_NAME, "'" `x` "' conflicts with a basic function in Lua"), %$not %$ismember)  `x`
 
 /*
   Warnings for Lua keywords 

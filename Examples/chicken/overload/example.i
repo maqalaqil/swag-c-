@@ -6,7 +6,7 @@
 %}
 
 /* Let "Foo" objects be converted back and forth from TinyCLOS into
-   low-level CHICKEN SWIG procedures */
+   low-level CHICKEN alaqil procedures */
 
 %typemap(clos_in) Foo * = SIMPLE_CLOS_OBJECT *;
 %typemap(clos_out) Foo * = SIMPLE_CLOS_OBJECT *;

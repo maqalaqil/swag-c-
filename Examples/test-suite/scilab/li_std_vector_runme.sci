@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // TODO: support for STL vectors operator =
 iv = new_DoubleVector();
@@ -7,6 +7,6 @@ iv = new_DoubleVector();
 //end
 //x = average(iv);
 
-//if x <> 2.5 then swigtesterror(); end
+//if x <> 2.5 then alaqiltesterror(); end
 exit
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

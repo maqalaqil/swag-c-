@@ -17,15 +17,15 @@ namespace std
   struct exception {};
 }
 
-%typemap(throws) std::bad_cast		%{_swig_gopanic($1.what());%}
-%typemap(throws) std::bad_exception	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::domain_error	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::exception		%{_swig_gopanic($1.what());%}
-%typemap(throws) std::invalid_argument	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::length_error	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::logic_error	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::out_of_range	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::overflow_error	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::range_error	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::runtime_error	%{_swig_gopanic($1.what());%}
-%typemap(throws) std::underflow_error	%{_swig_gopanic($1.what());%}
+%typemap(throws) std::bad_cast		%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::bad_exception	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::domain_error	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::exception		%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::invalid_argument	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::length_error	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::logic_error	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::out_of_range	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::overflow_error	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::range_error	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::runtime_error	%{_alaqil_gopanic($1.what());%}
+%typemap(throws) std::underflow_error	%{_alaqil_gopanic($1.what());%}

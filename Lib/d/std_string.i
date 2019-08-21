@@ -19,7 +19,7 @@ namespace std {
 
 class string;
 
-%define SWIGD_STD_STRING_TYPEMAPS(DW_STRING_TYPE, DP_STRING_TYPE, FROM_STRINGZ, TO_STRINGZ)
+%define alaqilD_STD_STRING_TYPEMAPS(DW_STRING_TYPE, DP_STRING_TYPE, FROM_STRINGZ, TO_STRINGZ)
 // string
 %typemap(ctype) string, const string & "char *"
 %typemap(imtype) string, const string & #DW_STRING_TYPE
@@ -27,39 +27,39 @@ class string;
 
 %typemap(in, canthrow=1) string, const string &
 %{ if (!$input) {
-    SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "null string");
+    alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "null string");
     return $null;
   }
   $1.assign($input); %}
 %typemap(in, canthrow=1) const string &
 %{ if (!$input) {
-    SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "null string");
+    alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "null string");
     return $null;
    }
    $*1_ltype $1_str($input);
    $1 = &$1_str; %}
 
-%typemap(out) string %{ $result = SWIG_d_string_callback($1.c_str()); %}
-%typemap(out) const string & %{ $result = SWIG_d_string_callback($1->c_str()); %}
+%typemap(out) string %{ $result = alaqil_d_string_callback($1.c_str()); %}
+%typemap(out) const string & %{ $result = alaqil_d_string_callback($1->c_str()); %}
 
 %typemap(din) string, const string & "($dinput ? TO_STRINGZ($dinput) : null)"
-%typemap(dout, excode=SWIGEXCODE) string, const string & {
+%typemap(dout, excode=alaqilEXCODE) string, const string & {
   DP_STRING_TYPE ret = FROM_STRINGZ($imcall);$excode
   return ret;
 }
 
-%typemap(directorin) string, const string & %{ $input = SWIG_d_string_callback($1.c_str()); %}
+%typemap(directorin) string, const string & %{ $input = alaqil_d_string_callback($1.c_str()); %}
 
 %typemap(directorout, canthrow=1) string
 %{ if (!$input) {
-    SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "null string");
+    alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "null string");
     return $null;
   }
   $result.assign($input); %}
 
-%typemap(directorout, canthrow=1, warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
+%typemap(directorout, canthrow=1, warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
 %{ if (!$input) {
-    SWIG_DSetPendingException(SWIG_DIllegalArgumentException, "null string");
+    alaqil_DSetPendingException(alaqil_DIllegalArgumentException, "null string");
     return $null;
   }
   /* possible thread/reentrant code problem */
@@ -71,7 +71,7 @@ class string;
 %typemap(ddirectorout) string, const string & "TO_STRINGZ($dcall)"
 
 %typemap(throws, canthrow=1) string, const string &
-%{ SWIG_DSetPendingException(SWIG_DException, $1.c_str());
+%{ alaqil_DSetPendingException(alaqil_DException, $1.c_str());
   return $null; %}
 
 %typemap(typecheck) string, const string & = char *;
@@ -79,13 +79,13 @@ class string;
 
 // We need to have the \0-terminated string conversion functions available in
 // the D proxy modules.
-#if (SWIG_D_VERSION == 1)
+#if (alaqil_D_VERSION == 1)
 // Could be easily extended to support Phobos as well.
-SWIGD_STD_STRING_TYPEMAPS(char*, char[], tango.stdc.stringz.fromStringz, tango.stdc.stringz.toStringz)
+alaqilD_STD_STRING_TYPEMAPS(char*, char[], tango.stdc.stringz.fromStringz, tango.stdc.stringz.toStringz)
 
 %pragma(d) globalproxyimports = "static import tango.stdc.stringz;";
 #else
-SWIGD_STD_STRING_TYPEMAPS(const(char)*, string, std.conv.to!string, std.string.toStringz)
+alaqilD_STD_STRING_TYPEMAPS(const(char)*, string, std.conv.to!string, std.string.toStringz)
 
 %pragma(d) globalproxyimports = %{
 static import std.conv;
@@ -93,6 +93,6 @@ static import std.string;
 %}
 #endif
 
-#undef SWIGD_STD_STRING_TYPEMAPS
+#undef alaqilD_STD_STRING_TYPEMAPS
 
 } // namespace std

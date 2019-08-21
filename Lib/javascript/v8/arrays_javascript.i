@@ -21,10 +21,10 @@
  *   fs = example.FiddleSticks;
  * ----------------------------------------------------------------------------- */
 
-%fragment("SWIG_JSCGetIntProperty",    "header", fragment=SWIG_AsVal_frag(int)) {}
-%fragment("SWIG_JSCGetNumberProperty", "header", fragment=SWIG_AsVal_frag(double)) {}
+%fragment("alaqil_JSCGetIntProperty",    "header", fragment=alaqil_AsVal_frag(int)) {}
+%fragment("alaqil_JSCGetNumberProperty", "header", fragment=alaqil_AsVal_frag(double)) {}
 
-%typemap(in, fragment="SWIG_JSCGetIntProperty") int[], int[ANY]
+%typemap(in, fragment="alaqil_JSCGetIntProperty") int[], int[ANY]
     (int length = 0, v8::Local<v8::Array> array, v8::Local<v8::Value> jsvalue, int i = 0, int res = 0, $*1_ltype temp) {
   if ($input->IsArray())
   {
@@ -41,10 +41,10 @@
       jsvalue = array->Get(i);
 
       // Get primitive value from JSObject
-      res = SWIG_AsVal(int)(jsvalue, &temp);
-      if (!SWIG_IsOK(res))
+      res = alaqil_AsVal(int)(jsvalue, &temp);
+      if (!alaqil_IsOK(res))
       {
-        SWIG_exception_fail(SWIG_ERROR, "Failed to convert $input to double");
+        alaqil_exception_fail(alaqil_ERROR, "Failed to convert $input to double");
       }
       arg$argnum[i] = temp;
     }
@@ -52,7 +52,7 @@
   }
   else
   {
-    SWIG_exception_fail(SWIG_ERROR, "$input is not JSObjectRef");
+    alaqil_exception_fail(alaqil_ERROR, "$input is not JSObjectRef");
   }
 }
 
@@ -60,21 +60,21 @@
     free($1);
 }
 
-%typemap(out, fragment=SWIG_From_frag(int)) int[], int[ANY] (int length = 0, int i = 0)
+%typemap(out, fragment=alaqil_From_frag(int)) int[], int[ANY] (int length = 0, int i = 0)
 {
   length = $1_dim0;
   v8::Local<v8::Array> array = v8::Array::New(length);
 
   for (i = 0; i < length; i++)
   {
-    array->Set(i, SWIG_From(int)($1[i]));
+    array->Set(i, alaqil_From(int)($1[i]));
   }
 
 
   $result = array;
 }
 
-%typemap(in, fragment="SWIG_JSCGetNumberProperty") double[], double[ANY]
+%typemap(in, fragment="alaqil_JSCGetNumberProperty") double[], double[ANY]
     (int length = 0, v8::Local<v8::Array> array, v8::Local<v8::Value> jsvalue, int i = 0, int res = 0, $*1_ltype temp) {
   if ($input->IsArray())
   {
@@ -91,10 +91,10 @@
       jsvalue = array->Get(i);
 
       // Get primitive value from JSObject
-      res = SWIG_AsVal(double)(jsvalue, &temp);
-      if (!SWIG_IsOK(res))
+      res = alaqil_AsVal(double)(jsvalue, &temp);
+      if (!alaqil_IsOK(res))
       {
-        SWIG_exception_fail(SWIG_ERROR, "Failed to convert $input to double");
+        alaqil_exception_fail(alaqil_ERROR, "Failed to convert $input to double");
       }
       arg$argnum[i] = temp;
     }
@@ -102,7 +102,7 @@
   }
   else
   {
-    SWIG_exception_fail(SWIG_ERROR, "$input is not JSObjectRef");
+    alaqil_exception_fail(alaqil_ERROR, "$input is not JSObjectRef");
   }
 }
 
@@ -110,14 +110,14 @@
     free($1);
 }
 
-%typemap(out, fragment=SWIG_From_frag(double)) double[], double[ANY] (int length = 0, int i = 0)
+%typemap(out, fragment=alaqil_From_frag(double)) double[], double[ANY] (int length = 0, int i = 0)
 {
   length = $1_dim0;
   v8::Local<v8::Array> array = v8::Array::New(length);
 
   for (i = 0; i < length; i++)
   {
-    array->Set(i, SWIG_From(double)($1[i]));
+    array->Set(i, alaqil_From(double)($1[i]));
   }
 
 

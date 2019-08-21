@@ -3,27 +3,27 @@
 
 %module(ruby_minherit="1") default_constructor
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) EB; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) EB; /* C#, D, Java, PHP multiple inheritance */
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) AD; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) AD; /* C#, D, Java, PHP multiple inheritance */
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) GGG; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) GGG; /* C#, D, Java, PHP multiple inheritance */
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) HHH; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) HHH; /* C#, D, Java, PHP multiple inheritance */
 
-%warnfilter(SWIGWARN_LANG_FRIEND_IGNORE) F; /* friend function */
+%warnfilter(alaqilWARN_LANG_FRIEND_IGNORE) F; /* friend function */
 
 %delobject F::destroy;
 %delobject G::destroy;
@@ -188,7 +188,7 @@ public:
 };
 
 %inline %{
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

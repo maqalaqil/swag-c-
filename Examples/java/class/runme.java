@@ -1,4 +1,4 @@
-// This example illustrates how C++ classes can be used from Java using SWIG.
+// This example illustrates how C++ classes can be used from Java using alaqil.
 // The Java class gets mapped onto the C++ class and behaves as if it is a Java class.
 
 public class runme {
@@ -6,7 +6,7 @@ public class runme {
     try {
         System.loadLibrary("example");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }

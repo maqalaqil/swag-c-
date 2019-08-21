@@ -1,6 +1,6 @@
 (* Test the unions example... *)
 
-open Swig
+open alaqil
 open Unions 
 
 let a = new_SmallStruct C_void

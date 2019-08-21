@@ -1,19 +1,19 @@
 <html>
 <head>
-<title>SWIG:Examples:java:class</title>
+<title>alaqil:Examples:java:class</title>
 </head>
 
 <body bgcolor="#ffffff">
 
 
-<tt>SWIG/Examples/java/class/</tt>
+<tt>alaqil/Examples/java/class/</tt>
 <hr>
 
 <H2>Wrapping a simple C++ class</H2>
 
 <p>
 This example illustrates the high level form of C++ class wrapping performed
-by SWIG.  In this case, a C++ class has a proxy Java class, which 
+by alaqil.  In this case, a C++ class has a proxy Java class, which 
 provides access to C++ class members.
 
 <h2>The C++ Code</h2>
@@ -60,9 +60,9 @@ public:
 </pre>
 </blockquote>
 
-<h2>The SWIG interface</h2>
+<h2>The alaqil interface</h2>
 
-A simple SWIG interface for this can be built by simply grabbing the header file
+A simple alaqil interface for this can be built by simply grabbing the header file
 like this:
 
 <blockquote>
@@ -79,10 +79,10 @@ like this:
 </pre>
 </blockquote>
 
-Note: when creating a C++ extension, you must run SWIG with the <tt>-c++</tt> option like this:
+Note: when creating a C++ extension, you must run alaqil with the <tt>-c++</tt> option like this:
 <blockquote>
 <pre>
-% swig -c++ -java example.i
+% alaqil -c++ -java example.i
 </pre>
 </blockquote>
 
@@ -146,12 +146,12 @@ Shape.setNshapes(13);       // Set a static data member
 
 <ul>
 <li>This high-level interface using proxy classes is not the only way to handle C++ code. 
-A low level interface using C functions to access member variables and member functions is the alternative SWIG
+A low level interface using C functions to access member variables and member functions is the alternative alaqil
 approach. This entails passing around the C pointer or C++ 'this' pointer and as such it is not difficult to crash the JVM. 
 The abstraction of the underlying pointer by the java proxy classes far better fits the java programming paradigm.
 
 <p>
-<li>SWIG <b>does</b> know how to properly perform upcasting of objects in an inheritance
+<li>alaqil <b>does</b> know how to properly perform upcasting of objects in an inheritance
 hierarchy (including multiple inheritance).  However Java classes can only derive from one base class so multiple inheritance
 is not implemented. Java classes can implement more than one interface so there is scope for improvement in the future. 
 

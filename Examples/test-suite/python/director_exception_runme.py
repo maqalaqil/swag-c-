@@ -59,7 +59,7 @@ try:
     b.pong()
 except TypeError, e:
     # fastdispatch mode adds on Additional Information to the exception message - just check the main exception message exists
-    if str(e).startswith("SWIG director type mismatch in output value of type 'std::string'"):
+    if str(e).startswith("alaqil director type mismatch in output value of type 'std::string'"):
         ok = 1
     else:
         print "Unexpected error message: %s" % str(e)

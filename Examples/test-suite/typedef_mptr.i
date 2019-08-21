@@ -9,7 +9,7 @@
 #endif
 %}
 
-#if defined(SWIGPYTHON) || defined(SWIGOCAML)
+#if defined(alaqilPYTHON) || defined(alaqilOCAML)
 
 %inline %{
 
@@ -35,7 +35,7 @@ Integer do_op(Foo *f, Integer x, Integer y, Integer (FooObj::*op)(Integer, Integ
 %}
 #endif
 
-#if defined(SWIGPYTHON) || defined(SWIGOCAML)
+#if defined(alaqilPYTHON) || defined(alaqilOCAML)
 %constant int (Foo::*add)(int,int) = &Foo::add;
 %constant Integer (FooObj::*sub)(Integer,Integer) = &FooObj::sub;
 #endif

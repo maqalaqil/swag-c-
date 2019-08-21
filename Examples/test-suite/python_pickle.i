@@ -17,11 +17,11 @@ def __reduce__(self):
     if (debug)
       std::cout << "In C++ __reduce__" << std::endl;
     PyObject *args = PyTuple_New(1);
-    PyTuple_SetItem(args, 0, SWIG_From_std_string(self->msg));
+    PyTuple_SetItem(args, 0, alaqil_From_std_string(self->msg));
 
-    swig_type_info *ty = SWIGTYPE_p_PickleMe;
-    SwigPyClientData *data = (SwigPyClientData *)ty->clientdata;
-#if defined(SWIGPYTHON_BUILTIN)
+    alaqil_type_info *ty = alaqilTYPE_p_PickleMe;
+    alaqilPyClientData *data = (alaqilPyClientData *)ty->clientdata;
+#if defined(alaqilPYTHON_BUILTIN)
     PyObject *callable = (PyObject *)data->pytype;
 #else
     PyObject *callable = data->klass;

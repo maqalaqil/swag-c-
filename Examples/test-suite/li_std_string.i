@@ -1,12 +1,12 @@
 %module li_std_string
 %include <std_string.i>
 
-#if defined(SWIGUTL)
+#if defined(alaqilUTL)
 %apply std::string& INPUT { std::string &input }
 %apply std::string& INOUT { std::string &inout }
 #endif
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)
@@ -85,7 +85,7 @@ void test_const_pointer_throw() TESTCASE_THROW1(const std::string *) {
                             std::string *Structure::StaticMemberString2 };
 */
 
-#ifdef SWIGSCILAB
+#ifdef alaqilSCILAB
 %rename(St) MemberString;
 %rename(Str) MemberString;
 %rename(Str2) MemberString2;

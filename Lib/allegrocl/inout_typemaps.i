@@ -82,7 +82,7 @@ INOUT_TYPEMAP(bool,
 // INOUT_TYPEMAP(unsigned long long);
 
 // char *OUTPUT map.
-// for this to work, swig needs to know how large an array to allocate.
+// for this to work, alaqil needs to know how large an array to allocate.
 // you can fake this by 
 // %typemap(ffitype) char *myarg	"(:array :char 30)";
 // %apply char *OUTPUT { char *myarg };

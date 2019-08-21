@@ -8,11 +8,11 @@
 %typemap(default) double y "$1=1000;";
 #endif
 
-#ifdef SWIGLUA
+#ifdef alaqilLUA
 // lua only has one numeric type, so some overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_PARSE_REDEFINED, SWIGWARN_LANG_OVERLOAD_SHADOW) Foo::test;
+%warnfilter(alaqilWARN_PARSE_REDEFINED, alaqilWARN_LANG_OVERLOAD_SHADOW) Foo::test;
 #else
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Foo::test; 
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Foo::test; 
 #endif
 
 

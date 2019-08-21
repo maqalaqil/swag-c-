@@ -1,6 +1,6 @@
 %module refcount
 
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_EQ,SWIGWARN_LANG_IDENTIFIER);
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_EQ,alaqilWARN_LANG_IDENTIFIER);
 
 %{ 
 #include <iostream> 
@@ -36,7 +36,7 @@
       // std::cout << "deleting a" << std::endl;
     }
 
-#ifdef SWIGRUBY 
+#ifdef alaqilRUBY 
     // fix strange ruby + virtual derivation problem
     using RCObjBase::ref_count;
 #endif
@@ -58,7 +58,7 @@
 
 %}
 
-#if defined(SWIGPYTHON)
+#if defined(alaqilPYTHON)
 %extend_smart_pointer(RCPtr<A>);
 %template(RCPtr_A) RCPtr<A>;
 #endif
@@ -115,7 +115,7 @@ struct Factory {
 
 %}
 
-#if defined(SWIGPYTHON) || defined(SWIGOCTAVE)
+#if defined(alaqilPYTHON) || defined(alaqilOCTAVE)
 
 %include <std_vector.i>
 %template(vector_A) std::vector<RCPtr<A> >;

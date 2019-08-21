@@ -75,8 +75,8 @@ void main() {
 
     foreach (i; 0 .. SIZE) {
       // Make sure that a shallow copy has been made.
-      void* aPtr = Struct.swigGetCPtr(sArray[i]);
-      void* vPtr = Struct.swigGetCPtr(sVector[i]);
+      void* aPtr = Struct.alaqilGetCPtr(sArray[i]);
+      void* vPtr = Struct.alaqilGetCPtr(sVector[i]);
       enforce(aPtr == vPtr, "slice test 2 failed, i: " ~ to!string(i));
     }
   }
@@ -155,8 +155,8 @@ void main() {
 
     foreach (i; 0 .. SIZE) {
       // Make sure that a shallow copy has been made.
-      void* aPtr = Struct.swigGetCPtr(array[i]);
-      void* vPtr = Struct.swigGetCPtr(vector[i]);
+      void* aPtr = Struct.alaqilGetCPtr(array[i]);
+      void* vPtr = Struct.alaqilGetCPtr(vector[i]);
       enforce(aPtr == vPtr, "StructConstPtrVector test 1 failed, i: " ~ to!string(i));
     }
   }
@@ -172,8 +172,8 @@ void main() {
 
     foreach (i; 0 .. SIZE) {
       // Make sure that a shallow copy has been made.
-      void* aPtr = Struct.swigGetCPtr(array[i]);
-      void* vPtr = Struct.swigGetCPtr(vector[i]);
+      void* aPtr = Struct.alaqilGetCPtr(array[i]);
+      void* vPtr = Struct.alaqilGetCPtr(vector[i]);
       enforce(aPtr == vPtr, "StructConstPtrVector test 1 failed, i: " ~ to!string(i));
     }
   }

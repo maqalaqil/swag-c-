@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Template_inherit
 
 let _ =

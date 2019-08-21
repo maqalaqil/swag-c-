@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly parses the user-defined literals
+/* This testcase checks whether alaqil correctly parses the user-defined literals
    introduced in C++11. */
 %module cpp11_userdefined_literals
 
@@ -38,7 +38,7 @@ OutputType operator"" _myRawLiteralIgnored(const char * value) { return OutputTy
 %}
 
 %{
-// TODO: SWIG cannot parse these
+// TODO: alaqil cannot parse these
 OutputType some_variable_a = 1234_myRawLiteral;
 
 OutputType some_variable_b = 1234_mySuffixIntegral;

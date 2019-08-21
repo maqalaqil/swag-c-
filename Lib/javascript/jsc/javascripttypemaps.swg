@@ -7,13 +7,13 @@
  * ------------------------------------------------------------ */
 
 /* These macros are necessary to provide an extra parameter
-   to SWIG_AsVal_dec functions (JSContextRef context).
+   to alaqil_AsVal_dec functions (JSContextRef context).
    They must be defined before including `typemaps/fragments.swg`
 */
-#define SWIG_FROM_DECL_ARGS SWIG_JSC_FROM_DECL_ARGS
-#define SWIG_FROM_CALL_ARGS SWIG_JSC_FROM_CALL_ARGS
-#define SWIG_AS_DECL_ARGS SWIG_JSC_AS_DECL_ARGS
-#define SWIG_AS_CALL_ARGS SWIG_JSC_AS_CALL_ARGS
+#define alaqil_FROM_DECL_ARGS alaqil_JSC_FROM_DECL_ARGS
+#define alaqil_FROM_CALL_ARGS alaqil_JSC_FROM_CALL_ARGS
+#define alaqil_AS_DECL_ARGS alaqil_JSC_AS_DECL_ARGS
+#define alaqil_AS_CALL_ARGS alaqil_JSC_AS_CALL_ARGS
 
 /* Include fundamental fragemt definitions */
 %include <typemaps/fragments.swg>
@@ -31,24 +31,24 @@
  *  Unified typemap section
  * ------------------------------------------------------------ */
 
-#define SWIG_Object                     JSValueRef
+#define alaqil_Object                     JSValueRef
 #define VOID_Object                     JSValueMakeUndefined(context)
 
 /* append output */
-#define SWIG_AppendOutput(result, obj) SWIGJSC_AppendOutput(context, result, obj)
+#define alaqil_AppendOutput(result, obj) alaqilJSC_AppendOutput(context, result, obj)
 
 /* set constant */
-#define SWIG_SetConstant(name, obj)
+#define alaqil_SetConstant(name, obj)
 
 /* raise */
-#define SWIG_Raise(obj, type, desc)  SWIG_Javascript_Raise(context, exception, type)
+#define alaqil_Raise(obj, type, desc)  alaqil_Javascript_Raise(context, exception, type)
 
 %insert("runtime") %{
-#define SWIG_JSC_FROM_DECL_ARGS(arg1)              (JSContextRef context, arg1)
-#define SWIG_JSC_FROM_CALL_ARGS(arg1)              (context, arg1)
-#define SWIG_JSC_AS_DECL_ARGS(arg1, arg2)          (JSContextRef context, arg1, arg2)
-#define SWIG_JSC_AS_CALL_ARGS(arg1, arg2)          (context, arg1, arg2)
+#define alaqil_JSC_FROM_DECL_ARGS(arg1)              (JSContextRef context, arg1)
+#define alaqil_JSC_FROM_CALL_ARGS(arg1)              (context, arg1)
+#define alaqil_JSC_AS_DECL_ARGS(arg1, arg2)          (JSContextRef context, arg1, arg2)
+#define alaqil_JSC_AS_CALL_ARGS(arg1, arg2)          (context, arg1, arg2)
 %}
 
 /* Include the unified typemap library */
-%include <typemaps/swigtypemaps.swg>
+%include <typemaps/alaqiltypemaps.swg>

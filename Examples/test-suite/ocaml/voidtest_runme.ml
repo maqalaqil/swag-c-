@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Voidtest
 
 let _ = _globalfunc C_void 

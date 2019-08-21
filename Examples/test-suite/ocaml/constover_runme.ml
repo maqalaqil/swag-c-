@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Constover
 
 let test_str = "test" to string

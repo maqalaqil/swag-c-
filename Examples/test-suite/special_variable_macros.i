@@ -3,7 +3,7 @@
 // test $typemap() special variable function
 // these tests are not typical of how $typemap() should be used, but it checks that it is mostly working
 
-%warnfilter(SWIGWARN_GO_NAME_CONFLICT);                       /* Ignoring 'NewName' due to Go name ('NewName') conflict with 'Name' */
+%warnfilter(alaqilWARN_GO_NAME_CONFLICT);                       /* Ignoring 'NewName' due to Go name ('NewName') conflict with 'Name' */
 
 %{
 #if defined(_MSC_VER)
@@ -186,7 +186,7 @@ namespace Space {
 //////////////////////////////////////////////////////////////////////////////////////
 // A real use case for $typemap
 
-#if defined(SWIGCSHARP)
+#if defined(alaqilCSHARP)
 %typemap(cscode) Space::RenameMe %{
   public static NewName factory(System.String s) {
   //below should expand to:
@@ -194,7 +194,7 @@ namespace Space {
     return new $typemap(cstype, Space::RenameMe)( new $typemap(cstype, Name)(s) ); 
   }
 %}
-#elif defined(SWIGJAVA)
+#elif defined(alaqilJAVA)
 %typemap(javacode) Space::RenameMe %{
   public static NewName factory(String s) {
   //below should expand to:
@@ -202,8 +202,8 @@ namespace Space {
     return new $typemap(jstype, Space::RenameMe)( new $typemap(jstype, Name)(s) ); 
   }
 %}
-#elif defined(SWIGD)
-#if (SWIG_D_VERSION == 1)
+#elif defined(alaqilD)
+#if (alaqil_D_VERSION == 1)
 %typemap(dcode) Space::RenameMe %{
   public static NewName factory(char[] s) {
     return new $typemap(dtype, Space::RenameMe)( new $typemap(dtype, Name)(s) );

@@ -35,22 +35,22 @@ include $(srcdir)/../common.mk
 # Overridden variables here
 SRCDIR       = ../$(srcdir)/
 TARGETSUFFIX = _wrap
-SWIGOPT+=-splitproxy -package $*
+alaqilOPT+=-splitproxy -package $*
 
 # Rules for the different types of tests
 %.cpptest:
 	$(setup)
-	+(cd $*$(VERSIONSUFFIX) && $(swig_and_compile_cpp))
+	+(cd $*$(VERSIONSUFFIX) && $(alaqil_and_compile_cpp))
 	+$(run_testcase)
 
 %.ctest:
 	$(setup)
-	+(cd $*$(VERSIONSUFFIX) && $(swig_and_compile_c))
+	+(cd $*$(VERSIONSUFFIX) && $(alaqil_and_compile_c))
 	+$(run_testcase)
 
 %.multicpptest:
 	$(setup)
-	+(cd $*$(VERSIONSUFFIX) && $(swig_and_compile_multi_cpp))
+	+(cd $*$(VERSIONSUFFIX) && $(alaqil_and_compile_multi_cpp))
 	+$(run_testcase)
 
 # Makes a directory for the testcase if it does not exist

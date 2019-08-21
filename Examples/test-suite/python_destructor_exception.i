@@ -5,7 +5,7 @@
 %exception ClassWithThrowingDestructor::~ClassWithThrowingDestructor()
 {
   $action
-  SWIG_exception(SWIG_RuntimeError, "I am the ClassWithThrowingDestructor dtor doing bad things");
+  alaqil_exception(alaqil_RuntimeError, "I am the ClassWithThrowingDestructor dtor doing bad things");
 }
 
 %inline %{

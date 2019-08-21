@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly uses the new alternate functions
+/* This testcase checks whether alaqil correctly uses the new alternate functions
    declarations and definitions introduced in C++11. */
 %module cpp11_alternate_function_syntax
 

@@ -2,9 +2,9 @@
 // This test is to check the intermediary class name can be changed (C# and Java only use intermediary classes at time of writing)
 %module(directors="1", jniclassname="intermediary_classname", imclassname="intermediary_classname") "intermediary_classname"
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR);
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR);
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW2(T1, T2) throw(T1, T2)
 %{
 #define TESTCASE_THROW2(T1, T2)

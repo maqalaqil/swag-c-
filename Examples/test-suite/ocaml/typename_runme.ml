@@ -1,6 +1,6 @@
 (* Fun with type names -- stolen from the ruby runme *)
 
-open Swig
+open alaqil
 open Typename
 
 let f = new_Foo C_void 

@@ -3,16 +3,16 @@ if exist("crash_dumps_octave_core", "builtin")
   crash_dumps_octave_core(0);
 endif
 
-swigexample
+alaqilexample
 
 # Call some templated functions
-swigexample.maxint(3,7)
-swigexample.maxdouble(3.14,2.18)
+alaqilexample.maxint(3,7)
+alaqilexample.maxdouble(3.14,2.18)
 
 # Create some class
 
-iv = swigexample.vecint(100)
-dv = swigexample.vecdouble(1000)
+iv = alaqilexample.vecint(100)
+dv = alaqilexample.vecdouble(1000)
 
 for i=0:99,
   iv.setitem(i,2*i);

@@ -1,9 +1,9 @@
 (* file: runme.ml
 
  This file illustrates the proxy class C++ interface generated
- by SWIG. *)
+ by alaqil. *)
 
-open Swig
+open alaqil
 open Example
 
 let repr o =
@@ -28,7 +28,7 @@ let _ = Printf.printf "\nA total of %d shapes were created\n" (_Shape_nshapes '(
 let _ = c -> "[x]" (20)
 let _ = c -> "[y]" (30)
 
-(* Temp var to work around a swigp4 bug (it doesn't properly handle "-" in some cases). *)
+(* Temp var to work around a alaqilp4 bug (it doesn't properly handle "-" in some cases). *)
 let arg = (-10. to float)
 let _ = s -> "[x]" (arg)
 let _ = s -> "[y]" (5)

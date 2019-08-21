@@ -1,8 +1,8 @@
 %module proxycode
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) Proxy4::Proxy4Nested;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) Proxy4::Proxy4Nested;
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGD)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilD)
 
 %{
 struct Proxy1 {};
@@ -98,7 +98,7 @@ template <typename T> struct TypemapProxy {
 %}
 
 %extend TypemapProxy {
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %proxycode %{
   public $javaclassname proxyUseT(long t1,  long t2) {
     $typemap(jstype, unsigned int) tt1 = t1;
@@ -109,7 +109,7 @@ template <typename T> struct TypemapProxy {
     return this;
   }
 %}
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 %proxycode %{
   public $csclassname proxyUseT(uint t1,  uint t2) {
     $typemap(cstype, unsigned int) tt1 = t1;
@@ -120,7 +120,7 @@ template <typename T> struct TypemapProxy {
     return this;
   }
 %}
-#elif defined(SWIGD)
+#elif defined(alaqilD)
 %proxycode %{
   public $dclassname proxyUseT(uint t1,  uint t2) {
     $typemap(dtype, unsigned int) tt1 = t1;

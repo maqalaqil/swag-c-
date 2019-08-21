@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>SWIG:Examples:perl5:value</title>
+<title>alaqil:Examples:perl5:value</title>
 </head>
 
 <body bgcolor="#ffffff">
 
 
-<tt>SWIG/Examples/perl5/value/</tt>
+<tt>alaqil/Examples/perl5/value/</tt>
 <hr>
 
 <H2>Passing and Returning Structures by Value</H2>
@@ -37,7 +37,7 @@ Vector vector_add(Vector a, Vector b) {
 </pre>
 </blockquote>
 
-Since SWIG only knows how to manage pointers to structures (not their internal
+Since alaqil only knows how to manage pointers to structures (not their internal
 representation), the following translations are made when wrappers are
 created:
 
@@ -60,9 +60,9 @@ It should also be noted that any function that returns a structure by value resu
 in an implicit memory allocation. This will be a memory leak unless you take steps
 to free the result (see below).
 
-<h2>The SWIG interface</h2>
+<h2>The alaqil interface</h2>
 
-Click <a href="example.i">here</a> to see a SWIG interface file that
+Click <a href="example.i">here</a> to see a alaqil interface file that
 wraps these two functions.  In this file, there are a few essential features:
 
 <ul>
@@ -108,7 +108,7 @@ approach would be to write a helper function like this:
 </blockquote>
 
 <p>
-<li>If you use proxy classes and are careful, the SWIG generated wrappers can automatically
+<li>If you use proxy classes and are careful, the alaqil generated wrappers can automatically
 clean up the result of return-by-reference when the scripting variable goes out of scope.
 
 <p>

@@ -5,7 +5,7 @@ public class runme
 {
     static void Main() 
     {
-      SWIGTYPE_p_int pInt = null;
+      alaqilTYPE_p_int pInt = null;
 
       // Check the correct constructors are available
       Pop p = new Pop(pInt);

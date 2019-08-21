@@ -79,25 +79,25 @@ $x = $d->toBase();
 print " Spam -> Base -> Foo : ";
 $y = foo::Foo::fromBase($x);
 if ($y) {
-    print "bad swig\n";
+    print "bad alaqil\n";
 } else {
-    print "good swig\n";
+    print "good alaqil\n";
 }
 
 print " Spam -> Base -> Bar : ";
 $y = bar::Bar::fromBase($x);
 if ($y) {
-    print "good swig\n";
+    print "good alaqil\n";
 } else {
-    print "bad swig\n";
+    print "bad alaqil\n";
 }
       
 print " Spam -> Base -> Spam : ";
 $y = spam::Spam::fromBase($x);
 if ($y) {
-    print "good swig\n";
+    print "good alaqil\n";
 } else {
-    print "bad swig\n";
+    print "bad alaqil\n";
 }
 
 print " Foo -> Spam : ";
@@ -105,9 +105,9 @@ print " Foo -> Spam : ";
 $y = spam::Spam::fromBase($b);
 print $y;
 if ($y) {
-    print "bad swig\n";
+    print "bad alaqil\n";
 } else {
-    print "good swig\n";
+    print "good alaqil\n";
 }
 
 

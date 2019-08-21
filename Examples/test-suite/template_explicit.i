@@ -1,13 +1,13 @@
 /* File : example.i */
 %module "template_explicit"
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) vector<int>;         /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) vector<double>;      /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) vector<int (*)[10]>; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) vector<int>;         /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) vector<double>;      /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) vector<int (*)[10]>; /* Ruby, wrong class name */
 
 // #pragma is used for warnings that are not associated to
 // specific nodes.
-#pragma SWIG nowarn=-SWIGWARN_PARSE_EXPLICIT_TEMPLATE
+#pragma alaqil nowarn=-alaqilWARN_PARSE_EXPLICIT_TEMPLATE
 
 
 /* Let's just grab the original header file here */
@@ -39,7 +39,7 @@ template<class T> class vector {
   void testconst(const T x) { }
 };
 
-/* Explicit instantiation.  SWIG should ignore */
+/* Explicit instantiation.  alaqil should ignore */
 template class vector<int>;
 template class vector<double>;
 template class vector<int *>;

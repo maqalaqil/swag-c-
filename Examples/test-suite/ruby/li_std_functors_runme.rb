@@ -9,12 +9,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'li_std_functors'
 
 
 def _set(container)
-  swig_assert_each_line(<<EOF, binding)
+  alaqil_assert_each_line(<<EOF, binding)
     cont = #{container}.new
     [9,1,8,2,7,3,6,4,5].each { |x| cont.insert(x) }
     i0 = cont.begin()
@@ -41,7 +41,7 @@ def b_lessthan_a(b, a)
 end
 
 def _map(container)
-  swig_assert_each_line(<<EOF, binding)
+  alaqil_assert_each_line(<<EOF, binding)
     cont = #{container}.new
     cont['z'] = 9
     cont['y'] = 1

@@ -1,7 +1,7 @@
 #ifndef ___typedef_import_h__
 #define ___typedef_import_h__
 
-#ifdef SWIG
+#ifdef alaqil
 %module template_typedef_cplx2;
 #endif
 
@@ -110,7 +110,7 @@ namespace vfncs {
       typename arith_traits< RF, RG >::result_type>();
   }
 
-#ifndef SWIG
+#ifndef alaqil
 
 // Initialize these static class members
 
@@ -130,7 +130,7 @@ const char* const arith_traits< double, Complex >::res_type = "complex";
 
 } // end namespace vfncs
 
-#ifdef SWIG
+#ifdef alaqil
 
 namespace vfncs {
   %template(UnaryFunction_double_double) UnaryFunction<double, double >;  

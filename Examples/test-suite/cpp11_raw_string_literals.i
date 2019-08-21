@@ -1,23 +1,23 @@
-/* This module tests whether SWIG correctly parses:
+/* This module tests whether alaqil correctly parses:
    -    ordinary strings (char_t)
    - L  wide strings (wchar_t)
    - u8 unicode8 strings (char_t)
    - u  unicode16 strings (char16_t)
    - U  unicode32 strings (char32_t)
 
-   This module also tests whether SWIG correctly parses custom string delimiters.
+   This module also tests whether alaqil correctly parses custom string delimiters.
 */
 %module cpp11_raw_string_literals
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK_MSG) bb;
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK_MSG) ee;
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK_MSG) gg;
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK_MSG) xx;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) cc;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) dd;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) hh;
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) ii;
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK_MSG) bb;
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK_MSG) ee;
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK_MSG) gg;
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK_MSG) xx;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) cc;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) dd;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) hh;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) ii;
 
-#if defined(SWIGTCL) || defined(SWIGCSHARP) || defined(SWIGOCTAVE) || defined(SWIGRUBY) || defined(SWIGPYTHON) || defined(SWIGJAVA)
+#if defined(alaqilTCL) || defined(alaqilCSHARP) || defined(alaqilOCTAVE) || defined(alaqilRUBY) || defined(alaqilPYTHON) || defined(alaqilJAVA)
 %include <std_wstring.i>
 #endif
 
@@ -63,11 +63,11 @@ const char32_t  *ii =  UR"XXX(I'm a "raw UTF-32" \ string.)XXX";
 %}
 
 // Constants
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javaconst(1);
-#elif SWIGCSHARP
+#elif alaqilCSHARP
 %csconst(1);
-#elif SWIGD
+#elif alaqilD
 %dmanifestconst;
 #endif
 

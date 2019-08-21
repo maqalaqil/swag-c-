@@ -1,6 +1,6 @@
 %module smart_pointer_template_const_overload
 
-%warnfilter(SWIGWARN_LANG_OVERLOAD_IGNORED) SmartPointer<FooImplementation>::operator->;      // Overloaded method SmartPointer< FooImplementation >::operator ->() ignored
+%warnfilter(alaqilWARN_LANG_OVERLOAD_IGNORED) SmartPointer<FooImplementation>::operator->;      // Overloaded method SmartPointer< FooImplementation >::operator ->() ignored
 
 %inline %{
   template <class T> class SmartPointer {

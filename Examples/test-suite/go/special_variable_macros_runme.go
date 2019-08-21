@@ -13,10 +13,10 @@ func main() {
 	if special_variable_macros.TestJill(name) != "jilly" {
 		panic("test failed")
 	}
-	if special_variable_macros.TestMary(name) != "SWIGTYPE_p_NameWrap" {
+	if special_variable_macros.TestMary(name) != "alaqilTYPE_p_NameWrap" {
 		panic("test failed")
 	}
-	if special_variable_macros.TestJames(name) != "SWIGTYPE_Name" {
+	if special_variable_macros.TestJames(name) != "alaqilTYPE_Name" {
 		panic("test failed")
 	}
 	if special_variable_macros.TestJim(name) != "multiname num" {

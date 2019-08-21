@@ -16,7 +16,7 @@ if (compare_versions(version(), "3.3", ">="))
 
   a1.hello();
   a2.hello();
-  assert(swig_this(a1)==swig_this(a2));
-  assert(strcmp(swig_type(a1),swig_type(a2)));
+  assert(alaqil_this(a1)==alaqil_this(a2));
+  assert(strcmp(alaqil_type(a1),alaqil_type(a2)));
 endif
 

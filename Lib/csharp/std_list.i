@@ -1,24 +1,24 @@
 /* -----------------------------------------------------------------------------
  * std_list.i
  *
- * SWIG typemaps for std::list<T>
+ * alaqil typemaps for std::list<T>
  * C# implementation
  * The C# wrapper is made to look and feel like a C# System.Collections.Generic.LinkedList<> collection.
  *
  * Note that IEnumerable<> is implemented in the proxy class which is useful for using LINQ with
  * C++ std::list wrappers. The ICollection<> interface is also implemented to provide enhanced functionality
  * whenever we are confident that the required C++ operator== is available. This is the case for when
- * T is a primitive type or a pointer. If T does define an operator==, then use the SWIG_STD_LIST_ENHANCED
+ * T is a primitive type or a pointer. If T does define an operator==, then use the alaqil_STD_LIST_ENHANCED
  * macro to obtain this enhanced functionality, for example:
  *
- *   SWIG_STD_LIST_ENHANCED(SomeNamespace::Klass)
+ *   alaqil_STD_LIST_ENHANCED(SomeNamespace::Klass)
  *   %template(ListKlass) std::list<SomeNamespace::Klass>;
  * ----------------------------------------------------------------------------- */
 
 %include <std_common.i>
 
 // MACRO for use within the std::list class body
-%define SWIG_STD_LIST_MINIMUM_INTERNAL(CSINTERFACE, CTYPE...)
+%define alaqil_STD_LIST_MINIMUM_INTERNAL(CSINTERFACE, CTYPE...)
 %typemap(csinterfaces) std::list< CTYPE > "global::System.IDisposable, global::System.Collections.IEnumerable, global::System.Collections.Generic.CSINTERFACE<$typemap(cstype, CTYPE)>\n";
 
 %apply void *VOID_INT_PTR { std::list< CTYPE >::iterator * };
@@ -423,7 +423,7 @@ public:
 
 // Extra methods added to the collection class if operator== is defined for the class being wrapped
 // The class will then implement ICollection<>, which adds extra functionality
-%define SWIG_STD_LIST_EXTRA_OP_EQUALS_EQUALS(CTYPE...)
+%define alaqil_STD_LIST_EXTRA_OP_EQUALS_EQUALS(CTYPE...)
   %extend {
     bool Contains(CTYPE const& value) {
       return std::find($self->begin(), $self->end(), value) != $self->end();
@@ -457,11 +457,11 @@ public:
 %enddef
 
 // Macros for std::list class specializations/enhancements
-%define SWIG_STD_LIST_ENHANCED(CTYPE...)
+%define alaqil_STD_LIST_ENHANCED(CTYPE...)
 namespace std {
   template<> class list< CTYPE > {
-    SWIG_STD_LIST_MINIMUM_INTERNAL(ICollection, %arg(CTYPE));
-    SWIG_STD_LIST_EXTRA_OP_EQUALS_EQUALS(CTYPE)
+    alaqil_STD_LIST_MINIMUM_INTERNAL(ICollection, %arg(CTYPE));
+    alaqil_STD_LIST_EXTRA_OP_EQUALS_EQUALS(CTYPE)
   };
 }
 %enddef
@@ -490,30 +490,30 @@ namespace std {
   // does not require operator== to be defined
   template<class T>
   class list {
-    SWIG_STD_LIST_MINIMUM_INTERNAL(IEnumerable, T)
+    alaqil_STD_LIST_MINIMUM_INTERNAL(IEnumerable, T)
   };
   // specialization for pointers
   template<class T>
   class list<T *> {
-    SWIG_STD_LIST_MINIMUM_INTERNAL(ICollection, T *)
-    SWIG_STD_LIST_EXTRA_OP_EQUALS_EQUALS(T *)
+    alaqil_STD_LIST_MINIMUM_INTERNAL(ICollection, T *)
+    alaqil_STD_LIST_EXTRA_OP_EQUALS_EQUALS(T *)
   };
 }
 
 // template specializations for std::list
 // these provide extra collections methods as operator== is defined
-SWIG_STD_LIST_ENHANCED(char)
-SWIG_STD_LIST_ENHANCED(signed char)
-SWIG_STD_LIST_ENHANCED(unsigned char)
-SWIG_STD_LIST_ENHANCED(short)
-SWIG_STD_LIST_ENHANCED(unsigned short)
-SWIG_STD_LIST_ENHANCED(int)
-SWIG_STD_LIST_ENHANCED(unsigned int)
-SWIG_STD_LIST_ENHANCED(long)
-SWIG_STD_LIST_ENHANCED(unsigned long)
-SWIG_STD_LIST_ENHANCED(long long)
-SWIG_STD_LIST_ENHANCED(unsigned long long)
-SWIG_STD_LIST_ENHANCED(float)
-SWIG_STD_LIST_ENHANCED(double)
-SWIG_STD_LIST_ENHANCED(std::string) // also requires a %include <std_string.i>
-SWIG_STD_LIST_ENHANCED(std::wstring) // also requires a %include <std_wstring.i>
+alaqil_STD_LIST_ENHANCED(char)
+alaqil_STD_LIST_ENHANCED(signed char)
+alaqil_STD_LIST_ENHANCED(unsigned char)
+alaqil_STD_LIST_ENHANCED(short)
+alaqil_STD_LIST_ENHANCED(unsigned short)
+alaqil_STD_LIST_ENHANCED(int)
+alaqil_STD_LIST_ENHANCED(unsigned int)
+alaqil_STD_LIST_ENHANCED(long)
+alaqil_STD_LIST_ENHANCED(unsigned long)
+alaqil_STD_LIST_ENHANCED(long long)
+alaqil_STD_LIST_ENHANCED(unsigned long long)
+alaqil_STD_LIST_ENHANCED(float)
+alaqil_STD_LIST_ENHANCED(double)
+alaqil_STD_LIST_ENHANCED(std::string) // also requires a %include <std_string.i>
+alaqil_STD_LIST_ENHANCED(std::wstring) // also requires a %include <std_wstring.i>

@@ -1,7 +1,7 @@
 %module(directors="1") director_frob;
-#pragma SWIG nowarn=SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR
+#pragma alaqil nowarn=alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR
 
-#ifdef SWIGSCILAB
+#ifdef alaqilSCILAB
 %rename(cb) coreCallbacks;
 %rename(On3dEngRedrawn) coreCallbacksOn3dEngineRedrawnData;
 %rename (_On3dEngRedrawn) coreCallbacks_On3dEngineRedrawnData;

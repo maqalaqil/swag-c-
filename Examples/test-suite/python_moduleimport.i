@@ -1,4 +1,4 @@
-#if !defined(SWIGPYTHON_BUILTIN)
+#if !defined(alaqilPYTHON_BUILTIN)
 %define MODULEIMPORT
 "
 # print 'Loading low-level module $module'

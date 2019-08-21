@@ -7,7 +7,7 @@ public class director_smartptr_runme {
     try {
       System.loadLibrary("director_smartptr");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -40,11 +40,11 @@ public class director_smartptr_runme {
     check(director_smartptr.FooDerived.callUpcall(myBarFooDerived, fooBar), "overrideDerived;Bar::Foo2::Foo2Bar()");
 
     director_smartptr.Foo myFoo3 = myBarFoo.makeFoo();
-    myFoo3.swigReleaseOwnership();
-    myFoo3.swigTakeOwnership();
+    myFoo3.alaqilReleaseOwnership();
+    myFoo3.alaqilTakeOwnership();
     director_smartptr.FooDerived myBarFooDerived2 = new director_smartptr_MyBarFooDerived();
-    myBarFooDerived2.swigReleaseOwnership();
-    myBarFooDerived2.swigTakeOwnership();
+    myBarFooDerived2.alaqilReleaseOwnership();
+    myBarFooDerived2.alaqilTakeOwnership();
 
   }
 }

@@ -1,6 +1,6 @@
 %module samename
 
-#if !(defined(SWIGCSHARP) || defined(SWIGJAVA) || defined(SWIGD))
+#if !(defined(alaqilCSHARP) || defined(alaqilJAVA) || defined(alaqilD))
 class samename {
  public:
   void do_something() {

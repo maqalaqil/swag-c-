@@ -1,12 +1,12 @@
 %module typemap_global_scope
 
-// Test global scope operator :: for typemaps. Previously SWIG would not use a typemap that did not specify the global scope
+// Test global scope operator :: for typemaps. Previously alaqil would not use a typemap that did not specify the global scope
 // operator for a type that did have it, and vice-versa.
 
-%typemap(in) SWIGTYPE "_this_will_not_compile_SWIGTYPE_ \"$type\""
-%typemap(in) const SWIGTYPE & "_this_will_not_compile_const_SWIGTYPE_REF_ \"$type\""
-%typemap(in) enum SWIGTYPE "_this_will_not_compile_enum_SWIGTYPE_ \"$type\""
-%typemap(in) const enum SWIGTYPE & "_this_will_not_compile_const_enum_SWIGTYPE_REF_ \"$type\""
+%typemap(in) alaqilTYPE "_this_will_not_compile_alaqilTYPE_ \"$type\""
+%typemap(in) const alaqilTYPE & "_this_will_not_compile_const_alaqilTYPE_REF_ \"$type\""
+%typemap(in) enum alaqilTYPE "_this_will_not_compile_enum_alaqilTYPE_ \"$type\""
+%typemap(in) const enum alaqilTYPE & "_this_will_not_compile_const_enum_alaqilTYPE_REF_ \"$type\""
 
 /////////////////////////////////////////////////////////////////////
 // Structs

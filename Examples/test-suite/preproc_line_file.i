@@ -29,11 +29,11 @@ const int NUMBER_UNIQUE(thing) = -2; /* resolves to thing28 */
 
 #define MYLINE2 __LINE__
 
-#if defined (SWIGJAVA)
+#if defined (alaqilJAVA)
 %javaconst(1);
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 %csconst(1);
-#elif defined(SWIGD)
+#elif defined(alaqilD)
 %dmanifestconst;
 #else
 %ignore LINE_NUMBER;
@@ -62,7 +62,7 @@ SILLY_CLASS
 
 
 %inline %{
-#ifdef SWIG
+#ifdef alaqil
 %define BODY
   int num;
   static const int LINE_NUM = __LINE__;

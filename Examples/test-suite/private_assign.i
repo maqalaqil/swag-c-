@@ -27,7 +27,7 @@
 
 %}
 
-#pragma SWIG nowarn=SWIGWARN_IGNORE_OPERATOR_NEW // operator new
+#pragma alaqil nowarn=alaqilWARN_IGNORE_OPERATOR_NEW // operator new
 
 %inline %{
   class TROOT {
@@ -55,7 +55,7 @@
   
 %}
 
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 
 // This case only works in python
 %inline %{

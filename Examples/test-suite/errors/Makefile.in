@@ -1,10 +1,10 @@
 #######################################################################
 # Makefile for errors test-suite
 #
-# This test-suite is for checking SWIG errors and warnings and uses
+# This test-suite is for checking alaqil errors and warnings and uses
 # Python as the target language.
 #
-# It compares the stderr output from SWIG to the contents of the .stderr
+# It compares the stderr output from alaqil to the contents of the .stderr
 # file for each test case. The test cases are different to those used by
 # the language module test-suites. The .i files in this directory are
 # used instead of those in the parent directory.
@@ -20,8 +20,8 @@ srcdir       = @srcdir@
 top_srcdir   = @top_srcdir@
 top_builddir = @top_builddir@
 
-SWIG_LIB_SET = @SWIG_LIB_SET@
-SWIGINVOKE   = $(SWIG_LIB_SET) $(SWIGTOOL) $(SWIGEXE)
+alaqil_LIB_SET = @alaqil_LIB_SET@
+alaqilINVOKE   = $(alaqil_LIB_SET) $(alaqilTOOL) $(alaqilEXE)
 
 # All .i files with prefix 'cpp_' will be treated as C++ input and remaining .i files as C input
 ALL_ERROR_TEST_CASES := $(sort $(patsubst %.i,%, $(notdir $(wildcard $(srcdir)/*.i))))
@@ -40,10 +40,10 @@ ERROR_TEST_CASES := $(CPP_ERROR_TEST_CASES:=.cpptest) \
 
 include $(srcdir)/../common.mk
 
-# This is tricky: we need to let common.mk define SWIGOPT before appending to
-# it, if we do it before including it, its defining of SWIGOPT would override
+# This is tricky: we need to let common.mk define alaqilOPT before appending to
+# it, if we do it before including it, its defining of alaqilOPT would override
 # whatever we do here.
-$(DOXYGEN_ERROR_TEST_CASES): SWIGOPT += -doxygen
+$(DOXYGEN_ERROR_TEST_CASES): alaqilOPT += -doxygen
 
 # Portable dos2unix / todos for stripping CR
 TODOS        = tr -d '\r'
@@ -55,12 +55,12 @@ STRIP_SRCDIR = sed -e 's|\\|/|g' -e 's|^$(SRCDIR)||'
 # Rules for the different types of tests
 %.cpptest:
 	echo "$(ACTION)ing errors testcase $*"
-	-$(SWIGINVOKE) -c++ -python -Wall -Fstandard $(SWIGOPT) $(SRCDIR)$*.i 2>&1 | $(TODOS) | $(STRIP_SRCDIR) > $*.$(ERROR_EXT)
+	-$(alaqilINVOKE) -c++ -python -Wall -Fstandard $(alaqilOPT) $(SRCDIR)$*.i 2>&1 | $(TODOS) | $(STRIP_SRCDIR) > $*.$(ERROR_EXT)
 	$(COMPILETOOL) diff -c $(SRCDIR)$*.stderr $*.$(ERROR_EXT)
 
 %.ctest:
 	echo "$(ACTION)ing errors testcase $*"
-	-$(SWIGINVOKE) -python -Wall -Fstandard $(SWIGOPT) $(SRCDIR)$*.i 2>&1 | $(TODOS) | $(STRIP_SRCDIR) > $*.$(ERROR_EXT)
+	-$(alaqilINVOKE) -python -Wall -Fstandard $(alaqilOPT) $(SRCDIR)$*.i 2>&1 | $(TODOS) | $(STRIP_SRCDIR) > $*.$(ERROR_EXT)
 	$(COMPILETOOL) diff -c $(SRCDIR)$*.stderr $*.$(ERROR_EXT)
 
 %.clean:

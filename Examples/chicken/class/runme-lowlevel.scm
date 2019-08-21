@@ -1,5 +1,5 @@
 ;; This file illustrates the low-level C++ interface generated
-;; by SWIG.
+;; by alaqil.
 
 (load-library 'example "class.so")
 (declare (uses example))

@@ -1,31 +1,31 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     x = add(3, 4);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if x <> 7 then swigtesterror(); end
+if x <> 7 then alaqiltesterror(); end
 
 try
     y = subtract(3,4);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if y <> -1 then swigtesterror(); end
+if y <> -1 then alaqiltesterror(); end
 
 try
     z = mul(3,4);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if z <> 12 then swigtesterror(); end
+if z <> 12 then alaqiltesterror(); end
 
 try
     w = divide(3,4);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if w <> 0 then swigtesterror(); end
+if w <> 0 then alaqiltesterror(); end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

@@ -7,7 +7,7 @@
 
 /**
  * These overloaded declarations conflict with other overloads (as far as
- * SWIG's Ruby module's implementation for overloaded methods is concerned).
+ * alaqil's Ruby module's implementation for overloaded methods is concerned).
  * One option is use the %rename directive to rename the conflicting methods;
  * here, we're just using %ignore to avoid wrapping some of the overloaded
  * functions altogether.

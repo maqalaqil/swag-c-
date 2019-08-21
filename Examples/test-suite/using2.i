@@ -1,10 +1,10 @@
 %module using2
 
-%warnfilter(SWIGWARN_PARSE_USING_UNDEF);
+%warnfilter(alaqilWARN_PARSE_USING_UNDEF);
 
 using ::baz;
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) X::_FooImpl;	/* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) X::_FooImpl;	/* Ruby, wrong class name */
 
 %inline %{
 

@@ -1,4 +1,4 @@
-use Inline SWIG => <<"END_CODE", SWIG_ARGS => '-c++ -proxy', CC => 'g++', LD=>'g++';
+use Inline alaqil => <<"END_CODE", alaqil_ARGS => '-c++ -proxy', CC => 'g++', LD=>'g++';
   class Foo {
   public:
     int meaning() { return 42; };
@@ -8,7 +8,7 @@ END_CODE
 my $o = new Foo();
 print $o->meaning(),"\n";
 
-use Inline SWIG => ' ', SWIG_INTERFACE => <<"END_CODE", SWIG_ARGS => '-c++', CC => "g++", LD => "g++";
+use Inline alaqil => ' ', alaqil_INTERFACE => <<"END_CODE", alaqil_ARGS => '-c++', CC => "g++", LD => "g++";
 %include std_string.i
 %inline {
   template <class Type>

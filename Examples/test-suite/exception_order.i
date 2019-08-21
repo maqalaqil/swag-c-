@@ -1,8 +1,8 @@
 %module exception_order
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME);
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME);
 
-#if defined(SWIGGO) && defined(SWIGGO_GCCGO)
+#if defined(alaqilGO) && defined(alaqilGO_GCCGO)
 %{
 #ifdef __GNUC__
 #include <cxxabi.h>
@@ -12,7 +12,7 @@
 
 %include "exception.i"
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)
@@ -23,25 +23,25 @@
    user's throw declarations.
 */
 
-#if defined(SWIGOCTAVE)
+#if defined(alaqilOCTAVE)
 %exception {
   try {
     $action
   }
-  SWIG_RETHROW_OCTAVE_EXCEPTIONS
+  alaqil_RETHROW_OCTAVE_EXCEPTIONS
   catch(...) {
-    SWIG_exception(SWIG_RuntimeError,"postcatch unknown");
+    alaqil_exception(alaqil_RuntimeError,"postcatch unknown");
   }
 }
-#elif defined(SWIGUTL)
+#elif defined(alaqilUTL)
 %exception {
   try {
     $action
   } catch(...) {
-    SWIG_exception_fail(SWIG_RuntimeError,"postcatch unknown");
+    alaqil_exception_fail(alaqil_RuntimeError,"postcatch unknown");
   }
 }
-#elif defined(SWIGGO) && defined(SWIGGO_GCCGO)
+#elif defined(alaqilGO) && defined(alaqilGO_GCCGO)
 %exception %{
   try {
     $action
@@ -50,7 +50,7 @@
     throw;
 #endif
   } catch(...) {
-    SWIG_exception(SWIG_RuntimeError,"postcatch unknown");
+    alaqil_exception(alaqil_RuntimeError,"postcatch unknown");
   }
 %}
 #else
@@ -58,7 +58,7 @@
   try {
     $action
   } catch(...) {
-    SWIG_exception(SWIG_RuntimeError,"postcatch unknown");
+    alaqil_exception(alaqil_RuntimeError,"postcatch unknown");
   }
 }
 #endif
@@ -136,7 +136,7 @@
   };
   int A::sfoovar = 1;
 
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

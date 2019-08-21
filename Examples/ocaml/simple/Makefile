@@ -1,6 +1,6 @@
 TOP        = ../..
-SWIGEXE    = $(TOP)/../swig
-SWIG_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
+alaqilEXE    = $(TOP)/../alaqil
+alaqil_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
 SRCS       = example.c
 TARGET     = example
 INTERFACE  = example.i
@@ -14,25 +14,25 @@ build: static
 
 dynamic:
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' SRCS='$(SRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
 	TARGET='$(TARGET)' INTERFACE='$(INTERFACE)' \
 	PROGFILE='$(PROGFILE)' OBJS='$(OBJS)' \
 	ocaml_dynamic
 
 static:
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' SRCS='$(SRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
 	PROGFILE='$(PROGFILE)' TARGET='$(TARGET)' INTERFACE='$(INTERFACE)' \
 	ocaml_core
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' SRCS='$(SRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
 	TARGET='$(TARGET)' INTERFACE='$(INTERFACE)' \
 	PROGFILE='$(PROGFILE)' OBJS='$(OBJS)' \
 	ocaml_static
 
 toplevel:
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' SRCS='$(SRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
 	TARGET='$(TARGET)' INTERFACE='$(INTERFACE)' \
 	PROGFILE='$(PROGFILE)' OBJS='$(OBJS)' \
 	ocaml_static_toplevel

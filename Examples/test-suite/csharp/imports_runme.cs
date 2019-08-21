@@ -5,7 +5,7 @@ public class runme
 {
     static void Main() {
         B b = new B();
-        b.hello(); //call member function in A which is in a different SWIG generated library.
+        b.hello(); //call member function in A which is in a different alaqil generated library.
         b.bye();
 
         if (b.member_virtual_test(A.MemberEnum.memberenum1) != A.MemberEnum.memberenum2)

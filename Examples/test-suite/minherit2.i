@@ -5,16 +5,16 @@
 // Java/C#/D interfaces.
 // In the future, all this trouble might be more automated.
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_RUBY_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) RemoteMpe;
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_RUBY_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) RemoteMpe;
 
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGD)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilD)
 
-#if defined(SWIGCSHARP)
+#if defined(alaqilCSHARP)
 #define javaclassmodifiers   csclassmodifiers
 #define javabody             csbody
 #define javafinalize         csfinalize
@@ -24,7 +24,7 @@
 #define javabase             csbase
 #endif
 
-#if defined(SWIGD)
+#if defined(alaqilD)
 #define javaclassmodifiers   dclassmodifiers
 #define javabody             dbody
 #define javafinalize         ddestructor
@@ -56,19 +56,19 @@ $importtype(IRemoteAsyncIO)
 // Turn the methods into abstract methods
 %typemap(javaout) void IRemoteSyncIO::syncmethod ";"
 %typemap(javaout) void IRemoteAsyncIO::asyncmethod ";"
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javamethodmodifiers IRemoteSyncIO::syncmethod "abstract public";
 %javamethodmodifiers IRemoteAsyncIO::asyncmethod "abstract public";
 // Features are inherited by derived classes, so override this
 %javamethodmodifiers RemoteMpe::syncmethod "public"
 %javamethodmodifiers RemoteMpe::asyncmethod "public"
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 %csmethodmodifiers IRemoteSyncIO::syncmethod "";
 %csmethodmodifiers IRemoteAsyncIO::asyncmethod "";
 // Features are inherited by derived classes, so override this
 %csmethodmodifiers RemoteMpe::syncmethod "public"
 %csmethodmodifiers RemoteMpe::asyncmethod "public"
-#elif defined(SWIGD)
+#elif defined(alaqilD)
 %dmethodmodifiers IRemoteSyncIO::syncmethod "";
 %dmethodmodifiers IRemoteAsyncIO::asyncmethod "";
 // Features are inherited by derived classes, so override this

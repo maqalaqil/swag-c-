@@ -11,7 +11,7 @@
 %template(VectorPairIntString) std::vector< std::pair<int, std::string> >;
 %template(VectorVectorString) std::vector< std::vector<std::string> >;
 
-#if !defined(SWIGSCILAB)
+#if !defined(alaqilSCILAB)
 %template(PairIntVectorString) std::pair< int, std::vector<std::string> >;
 %template(PairIntPairIntString) std::pair< int, std::pair<int, std::string> >;
 #else
@@ -20,9 +20,9 @@
 #endif
 
 
-#if defined(SWIGCSHARP) || defined(SWIGD)
+#if defined(alaqilCSHARP) || defined(alaqilD)
 // Checks macro containing a type with a comma
-SWIG_STD_VECTOR_ENHANCED(std::pair< double, std::string >)
+alaqil_STD_VECTOR_ENHANCED(std::pair< double, std::string >)
 #endif
 
 %template(PairDoubleString) std::pair< double, std::string >;

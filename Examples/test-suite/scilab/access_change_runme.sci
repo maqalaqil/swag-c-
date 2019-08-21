@@ -1,39 +1,39 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     baseInt = new_BaseInt();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     delete_BaseInt(baseInt);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     derivedInt = new_DerivedInt();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     delete_DerivedInt(derivedInt);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     bottomInt = new_BottomInt();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     delete_BottomInt(bottomInt);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

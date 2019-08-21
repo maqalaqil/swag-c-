@@ -1,7 +1,7 @@
 %module extend
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %extend Base {
@@ -27,7 +27,7 @@ struct Base {
   virtual int method(int v) {
     return v;
   }
-#if !defined(SWIG)
+#if !defined(alaqil)
   virtual ~Base() {}
 #endif
 };

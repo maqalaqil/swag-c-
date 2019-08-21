@@ -4,13 +4,13 @@ This testcase primarily test constant pointers, eg int* const.  Only a getter is
 
 %module constant_pointers
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(MbrVar) MemberVariablesTest;
 %rename(RetVal) ReturnValuesTest;
 #endif
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG);               /* Setting a pointer/reference variable may leak memory. */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG);               /* Setting a pointer/reference variable may leak memory. */
  
 
 %inline %{
@@ -132,7 +132,7 @@ int* const globalRet2() {return &GlobalInt;}
 static int wxEVT_COMMAND_BUTTON_CLICKEDv;
 static int *wxEVT_COMMAND_BUTTON_CLICKEDp;
 static int **wxEVT_COMMAND_BUTTON_CLICKEDpp = &wxEVT_COMMAND_BUTTON_CLICKEDp;
-#if defined(SWIGR)
+#if defined(alaqilR)
 #undef lang1 /* conflicts with symbol in R internals */
 #endif
 

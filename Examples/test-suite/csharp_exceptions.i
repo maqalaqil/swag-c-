@@ -1,6 +1,6 @@
 %module csharp_exceptions
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)
@@ -21,7 +21,7 @@
   try {
     $action
   } catch(Ex e) {
-    SWIG_exception(SWIG_DivisionByZero, e.what());
+    alaqil_exception(alaqil_DivisionByZero, e.what());
   }
 }
 
@@ -29,7 +29,7 @@
   try {
     $action
   } catch(Ex &e) {
-    SWIG_exception(SWIG_DivisionByZero, e.what());
+    alaqil_exception(alaqil_DivisionByZero, e.what());
   }
 }
 
@@ -84,7 +84,7 @@ void NullStdStringReference(std::string &s) {}
   try {
     $action
   } catch(Ex e) {
-    SWIG_exception(SWIG_DivisionByZero, e.what());
+    alaqil_exception(alaqil_DivisionByZero, e.what());
   }
 }
 
@@ -113,7 +113,7 @@ struct constructor {
 %typemap(out, canthrow=1) unsigned short ushorttest %{
   $result = $1;
   if ($result == 100) {
-    SWIG_CSharpSetPendingException(SWIG_CSharpIndexOutOfRangeException, "don't like 100");
+    alaqil_CSharpSetPendingException(alaqil_CSharpIndexOutOfRangeException, "don't like 100");
     return $null;
   }
 %}
@@ -124,14 +124,14 @@ unsigned short ushorttest() { return 100; }
 // test exception pending in the csvarout/csvarin typemaps and canthrow attribute in unmanaged code typemaps
 %typemap(check, canthrow=1) int numberin, int InOutStruct::staticnumberin %{
   if ($1 < 0) {
-    SWIG_CSharpSetPendingException(SWIG_CSharpIndexOutOfRangeException, "too small");
+    alaqil_CSharpSetPendingException(alaqil_CSharpIndexOutOfRangeException, "too small");
     return $null;
   }
 %}
 %typemap(out, canthrow=1) int numberout, int InOutStruct::staticnumberout %{
   $result = $1;
   if ($result > 10) {
-    SWIG_CSharpSetPendingException(SWIG_CSharpIndexOutOfRangeException, "too big");
+    alaqil_CSharpSetPendingException(alaqil_CSharpIndexOutOfRangeException, "too big");
     return $null;
   }
 %}
@@ -148,10 +148,10 @@ unsigned short ushorttest() { return 100; }
   int InOutStruct::staticnumberout;
 %}
 
-// test SWIG_exception macro - it must return from unmanaged code without executing any further unmanaged code
+// test alaqil_exception macro - it must return from unmanaged code without executing any further unmanaged code
 %typemap(check, canthrow=1) int macrotest {
   if ($1 < 0) {
-    SWIG_exception(SWIG_IndexError, "testing SWIG_exception macro");
+    alaqil_exception(alaqil_IndexError, "testing alaqil_exception macro");
   }
 }
 %inline %{
@@ -164,20 +164,20 @@ unsigned short ushorttest() { return 100; }
 // test all the types of exceptions
 %typemap(check, canthrow=1) UnmanagedExceptions {
   switch($1) {
-    case UnmanagedApplicationException:          SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException,        "msg"); return $null; break;
-    case UnmanagedArithmeticException:           SWIG_CSharpSetPendingException(SWIG_CSharpArithmeticException,         "msg"); return $null; break;
-    case UnmanagedDivideByZeroException:         SWIG_CSharpSetPendingException(SWIG_CSharpDivideByZeroException,       "msg"); return $null; break;
-    case UnmanagedIndexOutOfRangeException:      SWIG_CSharpSetPendingException(SWIG_CSharpIndexOutOfRangeException,    "msg"); return $null; break;
-    case UnmanagedInvalidCastException:          SWIG_CSharpSetPendingException(SWIG_CSharpInvalidCastException,        "msg"); return $null; break;
-    case UnmanagedInvalidOperationException:     SWIG_CSharpSetPendingException(SWIG_CSharpInvalidOperationException,   "msg"); return $null; break;
-    case UnmanagedIOException:                   SWIG_CSharpSetPendingException(SWIG_CSharpIOException,                 "msg"); return $null; break;
-    case UnmanagedNullReferenceException:        SWIG_CSharpSetPendingException(SWIG_CSharpNullReferenceException,      "msg"); return $null; break;
-    case UnmanagedOutOfMemoryException:          SWIG_CSharpSetPendingException(SWIG_CSharpOutOfMemoryException,        "msg"); return $null; break;
-    case UnmanagedOverflowException:             SWIG_CSharpSetPendingException(SWIG_CSharpOverflowException,           "msg"); return $null; break;
-    case UnmanagedSystemException:               SWIG_CSharpSetPendingException(SWIG_CSharpSystemException,             "msg"); return $null; break;
-    case UnmanagedArgumentException:             SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentException,           "msg", "parm"); return $null; break;
-    case UnmanagedArgumentNullException:         SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException,       "msg", "parm"); return $null; break;
-    case UnmanagedArgumentOutOfRangeException:   SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, "msg", "parm"); return $null; break;
+    case UnmanagedApplicationException:          alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException,        "msg"); return $null; break;
+    case UnmanagedArithmeticException:           alaqil_CSharpSetPendingException(alaqil_CSharpArithmeticException,         "msg"); return $null; break;
+    case UnmanagedDivideByZeroException:         alaqil_CSharpSetPendingException(alaqil_CSharpDivideByZeroException,       "msg"); return $null; break;
+    case UnmanagedIndexOutOfRangeException:      alaqil_CSharpSetPendingException(alaqil_CSharpIndexOutOfRangeException,    "msg"); return $null; break;
+    case UnmanagedInvalidCastException:          alaqil_CSharpSetPendingException(alaqil_CSharpInvalidCastException,        "msg"); return $null; break;
+    case UnmanagedInvalidOperationException:     alaqil_CSharpSetPendingException(alaqil_CSharpInvalidOperationException,   "msg"); return $null; break;
+    case UnmanagedIOException:                   alaqil_CSharpSetPendingException(alaqil_CSharpIOException,                 "msg"); return $null; break;
+    case UnmanagedNullReferenceException:        alaqil_CSharpSetPendingException(alaqil_CSharpNullReferenceException,      "msg"); return $null; break;
+    case UnmanagedOutOfMemoryException:          alaqil_CSharpSetPendingException(alaqil_CSharpOutOfMemoryException,        "msg"); return $null; break;
+    case UnmanagedOverflowException:             alaqil_CSharpSetPendingException(alaqil_CSharpOverflowException,           "msg"); return $null; break;
+    case UnmanagedSystemException:               alaqil_CSharpSetPendingException(alaqil_CSharpSystemException,             "msg"); return $null; break;
+    case UnmanagedArgumentException:             alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentException,           "msg", "parm"); return $null; break;
+    case UnmanagedArgumentNullException:         alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentNullException,       "msg", "parm"); return $null; break;
+    case UnmanagedArgumentOutOfRangeException:   alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentOutOfRangeException, "msg", "parm"); return $null; break;
   }
 }
 %inline %{
@@ -209,7 +209,7 @@ void check_exception(UnmanagedExceptions e) {
   } catch (long long d) {
     char message[64];
     sprintf(message, "caught:%lld", d);
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, message, "input");
+    alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentOutOfRangeException, message, "input");
   }
 }
 %inline %{
@@ -228,8 +228,8 @@ struct ThrowsClass {
   try {
     $action
   } catch(Ex &e) {
-    SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, e.what());
-    SWIG_CSharpSetPendingException(SWIG_CSharpInvalidOperationException, "My OuterException message");
+    alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, e.what());
+    alaqil_CSharpSetPendingException(alaqil_CSharpInvalidOperationException, "My OuterException message");
   }
 }
 

@@ -1,18 +1,18 @@
 // This is a copy of the multiple_inheritance_abstract test
 %module  multiple_inheritance_abstract
 
-%warnfilter(SWIGWARN_RUBY_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE); /* languages not supporting multiple inheritance or %interface */
+%warnfilter(alaqilWARN_RUBY_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE); /* languages not supporting multiple inheritance or %interface */
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
-%include "swiginterface.i"
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
+%include "alaqilinterface.i"
 %interface_impl(Space::ABase1)
 %interface_impl(Space::CBase1)
 %interface_impl(Space::CBase2)
 #endif
 
-#if defined(SWIGD)
+#if defined(alaqilD)
 // Missing multiple inheritance support results in incorrect use of override
 %ignore CBase1;
 %ignore CBase2;

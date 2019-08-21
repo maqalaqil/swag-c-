@@ -90,7 +90,7 @@
   
 
 // Functions with keywords
-%warnfilter(SWIGWARN_PARSE_KEYWORD);
+%warnfilter(alaqilWARN_PARSE_KEYWORD);
 %inline %{
   /* silently rename the parameter names in python */
 

@@ -1,7 +1,7 @@
 -- file: runme.lua
 
 -- This file illustrates class C++ interface generated
--- by SWIG.
+-- by alaqil.
 
 ---- importing ----
 if string.sub(_VERSION,1,7)=='Lua 5.0' then

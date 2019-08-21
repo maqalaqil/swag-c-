@@ -2,8 +2,8 @@
 
 %module template_methods
 
-%warnfilter(SWIGWARN_LANG_TEMPLATE_METHOD_IGNORE) convolve1<float>();
-%warnfilter(SWIGWARN_LANG_TEMPLATE_METHOD_IGNORE) convolve3<float>();
+%warnfilter(alaqilWARN_LANG_TEMPLATE_METHOD_IGNORE) convolve1<float>();
+%warnfilter(alaqilWARN_LANG_TEMPLATE_METHOD_IGNORE) convolve3<float>();
 
 %include <std_string.i>
 

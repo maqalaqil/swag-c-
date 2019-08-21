@@ -37,7 +37,7 @@ To use these, suppose you had a C function like this :
                return *a+*b;
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
         
         %include <typemaps.i>
         double fadd(double *INPUT, double *INPUT);
@@ -80,7 +80,7 @@ returns the integer part in one of its parameters).K:
 
         double modf(double x, double *ip);
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double modf(double x, double *OUTPUT);
@@ -106,7 +106,7 @@ or you can use the %apply directive :
 
 %typemap(in) type_ *INPUT($*1_ltype temp), type_ &INPUT($*1_ltype temp)
 %{  if (!checker ($input)) {
-    swig_barf (SWIG_BARF1_BAD_ARGUMENT_TYPE, "Argument #$argnum is not of type 'type_'");
+    alaqil_barf (alaqil_BARF1_BAD_ARGUMENT_TYPE, "Argument #$argnum is not of type 'type_'");
   }
   temp = ($*1_ltype) from_scheme ($input);
   $1 = &temp; %}
@@ -122,9 +122,9 @@ or you can use the %apply directive :
 %typemap(argout) type_ *OUTPUT, type_ &OUTPUT 
 %{ 
   if ($1 == NULL) {
-    swig_barf (SWIG_BARF1_ARGUMENT_NULL, "Argument #$argnum must be non-null");
+    alaqil_barf (alaqil_BARF1_ARGUMENT_NULL, "Argument #$argnum must be non-null");
   }
-  SWIG_APPEND_VALUE(to_scheme (convtype (*$1)));
+  alaqil_APPEND_VALUE(to_scheme (convtype (*$1)));
 %}
 
 #else
@@ -134,9 +134,9 @@ or you can use the %apply directive :
   {
     C_word *known_space = C_alloc(storage_);
     if ($1 == NULL) {
-      swig_barf (SWIG_BARF1_ARGUMENT_NULL, "Variable '$1' must be non-null");
+      alaqil_barf (alaqil_BARF1_ARGUMENT_NULL, "Variable '$1' must be non-null");
     }
-    SWIG_APPEND_VALUE(to_scheme (&known_space, convtype (*$1)));
+    alaqil_APPEND_VALUE(to_scheme (&known_space, convtype (*$1)));
   }
 %}
 
@@ -144,21 +144,21 @@ or you can use the %apply directive :
 
 %enddef
 
-INOUT_TYPEMAP(int, C_num_to_int, C_fix, C_swig_is_number, (int), 0);
-INOUT_TYPEMAP(enum SWIGTYPE, C_num_to_int, C_fix, C_swig_is_number, (int), 0);
-INOUT_TYPEMAP(short, C_num_to_int, C_fix, C_swig_is_number, (int), 0);
-INOUT_TYPEMAP(long, C_num_to_long, C_long_to_num, C_swig_is_long, (long), C_SIZEOF_FLONUM);
-INOUT_TYPEMAP(long long, C_num_to_long, C_long_to_num, C_swig_is_long, (long), C_SIZEOF_FLONUM);
-INOUT_TYPEMAP(unsigned int, C_num_to_unsigned_int, C_unsigned_int_to_num, C_swig_is_number, (int), C_SIZEOF_FLONUM);
-INOUT_TYPEMAP(unsigned short, C_num_to_unsigned_int, C_fix, C_swig_is_number, (unsigned int), 0);
-INOUT_TYPEMAP(unsigned long, C_num_to_unsigned_long, C_unsigned_long_to_num, C_swig_is_long, (unsigned long), C_SIZEOF_FLONUM);
-INOUT_TYPEMAP(unsigned long long, C_num_to_unsigned_long, C_unsigned_long_to_num, C_swig_is_long, (unsigned long), C_SIZEOF_FLONUM);
-INOUT_TYPEMAP(unsigned char, C_character_code, C_make_character, C_swig_is_char, (unsigned int), 0);
-INOUT_TYPEMAP(signed char, C_character_code, C_make_character, C_swig_is_char, (int), 0);
-INOUT_TYPEMAP(char, C_character_code, C_make_character, C_swig_is_char, (char), 0);
-INOUT_TYPEMAP(bool, C_truep, C_mk_bool, C_swig_is_bool, (bool), 0);
-INOUT_TYPEMAP(float, C_c_double, C_flonum, C_swig_is_number, (double), C_SIZEOF_FLONUM);
-INOUT_TYPEMAP(double, C_c_double, C_flonum, C_swig_is_number, (double), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(int, C_num_to_int, C_fix, C_alaqil_is_number, (int), 0);
+INOUT_TYPEMAP(enum alaqilTYPE, C_num_to_int, C_fix, C_alaqil_is_number, (int), 0);
+INOUT_TYPEMAP(short, C_num_to_int, C_fix, C_alaqil_is_number, (int), 0);
+INOUT_TYPEMAP(long, C_num_to_long, C_long_to_num, C_alaqil_is_long, (long), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(long long, C_num_to_long, C_long_to_num, C_alaqil_is_long, (long), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(unsigned int, C_num_to_unsigned_int, C_unsigned_int_to_num, C_alaqil_is_number, (int), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(unsigned short, C_num_to_unsigned_int, C_fix, C_alaqil_is_number, (unsigned int), 0);
+INOUT_TYPEMAP(unsigned long, C_num_to_unsigned_long, C_unsigned_long_to_num, C_alaqil_is_long, (unsigned long), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(unsigned long long, C_num_to_unsigned_long, C_unsigned_long_to_num, C_alaqil_is_long, (unsigned long), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(unsigned char, C_character_code, C_make_character, C_alaqil_is_char, (unsigned int), 0);
+INOUT_TYPEMAP(signed char, C_character_code, C_make_character, C_alaqil_is_char, (int), 0);
+INOUT_TYPEMAP(char, C_character_code, C_make_character, C_alaqil_is_char, (char), 0);
+INOUT_TYPEMAP(bool, C_truep, C_mk_bool, C_alaqil_is_bool, (bool), 0);
+INOUT_TYPEMAP(float, C_c_double, C_flonum, C_alaqil_is_number, (double), C_SIZEOF_FLONUM);
+INOUT_TYPEMAP(double, C_c_double, C_flonum, C_alaqil_is_number, (double), C_SIZEOF_FLONUM);
 
 // INOUT
 // Mappings for an argument that is both an input and output
@@ -190,7 +190,7 @@ For example, suppose you were trying to wrap the following function :
              *x = -(*x);
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         void neg(double *INOUT);
@@ -214,14 +214,14 @@ to a CHICKEN variable you might do this :
 
        x = neg(x)
 
-Note : previous versions of SWIG used the symbol 'BOTH' to mark
+Note : previous versions of alaqil used the symbol 'BOTH' to mark
 input/output arguments.   This is still supported, but will be slowly
 phased out in future releases.
 
 */
 
 %typemap(in) int *INOUT = int *INPUT;
-%typemap(in) enum SWIGTYPE *INOUT = enum SWIGTYPE *INPUT;
+%typemap(in) enum alaqilTYPE *INOUT = enum alaqilTYPE *INPUT;
 %typemap(in) short *INOUT = short *INPUT;
 %typemap(in) long *INOUT = long *INPUT;
 %typemap(in) long long *INOUT = long long *INPUT;
@@ -236,7 +236,7 @@ phased out in future releases.
 %typemap(in) double *INOUT = double *INPUT;
 
 %typemap(in) int &INOUT = int &INPUT;
-%typemap(in) enum SWIGTYPE &INOUT = enum SWIGTYPE &INPUT;
+%typemap(in) enum alaqilTYPE &INOUT = enum alaqilTYPE &INPUT;
 %typemap(in) short &INOUT = short &INPUT;
 %typemap(in) long &INOUT = long &INPUT;
 %typemap(in) long long &INOUT = long long &INPUT;
@@ -251,7 +251,7 @@ phased out in future releases.
 %typemap(in) double &INOUT = double &INPUT;
 
 %typemap(argout) int *INOUT = int *OUTPUT;
-%typemap(argout) enum SWIGTYPE *INOUT = enum SWIGTYPE *OUTPUT;
+%typemap(argout) enum alaqilTYPE *INOUT = enum alaqilTYPE *OUTPUT;
 %typemap(argout) short *INOUT = short *OUTPUT;
 %typemap(argout) long *INOUT = long *OUTPUT;
 %typemap(argout) long long *INOUT = long long *OUTPUT;
@@ -265,7 +265,7 @@ phased out in future releases.
 %typemap(argout) double *INOUT = double *OUTPUT;
 
 %typemap(argout) int &INOUT = int &OUTPUT;
-%typemap(argout) enum SWIGTYPE &INOUT = enum SWIGTYPE &OUTPUT;
+%typemap(argout) enum alaqilTYPE &INOUT = enum alaqilTYPE &OUTPUT;
 %typemap(argout) short &INOUT = short &OUTPUT;
 %typemap(argout) long &INOUT = long &OUTPUT;
 %typemap(argout) long long &INOUT = long long &OUTPUT;
@@ -294,7 +294,7 @@ phased out in future releases.
 %typemap(typecheck) long long *INOUT = long long;
 %typemap(typecheck) short *INOUT = short;
 %typemap(typecheck) int *INOUT = int;
-%typemap(typecheck) enum SWIGTYPE *INOUT = enum SWIGTYPE;
+%typemap(typecheck) enum alaqilTYPE *INOUT = enum alaqilTYPE;
 %typemap(typecheck) float *INOUT = float;
 
 %typemap(typecheck) double &INOUT = double;
@@ -310,5 +310,5 @@ phased out in future releases.
 %typemap(typecheck) long long &INOUT = long long;
 %typemap(typecheck) short &INOUT = short;
 %typemap(typecheck) int &INOUT = int;
-%typemap(typecheck) enum SWIGTYPE &INOUT = enum SWIGTYPE;
+%typemap(typecheck) enum alaqilTYPE &INOUT = enum alaqilTYPE;
 %typemap(typecheck) float &INOUT = float;

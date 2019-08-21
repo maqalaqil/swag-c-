@@ -16,7 +16,7 @@ class java_director_exception_feature_nspace_Consts {
     public static final String GENERICPONGEXCP4 = "GenericPong New Exception Without String ctor";
 }
 
-// an exception not mentioned or wrapped by the swig interface,
+// an exception not mentioned or wrapped by the alaqil interface,
 // to reconstruct using generic DirectorException handling
 class java_director_exception_feature_nspace_NewCheckedException extends Exception {
     public java_director_exception_feature_nspace_NewCheckedException(String s) {
@@ -24,7 +24,7 @@ class java_director_exception_feature_nspace_NewCheckedException extends Excepti
     }
 }
 
-// an exception not mentioned or wrapped by the swig interface,
+// an exception not mentioned or wrapped by the alaqil interface,
 // to reconstruct using generic DirectorException handling
 class java_director_exception_feature_nspace_NewUncheckedException extends RuntimeException {
     public java_director_exception_feature_nspace_NewUncheckedException(String s) {
@@ -81,7 +81,7 @@ public class java_director_exception_feature_nspace_runme {
     try {
       System.loadLibrary("java_director_exception_feature_nspace");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }

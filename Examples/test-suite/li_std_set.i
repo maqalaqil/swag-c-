@@ -1,12 +1,12 @@
 /*
  * a test of set containers.
- * Languages should define swig::LANGUAGE_OBJ to be
+ * Languages should define alaqil::LANGUAGE_OBJ to be
  * an entity of their native pointer type which can be
  * included in a STL container.
  *
  * For example:
- *   swig::LANGUAGE_OBJ  is  GC_VALUE in Ruby
- *   swig::LANGUAGE_OBJ  is  SwigPtr_PyObject in python
+ *   alaqil::LANGUAGE_OBJ  is  GC_VALUE in Ruby
+ *   alaqil::LANGUAGE_OBJ  is  alaqilPtr_PyObject in python
  */
 
 %module li_std_set
@@ -17,19 +17,19 @@
 
 // Use language macros since Java and C# don't have multiset support (yet)
 // and uses different naming conventions.
-#if defined(SWIGRUBY) || defined(SWIGPYTHON)
+#if defined(alaqilRUBY) || defined(alaqilPYTHON)
     %include <std_multiset.i>
     %template(set_int) std::multiset<int>;
     %template(v_int) std::vector<int>;
     %template(set_string) std::set<std::string>;
-#elif defined(SWIGJAVA) || defined(SWIGCSHARP)
+#elif defined(alaqilJAVA) || defined(alaqilCSHARP)
     %template(StringSet) std::set<std::string>;
 #endif
 
-#if defined(SWIGRUBY)
-%template(LanguageSet) std::set<swig::LANGUAGE_OBJ>;
+#if defined(alaqilRUBY)
+%template(LanguageSet) std::set<alaqil::LANGUAGE_OBJ>;
 #endif
 
-#if defined(SWIGPYTHON)
-%template(pyset) std::set<swig::SwigPtr_PyObject>;
+#if defined(alaqilPYTHON)
+%template(pyset) std::set<alaqil::alaqilPtr_PyObject>;
 #endif

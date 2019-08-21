@@ -1,4 +1,4 @@
-/* This interface file tests whether SWIG handles the Microsoft __int64 type through the use of 
+/* This interface file tests whether alaqil handles the Microsoft __int64 type through the use of 
 applying the long long typemaps. The generated code should not have any instances of long long. */
 
 %module long_long_apply

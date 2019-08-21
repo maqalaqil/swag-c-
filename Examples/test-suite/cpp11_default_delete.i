@@ -1,8 +1,8 @@
-/* This testcase checks whether SWIG correctly parses C++11 explicitly defaulted functions and deleted functions */
+/* This testcase checks whether alaqil correctly parses C++11 explicitly defaulted functions and deleted functions */
 %module cpp11_default_delete
 
-%warnfilter(SWIGWARN_LANG_OVERLOAD_IGNORED, SWIGWARN_LANG_OVERLOAD_SHADOW) trivial::trivial(trivial&&);
-%warnfilter(SWIGWARN_LANG_OVERLOAD_IGNORED, SWIGWARN_LANG_OVERLOAD_SHADOW) trivial::operator =(trivial&&);
+%warnfilter(alaqilWARN_LANG_OVERLOAD_IGNORED, alaqilWARN_LANG_OVERLOAD_SHADOW) trivial::trivial(trivial&&);
+%warnfilter(alaqilWARN_LANG_OVERLOAD_IGNORED, alaqilWARN_LANG_OVERLOAD_SHADOW) trivial::operator =(trivial&&);
 
 %rename(Assignment) *::operator=;
 

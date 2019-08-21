@@ -1,12 +1,12 @@
 %module java_nspacewithoutpackage
 
-%warnfilter(SWIGWARN_JAVA_NSPACE_WITHOUT_PACKAGE) TopLevel::Foo;
-%warnfilter(SWIGWARN_JAVA_NSPACE_WITHOUT_PACKAGE) TopLevel::Bar;
+%warnfilter(alaqilWARN_JAVA_NSPACE_WITHOUT_PACKAGE) TopLevel::Foo;
+%warnfilter(alaqilWARN_JAVA_NSPACE_WITHOUT_PACKAGE) TopLevel::Bar;
 
 %pragma(java) jniclasspackage="PragmaDefinedPackage"
 
-SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
-SWIG_JAVABODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
+alaqil_JAVABODY_PROXY(public, public, alaqilTYPE)
+alaqil_JAVABODY_TYPEWRAPPER(public, public, public, alaqilTYPE)
 
 %include <std_string.i>
 

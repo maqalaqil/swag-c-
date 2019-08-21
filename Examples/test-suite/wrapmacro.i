@@ -1,7 +1,7 @@
 %module wrapmacro
 
-#ifdef SWIGLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) SWIGMACRO_maximum;
+#ifdef alaqilLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) alaqilMACRO_maximum;
 #endif
 
 /* Testing technique for wrapping macros */
@@ -29,9 +29,9 @@ typedef unsigned short guint16;
 
 /* Here, the auxiliary macro to wrap a macro */
 %define %wrapmacro(type, name, lparams, lnames)
-%rename(name) SWIGMACRO_##name;
+%rename(name) alaqilMACRO_##name;
 %inline %{
-type SWIGMACRO_##name(lparams) {
+type alaqilMACRO_##name(lparams) {
   return name(lnames);
 }
 %}
@@ -46,7 +46,7 @@ type SWIGMACRO_##name(lparams) {
 %wrapmacro(double, maximum, PLIST(double a, double b), PLIST(a, b));
 
 
-/* Maybe in the future, a swig directive will make this easier:
+/* Maybe in the future, a alaqil directive will make this easier:
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 

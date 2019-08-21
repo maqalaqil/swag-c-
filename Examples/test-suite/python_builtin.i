@@ -2,7 +2,7 @@
 
 %module python_builtin
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 #define TESTCASE_THROW2(T1, T2) throw(T1, T2)
 %{
@@ -11,7 +11,7 @@
 %}
 
 %inline %{
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }
@@ -30,7 +30,7 @@ struct ValueStruct {
 %}
 
 // Test 1a for tp_hash
-#if defined(SWIGPYTHON_BUILTIN)
+#if defined(alaqilPYTHON_BUILTIN)
 %feature("python:tp_hash") SimpleValue "SimpleValueHashFunction"
 #endif
 
@@ -48,7 +48,7 @@ Py_hash_t SimpleValueHashFunction(PyObject *v)
 long SimpleValueHashFunction(PyObject *v)
 #endif
 {
-  SwigPyObject *sobj = (SwigPyObject *) v;
+  alaqilPyObject *sobj = (alaqilPyObject *) v;
   SimpleValue *p = (SimpleValue *)sobj->ptr;
   return p->value;
 }
@@ -58,7 +58,7 @@ hashfunc test_hashfunc_cast() {
 %}
 
 // Test 1b for tp_hash
-#if defined(SWIGPYTHON_BUILTIN)
+#if defined(alaqilPYTHON_BUILTIN)
 %feature("python:slot", "tp_hash", functype="hashfunc") SimpleValue2::HashFunc;
 #endif
 
@@ -76,7 +76,7 @@ struct SimpleValue2 {
 %}
 
 // Test 2 for tp_hash
-#if defined(SWIGPYTHON_BUILTIN)
+#if defined(alaqilPYTHON_BUILTIN)
 %feature("python:slot", "tp_hash", functype="hashfunc") BadHashFunctionReturnType::bad_hash_function;
 #endif
 
@@ -89,7 +89,7 @@ struct BadHashFunctionReturnType {
 %}
 
 // Test 3 for tp_hash
-#if defined(SWIGPYTHON_BUILTIN)
+#if defined(alaqilPYTHON_BUILTIN)
 %feature("python:slot", "tp_hash", functype="hashfunc") ExceptionHashFunction::exception_hash_function;
 #endif
 
@@ -106,8 +106,8 @@ struct ExceptionHashFunction {
 };
 %}
 
-// Test 4 for tp_dealloc (which is handled differently to other slots in the SWIG source)
-#if defined(SWIGPYTHON_BUILTIN)
+// Test 4 for tp_dealloc (which is handled differently to other slots in the alaqil source)
+#if defined(alaqilPYTHON_BUILTIN)
 %feature("python:tp_dealloc") Dealloc1 "Dealloc1Destroyer"
 %feature("python:tp_dealloc") Dealloc2 "Dealloc2Destroyer"
 %feature("python:slot", "tp_dealloc", functype="destructor") Dealloc3::Destroyer;
@@ -133,13 +133,13 @@ struct Dealloc3 {
 
 %{
 void Dealloc1Destroyer(PyObject *v) {
-  SwigPyObject *sobj = (SwigPyObject *) v;
+  alaqilPyObject *sobj = (alaqilPyObject *) v;
   Dealloc1 *p = (Dealloc1 *)sobj->ptr;
   delete p;
   Dealloc1CalledCount++;
 }
 void Dealloc2Destroyer(PyObject *v) {
-  SwigPyObject *sobj = (SwigPyObject *) v;
+  alaqilPyObject *sobj = (alaqilPyObject *) v;
   Dealloc2 *p = (Dealloc2 *)sobj->ptr;
   delete p;
   Dealloc2CalledCount++;
@@ -170,7 +170,7 @@ void Dealloc2Destroyer(PyObject *v) {
 %apply int {Py_ssize_t}
 %typemap(in) PySliceObject * {
   if (!PySlice_Check($input))
-    SWIG_exception(SWIG_TypeError, "in method '$symname', argument $argnum of type '$type'");
+    alaqil_exception(alaqil_TypeError, "in method '$symname', argument $argnum of type '$type'");
   $1 = (PySliceObject *)$input;
 }
 %typemap(typecheck,precedence=300) PySliceObject* {

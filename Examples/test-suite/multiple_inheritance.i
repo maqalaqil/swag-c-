@@ -3,15 +3,15 @@ It tests basic multiple inheritance */
 
 %module(ruby_minherit="1") multiple_inheritance
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) FooBar;	/* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) FooBar;	/* C#, D, Java, PHP multiple inheritance */
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) FooBarSpam;	/* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) FooBarSpam;	/* C#, D, Java, PHP multiple inheritance */
 
 
 %inline %{

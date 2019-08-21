@@ -1,4 +1,4 @@
-package org.swig.extendexample;
+package org.alaqil.extendexample;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,14 +16,14 @@ class CEO extends Manager {
   public String getPosition() {
     return "CEO";
   }
-  // Public method to stop the SWIG proxy base class from thinking it owns the underlying C++ memory.
+  // Public method to stop the alaqil proxy base class from thinking it owns the underlying C++ memory.
   public void disownMemory() {
-    swigCMemOwn = false; 
+    alaqilCMemOwn = false; 
   } 
 }
 
 
-public class SwigExtend extends Activity
+public class alaqilExtend extends Activity
 {
     TextView outputText = null;
     ScrollView scroller = null;

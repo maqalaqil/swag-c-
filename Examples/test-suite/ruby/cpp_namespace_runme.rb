@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 # Note: This example assumes that namespaces are flattened
 require 'cpp_namespace'

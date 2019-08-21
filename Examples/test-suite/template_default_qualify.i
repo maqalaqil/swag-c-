@@ -3,7 +3,7 @@
 
 %module template_default_qualify
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) etraits; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) etraits; /* Ruby, wrong class name */
 
 %inline %{
   namespace oss

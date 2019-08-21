@@ -1,13 +1,13 @@
 %module(ruby_minherit="1") abstract_virtual
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) D; /* C#, D, Java, PHP multiple inheritance */
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) E; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) D; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) E; /* C#, D, Java, PHP multiple inheritance */
 
 %inline %{
 #if defined(_MSC_VER)
@@ -54,7 +54,7 @@
   // navigate the entire set of base classes,
   // and therefore, it doesn't detect B::foo()
   //
-#ifdef SWIG
+#ifdef alaqil
   // Uncommenting this line, of course, make it works
   // %feature("notabstract") E;
 #endif

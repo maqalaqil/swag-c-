@@ -3,11 +3,11 @@
 # Put script description here.
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'integers'
 include Integers
 
-swig_assert_each_line <<EOF
+alaqil_assert_each_line <<EOF
 signed_char_identity(-3)   == -3
 unsigned_char_identity(5)  == 5
 signed_short_identity(-3)  == -3

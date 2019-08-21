@@ -1,5 +1,5 @@
 TOP        = ../..
-SWIGOPT    =
+alaqilOPT    =
 LIBS       =
 
 import_packages_subdirs = \
@@ -29,12 +29,12 @@ check: build
 
 build:
 	for s in $(import_packages_subdirs); do \
-		(cd $$s && $(MAKE) SWIGOPT='$(SWIGOPT)' LIBS='$(LIBS)' build) || exit 1; \
+		(cd $$s && $(MAKE) alaqilOPT='$(alaqilOPT)' LIBS='$(LIBS)' build) || exit 1; \
 	done
 
 static:
 	for s in $(import_packages_subdirs); do \
-		(cd $$s && $(MAKE) SWIGOPT='$(SWIGOPT)' LIBS='$(LIBS)' static) || exit 1; \
+		(cd $$s && $(MAKE) alaqilOPT='$(alaqilOPT)' LIBS='$(LIBS)' static) || exit 1; \
 	done
 
 clean:

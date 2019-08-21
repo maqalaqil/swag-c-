@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly treats the new nullptr_t
+/* This testcase checks whether alaqil correctly treats the new nullptr_t
    constant introduced in C++11.
 */
 

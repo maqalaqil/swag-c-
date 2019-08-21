@@ -1,7 +1,7 @@
-/* File : swig_exception.i
- * Test SWIG_exception().
+/* File : alaqil_exception.i
+ * Test alaqil_exception().
  */
-%module swig_exception
+%module alaqil_exception
 
 %include exception.i
 
@@ -9,7 +9,7 @@
     try {
         $action
     } catch (std::exception& e) {
-      SWIG_exception(SWIG_SystemError, e.what());
+      alaqil_exception(alaqil_SystemError, e.what());
     }
 }
 

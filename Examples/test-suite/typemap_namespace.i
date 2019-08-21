@@ -12,24 +12,24 @@ namespace Foo {
     struct Str1;
     struct Str2;
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
     %typemap(ctype) Str1 * = char *;
     %typemap(imtype) Str1 * = char *;
     %typemap(cstype) Str1 * = char *;
     %typemap(csin) Str1 * = char *;
     %typemap(csout) Str1 * = char *;
 #endif
-#ifdef SWIGJAVA
+#ifdef alaqilJAVA
     %typemap(jni) Str1 * = char *;
     %typemap(jtype) Str1 * = char *;
     %typemap(jstype) Str1 * = char *;
     %typemap(javain) Str1 * = char *;
     %typemap(javaout) Str1 * = char *;
 #endif
-#ifdef SWIGGO
+#ifdef alaqilGO
     %typemap(gotype) Str1 * = char *;
 #endif
-#ifdef SWIGD
+#ifdef alaqilD
     %typemap(ctype) Str1 * = char *;
     %typemap(imtype) Str1 * = char *;
     %typemap(dtype) Str1 * = char *;
@@ -37,7 +37,7 @@ namespace Foo {
     %typemap(dout) Str1 * = char *;
 #endif
     %typemap(in) Str1 * = char *;
-#if !(defined(SWIGCSHARP) || defined(SWIGLUA) || defined(SWIGPHP) || defined(SWIGMZSCHEME) || defined(SWIGOCAML) || defined(SWIGGO) || defined(SWIGD))
+#if !(defined(alaqilCSHARP) || defined(alaqilLUA) || defined(alaqilPHP) || defined(alaqilMZSCHEME) || defined(alaqilOCAML) || defined(alaqilGO) || defined(alaqilD))
     %typemap(freearg) Str1 * = char *;
 #endif
     %typemap(typecheck) Str1 * = char *;

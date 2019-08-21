@@ -23,10 +23,10 @@ extern int    gcd(int x, int y);
   I32 len;
   int i;
   if (!SvROK($input)) {
-    SWIG_exception(SWIG_ValueError,"$input is not an array.");
+    alaqil_exception(alaqil_ValueError,"$input is not an array.");
   }
   if (SvTYPE(SvRV($input)) != SVt_PVAV) {
-    SWIG_exception(SWIG_ValueError,"$input is not an array.");
+    alaqil_exception(alaqil_ValueError,"$input is not an array.");
   }
   tempav = (AV*)SvRV($input);
   len = av_len(tempav);
@@ -84,7 +84,7 @@ extern void capitalize(char *str, int len);
 %typemap(check) (double cx, double cy) {
    double a = $1*$1 + $2*$2;
    if (a > 1.0) {
-	SWIG_exception(SWIG_ValueError,"$1_name and $2_name must be in unit circle");
+	alaqil_exception(alaqil_ValueError,"$1_name and $2_name must be in unit circle");
    }
 }
 

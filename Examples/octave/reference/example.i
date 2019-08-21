@@ -2,7 +2,7 @@
 
 /* This file has a few "typical" uses of C++ references. */
 
-%module swigexample
+%module alaqilexample
 
 %feature("autodoc", 1);
 

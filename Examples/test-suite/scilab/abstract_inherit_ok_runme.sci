@@ -1,11 +1,11 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     Spam = new_Spam()
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
   
-if Foo_blah(Spam)<>0 then swigtesterror; end
+if Foo_blah(Spam)<>0 then alaqiltesterror; end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

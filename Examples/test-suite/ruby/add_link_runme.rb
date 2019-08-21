@@ -7,14 +7,14 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'add_link'
 include Add_link
 
 #
-# This test currently fails due to swig
+# This test currently fails due to alaqil
 #
 exit(0)
 
-swig_assert( 'Foo.new' )
-swig_assert( 'Foo.blah' )
+alaqil_assert( 'Foo.new' )
+alaqil_assert( 'Foo.blah' )

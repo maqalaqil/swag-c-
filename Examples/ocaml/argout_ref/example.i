@@ -2,8 +2,8 @@
 %module example
 
 %typemap(argout) (const int &x, const int &y) {
-  swig_result = caml_list_append(swig_result, caml_val_int(*$1));
-  swig_result = caml_list_append(swig_result, caml_val_int(*$2));
+  alaqil_result = caml_list_append(alaqil_result, caml_val_int(*$1));
+  alaqil_result = caml_list_append(alaqil_result, caml_val_int(*$2));
 }
 
 %{

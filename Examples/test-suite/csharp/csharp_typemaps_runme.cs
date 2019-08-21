@@ -59,7 +59,7 @@ public class TestThread {
    public void Run() {
      Failed = false;
      try {
-       // Older versions of SWIG used IntPtr instead of HandleRef to hold the underlying
+       // Older versions of alaqil used IntPtr instead of HandleRef to hold the underlying
        // C++ pointer, so this test would (usually) fail as the garbage collector would
        // sometimes collect the Number class while it was being used in unmanaged code
        for (int i=0; i<5000; i++) { // run test for a few seconds

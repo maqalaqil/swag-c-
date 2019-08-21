@@ -1,8 +1,8 @@
 // Another evil Luigi test
 %module template_extend2
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Baz<long>;	// Ruby, wrong class name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Baz<double>;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Baz<long>;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Baz<double>;	// Ruby, wrong class name
 
 %{
 namespace Quux {  

@@ -1,8 +1,8 @@
 /* File : go_subdir_import_a.i */
 
 /*
- * This files helps check the case where the SWIG-generated .go file needs to
- * import another, SWIG-generated, module that is in a relative subdirectory.
+ * This files helps check the case where the alaqil-generated .go file needs to
+ * import another, alaqil-generated, module that is in a relative subdirectory.
  * This case might happen for two different reasons:
  * 1) Importing a module for which the .i file is in a subdirectory relatively
  *    to this file (this is tested here with go_subdir_import_c).
@@ -10,7 +10,7 @@
  *    go_subdir_import_b).
  *
  * This file is the "root" file that imports the two modules which will be
- * generated (by swig) in a relative subdirectory.
+ * generated (by alaqil) in a relative subdirectory.
  */
 %module go_subdir_import_a
 

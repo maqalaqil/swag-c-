@@ -1,6 +1,6 @@
 %module li_carrays_cpp
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) doubleArray; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) doubleArray; /* Ruby, wrong class name */
 
 %include <carrays.i>
 

@@ -1,10 +1,10 @@
 %module(directors="1") director_basic
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) MyClass::pmethod;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) MyClass::pmethod;
 
  %{
  #include <string>
@@ -70,10 +70,10 @@
  %}
 
  %typemap(cscode) MyClass %{
-   public void testSwigDerivedClassHasMethod() {
-     if (SwigDerivedClassHasMethod("nonVirtual", swigMethodTypes3))
+   public void testalaqilDerivedClassHasMethod() {
+     if (alaqilDerivedClassHasMethod("nonVirtual", alaqilMethodTypes3))
        throw new global::System.Exception("non-overriding non-virtual method would be when connecting director");
-     if (SwigDerivedClassHasMethod("nonOverride", swigMethodTypes4))
+     if (alaqilDerivedClassHasMethod("nonOverride", alaqilMethodTypes4))
        throw new global::System.Exception("non-overriding virtual method would be when connecting director");
    }
  %}

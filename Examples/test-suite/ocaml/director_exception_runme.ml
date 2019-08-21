@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Director_exception
 
 exception MyException of string * string

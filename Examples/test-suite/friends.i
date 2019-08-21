@@ -3,11 +3,11 @@
 #include <iostream>
 %}
 
-%warnfilter(SWIGWARN_LANG_IDENTIFIER);
+%warnfilter(alaqilWARN_LANG_IDENTIFIER);
 
-#if defined(SWIGOCTAVE)
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_LSHIFT_MSG) operator<<;
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_RSHIFT_MSG) operator>>;
+#if defined(alaqilOCTAVE)
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_LSHIFT_MSG) operator<<;
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_RSHIFT_MSG) operator>>;
 #endif
 
 
@@ -83,7 +83,7 @@
 
   /* 
      'mix' is an interesting case, this is the third declaration
-     swig is getting (two friends + one inline).
+     alaqil is getting (two friends + one inline).
    */
   inline int mix(A* a, B *b) {
     return a->val + b->v;
@@ -111,7 +111,7 @@
     sit and watch how well this case works, is just incredible!!,
 
     also note that there is no special code added to manage friends
-    and templates (or overloading), this is just old swig magic
+    and templates (or overloading), this is just old alaqil magic
     working at its best.
   */
 
@@ -146,7 +146,7 @@
   }
 }
 
-// Use this version with extra qualifiers to test SWIG as some compilers accept this
+// Use this version with extra qualifiers to test alaqil as some compilers accept this
   namespace ns1 {
     namespace ns2 {
       class Foo {

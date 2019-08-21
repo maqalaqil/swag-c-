@@ -5,7 +5,7 @@
 LANGUAGE     = ocaml
 OCAMLP4WHERE =`$(COMPILETOOL) @CAMLP4@ -where`
 OCC          =$(COMPILETOOL) @OCAMLC@
-OCAMLPP      = -pp "camlp4o ./swigp4.cmo"
+OCAMLPP      = -pp "camlp4o ./alaqilp4.cmo"
 VARIANT      = _static
 SCRIPTSUFFIX = _runme.ml
 
@@ -43,16 +43,16 @@ run_testcase = \
 		fi ; \
 		$(OCC) $(OCAMLPP) -c $(ml_runme) && \
 		if [ -f $(top_srcdir)/Examples/test-suite/$*.list ]; then \
-			$(OCC) swig.cmo -custom -g -cc '$(CXX)' -o $*_runme `cat $(top_srcdir)/Examples/test-suite/$(*).list | sed -e 's/\(.*\)/\1_wrap.o \1.cmo/g'`&& $(RUNTOOL) ./$*_runme; \
+			$(OCC) alaqil.cmo -custom -g -cc '$(CXX)' -o $*_runme `cat $(top_srcdir)/Examples/test-suite/$(*).list | sed -e 's/\(.*\)/\1_wrap.o \1.cmo/g'`&& $(RUNTOOL) ./$*_runme; \
 		else \
-			$(OCC) swig.cmo -custom -g -cc '$(CXX)' -o $*_runme $(*).cmo $(*)_runme.cmo $(*)_wrap.o && $(RUNTOOL) ./$*_runme; \
+			$(OCC) alaqil.cmo -custom -g -cc '$(CXX)' -o $*_runme $(*).cmo $(*)_runme.cmo $(*)_wrap.o && $(RUNTOOL) ./$*_runme; \
 		fi ; \
 	fi ;
 
 include $(srcdir)/../common.mk
 
 # Overridden variables here
-SWIGOPT += -w524 # Suppress SWIGWARN_LANG_EXPERIMENTAL warning
+alaqilOPT += -w524 # Suppress alaqilWARN_LANG_EXPERIMENTAL warning
 
 # Custom tests - tests with additional commandline options
 # none!
@@ -60,29 +60,29 @@ SWIGOPT += -w524 # Suppress SWIGWARN_LANG_EXPERIMENTAL warning
 # Rules for the different types of tests
 %.cpptest:
 	$(setup)
-	+$(swig_and_compile_cpp)
+	+$(alaqil_and_compile_cpp)
 	$(run_testcase)
 
 %.ctest:
 	$(setup)
-	+$(swig_and_compile_c)
+	+$(alaqil_and_compile_c)
 	$(run_testcase)
 
 %.multicpptest:
-	+$(swig_and_compile_multi_cpp)
+	+$(alaqil_and_compile_multi_cpp)
 	$(setup)
 	$(run_testcase)
 
-swig.cmi:
-	env SWIG_LIB=$(SWIG_LIB_DIR) $(SWIGEXE) -ocaml -co swig.mli
-	$(OCC) -c swig.mli
-swig.cmo:
-	env SWIG_LIB=$(SWIG_LIB_DIR) $(SWIGEXE) -ocaml -co swig.ml
-	$(OCC) -c swig.ml
-swigp4.cmi:
-	env SWIG_LIB=$(SWIG_LIB_DIR) $(SWIGEXE) -ocaml -co swigp4.ml
-	$(OCC) -I $(OCAMLP4WHERE) -pp "camlp4o pa_extend.cmo q_MLast.cmo" -c swigp4.ml
-extra_objects: swig.cmi swig.cmo swigp4.cmi
+alaqil.cmi:
+	env alaqil_LIB=$(alaqil_LIB_DIR) $(alaqilEXE) -ocaml -co alaqil.mli
+	$(OCC) -c alaqil.mli
+alaqil.cmo:
+	env alaqil_LIB=$(alaqil_LIB_DIR) $(alaqilEXE) -ocaml -co alaqil.ml
+	$(OCC) -c alaqil.ml
+alaqilp4.cmi:
+	env alaqil_LIB=$(alaqil_LIB_DIR) $(alaqilEXE) -ocaml -co alaqilp4.ml
+	$(OCC) -I $(OCAMLP4WHERE) -pp "camlp4o pa_extend.cmo q_MLast.cmo" -c alaqilp4.ml
+extra_objects: alaqil.cmi alaqil.cmo alaqilp4.cmi
 
 $(C_TEST_CASES:=.ctest): extra_objects
 $(CPP_TEST_CASES:=.cpptest): extra_objects

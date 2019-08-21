@@ -6,7 +6,7 @@
 
 %module equality
 
-%warnfilter(SWIGWARN_LANG_IDENTIFIER) operator==;
+%warnfilter(alaqilWARN_LANG_IDENTIFIER) operator==;
 
 %inline %{
 

@@ -1,6 +1,6 @@
 %module array_typedef_memberin
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(ExDetail) ExampleDetail;
 #endif
 

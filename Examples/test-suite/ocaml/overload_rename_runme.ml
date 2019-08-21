@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Overload_rename
 
 let _ = new_Foo (C_float 1.)

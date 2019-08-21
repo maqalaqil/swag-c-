@@ -39,7 +39,7 @@ int call_checking(void) {
 /*****************************************************************************/
 /* Check #if/#elif defined() macro expansions
    Also checks #if/#elif defined() works correctly within macros... this is not
-   standard C, but is now relied on in the SWIG library. */
+   standard C, but is now relied on in the alaqil library. */
 /*****************************************************************************/
 
 #define AAA

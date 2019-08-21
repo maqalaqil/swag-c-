@@ -5,7 +5,7 @@
 #include "example.h"
 %}
 
-%insert(m3makefile) %{template("../swig")
+%insert(m3makefile) %{template("../alaqil")
 cxx_source("example_wrap")%}
 
 %typemap(m3rawinmode)    Shape *, Circle *, Square * ""

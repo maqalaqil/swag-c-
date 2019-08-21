@@ -18,18 +18,18 @@ extern int    gcd(int x, int y);
   int i;
   
   if (TYPE($input) != T_ARRAY) {
-    SWIG_exception(SWIG_ValueError, "Expected an array");
+    alaqil_exception(alaqil_ValueError, "Expected an array");
   }
   $1 = RARRAY_LEN($input);
   if ($1 == 0) {
-    SWIG_exception(SWIG_ValueError, "List must contain at least 1 element");
+    alaqil_exception(alaqil_ValueError, "List must contain at least 1 element");
   }
   $2 = (char **) malloc(($1+1)*sizeof(char *));
   for (i = 0; i < $1; i++) {
     VALUE   s = rb_ary_entry($input,i);
     if (TYPE(s) != T_STRING) {
       free($2);
-      SWIG_exception(SWIG_ValueError, "List items must be strings");
+      alaqil_exception(alaqil_ValueError, "List items must be strings");
     }
     $2[i] = StringValuePtr(s);
   }
@@ -44,7 +44,7 @@ extern int gcdmain(int argc, char *argv[]);
 
 %typemap(in) (char *bytes, int len) {
   if (TYPE($input) != T_STRING) {
-    SWIG_exception(SWIG_ValueError, "Expected a string");
+    alaqil_exception(alaqil_ValueError, "Expected a string");
   }
   $1 = StringValuePtr($input);
   $2 = RSTRING_LEN($input);
@@ -58,7 +58,7 @@ extern int count(char *bytes, int len, char c);
 %typemap(in) (char *str, int len) {
   char *temp;
   if (TYPE($input) != T_STRING) {
-    SWIG_exception(SWIG_ValueError,"Expected a string");
+    alaqil_exception(alaqil_ValueError,"Expected a string");
   }
   temp = StringValuePtr($input);
   $2 = RSTRING_LEN($input);
@@ -83,7 +83,7 @@ extern void capitalize(char *str, int len);
 %typemap(check) (double cx, double cy) {
    double a = $1*$1 + $2*$2;
    if (a > 1.0) {
-	SWIG_exception(SWIG_ValueError,"$1_name and $2_name must be in unit circle");
+	alaqil_exception(alaqil_ValueError,"$1_name and $2_name must be in unit circle");
    }
 }
 

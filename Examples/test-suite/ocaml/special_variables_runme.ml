@@ -1,13 +1,13 @@
-open Swig
+open alaqil
 open Special_variables
 
 let _ =
   assert (_ExceptionVars '(1.0, 2.0) as string =
     "result = Space::exceptionvars(arg1,arg2);  Space::exceptionvars  ExceptionVars   _wrap_ExceptionVarsspecial_variables  ");
   assert (_overloadedmethod '() as string =
-    "result = Space::overloadedmethod();  Space::overloadedmethod  overloadedmethod  __SWIG_1 _wrap_overloadedmethod__SWIG_1special_variables  ");
+    "result = Space::overloadedmethod();  Space::overloadedmethod  overloadedmethod  __alaqil_1 _wrap_overloadedmethod__alaqil_1special_variables  ");
   assert (_overloadedmethod '(10.0) as string =
-    "result = Space::overloadedmethod(arg1);  Space::overloadedmethod  overloadedmethod  __SWIG_0 _wrap_overloadedmethod__SWIG_0special_variables  ");
+    "result = Space::overloadedmethod(arg1);  Space::overloadedmethod  overloadedmethod  __alaqil_0 _wrap_overloadedmethod__alaqil_0special_variables  ");
 
   let _ = new_ABC '(0, 0.0) in
   assert (_declaration '() as string = "SpaceNamespace::ABC::ABC(int,double) SpaceNamespace::ABC::ABC(int,double)");

@@ -2,9 +2,9 @@
 
 /* check C++ delete keyword is okay in C wrappers */
 
-%warnfilter(SWIGWARN_PARSE_KEYWORD) delete;
+%warnfilter(alaqilWARN_PARSE_KEYWORD) delete;
 
-#if !defined(SWIGOCTAVE) && !defined(SWIG_JAVASCRIPT_V8) /* Octave and Javascript/v8 compiles wrappers as C++ */
+#if !defined(alaqilOCTAVE) && !defined(alaqil_JAVASCRIPT_V8) /* Octave and Javascript/v8 compiles wrappers as C++ */
 
 %inline %{
 struct delete {

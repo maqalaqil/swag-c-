@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'template_typedef_cplx2'
 
@@ -19,7 +19,7 @@ include Template_typedef_cplx2
 
 
 d = make_Identity_double()
-raise RuntimeError, "#{d} is not an instance" if d.is_a? SWIG::Pointer
+raise RuntimeError, "#{d} is not an instance" if d.is_a? alaqil::Pointer
 
 classname = d.class.name.split(/::/).last
 unless classname =~ /ArithUnaryFunction/
@@ -27,7 +27,7 @@ unless classname =~ /ArithUnaryFunction/
 end
 
 e = make_Multiplies_double_double_double_double(d, d)
-raise RuntimeError, "#{e} is not an instance" if e.is_a? SWIG::Pointer
+raise RuntimeError, "#{e} is not an instance" if e.is_a? alaqil::Pointer
 
 classname = e.class.name.split(/::/).last
 unless classname =~ /ArithUnaryFunction/
@@ -40,7 +40,7 @@ end
 #
 
 c = make_Identity_complex()
-raise RuntimeError, "#{c}is not an instance" if c.is_a? SWIG::Pointer
+raise RuntimeError, "#{c}is not an instance" if c.is_a? alaqil::Pointer
 
 classname = c.class.name.split(/::/).last
 unless classname =~ /ArithUnaryFunction/
@@ -48,7 +48,7 @@ unless classname =~ /ArithUnaryFunction/
 end
 
 f = make_Multiplies_complex_complex_complex_complex(c, c)
-raise RuntimeError, "{f} is not an instance" if f.is_a? SWIG::Pointer
+raise RuntimeError, "{f} is not an instance" if f.is_a? alaqil::Pointer
 
 classname = f.class.name.split(/::/).last
 unless classname =~ /ArithUnaryFunction/
@@ -60,7 +60,7 @@ end
 #
 
 g = make_Multiplies_double_double_complex_complex(d, c)
-raise RuntimeError, "#{g} is not an instance" if g.is_a? SWIG::Pointer
+raise RuntimeError, "#{g} is not an instance" if g.is_a? alaqil::Pointer
 
 classname = g.class.name.split(/::/).last
 unless classname =~ /ArithUnaryFunction/
@@ -71,7 +71,7 @@ end
 g.get_value()
   
 h = make_Multiplies_complex_complex_double_double(c, d)
-raise RuntimeError, "#{h} is not an instance" if h.is_a? SWIG::Pointer
+raise RuntimeError, "#{h} is not an instance" if h.is_a? alaqil::Pointer
 
 classname = h.class.name.split(/::/).last
 unless classname =~ /ArithUnaryFunction/

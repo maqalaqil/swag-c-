@@ -1,15 +1,15 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     a = new_A_UF();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 try
     delete_A_UF(a);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

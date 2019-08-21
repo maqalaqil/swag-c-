@@ -18,11 +18,11 @@ extern int    gcd(int x, int y);
 %typemap(in,fragment="t_output_helper") (int argc, char *argv[]) {
   int i;
   if (!PyList_Check($input)) {
-    SWIG_exception(SWIG_ValueError, "Expecting a list");
+    alaqil_exception(alaqil_ValueError, "Expecting a list");
   }
   $1 = (int)PyList_Size($input);
   if ($1 == 0) {
-    SWIG_exception(SWIG_ValueError, "List must contain at least 1 element");
+    alaqil_exception(alaqil_ValueError, "List must contain at least 1 element");
   }
   $2 = (char **) malloc(($1+1)*sizeof(char *));
   for (i = 0; i < $1; i++) {
@@ -34,14 +34,14 @@ extern int    gcd(int x, int y);
 %#endif
     {
       free($2);
-      SWIG_exception(SWIG_ValueError, "List items must be strings");
+      alaqil_exception(alaqil_ValueError, "List items must be strings");
     }
 %#if PY_VERSION_HEX >= 0x03000000
     {
       PyObject *utf8str = PyUnicode_AsUTF8String(s);
       const char *cstr;
       if (!utf8str) {
-        SWIG_fail;
+        alaqil_fail;
       }
       cstr = PyBytes_AsString(utf8str);
       $2[i] = strdup(cstr);
@@ -73,11 +73,11 @@ extern int gcdmain(int argc, char *argv[]);
   PyObject *utf8str;
   if (!PyUnicode_Check($input)) {
     PyErr_SetString(PyExc_ValueError,"Expected a string");
-    SWIG_fail;
+    alaqil_fail;
   }
   utf8str = PyUnicode_AsUTF8String($input);
   if (!utf8str) {
-    SWIG_fail;
+    alaqil_fail;
   }
   PyBytes_AsStringAndSize(utf8str, &cstr, &len);
   $1 = strncpy((char *)malloc(len+1), cstr, (size_t)len);
@@ -86,7 +86,7 @@ extern int gcdmain(int argc, char *argv[]);
 %#else
   if (!PyString_Check($input)) {
     PyErr_SetString(PyExc_ValueError,"Expected a string");
-    SWIG_fail;
+    alaqil_fail;
   }
   $1 = PyString_AsString($input);
   $2 = (int)PyString_Size($input);
@@ -113,7 +113,7 @@ extern int count(char *bytes, int len, char c);
   Py_ssize_t len;
   PyObject *utf8str = PyUnicode_AsUTF8String($input);
   if (!utf8str) {
-    SWIG_fail;
+    alaqil_fail;
   }
   PyBytes_AsStringAndSize(utf8str, &cstr, &len);
   $1 = strncpy((char *)malloc(len+1), cstr, (size_t)len);
@@ -149,7 +149,7 @@ extern void capitalize(char *str, int len);
 %typemap(check) (double cx, double cy) {
    double a = $1*$1 + $2*$2;
    if (a > 1.0) {
-	SWIG_exception(SWIG_ValueError,"$1_name and $2_name must be in unit circle");
+	alaqil_exception(alaqil_ValueError,"$1_name and $2_name must be in unit circle");
    }
 }
 

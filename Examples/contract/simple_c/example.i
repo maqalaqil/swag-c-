@@ -1,6 +1,6 @@
 /* File : example.i */
 
-/* Basic C example for swig contract */
+/* Basic C example for alaqil contract */
 /* Tiger, University of Chicago, 2003 */
 
 %module example

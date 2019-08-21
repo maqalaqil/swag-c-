@@ -1,19 +1,19 @@
 %module ruby_manual_proxy
 
 
-%typemap(in, numinputs=0) SWIGTYPE ** ($*1_ltype temp) "$1 = &temp;";
+%typemap(in, numinputs=0) alaqilTYPE ** ($*1_ltype temp) "$1 = &temp;";
 
-%typemap(argout) SWIGTYPE **OUTPARAM {
-  $result = SWIG_Ruby_AppendOutput($result, SWIG_NewPointerObj(*$1, $*1_descriptor, 0));
+%typemap(argout) alaqilTYPE **OUTPARAM {
+  $result = alaqil_Ruby_AppendOutput($result, alaqil_NewPointerObj(*$1, $*1_descriptor, 0));
 }
 
-%apply SWIGTYPE **OUTPARAM {
+%apply alaqilTYPE **OUTPARAM {
   svn_fs_t **
 };
 
 %typemap(check) svn_fs_t * {
   if (!$1) {
-    svn_swig_rb_raise_svn_fs_already_close();
+    svn_alaqil_rb_raise_svn_fs_already_close();
   }
 }
 
@@ -37,13 +37,13 @@ void svn_fs_create(svn_fs_t **fs_p, const char *path);
 const char *svn_fs_path(svn_fs_t *fs);
 
 %{
-static void svn_swig_rb_raise_svn_fs_already_close(void) {
+static void svn_alaqil_rb_raise_svn_fs_already_close(void) {
   rb_raise(rb_eIOError, "already closed");
 }
 
-static VALUE svn_fs_swig_rb_close(VALUE self) {
+static VALUE svn_fs_alaqil_rb_close(VALUE self) {
   if (!DATA_PTR(self)) {
-    svn_swig_rb_raise_svn_fs_already_close();
+    svn_alaqil_rb_raise_svn_fs_already_close();
   }
 
   DATA_PTR(self) = NULL;
@@ -51,7 +51,7 @@ static VALUE svn_fs_swig_rb_close(VALUE self) {
   return Qnil;
 }
 
-static VALUE svn_fs_swig_rb_closed(VALUE self) {
+static VALUE svn_fs_alaqil_rb_closed(VALUE self) {
   return DATA_PTR(self) ? Qfalse : Qtrue;
 }
 %}
@@ -59,8 +59,8 @@ static VALUE svn_fs_swig_rb_closed(VALUE self) {
 %insert("init") %{
   {
     VALUE cSvnfs;
-    cSvnfs = rb_const_get(_mSWIG, rb_intern("TYPE_p_svn_fs_t"));
+    cSvnfs = rb_const_get(_malaqil, rb_intern("TYPE_p_svn_fs_t"));
     rb_define_method(cSvnfs, "close",
-                     VALUEFUNC(svn_fs_swig_rb_close), 0);
+                     VALUEFUNC(svn_fs_alaqil_rb_close), 0);
   }
 %}

@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // Negative values
 checkequal(signed_char_identity(-1), -1, "signed_char_identity(-1)");
@@ -26,4 +26,4 @@ checkequal(ierr, 20009, 'signed_int_identity(100.2)');
 ierr = execstr('signed_long_identity(100.2)', 'errcatch');
 checkequal(ierr, 20009, 'signed_long_identity(100.2)');
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

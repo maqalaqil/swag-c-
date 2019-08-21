@@ -1,5 +1,5 @@
 (* Stolen from the python tests *)
-open Swig
+open alaqil
 open Minherit
 
 let a = new_Foo C_void

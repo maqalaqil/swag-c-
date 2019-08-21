@@ -1,11 +1,11 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     a = new_Bar();
     Bar_x_set(a,100);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if Bar_x_get(a) <> 100 then swigtesterror(); end
+if Bar_x_get(a) <> 100 then alaqiltesterror(); end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

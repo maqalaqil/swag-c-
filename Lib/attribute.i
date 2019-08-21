@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * attribute.i
  *
- * SWIG library file for implementing attributes.
+ * alaqil library file for implementing attributes.
  * ----------------------------------------------------------------------------- */
 
 /* we use a simple exception warning here */

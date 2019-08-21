@@ -7,15 +7,15 @@ public class arrays_global_twodim_runme {
     try {
         System.loadLibrary("arrays_global_twodim");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
 
   public static void main(String argv[]) 
   {
-      SWIGTYPE_p_a_4__int constintarray2d = arrays_global_twodim.getArray_const_i();
-      SWIGTYPE_p_a_4__int intarray2d = arrays_global_twodim.getArray_i();
+      alaqilTYPE_p_a_4__int constintarray2d = arrays_global_twodim.getArray_const_i();
+      alaqilTYPE_p_a_4__int intarray2d = arrays_global_twodim.getArray_i();
 
       // Set all the non const int array members from the const int array members and check
       arrays_global_twodim.setArray_i(constintarray2d);

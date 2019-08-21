@@ -1,10 +1,10 @@
-%module li_swigtype_inout
+%module li_alaqiltype_inout
 
-// Test SWIGTYPE *& typemaps in swigtype_inout.i library
+// Test alaqilTYPE *& typemaps in alaqiltype_inout.i library
 
-#ifdef SWIGCSHARP
-%include <swigtype_inout.i>
-%apply SWIGTYPE *& OUTPUT { SWIGTYPE *& }
+#ifdef alaqilCSHARP
+%include <alaqiltype_inout.i>
+%apply alaqilTYPE *& OUTPUT { alaqilTYPE *& }
 #endif
 
 %ignore XXX::operator=;

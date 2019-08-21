@@ -1,16 +1,16 @@
 <html>
 <head>
-<title>SWIG:Examples:Go</title>
+<title>alaqil:Examples:Go</title>
 </head>
 
 <body bgcolor="#ffffff">
-<H1>SWIG Go Examples</H1>
+<H1>alaqil Go Examples</H1>
 
 <p>
-The following examples illustrate the use of SWIG with Go.
+The following examples illustrate the use of alaqil with Go.
 
 <ul>
-<li><a href="simple/index.html">simple</a>.  A minimal example showing how SWIG can
+<li><a href="simple/index.html">simple</a>.  A minimal example showing how alaqil can
 be used to wrap a C function, a global variable, and a constant.
 <li><a href="constants/index.html">constants</a>.  This shows how preprocessor macros and
 certain C declarations are turned into constants.
@@ -29,11 +29,11 @@ certain C declarations are turned into constants.
 <h2>Compilation Issues</h2>
 
 <ul>
-<li>To create a Go extension, SWIG is run with the following options:
+<li>To create a Go extension, alaqil is run with the following options:
 
 <blockquote>
 <pre>
-% swig -go interface.i
+% alaqil -go interface.i
 </pre>
 </blockquote>
 
@@ -46,7 +46,7 @@ the <tt>gc</tt> compiler, the steps look approximately like this
 
 <blockquote>
 <pre>
-% swig -go -cgo interface.i
+% alaqil -go -cgo interface.i
 % mkdir -p gopath/src/interface
 % cp interface_wrap.c interface_wrap.h interface.go gopath/src/interface
 % GOPATH=`pwd`/gopath
@@ -62,7 +62,7 @@ the <tt>gc</tt> compiler, the steps look approximately like this
 
 <blockquote>
 <pre>
-% swig -go -cgo interface.i
+% alaqil -go -cgo interface.i
 % mkdir -p gopath/src/interface
 % cp interface_wrap.c interface_wrap.h interface.go gopath/src/interface
 % GOPATH=`pwd`/gopath
@@ -93,6 +93,6 @@ All of the examples were last tested with the following configuration
 </ul>
 
 Your mileage may vary.  If you experience a problem, please let us know by
-contacting us on the <a href="http://www.swig.org/mail.html">mailing lists</a>.
+contacting us on the <a href="http://www.alaqil.org/mail.html">mailing lists</a>.
 </body>
 </html>

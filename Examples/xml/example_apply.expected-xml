@@ -1,32 +1,32 @@
-<swigxml:swig name="namespaces" xmlns:swigxml="http://jniplusplus.sourceforge.net" xmlns:swig="http://swig.sourceforge.net" xmlns:c="http://www.ansi.org" >
-  <swig:top >
-    <swigxml:child >
-      <swig:file name="../../Lib/swig.swg" >
-        <swigxml:type string="include"  />
-      </swig:file>
-      <swig:file name="example_apply.i" >
-        <swigxml:child >
-          <swig:module name="example"  />
+<alaqilxml:alaqil name="namespaces" xmlns:alaqilxml="http://jniplusplus.sourceforge.net" xmlns:alaqil="http://alaqil.sourceforge.net" xmlns:c="http://www.ansi.org" >
+  <alaqil:top >
+    <alaqilxml:child >
+      <alaqil:file name="../../Lib/alaqil.swg" >
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+      <alaqil:file name="example_apply.i" >
+        <alaqilxml:child >
+          <alaqil:module name="example"  />
           <c:function name="add" >
-            <swigxml:parms >
-              <swigxml:parm name="x" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-              <swigxml:parm name="y" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-              <swigxml:parm name="result" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="void"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="x" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="y" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="result" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="void"  />
           </c:function>
-          <swig:file name="../../Lib/pointer.i" >
-            <swigxml:child >
-              <swig:module name="pointer"  />
-              <swig:insert >
-                <swigxml:code >
+          <alaqil:file name="../../Lib/pointer.i" >
+            <alaqilxml:child >
+              <alaqil:module name="pointer"  />
+              <alaqil:insert >
+                <alaqilxml:code >
 
 %include pointer.i
 
@@ -50,7 +50,7 @@ datatypes may generate an error.
 One of the more interesting aspects of this library is that
 it operates with a wide range of datatypes.  For example,
 the "ptrvalue" function can dereference "double *", "int *",
-"long *", "char *", and other datatypes. Since SWIG encodes
+"long *", "char *", and other datatypes. Since alaqil encodes
 pointers with type information, this can be done transparently
 and in most cases, you can dereference a pointer without
 ever knowing what type it actually is.
@@ -61,71 +61,71 @@ more work than most normal wrapper functions).  As a result,
 you may achieve better performance by writing customized
 "helper" functions if you're making lots of calls to these
 functions in inner loops or other intensive operations.
-                </swigxml:code>
-                <swigxml:section string="doc"  />
-              </swig:insert>
-              <swig:types >
-                <swigxml:parms >
-                  <swigxml:parm >
-                    <swigxml:type string="p.int"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.short"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.long"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.float"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.double"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.char"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.p.char"  />
-                  </swigxml:parm>
-                  <swigxml:parm >
-                    <swigxml:type string="p.void"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-              </swig:types>
-              <swig:file name="../../Lib/xml/ptrlang.i" >
-                <swigxml:child >
-                  <swig:insert >
-                    <swigxml:code >
+                </alaqilxml:code>
+                <alaqilxml:section string="doc"  />
+              </alaqil:insert>
+              <alaqil:types >
+                <alaqilxml:parms >
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.int"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.short"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.long"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.float"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.double"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.char"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.p.char"  />
+                  </alaqilxml:parm>
+                  <alaqilxml:parm >
+                    <alaqilxml:type string="p.void"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+              </alaqil:types>
+              <alaqil:file name="../../Lib/xml/ptrlang.i" >
+                <alaqilxml:child >
+                  <alaqil:insert >
+                    <alaqilxml:code >
 
 #include &amp;lt;ctype.h>
 
 /* Types used by the library */
-static swig_type_info *SWIG_POINTER_int_p = 0;
-static swig_type_info *SWIG_POINTER_short_p =0;
-static swig_type_info *SWIG_POINTER_long_p = 0;
-static swig_type_info *SWIG_POINTER_float_p = 0;
-static swig_type_info *SWIG_POINTER_double_p = 0;
-static swig_type_info *SWIG_POINTER_char_p = 0;
-static swig_type_info *SWIG_POINTER_char_pp = 0;
-static swig_type_info *SWIG_POINTER_void_p = 0;
-                    </swigxml:code>
-                  </swig:insert>
-                  <swig:insert >
-                    <swigxml:code >
+static alaqil_type_info *alaqil_POINTER_int_p = 0;
+static alaqil_type_info *alaqil_POINTER_short_p =0;
+static alaqil_type_info *alaqil_POINTER_long_p = 0;
+static alaqil_type_info *alaqil_POINTER_float_p = 0;
+static alaqil_type_info *alaqil_POINTER_double_p = 0;
+static alaqil_type_info *alaqil_POINTER_char_p = 0;
+static alaqil_type_info *alaqil_POINTER_char_pp = 0;
+static alaqil_type_info *alaqil_POINTER_void_p = 0;
+                    </alaqilxml:code>
+                  </alaqil:insert>
+                  <alaqil:insert >
+                    <alaqilxml:code >
 
-  SWIG_POINTER_int_p = SWIG_TypeQuery("int *");
-  SWIG_POINTER_short_p = SWIG_TypeQuery("short *");
-  SWIG_POINTER_long_p = SWIG_TypeQuery("long *");
-  SWIG_POINTER_float_p = SWIG_TypeQuery("float *");
-  SWIG_POINTER_double_p = SWIG_TypeQuery("double *");
-  SWIG_POINTER_char_p = SWIG_TypeQuery("char *");
-  SWIG_POINTER_char_pp = SWIG_TypeQuery("char **");
-  SWIG_POINTER_void_p = SWIG_TypeQuery("void *");
-                    </swigxml:code>
-                    <swigxml:section string="init"  />
-                  </swig:insert>
-                  <swig:insert >
-                    <swigxml:code >
+  alaqil_POINTER_int_p = alaqil_TypeQuery("int *");
+  alaqil_POINTER_short_p = alaqil_TypeQuery("short *");
+  alaqil_POINTER_long_p = alaqil_TypeQuery("long *");
+  alaqil_POINTER_float_p = alaqil_TypeQuery("float *");
+  alaqil_POINTER_double_p = alaqil_TypeQuery("double *");
+  alaqil_POINTER_char_p = alaqil_TypeQuery("char *");
+  alaqil_POINTER_char_pp = alaqil_TypeQuery("char **");
+  alaqil_POINTER_void_p = alaqil_TypeQuery("void *");
+                    </alaqilxml:code>
+                    <alaqilxml:section string="init"  />
+                  </alaqil:insert>
+                  <alaqil:insert >
+                    <alaqilxml:code >
 
 
 /* #ifdef WIN32
@@ -154,7 +154,7 @@ static SV *_ptrvalue(SV *_PTRVALUE, int index, char *type) {
   void     *ptr;
   SV       *obj = 0;
 
-  if (SWIG_ConvertPtr(_PTRVALUE, &amp;ptr, 0) &amp;lt; 0) {
+  if (alaqil_ConvertPtr(_PTRVALUE, &amp;ptr, 0) &amp;lt; 0) {
     croak("Type error it ptrvalue. Argument is not a valid pointer value.");
   } else {
     /* If no datatype was passed, try a few common datatypes first */
@@ -162,19 +162,19 @@ static SV *_ptrvalue(SV *_PTRVALUE, int index, char *type) {
 
       /* No datatype was passed.   Type to figure out if it's a common one */
 
-      if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_int_p) >= 0) {
+      if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_int_p) >= 0) {
 	type = "int";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_double_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_double_p) >= 0) {
 	type = "double";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_short_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_short_p) >= 0) {
 	type = "short";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_long_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_long_p) >= 0) {
 	type = "long";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_float_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_float_p) >= 0) {
 	type = "float";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_char_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_char_p) >= 0) {
 	type = "char";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_char_pp) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_char_pp) >= 0) {
 	type = "char *";
       } else {
 	type = "unknown";
@@ -237,34 +237,34 @@ static SV *_ptrcreate(char *type, SV *value, int numelements) {
   void     *ptr;
   SV       *obj;
   int       sz;
-  swig_type_info *cast = 0;
+  alaqil_type_info *cast = 0;
 
   /* Check the type string against a variety of possibilities */
 
   if (strcmp(type,"int") == 0) {
     sz = sizeof(int)*numelements;
-    cast = SWIG_POINTER_int_p;
+    cast = alaqil_POINTER_int_p;
   } else if (strcmp(type,"short") == 0) {
     sz = sizeof(short)*numelements;
-    cast = SWIG_POINTER_short_p;
+    cast = alaqil_POINTER_short_p;
   } else if (strcmp(type,"long") == 0) {
     sz = sizeof(long)*numelements;
-    cast = SWIG_POINTER_long_p;
+    cast = alaqil_POINTER_long_p;
   } else if (strcmp(type,"double") == 0) {
     sz = sizeof(double)*numelements;
-    cast = SWIG_POINTER_double_p;
+    cast = alaqil_POINTER_double_p;
   } else if (strcmp(type,"float") == 0) {
     sz = sizeof(float)*numelements;
-    cast = SWIG_POINTER_float_p;
+    cast = alaqil_POINTER_float_p;
   } else if (strcmp(type,"char") == 0) {
     sz = sizeof(char)*numelements;
-    cast = SWIG_POINTER_char_p;
+    cast = alaqil_POINTER_char_p;
   } else if (strcmp(type,"char *") == 0) {
     sz = sizeof(char *)*(numelements+1);
-    cast = SWIG_POINTER_char_pp;
+    cast = alaqil_POINTER_char_pp;
   } else if (strcmp(type,"void") == 0) {
     sz = numelements;
-    cast = SWIG_POINTER_void_p;
+    cast = alaqil_POINTER_void_p;
   } else {
     croak("Unable to create unknown datatype.");
     return 0;
@@ -340,7 +340,7 @@ static SV *_ptrcreate(char *type, SV *value, int numelements) {
 
 
   obj = sv_newmortal();
-  SWIG_MakePtr(obj,ptr,cast);
+  alaqil_MakePtr(obj,ptr,cast);
   return obj;
 }
 
@@ -362,25 +362,25 @@ static void _ptrset(SV *_PTRVALUE, SV *value, int index, char *type) {
   SV       *obj;
 
 
-  if (SWIG_ConvertPtr(_PTRVALUE, &amp;ptr, 0) &amp;lt; 0) {
+  if (alaqil_ConvertPtr(_PTRVALUE, &amp;ptr, 0) &amp;lt; 0) {
     croak("Type error it ptrvalue. Argument is not a valid pointer value.");
   } else {
     /* If no datatype was passed, try a few common datatypes first */
     if (!type) {
       /* No datatype was passed.   Type to figure out if it's a common one */
-      if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_int_p) >= 0) {
+      if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_int_p) >= 0) {
 	type = "int";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_double_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_double_p) >= 0) {
 	type = "double";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_short_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_short_p) >= 0) {
 	type = "short";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_long_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_long_p) >= 0) {
 	type = "long";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_float_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_float_p) >= 0) {
 	type = "float";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_char_p) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_char_p) >= 0) {
 	type = "char";
-      } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_char_pp) >= 0) {
+      } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_char_pp) >= 0) {
 	type = "char *";
       } else {
 	type = "unknown";
@@ -439,24 +439,24 @@ static SV *_ptradd(SV *_PTRVALUE, int offset) {
 
   void *ptr,*junk;
   SV   *obj;
-  swig_type_info *type;
+  alaqil_type_info *type;
   char *tname;
 
   /* Try to handle a few common datatypes first */
 
-  if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_int_p) >= 0) {
+  if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_int_p) >= 0) {
     ptr = (void *) (((int *) ptr) + offset);
-  } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_double_p) >= 0) {
+  } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_double_p) >= 0) {
     ptr = (void *) (((double *) ptr) + offset);
-  } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_short_p) >= 0) {
+  } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_short_p) >= 0) {
     ptr = (void *) (((short *) ptr) + offset);
-  } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_long_p) >= 0) {
+  } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_long_p) >= 0) {
     ptr = (void *) (((long *) ptr) + offset);
-  } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_float_p) >= 0) {
+  } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_float_p) >= 0) {
     ptr = (void *) (((float *) ptr) + offset);
-  } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,SWIG_POINTER_char_p) >= 0) {
+  } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,alaqil_POINTER_char_p) >= 0) {
     ptr = (void *) (((char *) ptr) + offset);
-  } else if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,0) >= 0) {
+  } else if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,0) >= 0) {
     ptr = (void *) (((char *) ptr) + offset);
   } else {
     croak("Type error in ptradd. Argument is not a valid pointer value.");
@@ -484,13 +484,13 @@ void _ptrfree(SV *_PTRVALUE) {
 
   void *ptr, *junk;
 
-  if (SWIG_ConvertPtr(_PTRVALUE,&amp;ptr,0) &amp;lt; 0) {
+  if (alaqil_ConvertPtr(_PTRVALUE,&amp;ptr,0) &amp;lt; 0) {
     croak("Type error in ptrfree. Argument is not a valid pointer value.");
     return;
   }
 
   /* Check to see if this pointer is a char ** */
-  if (SWIG_ConvertPtr(_PTRVALUE,&amp;junk,SWIG_POINTER_char_pp) >= 0) {
+  if (alaqil_ConvertPtr(_PTRVALUE,&amp;junk,alaqil_POINTER_char_pp) >= 0) {
     char **c = (char **) ptr;
     if (c) {
       int i = 0;
@@ -504,416 +504,416 @@ void _ptrfree(SV *_PTRVALUE) {
     free((char *) ptr);
 }
 
-                    </swigxml:code>
-                  </swig:insert>
-                  <swig:typemap name="ptr" >
-                    <swigxml:code >
+                    </alaqilxml:code>
+                  </alaqil:insert>
+                  <alaqil:typemap name="ptr" >
+                    <alaqilxml:code >
 {
   $target = $source;
-}                    </swigxml:code>
-                    <swigxml:method string="in"  />
-                    <swigxml:type string="p.SV"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
-                  <swig:typemap name="value" >
-                    <swigxml:code >
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="in"  />
+                    <alaqilxml:type string="p.SV"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
+                  <alaqil:typemap name="value" >
+                    <alaqilxml:code >
 {
   $target = $source;
-}                    </swigxml:code>
-                    <swigxml:method string="in"  />
-                    <swigxml:type string="p.SV"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
-                  <swig:typemap name="ptrcast" >
-                    <swigxml:code >
-{
-  $target = $source;
-  argvi++;
-}                    </swigxml:code>
-                    <swigxml:method string="out"  />
-                    <swigxml:type string="p.SV"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
-                  <swig:typemap name="ptrvalue" >
-                    <swigxml:code >
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="in"  />
+                    <alaqilxml:type string="p.SV"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
+                  <alaqil:typemap name="ptrcast" >
+                    <alaqilxml:code >
 {
   $target = $source;
   argvi++;
-}                    </swigxml:code>
-                    <swigxml:method string="out"  />
-                    <swigxml:type string="p.SV"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
-                  <swig:typemap name="ptrcreate" >
-                    <swigxml:code >
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="out"  />
+                    <alaqilxml:type string="p.SV"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
+                  <alaqil:typemap name="ptrvalue" >
+                    <alaqilxml:code >
 {
   $target = $source;
   argvi++;
-}                    </swigxml:code>
-                    <swigxml:method string="out"  />
-                    <swigxml:type string="p.SV"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
-                  <swig:typemap name="ptradd" >
-                    <swigxml:code >
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="out"  />
+                    <alaqilxml:type string="p.SV"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
+                  <alaqil:typemap name="ptrcreate" >
+                    <alaqilxml:code >
 {
   $target = $source;
   argvi++;
-}                    </swigxml:code>
-                    <swigxml:method string="out"  />
-                    <swigxml:type string="p.SV"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
-                  <swig:typemap name="ptrset" >
-                    <swigxml:code >
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="out"  />
+                    <alaqilxml:type string="p.SV"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
+                  <alaqil:typemap name="ptradd" >
+                    <alaqilxml:code >
+{
+  $target = $source;
+  argvi++;
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="out"  />
+                    <alaqilxml:type string="p.SV"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
+                  <alaqil:typemap name="ptrset" >
+                    <alaqilxml:code >
 {
   if ($source == -1) return NULL;
-}                    </swigxml:code>
-                    <swigxml:method string="ret"  />
-                    <swigxml:type string="int"  />
-                    <swigxml:lang string="perl5"  />
-                  </swig:typemap>
+}                    </alaqilxml:code>
+                    <alaqilxml:method string="ret"  />
+                    <alaqilxml:type string="int"  />
+                    <alaqilxml:lang string="perl5"  />
+                  </alaqil:typemap>
                   <c:function name="ptrvalue" >
-                    <swigxml:parms >
-                      <swigxml:parm name="ptr" >
-                        <swigxml:type string="p.SV"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="index" >
-                        <swigxml:value string="0"  />
-                        <swigxml:type string="int"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="type" >
-                        <swigxml:value string="0"  />
-                        <swigxml:type string="p.char"  />
-                      </swigxml:parm>
-                    </swigxml:parms>
-                    <swigxml:type string="p.SV"  />
+                    <alaqilxml:parms >
+                      <alaqilxml:parm name="ptr" >
+                        <alaqilxml:type string="p.SV"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="index" >
+                        <alaqilxml:value string="0"  />
+                        <alaqilxml:type string="int"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="type" >
+                        <alaqilxml:value string="0"  />
+                        <alaqilxml:type string="p.char"  />
+                      </alaqilxml:parm>
+                    </alaqilxml:parms>
+                    <alaqilxml:type string="p.SV"  />
                   </c:function>
                   <c:function name="ptrset" >
-                    <swigxml:parms >
-                      <swigxml:parm name="ptr" >
-                        <swigxml:type string="p.SV"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="value" >
-                        <swigxml:type string="p.SV"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="index" >
-                        <swigxml:value string="0"  />
-                        <swigxml:type string="int"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="type" >
-                        <swigxml:value string="0"  />
-                        <swigxml:type string="p.char"  />
-                      </swigxml:parm>
-                    </swigxml:parms>
-                    <swigxml:type string="void"  />
+                    <alaqilxml:parms >
+                      <alaqilxml:parm name="ptr" >
+                        <alaqilxml:type string="p.SV"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="value" >
+                        <alaqilxml:type string="p.SV"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="index" >
+                        <alaqilxml:value string="0"  />
+                        <alaqilxml:type string="int"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="type" >
+                        <alaqilxml:value string="0"  />
+                        <alaqilxml:type string="p.char"  />
+                      </alaqilxml:parm>
+                    </alaqilxml:parms>
+                    <alaqilxml:type string="void"  />
                   </c:function>
                   <c:function name="ptrcreate" >
-                    <swigxml:parms >
-                      <swigxml:parm name="type" >
-                        <swigxml:type string="p.char"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="value" >
-                        <swigxml:value string="0"  />
-                        <swigxml:type string="p.SV"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="nitems" >
-                        <swigxml:value string="1"  />
-                        <swigxml:type string="int"  />
-                      </swigxml:parm>
-                    </swigxml:parms>
-                    <swigxml:type string="p.SV"  />
+                    <alaqilxml:parms >
+                      <alaqilxml:parm name="type" >
+                        <alaqilxml:type string="p.char"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="value" >
+                        <alaqilxml:value string="0"  />
+                        <alaqilxml:type string="p.SV"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="nitems" >
+                        <alaqilxml:value string="1"  />
+                        <alaqilxml:type string="int"  />
+                      </alaqilxml:parm>
+                    </alaqilxml:parms>
+                    <alaqilxml:type string="p.SV"  />
                   </c:function>
                   <c:function name="ptrfree" >
-                    <swigxml:parms >
-                      <swigxml:parm name="ptr" >
-                        <swigxml:type string="p.SV"  />
-                      </swigxml:parm>
-                    </swigxml:parms>
-                    <swigxml:type string="void"  />
+                    <alaqilxml:parms >
+                      <alaqilxml:parm name="ptr" >
+                        <alaqilxml:type string="p.SV"  />
+                      </alaqilxml:parm>
+                    </alaqilxml:parms>
+                    <alaqilxml:type string="void"  />
                   </c:function>
                   <c:function name="ptradd" >
-                    <swigxml:parms >
-                      <swigxml:parm name="ptr" >
-                        <swigxml:type string="p.SV"  />
-                      </swigxml:parm>
-                      <swigxml:parm name="offset" >
-                        <swigxml:type string="int"  />
-                      </swigxml:parm>
-                    </swigxml:parms>
-                    <swigxml:type string="p.SV"  />
+                    <alaqilxml:parms >
+                      <alaqilxml:parm name="ptr" >
+                        <alaqilxml:type string="p.SV"  />
+                      </alaqilxml:parm>
+                      <alaqilxml:parm name="offset" >
+                        <alaqilxml:type string="int"  />
+                      </alaqilxml:parm>
+                    </alaqilxml:parms>
+                    <alaqilxml:type string="p.SV"  />
                   </c:function>
-                </swigxml:child>
-                <swigxml:type string="include"  />
-              </swig:file>
-            </swigxml:child>
-            <swigxml:type string="include"  />
-          </swig:file>
-          <swig:file name="../../Lib/xml/typemaps.i" >
-            <swigxml:child >
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="double"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+                </alaqilxml:child>
+                <alaqilxml:type string="include"  />
+              </alaqil:file>
+            </alaqilxml:child>
+            <alaqilxml:type string="include"  />
+          </alaqil:file>
+          <alaqil:file name="../../Lib/xml/typemaps.i" >
+            <alaqilxml:child >
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="double"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (double) SvNV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="float"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="float"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (float) SvNV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (int) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="short"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="short"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (short) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="long"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="long"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (long) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (unsigned int) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned short"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned short"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (unsigned short) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned long"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned long"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (unsigned long) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="INPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned char"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="INPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned char"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   temp = (unsigned char) SvIV($source);
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned char"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned char"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="short"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="short"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="long"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="long"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.unsigned int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned short"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.unsigned int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned short"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned long"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned long"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="unsigned char"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="unsigned char"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;amp;amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.unsigned char"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="float"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.unsigned char"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="float"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;amp;amp;amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:parms >
-                  <swigxml:parm name="temp" >
-                    <swigxml:type string="double"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="temp" >
+                    <alaqilxml:type string="double"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   $target = &amp;amp;amp;amp;amp;amp;amp;amp;amp;temp;
-}                </swigxml:code>
-                <swigxml:method string="ignore"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="ignore"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -921,13 +921,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -935,13 +935,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -949,13 +949,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -963,13 +963,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -977,13 +977,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -991,13 +991,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -1005,13 +1005,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setiv($target,(IV) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned char"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned char"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -1019,13 +1019,13 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setnv($target,(double) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="OUTPUT" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="OUTPUT" >
+                <alaqilxml:code >
 {
   if (argvi >= items) {
     EXTEND(sp,1);
@@ -1033,144 +1033,144 @@ void _ptrfree(SV *_PTRVALUE) {
   $target = sv_newmortal();
   sv_setnv($target,(double) *($source));
   argvi++;
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.int"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.short"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.long"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned short"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned long"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned char"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned char"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.float"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.double"  />
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="INPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.int"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.short"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.long"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned short"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned long"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.unsigned char"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned char"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.float"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="BOTH" >
-                <swigxml:srctype string="p.double"  />
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-                <swigxml:srcname string="OUTPUT"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="double"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.int"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.short"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.long"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned short"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned long"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned char"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned char"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.float"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.double"  />
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="INPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.int"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.short"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.long"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned short"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned long"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.unsigned char"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned char"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.float"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="BOTH" >
+                <alaqilxml:srctype string="p.double"  />
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+                <alaqilxml:srcname string="OUTPUT"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="double"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1183,18 +1183,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = SvNV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="float"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="float"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1206,18 +1206,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = (float) SvNV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1229,18 +1229,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = SvIV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="short"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="short"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1252,18 +1252,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = (short) SvIV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="long"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="long"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1275,18 +1275,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = (long) SvIV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="unsigned int"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="unsigned int"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1298,18 +1298,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = (unsigned int) SvIV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="unsigned short"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="unsigned short"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1321,18 +1321,18 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = (unsigned short) SvIV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:parms >
-                  <swigxml:parm name="dvalue" >
-                    <swigxml:type string="unsigned long"  />
-                  </swigxml:parm>
-                </swigxml:parms>
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:parms >
+                  <alaqilxml:parm name="dvalue" >
+                    <alaqilxml:type string="unsigned long"  />
+                  </alaqilxml:parm>
+                </alaqilxml:parms>
+                <alaqilxml:code >
 {
   SV *tempsv;
   if (!SvROK($source)) {
@@ -1344,143 +1344,143 @@ void _ptrfree(SV *_PTRVALUE) {
   }
   dvalue = (unsigned long) SvIV(tempsv);
   $target = &amp;dvalue;
-}                </swigxml:code>
-                <swigxml:method string="in"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="in"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setnv(tempsv, (double) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.double"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.double"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setnv(tempsv, (double) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.float"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.float"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setiv(tempsv, (int) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setiv(tempsv, (int) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setiv(tempsv, (int) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setiv(tempsv, (int) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned int"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned int"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setiv(tempsv, (int) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned short"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-              <swig:typemap name="REFERENCE" >
-                <swigxml:code >
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned short"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+              <alaqil:typemap name="REFERENCE" >
+                <alaqilxml:code >
 {
   SV *tempsv;
   tempsv = SvRV($arg);
   sv_setiv(tempsv, (int) *$source);
-}                </swigxml:code>
-                <swigxml:method string="argout"  />
-                <swigxml:type string="p.unsigned long"  />
-                <swigxml:lang string="perl5"  />
-              </swig:typemap>
-            </swigxml:child>
-            <swigxml:type string="include"  />
-          </swig:file>
+}                </alaqilxml:code>
+                <alaqilxml:method string="argout"  />
+                <alaqilxml:type string="p.unsigned long"  />
+                <alaqilxml:lang string="perl5"  />
+              </alaqil:typemap>
+            </alaqilxml:child>
+            <alaqilxml:type string="include"  />
+          </alaqil:file>
           <c:function name="sub" >
-            <swigxml:parms >
-              <swigxml:parm name="INPUT" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-              <swigxml:parm name="INPUT" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-              <swigxml:parm name="OUTPUT" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="void"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="INPUT" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="INPUT" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="OUTPUT" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="void"  />
           </c:function>
-          <swig:apply name="OUTPUT" >
-            <swigxml:parms >
-              <swigxml:none name="r" >
-                <swigxml:type string="p.int"  />
-              </swigxml:none>
-            </swigxml:parms>
-            <swigxml:type string="p.int"  />
-          </swig:apply>
+          <alaqil:apply name="OUTPUT" >
+            <alaqilxml:parms >
+              <alaqilxml:none name="r" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:none>
+            </alaqilxml:parms>
+            <alaqilxml:type string="p.int"  />
+          </alaqil:apply>
           <c:function name="divide" >
-            <swigxml:parms >
-              <swigxml:parm name="n" >
-                <swigxml:type string="int"  />
-              </swigxml:parm>
-              <swigxml:parm name="d" >
-                <swigxml:type string="int"  />
-              </swigxml:parm>
-              <swigxml:parm name="r" >
-                <swigxml:type string="p.int"  />
-              </swigxml:parm>
-            </swigxml:parms>
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="int"  />
+            <alaqilxml:parms >
+              <alaqilxml:parm name="n" >
+                <alaqilxml:type string="int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="d" >
+                <alaqilxml:type string="int"  />
+              </alaqilxml:parm>
+              <alaqilxml:parm name="r" >
+                <alaqilxml:type string="p.int"  />
+              </alaqilxml:parm>
+            </alaqilxml:parms>
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="int"  />
           </c:function>
-        </swigxml:child>
-        <swigxml:type string="include"  />
-      </swig:file>
-    </swigxml:child>
-  </swig:top>
-</swigxml:swig>
+        </alaqilxml:child>
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+    </alaqilxml:child>
+  </alaqil:top>
+</alaqilxml:alaqil>

@@ -1,16 +1,16 @@
 <html>
 <head>
-<title>SWIG:Examples:python</title>
+<title>alaqil:Examples:python</title>
 </head>
 
 <body bgcolor="#ffffff">
-<H1>SWIG Python Examples</H1>
+<H1>alaqil Python Examples</H1>
 
 <p>
-The following examples illustrate the use of SWIG with Python.
+The following examples illustrate the use of alaqil with Python.
 
 <ul>
-<li><a href="simple/index.html">simple</a>.  A minimal example showing how SWIG can
+<li><a href="simple/index.html">simple</a>.  A minimal example showing how alaqil can
 be used to wrap a C function, a global variable, and a constant.
 <li><a href="constants/index.html">constants</a>.  This shows how preprocessor macros and
 certain C declarations are turned into constants.
@@ -25,11 +25,11 @@ certain C declarations are turned into constants.
 <h2>Compilation Issues</h2>
 
 <ul>
-<li>To create a Python extension, SWIG is run with the following options:
+<li>To create a Python extension, alaqil is run with the following options:
 
 <blockquote>
 <pre>
-% swig -python interface.i
+% alaqil -python interface.i
 </pre>
 </blockquote>
 
@@ -43,7 +43,7 @@ the steps look like this (Linux):
 
 <blockquote>
 <pre>
-% swig -python interface.i
+% alaqil -python interface.i
 % gcc -fpic -c interface_wrap.c -I/usr/local/include/python1.5
 % gcc -shared interface_wrap.o $(OBJS) -o interfacemodule.so 
 % python
@@ -93,7 +93,7 @@ This will ensure the 2to3 program is run prior to running any example.
 
 <p>
 Your mileage may vary.  If you experience a problem, please let us know by 
-contacting us on the <a href="http://www.swig.org/mail.html">mailing lists</a>.
+contacting us on the <a href="http://www.alaqil.org/mail.html">mailing lists</a>.
 </body>
 </html>
 

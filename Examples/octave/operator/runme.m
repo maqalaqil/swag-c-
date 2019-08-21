@@ -4,10 +4,10 @@ if exist("crash_dumps_octave_core", "builtin")
 endif
 
 # Operator overloading example
-swigexample
+alaqilexample
 
-a = swigexample.ComplexVal(2,3);
-b = swigexample.ComplexVal(-5,10);
+a = alaqilexample.ComplexVal(2,3);
+b = alaqilexample.ComplexVal(-5,10);
 
 printf("a   = %s\n",disp(a));
 printf("b   = %s\n",disp(b));
@@ -17,7 +17,7 @@ printf("c   = %s\n",disp(c));
 printf("a*b = %s\n",disp(a*b));
 printf("a-c = %s\n",disp(a-c));
 
-e = swigexample.ComplexVal(a-c);
+e = alaqilexample.ComplexVal(a-c);
 printf("e   = %s\n",disp(e));
 
 # Big expression
@@ -35,7 +35,7 @@ printf("single(a) = %g\n", single(a));
 printf("double(a) = %g\n", double(a));
 
 # unary functions
-if swig_octave_prereq(3,8,0)
+if alaqil_octave_prereq(3,8,0)
   printf("real(a) = %g\n", real(a));
   printf("imag(a) = %g\n", imag(a));
   printf("abs(a) = %g\n", abs(a));

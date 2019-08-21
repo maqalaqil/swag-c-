@@ -1,6 +1,6 @@
 %module cpp11_reference_wrapper
 
-// SWIG could provide some sort of typemaps for reference_wrapper which is acts like a C++ reference,
+// alaqil could provide some sort of typemaps for reference_wrapper which is acts like a C++ reference,
 // but is copy-constructible and copy-assignable
 
 %inline %{

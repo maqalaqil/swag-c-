@@ -10,25 +10,25 @@
 };
 
 %inline %{
-#ifndef SWIG_DIRECTORS
+#ifndef alaqil_DIRECTORS
 // dummy definition for non-director languages
-namespace Swig {
+namespace alaqil {
   typedef int Director;
 }
 #endif
 %}
 
-// Some director implementations do not have Swig::director
-#if !defined(SWIGGO)
+// Some director implementations do not have alaqil::director
+#if !defined(alaqilGO)
 %extend SpObject
 {
   size_t ExceptionMethod()
   {
 // Check positioning of director code in wrapper file
 // Below is what we really want to test, but director exceptions vary too much across all languages
-//    throw Swig::DirectorException("DirectorException was not in scope!!");
+//    throw alaqil::DirectorException("DirectorException was not in scope!!");
 // Instead check definition of Director class as that is defined in the same place as DirectorException (director.swg)
-    size_t size = sizeof(Swig::Director);
+    size_t size = sizeof(alaqil::Director);
     return size;
   }
 }

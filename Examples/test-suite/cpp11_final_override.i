@@ -3,10 +3,10 @@
 
 %module cpp11_final_override
 
-%warnfilter(SWIGWARN_PARSE_KEYWORD) final; // 'final' is a java keyword, renaming to '_final'
-%warnfilter(SWIGWARN_PARSE_KEYWORD) override; // 'override' is a C# keyword, renaming to '_override'
+%warnfilter(alaqilWARN_PARSE_KEYWORD) final; // 'final' is a java keyword, renaming to '_final'
+%warnfilter(alaqilWARN_PARSE_KEYWORD) override; // 'override' is a C# keyword, renaming to '_override'
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)

@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Using_protected
 
 let f = new_FooBar C_void

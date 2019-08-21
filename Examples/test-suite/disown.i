@@ -4,9 +4,9 @@
 #include <iostream>
 %}
 
-#pragma SWIG nowarn=SWIGWARN_TYPEMAP_APPLY_UNDEF
+#pragma alaqil nowarn=alaqilWARN_TYPEMAP_APPLY_UNDEF
 
-%apply SWIGTYPE *DISOWN { A *disown };
+%apply alaqilTYPE *DISOWN { A *disown };
 
 %inline {
   struct A

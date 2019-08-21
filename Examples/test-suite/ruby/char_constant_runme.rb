@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'char_constant'
 
@@ -28,7 +28,7 @@ if Char_constant::NULL_CONST != "\000"
   raise RuntimeError, "Invalid value for NULL_CONST."
 end
 
-if Char_constant::SPECIALCHAR != "\341"  #'á'
+if Char_constant::SPECIALCHAR != "\341"  #'ï¿½'
   raise RuntimeError, "Invalid value for SPECIALCHAR."
 end
 

@@ -1,7 +1,7 @@
 %module abstract_inherit_ok
 
 %feature("notabstract") Spam;
-%warnfilter(SWIGWARN_TYPE_ABSTRACT) Spam;
+%warnfilter(alaqilWARN_TYPE_ABSTRACT) Spam;
 
 %inline %{
 
@@ -14,7 +14,7 @@ public:
 class Spam: public Foo {
 public:
    Spam() { }
-#ifndef SWIG
+#ifndef alaqil
    int blah() { return 0; }
 #endif
 };

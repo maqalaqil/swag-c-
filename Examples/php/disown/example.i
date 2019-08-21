@@ -5,7 +5,7 @@
 #include "example.h"
 %}
 
-%apply SWIGTYPE *DISOWN {(Shape *s)};
+%apply alaqilTYPE *DISOWN {(Shape *s)};
 
 /* Let's just grab the original header file here */
 %include "example.h"

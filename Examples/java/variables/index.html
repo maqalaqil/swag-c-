@@ -1,25 +1,25 @@
 <html>
 <head>
-<title>SWIG:Examples:java:variables</title>
+<title>alaqil:Examples:java:variables</title>
 </head>
 
 <body bgcolor="#ffffff">
 
-<tt>SWIG/Examples/java/variables/</tt>
+<tt>alaqil/Examples/java/variables/</tt>
 <hr>
 
 <H2>Wrapping C Global Variables</H2>
 
 <p>
-When a C global variable appears in an interface file, SWIG tries to
+When a C global variable appears in an interface file, alaqil tries to
 wrap it using a technique known as "variable linking."  The idea is
 pretty simple---we try to create a Java variable that magically
 retrieves or updates the value of the underlying C variable when it is
-accessed.  Click <a href="example.i">here</a> to see a SWIG interface with some variable
+accessed.  Click <a href="example.i">here</a> to see a alaqil interface with some variable
 declarations in it.
 
 
-<p>Click <a href="../../../Doc/Manual/Java.html#global_variables">here</a> for the section on global variables in the SWIG and Java documentation.</p>
+<p>Click <a href="../../../Doc/Manual/Java.html#global_variables">here</a> for the section on global variables in the alaqil and Java documentation.</p>
 <h2>Manipulating Variables from Java</h2>
 
 C variables are accessed through getters and setters from Java. Unfortunately this is the only way to get current values from variables because it is not possible to overload the dot operator in Java. All global variables are accessible from the module class. For example if the module class is called 'example', the global variable
@@ -44,10 +44,10 @@ out the values of the variables using this technique.
 <h2>Key points</h2>
 
 <ul>
-<li>When a global variable has the type "<tt>char *</tt>", SWIG manages it as a character
+<li>When a global variable has the type "<tt>char *</tt>", alaqil manages it as a character
 string.   However, whenever the value of such a variable is set from Java, the old
 value is destroyed using <tt>free()</tt> or <tt>delete</tt> (the choice of which depends
-on whether or not SWIG was run with the -c++ option).
+on whether or not alaqil was run with the -c++ option).
 <li><tt>signed char</tt> and <tt>unsigned char</tt> are handled as small 8-bit integers.
 <li>String array variables such as '<tt>char name[256]</tt>' are managed as Java strings, but
 when setting the value, the result is truncated to the maximum length of the array.  Furthermore, the string is assumed to be null-terminated.

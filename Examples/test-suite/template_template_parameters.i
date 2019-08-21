@@ -16,7 +16,7 @@
     class list_tt : public list_impl_t<t_item,pfc::array_t<t_item,t_alloc> > {
   public:
     t_item item;
-//    typename t_alloc<t_item>::alloc_type allotype; // SWIG can't handle this yet
+//    typename t_alloc<t_item>::alloc_type allotype; // alaqil can't handle this yet
     void xx() {
       typename t_alloc<t_item>::alloc_type atype; // this type is the same as t_item type
       atype = true;

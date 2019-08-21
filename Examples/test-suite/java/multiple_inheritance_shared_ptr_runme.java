@@ -6,7 +6,7 @@ public class multiple_inheritance_shared_ptr_runme {
     try {
       System.loadLibrary("multiple_inheritance_shared_ptr");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -61,8 +61,8 @@ public class multiple_inheritance_shared_ptr_runme {
     check(b3.abase1()!=309, "Bottom3::abase1() failed");
 
     //Test interfaces from c++ classes 
-    CBase1 cb1=new CBase1SwigImpl();
-    CBase2 cb2=new CBase2SwigImpl();
+    CBase1 cb1=new CBase1alaqilImpl();
+    CBase2 cb2=new CBase2alaqilImpl();
     check(cb1.cbase1y()!=1, "CBase1::cbase1y() failed");
     check(cb2.cbase2()!=2, "CBase2::cbase2() failed");
 

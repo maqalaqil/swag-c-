@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * d.swg
  *
- * Main library file for the D language module. See the D chapter in the SWIG
+ * Main library file for the D language module. See the D chapter in the alaqil
  * manual for explanation on the typemaps, pragmas, etc. used.
  * ----------------------------------------------------------------------------- */
 
@@ -12,7 +12,7 @@
 %include <dprimitives.swg>
 
 // Typemaps for non-primitive types (C/C++ classes and structs).
-%include <dswigtype.swg>
+%include <dalaqiltype.swg>
 
 // Typemaps for enumeration types.
 %include <denums.swg>

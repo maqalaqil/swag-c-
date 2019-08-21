@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly parses function objects
+/* This testcase checks whether alaqil correctly parses function objects
    and the templates for the functions (signature).
    Function objects are objects which overload the operator() function.
    The std::function does not provide any seamless support in the target languages yet.

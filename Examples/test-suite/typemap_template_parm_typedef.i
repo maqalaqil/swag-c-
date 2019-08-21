@@ -1,10 +1,10 @@
 %module typemap_template_parm_typedef
 
-%typemap(in) SWIGTYPE " _in_will_not_compile_ "
-%typemap(in) SWIGTYPE * " _in_will_not_compile_ "
+%typemap(in) alaqilTYPE " _in_will_not_compile_ "
+%typemap(in) alaqilTYPE * " _in_will_not_compile_ "
 
-%typemap(out) SWIGTYPE " _out_will_not_compile_ "
-%typemap(out) SWIGTYPE * " _out_will_not_compile_ "
+%typemap(out) alaqilTYPE " _out_will_not_compile_ "
+%typemap(out) alaqilTYPE * " _out_will_not_compile_ "
 
 %{
 #include <vector>
@@ -33,12 +33,12 @@
 %typemap(out) std::list<unsigned int> {
 }
 
-// The presennce of this 'out' typemap was hiding the std::vector<unsigned int> 'in' typemap in swig-2.0.5 and swig-2.0.6
+// The presennce of this 'out' typemap was hiding the std::vector<unsigned int> 'in' typemap in alaqil-2.0.5 and alaqil-2.0.6
 %typemap(out) std::vector<jada::uint> {
 }
 
 // This typemap was not used for no_typedef_out in 2.0.4 and earlier
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 %typemap(out) std::deque<jada::uint> {
   $result = 0;
 }

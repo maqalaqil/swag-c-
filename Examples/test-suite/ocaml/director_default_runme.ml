@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Director_default
 
 let director_default_MyFoo ob meth args =

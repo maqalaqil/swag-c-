@@ -6,13 +6,13 @@ public class director_ownership_runme {
     try {
       System.loadLibrary("director_ownership");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
 
   public static void set_content_and_release(Container container, ContentBase content) {
-    content.swigReleaseOwnership();
+    content.alaqilReleaseOwnership();
     container.set_content(content);
   }
 
@@ -30,8 +30,8 @@ public class director_ownership_runme {
     if (!container.get_content().get_name().equals("ContentDerived"))
       throw new RuntimeException("did not get ContentDerived");
 
-    // when swigReleaseOwnership() is called on content_cpp, swig tries a static_cast to director and calls the method
-    // director->swig_java_change_ownership. The content created in c++ native library is not a director, therefore a
+    // when alaqilReleaseOwnership() is called on content_cpp, alaqil tries a static_cast to director and calls the method
+    // director->alaqil_java_change_ownership. The content created in c++ native library is not a director, therefore a
     // segfault may occur.
     // With a check done using dynamic_cast this issue could be avoided.
     set_content_and_release(container, content_cpp);

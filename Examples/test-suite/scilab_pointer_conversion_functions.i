@@ -1,6 +1,6 @@
 %module scilab_pointer_conversion_functions
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK_MSG) pfoo; /* Setting a pointer/reference variable may leak memory. */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK_MSG) pfoo; /* Setting a pointer/reference variable may leak memory. */
 
 %inline %{
 
@@ -16,10 +16,10 @@ bool equalFooPointer(void *p) { return p == pfoo; }
 %}
 
 %typemap(out, noblock=1) struct structA* {
-  if (SwigScilabPtrFromObject(pvApiCtx, SWIG_Scilab_GetOutputPosition(), $1, SWIG_Scilab_TypeQuery("struct structA *"), 0, NULL) != SWIG_OK) {
-    return SWIG_ERROR;
+  if (alaqilScilabPtrFromObject(pvApiCtx, alaqil_Scilab_GetOutputPosition(), $1, alaqil_Scilab_TypeQuery("struct structA *"), 0, NULL) != alaqil_OK) {
+    return alaqil_ERROR;
   }
-  SWIG_Scilab_SetOutput(pvApiCtx, SWIG_NbInputArgument(pvApiCtx) + SWIG_Scilab_GetOutputPosition());
+  alaqil_Scilab_SetOutput(pvApiCtx, alaqil_NbInputArgument(pvApiCtx) + alaqil_Scilab_GetOutputPosition());
 }
 
 %inline %{

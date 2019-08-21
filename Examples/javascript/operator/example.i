@@ -1,6 +1,6 @@
 /* File : example.i */
 %module example
-#pragma SWIG nowarn=SWIGWARN_IGNORE_OPERATOR_EQ
+#pragma alaqil nowarn=alaqilWARN_IGNORE_OPERATOR_EQ
 %{
 #include "example.h"
 %}

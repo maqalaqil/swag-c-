@@ -26,7 +26,7 @@ check(v, 20);
 
 #expected = 10 
 #ev.nums.each do|val|
-#  swig_assert(val == expected)
+#  alaqil_assert(val == expected)
 #  expected += 10
 #end
 

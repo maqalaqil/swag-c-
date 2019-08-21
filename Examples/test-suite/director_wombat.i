@@ -1,5 +1,5 @@
 %module(directors="1") director_wombat
-#pragma SWIG nowarn=SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR
+#pragma alaqil nowarn=alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR
 
 %feature(director) Bar;
 %feature(director) Foo<int>;

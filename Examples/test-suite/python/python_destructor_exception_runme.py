@@ -39,8 +39,8 @@ class VectorHolder(object):
             yield e
 
 # See issue #559, #560, #573 - In Python 3.5, test2() call to the generator 'gen' was
-# resulting in the following (not for -builtin where there is no call to SWIG_Python_CallFunctor
-# as SwigPyObject_dealloc is not used):
+# resulting in the following (not for -builtin where there is no call to alaqil_Python_CallFunctor
+# as alaqilPyObject_dealloc is not used):
 #
 # StopIteration
 #

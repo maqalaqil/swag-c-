@@ -9,7 +9,7 @@ b = director_unroll.Bar();
 b.set(a);
 c = b.get();
 
-if (swig_this(a) != swig_this(c))
+if (alaqil_this(a) != alaqil_this(c))
   a,c
   error
 endif

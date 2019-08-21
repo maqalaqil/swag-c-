@@ -1,4 +1,4 @@
-// Based on https://github.com/swig/swig/issues/339 .
+// Based on https://github.com/alaqil/alaqil/issues/339 .
 
 %module inherit_member
 

@@ -1,7 +1,7 @@
 %module smart_pointer_overload
 
-#ifdef SWIGLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) test;
+#ifdef alaqilLUA	// lua only has one numeric type, so some overloads shadow each other creating warnings
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) test;
 #endif
 
 %inline %{

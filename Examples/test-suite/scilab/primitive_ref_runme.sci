@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 checkequal(ref_int(3), 3, "ref_int() test fails.");
 checkequal(ref_uint(uint32(3)), 3, "ref_uint() test fails.");
@@ -21,4 +21,4 @@ checkequal(ref_char('x'), 'x', "ref_char() test fails.");
 
 checkequal(ref_over(0), 0, "ref_over() test fails.");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

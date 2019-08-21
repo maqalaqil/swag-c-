@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     small = new_SmallStruct();
@@ -9,15 +9,15 @@ try
 
     Jill = SmallStruct_jill_get(small);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if Jill <> 200 then swigtesterror(); end
+if Jill <> 200 then alaqiltesterror(); end
 
 try
     Jack = BigStruct_jack_get(big);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if Jack <> 300 then swigtesterror(); end
+if Jack <> 300 then alaqiltesterror(); end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

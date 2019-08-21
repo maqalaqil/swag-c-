@@ -1,31 +1,31 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     x = makeFoo();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if fooCount() <> 1 then swigtesterror(); end
+if fooCount() <> 1 then alaqiltesterror(); end
 
 try
     y = makeFoo();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if fooCount() <> 2 then swigtesterror(); end
+if fooCount() <> 2 then alaqiltesterror(); end
 
 try
     delete_Foo(x);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if fooCount() <> 1 then swigtesterror(); end
+if fooCount() <> 1 then alaqiltesterror(); end
 
 try
     delete_Foo(y);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if fooCount() <> 0 then swigtesterror(); end
+if fooCount() <> 0 then alaqiltesterror(); end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

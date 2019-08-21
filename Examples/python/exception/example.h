@@ -1,7 +1,7 @@
 /* File : example.h */
 
 #include <string.h>
-#ifndef SWIG
+#ifndef alaqil
 struct A {
 };
 #endif

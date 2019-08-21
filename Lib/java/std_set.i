@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_set.i
  *
- * SWIG typemaps for std::set
+ * alaqil typemaps for std::set
  * The Java proxy class extends java.util.AbstractSet. The std::set
  * container looks and feels much like a java.util.HashSet from Java.
  * ----------------------------------------------------------------------------- */
@@ -17,9 +17,9 @@
 #include <stdexcept>
 %}
 
-%fragment("SWIG_SetSize", "header", fragment="SWIG_JavaIntFromSize_t") {
-  SWIGINTERN jint SWIG_SetSize(size_t size) {
-    jint sz = SWIG_JavaIntFromSize_t(size);
+%fragment("alaqil_SetSize", "header", fragment="alaqil_JavaIntFromSize_t") {
+  alaqilINTERN jint alaqil_SetSize(size_t size) {
+    jint sz = alaqil_JavaIntFromSize_t(size);
     if (sz == -1) {
       throw std::out_of_range("set size is too large to fit into a Java int");
     }
@@ -169,7 +169,7 @@ class set {
     iterator end();
 
     %extend {
-      %fragment("SWIG_SetSize");
+      %fragment("alaqil_SetSize");
 
       // Returns whether item was inserted.
       bool add(const T& key) {
@@ -187,7 +187,7 @@ class set {
       }
 
       jint sizeImpl() const throw (std::out_of_range) {
-        return SWIG_SetSize(self->size());
+        return alaqil_SetSize(self->size());
       }
 
       bool hasNextImpl(const iterator& itr) const {

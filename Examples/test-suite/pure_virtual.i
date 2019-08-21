@@ -1,19 +1,19 @@
 /* SF Bug #445219, submitted by Krzysztof Kozminski
    <kozminski@users.sf.net>. 
 
-   Swig 1.3.6 gets confused by pure virtual destructors,
+   alaqil 1.3.6 gets confused by pure virtual destructors,
    as in this file:
 */
 
 %module(ruby_minherit="1") pure_virtual
 
-%warnfilter(SWIGWARN_JAVA_MULTIPLE_INHERITANCE,
-	    SWIGWARN_CSHARP_MULTIPLE_INHERITANCE,
-	    SWIGWARN_D_MULTIPLE_INHERITANCE,
-	    SWIGWARN_PHP_MULTIPLE_INHERITANCE) E; /* C#, D, Java, PHP multiple inheritance */
+%warnfilter(alaqilWARN_JAVA_MULTIPLE_INHERITANCE,
+	    alaqilWARN_CSHARP_MULTIPLE_INHERITANCE,
+	    alaqilWARN_D_MULTIPLE_INHERITANCE,
+	    alaqilWARN_PHP_MULTIPLE_INHERITANCE) E; /* C#, D, Java, PHP multiple inheritance */
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %nodefaultctor C;
@@ -70,7 +70,7 @@ public:
 %}
 
 /* Fill in method from AA.  This class should be constructable */
-#if defined(SWIGCSHARP) || defined(SWIGD)
+#if defined(alaqilCSHARP) || defined(alaqilD)
 %ignore F::method2(); // Work around for lack of multiple inheritance support - base AA is ignored.
 #endif
 

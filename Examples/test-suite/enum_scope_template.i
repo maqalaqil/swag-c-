@@ -1,6 +1,6 @@
 %module enum_scope_template
 
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 // php internal naming conflict
 %rename (chops) chop;
 #endif

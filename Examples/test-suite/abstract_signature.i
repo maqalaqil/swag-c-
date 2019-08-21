@@ -1,7 +1,7 @@
 %module abstract_signature
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) abstract_foo;	// Ruby, wrong class name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) abstract_bar;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) abstract_foo;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) abstract_bar;	// Ruby, wrong class name
 
 %inline %{ 
 class abstract_foo 

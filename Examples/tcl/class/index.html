@@ -1,19 +1,19 @@
 <html>
 <head>
-<title>SWIG:Examples:tcl:class</title>
+<title>alaqil:Examples:tcl:class</title>
 </head>
 
 <body bgcolor="#ffffff">
 
 
-<tt>SWIG/Examples/tcl/class/</tt>
+<tt>alaqil/Examples/tcl/class/</tt>
 <hr>
 
 <H2>Wrapping a simple C++ class</H2>
 
 <p>
 This example illustrates the most primitive form of C++ class wrapping performed
-by SWIG.  In this case, C++ classes are simply transformed into a collection of
+by alaqil.  In this case, C++ classes are simply transformed into a collection of
 C-style functions that provide access to class members.
 
 <h2>The C++ Code</h2>
@@ -60,9 +60,9 @@ public:
 </pre>
 </blockquote>
 
-<h2>The SWIG interface</h2>
+<h2>The alaqil interface</h2>
 
-A simple SWIG interface for this can be built by simply grabbing the header file
+A simple alaqil interface for this can be built by simply grabbing the header file
 like this:
 
 <blockquote>
@@ -79,16 +79,16 @@ like this:
 </pre>
 </blockquote>
 
-Note: when creating a C++ extension, you must run SWIG with the <tt>-c++</tt> option like this:
+Note: when creating a C++ extension, you must run alaqil with the <tt>-c++</tt> option like this:
 <blockquote>
 <pre>
-% swig -c++ -tcl example.i
+% alaqil -c++ -tcl example.i
 </pre>
 </blockquote>
 
 <h2>Some sample Tcl scripts</h2>
 
-SWIG performs two forms of C++ wrapping-- a low level interface and a high level widget-like interface.
+alaqil performs two forms of C++ wrapping-- a low level interface and a high level widget-like interface.
 <ul>
 <li>
 Click <a href="runme.tcl">here</a> to see a script that calls the C++ functions using the
@@ -229,7 +229,7 @@ set Shapes_nshapes 13   # Set a static data member
 <li>The low-level function interface is much faster than the high-level interface.
 In fact, all the higher level interface does is call functions in the low-level interface.
 
-<li>SWIG <b>does</b> know how to properly perform upcasting of objects in an inheritance
+<li>alaqil <b>does</b> know how to properly perform upcasting of objects in an inheritance
 hierarchy (including multiple inheritance).  Therefore it is perfectly safe to pass
 an object of a derived class to any function involving a base class.
 

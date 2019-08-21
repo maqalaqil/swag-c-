@@ -73,31 +73,31 @@ x = d:toBase()
 print " Spam -> Base -> Foo : "
 y = foo.Foo_fromBase(x)
 if y then
-      print "bad swig"
+      print "bad alaqil"
 else
-      print "good swig"
+      print "good alaqil"
 end
 
 print " Spam -> Base -> Bar : "
 y = bar.Bar_fromBase(x)
 if y then
-      print "good swig"
+      print "good alaqil"
 else
-      print "bad swig"
+      print "bad alaqil"
 end
       
 print " Spam -> Base -> Spam : "
 y = spam.Spam_fromBase(x)
 if y then
-      print "good swig"
+      print "good alaqil"
 else
-      print "bad swig"
+      print "bad alaqil"
 end
 
 print " Foo -> Spam : "
 y = spam.Spam_fromBase(b)
 if y then
-      print "bad swig"
+      print "bad alaqil"
 else
-      print "good swig"
+      print "good alaqil"
 end

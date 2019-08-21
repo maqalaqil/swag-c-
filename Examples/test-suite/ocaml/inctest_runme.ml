@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Inctest
 
 let _ = new_A '()

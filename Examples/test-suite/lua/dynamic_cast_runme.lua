@@ -7,9 +7,9 @@ b = dynamic_cast.Bar()
 x = f:blah()
 y = b:blah()
 
--- swig_type is a swiglua specific function which gets the swig_type_info's name
-assert(swig_type(f)==swig_type(x))
-assert(swig_type(b)==swig_type(y))
+-- alaqil_type is a alaqillua specific function which gets the alaqil_type_info's name
+assert(alaqil_type(f)==alaqil_type(x))
+assert(alaqil_type(b)==alaqil_type(y))
 
 -- the real test: is y a Foo* or a Bar*?
 assert(dynamic_cast.do_test(y)=="Bar::test")

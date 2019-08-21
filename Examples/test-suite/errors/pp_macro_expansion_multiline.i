@@ -12,7 +12,7 @@ z
 void foo(int *);
 void foo(const int *);
 
-%define MYSWIGMACRO(A, B, C)
+%define MYalaqilMACRO(A, B, C)
 MYMACRO(funk1, 
         AA,
         BB,
@@ -23,7 +23,7 @@ MYMACRO(funk2,
         CC)
 %enddef
 
-MYSWIGMACRO(xx,
+MYalaqilMACRO(xx,
  yy,
  zz)
 

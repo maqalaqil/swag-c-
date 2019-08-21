@@ -1,18 +1,18 @@
 /* -----------------------------------------------------------------------------
  * std_vector.i
  *
- * SWIG typemaps for std::vector<T>, D implementation.
+ * alaqil typemaps for std::vector<T>, D implementation.
  *
  * The D wrapper is made to loosely resemble a tango.util.container.more.Vector
  * and to provide built-in array-like access.
  *
- * If T does define an operator==, then use the SWIG_STD_VECTOR_ENHANCED
+ * If T does define an operator==, then use the alaqil_STD_VECTOR_ENHANCED
  * macro to obtain enhanced functionality (none yet), for example:
  *
- *   SWIG_STD_VECTOR_ENHANCED(SomeNamespace::Klass)
+ *   alaqil_STD_VECTOR_ENHANCED(SomeNamespace::Klass)
  *   %template(VectKlass) std::vector<SomeNamespace::Klass>;
  *
- * Warning: heavy macro usage in this file. Use swig -E to get a sane view on
+ * Warning: heavy macro usage in this file. Use alaqil -E to get a sane view on
  * the real file contents!
  * ----------------------------------------------------------------------------- */
 
@@ -21,8 +21,8 @@
 %include <std_common.i>
 
 // MACRO for use within the std::vector class body
-%define SWIG_STD_VECTOR_MINIMUM_INTERNAL(CONST_REFERENCE, CTYPE...)
-#if (SWIG_D_VERSION == 1)
+%define alaqil_STD_VECTOR_MINIMUM_INTERNAL(CONST_REFERENCE, CTYPE...)
+#if (alaqil_D_VERSION == 1)
 %typemap(dimports) std::vector< CTYPE > "static import tango.core.Exception;"
 %proxycode %{
 public this($typemap(dtype, CTYPE)[] values) {
@@ -158,7 +158,7 @@ public void capacity(size_t value) {
     }
 
     // Wrappers for setting/getting items with the possibly thrown exception
-    // specified (important for SWIG wrapper generation).
+    // specified (important for alaqil wrapper generation).
     %extend {
       CONST_REFERENCE getElement(size_type index) throw (std::out_of_range) {
         if ((index < 0) || ($self->size() <= index)) {
@@ -168,7 +168,7 @@ public void capacity(size_t value) {
       }
     }
 
-    // Use CTYPE const& instead of const_reference to work around SWIG code
+    // Use CTYPE const& instead of const_reference to work around alaqil code
     // generation issue when using const pointers as vector elements (like
     // std::vector< const int* >).
     %extend {
@@ -346,14 +346,14 @@ alias pop_back stableRemoveBack;
 
 size_t insertBefore(Stuff)(Range r, Stuff stuff)
 if (std.traits.isImplicitlyConvertible!(Stuff, ValueType)) {
-  std.exception.enforce(r._outer.swigCPtr == swigCPtr && r._a < length);
+  std.exception.enforce(r._outer.alaqilCPtr == alaqilCPtr && r._a < length);
   insertAt(r._a, stuff);
   return 1;
 }
 
 size_t insertBefore(Stuff)(Range r, Stuff stuff)
 if (std.range.isInputRange!Stuff && std.traits.isImplicitlyConvertible!(ElementType!Stuff, ValueType)) {
-  std.exception.enforce(r._outer.swigCPtr == swigCPtr && r._a <= length);
+  std.exception.enforce(r._outer.alaqilCPtr == alaqilCPtr && r._a <= length);
 
   size_t insertCount;
   foreach(i, item; stuff) {
@@ -518,7 +518,7 @@ int opApply(int delegate(ref size_t index, ref $typemap(dtype, CTYPE) value) dg)
     }
 
     // Wrappers for setting/getting items with the possibly thrown exception
-    // specified (important for SWIG wrapper generation).
+    // specified (important for alaqil wrapper generation).
     %extend {
       CONST_REFERENCE getElement(size_type index) throw (std::out_of_range) {
         if ((index < 0) || ($self->size() <= index)) {
@@ -527,7 +527,7 @@ int opApply(int delegate(ref size_t index, ref $typemap(dtype, CTYPE) value) dg)
         return (*$self)[index];
       }
     }
-    // Use CTYPE const& instead of const_reference to work around SWIG code
+    // Use CTYPE const& instead of const_reference to work around alaqil code
     // generation issue when using const pointers as vector elements (like
     // std::vector< const int* >).
     %extend {
@@ -546,20 +546,20 @@ int opApply(int delegate(ref size_t index, ref $typemap(dtype, CTYPE) value) dg)
 
 // Extra methods added to the collection class if operator== is defined for the class being wrapped
 // The class will then implement IList<>, which adds extra functionality
-%define SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE...)
+%define alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE...)
     %extend {
     }
 %enddef
 
-// For vararg handling in macros, from swigmacros.swg
+// For vararg handling in macros, from alaqilmacros.swg
 #define %arg(X...) X
 
 // Macros for std::vector class specializations/enhancements
-%define SWIG_STD_VECTOR_ENHANCED(CTYPE...)
+%define alaqil_STD_VECTOR_ENHANCED(CTYPE...)
 namespace std {
   template<> class vector<CTYPE > {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(%arg(CTYPE const&), %arg(CTYPE))
-    SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(%arg(CTYPE const&), %arg(CTYPE))
+    alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(CTYPE)
   };
 }
 %enddef
@@ -573,33 +573,33 @@ namespace std {
   // primary (unspecialized) class template for std::vector
   // does not require operator== to be defined
   template<class T> class vector {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(T const&, T)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(T const&, T)
   };
   // specializations for pointers
   template<class T> class vector<T *> {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(T *const&, T *)
-    SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(T *)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(T *const&, T *)
+    alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(T *)
   };
   // bool is a bit different in the C++ standard - const_reference in particular
   template<> class vector<bool> {
-    SWIG_STD_VECTOR_MINIMUM_INTERNAL(bool, bool)
-    SWIG_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(bool)
+    alaqil_STD_VECTOR_MINIMUM_INTERNAL(bool, bool)
+    alaqil_STD_VECTOR_EXTRA_OP_EQUALS_EQUALS(bool)
   };
 }
 
 // template specializations for std::vector
 // these provide extra collections methods as operator== is defined
-SWIG_STD_VECTOR_ENHANCED(char)
-SWIG_STD_VECTOR_ENHANCED(signed char)
-SWIG_STD_VECTOR_ENHANCED(unsigned char)
-SWIG_STD_VECTOR_ENHANCED(short)
-SWIG_STD_VECTOR_ENHANCED(unsigned short)
-SWIG_STD_VECTOR_ENHANCED(int)
-SWIG_STD_VECTOR_ENHANCED(unsigned int)
-SWIG_STD_VECTOR_ENHANCED(long)
-SWIG_STD_VECTOR_ENHANCED(unsigned long)
-SWIG_STD_VECTOR_ENHANCED(long long)
-SWIG_STD_VECTOR_ENHANCED(unsigned long long)
-SWIG_STD_VECTOR_ENHANCED(float)
-SWIG_STD_VECTOR_ENHANCED(double)
-SWIG_STD_VECTOR_ENHANCED(std::string) // also requires a %include <std_string.i>
+alaqil_STD_VECTOR_ENHANCED(char)
+alaqil_STD_VECTOR_ENHANCED(signed char)
+alaqil_STD_VECTOR_ENHANCED(unsigned char)
+alaqil_STD_VECTOR_ENHANCED(short)
+alaqil_STD_VECTOR_ENHANCED(unsigned short)
+alaqil_STD_VECTOR_ENHANCED(int)
+alaqil_STD_VECTOR_ENHANCED(unsigned int)
+alaqil_STD_VECTOR_ENHANCED(long)
+alaqil_STD_VECTOR_ENHANCED(unsigned long)
+alaqil_STD_VECTOR_ENHANCED(long long)
+alaqil_STD_VECTOR_ENHANCED(unsigned long long)
+alaqil_STD_VECTOR_ENHANCED(float)
+alaqil_STD_VECTOR_ENHANCED(double)
+alaqil_STD_VECTOR_ENHANCED(std::string) // also requires a %include <std_string.i>

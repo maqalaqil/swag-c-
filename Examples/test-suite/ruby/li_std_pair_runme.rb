@@ -7,12 +7,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'li_std_pair'
 include Li_std_pair
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 #
 # Because of template specializations for pair<int, int>, these should return
 # an Array of size 2, where both elements are Fixnums.

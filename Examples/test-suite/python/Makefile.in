@@ -74,7 +74,7 @@ CPP_TEST_CASES += \
 	python_threads \
 	simutry \
 	std_containers \
-	swigobject \
+	alaqilobject \
 	template_matrix \
 
 #	li_std_carray
@@ -109,7 +109,7 @@ include $(srcdir)/../common.mk
 # Overridden variables here
 SCRIPTDIR    = .
 LIBS         = -L.
-VALGRIND_OPT += --suppressions=pythonswig.supp
+VALGRIND_OPT += --suppressions=pythonalaqil.supp
 
 # Custom tests - tests with additional commandline options
 # none!
@@ -118,21 +118,21 @@ VALGRIND_OPT += --suppressions=pythonswig.supp
 %.cpptest:
 	+$(convert_testcase)
 	$(setup)
-	+$(swig_and_compile_cpp)
+	+$(alaqil_and_compile_cpp)
 	$(check_pep8)
 	$(run_testcase)
 
 %.ctest:
 	+$(convert_testcase)
 	$(setup)
-	+$(swig_and_compile_c)
+	+$(alaqil_and_compile_c)
 	$(check_pep8)
 	$(run_testcase)
 
 %.multicpptest:
 	+$(convert_testcase)
 	$(setup)
-	+$(swig_and_compile_multi_cpp)
+	+$(alaqil_and_compile_multi_cpp)
 	$(check_pep8_multi_cpp)
 	$(run_testcase)
 
@@ -163,7 +163,7 @@ run_testcase = \
 
 # Grab runme file ready for running: copied for out of source tree builds, and/or run 2to3
 # Note terminal (double colon) rules creating runme files to fix possible infinite recursion,
-# see https://github.com/swig/swig/pull/688
+# see https://github.com/alaqil/alaqil/pull/688
 ifeq ($(SCRIPTDIR),$(srcdir))
   # in source tree build
   ifeq (,$(PY3))

@@ -7,7 +7,7 @@
   /* do nothing */
 }
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %typemap(out) Integer1 { /* do nothing */ $result = 0; }
 #else
 %typemap(out) Integer1 { /* do nothing */ }
@@ -19,14 +19,14 @@
   /* do nothing */
 }
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %typemap(out) Integer2 { /* do nothing */ $result = 0; }
 #else
 %typemap(out) Integer2 { /* do nothing */ }
 #endif
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %{
@@ -52,7 +52,7 @@
 	val = v;
       }
 
-#ifdef SWIG
+#ifdef alaqil
        %typemap(in) Foo* "/* in typemap for Foo, with type T */" 
 #endif
     };  

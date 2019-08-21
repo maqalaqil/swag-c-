@@ -1,18 +1,18 @@
 // This testcase was in the python subdirectory
 
-#if defined(SWIGPYTHON)
+#if defined(alaqilPYTHON)
 // Is "threads" really needed for Python? It seems to work without it.
 %module(directors="1",threads="1") director_thread
 #else
 %module(directors="1") director_thread
 #endif
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %begin %{
-#define SWIG_JAVA_USE_THREAD_NAME
+#define alaqil_JAVA_USE_THREAD_NAME
 //#define DEBUG_DIRECTOR_THREAD_NAME
 %}
 
@@ -30,7 +30,7 @@
 #endif
 
 #include <assert.h>
-#include "swig_examples_lock.h"
+#include "alaqil_examples_lock.h"
 
 class Foo;  
 extern "C" {
@@ -43,13 +43,13 @@ extern "C" {
 #endif
 
   static int thread_terminate = 0;
-  static SwigExamples::CriticalSection critical_section;
+  static alaqilExamples::CriticalSection critical_section;
   int get_thread_terminate() {
-    SwigExamples::Lock lock(critical_section);
+    alaqilExamples::Lock lock(critical_section);
     return thread_terminate;
   }
   void set_thread_terminate(int value) {
-    SwigExamples::Lock lock(critical_section);
+    alaqilExamples::Lock lock(critical_section);
     thread_terminate = value;
   }
 }

@@ -10,7 +10,7 @@
 // we want to return Exc objects to the interpreter
 // therefore we add this typemap
 // note: only works if Exc is copyable
-%apply SWIGTYPE EXCEPTION_BY_VAL {Exc};
+%apply alaqilTYPE EXCEPTION_BY_VAL {Exc};
 
 %catches(int) Test::simple();
 %catches(const char *) Test::message();

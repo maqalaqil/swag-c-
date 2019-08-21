@@ -38,6 +38,6 @@ if t2.b != 5:
 if get_bucket_allocator1() != 1:
     raise RuntimeError("bucket_allocator1 should be 1")
 
-# SWIG doesn't handle ::MyClass as a template argument. Skip this test.
+# alaqil doesn't handle ::MyClass as a template argument. Skip this test.
 #if get_bucket_allocator2() != 2:
 #    raise RuntimeError("bucket_allocator2 should be 2")

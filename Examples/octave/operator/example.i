@@ -1,9 +1,9 @@
 /* File : example.i */
-%module swigexample
+%module alaqilexample
 
 %feature("autodoc", 1);
 
-#pragma SWIG nowarn=SWIGWARN_IGNORE_OPERATOR_EQ
+#pragma alaqil nowarn=alaqilWARN_IGNORE_OPERATOR_EQ
 
 %{
 #include "example.h"

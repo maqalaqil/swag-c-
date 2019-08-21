@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Class_scope_weird
 
 let f = new_Foo (C_void)

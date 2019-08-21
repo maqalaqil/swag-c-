@@ -2,11 +2,11 @@
 
 // ::Vector and ::Text::Vector were incorrectly clashing in the target language symbol tables
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP)
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %include "enumtypeunsafe.swg"
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 %include "enumsimple.swg"
 #endif
 

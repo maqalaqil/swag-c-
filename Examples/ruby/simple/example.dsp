@@ -124,7 +124,7 @@ InputName=example
 	echo RUBY_INCLUDE: %RUBY_INCLUDE% 
 	echo RUBY_LIB: %RUBY_LIB% 
 	echo on 
-	..\..\..\swig.exe -ruby "$(InputPath)" 
+	..\..\..\alaqil.exe -ruby "$(InputPath)" 
 	
 # End Custom Build
 
@@ -139,7 +139,7 @@ InputName=example
 	echo RUBY_INCLUDE: %RUBY_INCLUDE% 
 	echo RUBY_LIB: %RUBY_LIB% 
 	echo on 
-	..\..\..\swig.exe -ruby "$(InputPath)" 
+	..\..\..\alaqil.exe -ruby "$(InputPath)" 
 	
 # End Custom Build
 

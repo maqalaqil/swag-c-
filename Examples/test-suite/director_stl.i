@@ -1,11 +1,11 @@
 %module(directors="1") director_stl
-#pragma SWIG nowarn=SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR
+#pragma alaqil nowarn=alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR
 
 %include "std_string.i"
 %include "std_pair.i"
 %include "std_vector.i"
 
-#ifndef SWIG_STD_DEFAULT_INSTANTIATION
+#ifndef alaqil_STD_DEFAULT_INSTANTIATION
 %template() std::vector<double>;
 %template() std::vector<int>;
 %template() std::vector<std::string>;
@@ -17,18 +17,18 @@
 %feature("director") Foo;
 
 %feature("director:except") {
-#ifndef SWIGPHP
+#ifndef alaqilPHP
   if ($error != NULL) {
 #else
   if ($error == FAILURE) {
 #endif
-    throw Swig::DirectorMethodException();
+    throw alaqil::DirectorMethodException();
   }
 }
 
 %exception {
   try { $action }
-  catch (...) { SWIG_fail; }
+  catch (...) { alaqil_fail; }
 }
 
 %inline 

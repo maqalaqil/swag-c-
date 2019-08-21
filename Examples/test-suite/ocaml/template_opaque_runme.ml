@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Template_opaque
 
 let v = new_OpaqueVectorType (C_uint 10l)

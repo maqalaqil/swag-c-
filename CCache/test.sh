@@ -9,10 +9,10 @@ else
  COMPILER=cc
 fi
 
-if test -n "$SWIG"; then
- SWIG="$SWIG"
+if test -n "$alaqil"; then
+ alaqil="$alaqil"
 else
- SWIG=swig
+ alaqil=alaqil
 fi
 
 # fix: Remove ccache from $PATH if it exists
@@ -23,7 +23,7 @@ PATH="`echo $PATH | \
 if test -n "$CCACHE"; then
  CCACHE="$CCACHE"
 else
- CCACHE=../ccache-swig
+ CCACHE=../ccache-alaqil
 fi
 
 TESTDIR=test.$$
@@ -50,12 +50,12 @@ randcode() {
     ) >> "$outfile"
 }
 
-genswigcode() {
+genalaqilcode() {
     outfile="$1"
     nlines=$2
     i=0;
     (
-    echo "%module swigtest$2;"
+    echo "%module alaqiltest$2;"
     while [ $i -lt $nlines ]; do
         echo "int foo$nlines$i(int x);"
         echo "struct Bar$nlines$i { int y; };"
@@ -287,44 +287,44 @@ basetests() {
     rm -f test1.c
 }
 
-swigtests() {
-    echo "starting swig testsuite $testsuite"
+alaqiltests() {
+    echo "starting alaqil testsuite $testsuite"
     rm -rf "$CCACHE_DIR"
     checkstat 'cache hit' 0
     checkstat 'cache miss' 0
 
     j=1
     rm -f *.i
-    genswigcode testswig1.i 1
+    genalaqilcode testalaqil1.i 1
 
     testname="BASIC"
-    $CCACHE_COMPILE -java testswig1.i
+    $CCACHE_COMPILE -java testalaqil1.i
     checkstat 'cache hit' 0
     checkstat 'cache miss' 1
     
     checkstat 'files in cache' 6
 
     testname="BASIC2"
-    $CCACHE_COMPILE -java testswig1.i
+    $CCACHE_COMPILE -java testalaqil1.i
     checkstat 'cache hit' 1
     checkstat 'cache miss' 1
     
     testname="output"
-    $CCACHE_COMPILE -java testswig1.i -o foo_wrap.c
+    $CCACHE_COMPILE -java testalaqil1.i -o foo_wrap.c
     checkstat 'cache hit' 1
     checkstat 'cache miss' 2
 
     testname="bad"
-    $CCACHE_COMPILE -java testswig1.i -I 2> /dev/null
+    $CCACHE_COMPILE -java testalaqil1.i -I 2> /dev/null
     checkstat 'bad compiler arguments' 1
 
     testname="stdout"
-    $CCACHE_COMPILE -v -java testswig1.i > /dev/null
+    $CCACHE_COMPILE -v -java testalaqil1.i > /dev/null
     checkstat 'compiler produced stdout' 1
 
     testname="non-regular"
     mkdir testd
-    $CCACHE_COMPILE -o testd -java testswig1.i > /dev/null 2>&1
+    $CCACHE_COMPILE -o testd -java testalaqil1.i > /dev/null 2>&1
     rm -rf testd
     checkstat 'output to a non-regular file' 1
 
@@ -334,27 +334,27 @@ swigtests() {
 
 
     testname="CCACHE_DISABLE"
-    CCACHE_DISABLE=1 $CCACHE_COMPILE -java testswig1.i 2> /dev/null
+    CCACHE_DISABLE=1 $CCACHE_COMPILE -java testalaqil1.i 2> /dev/null
     checkstat 'cache hit' 1 
-    $CCACHE_COMPILE -java testswig1.i
+    $CCACHE_COMPILE -java testalaqil1.i
     checkstat 'cache hit' 2 
 
     testname="CCACHE_CPP2"
-    CCACHE_CPP2=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_CPP2=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 2 
     checkstat 'cache miss' 3
 
-    CCACHE_CPP2=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_CPP2=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 3 
     checkstat 'cache miss' 3
 
     testname="CCACHE_NOSTATS"
-    CCACHE_NOSTATS=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_NOSTATS=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 3
     checkstat 'cache miss' 3
     
     testname="CCACHE_RECACHE"
-    CCACHE_RECACHE=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_RECACHE=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 3 
     checkstat 'cache miss' 4
 
@@ -365,46 +365,46 @@ swigtests() {
 
 
     testname="CCACHE_HASHDIR"
-    CCACHE_HASHDIR=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_HASHDIR=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 3
     checkstat 'cache miss' 5
 
-    CCACHE_HASHDIR=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_HASHDIR=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 4
     checkstat 'cache miss' 5
 
     checkstat 'files in cache' 24
     
     testname="cpp call"
-    $CCACHE_COMPILE -java -E testswig1.i > testswig1-preproc.i
+    $CCACHE_COMPILE -java -E testalaqil1.i > testalaqil1-preproc.i
     checkstat 'cache hit' 4
     checkstat 'cache miss' 5
 
     testname="direct .i compile"
-    $CCACHE_COMPILE -java testswig1.i
+    $CCACHE_COMPILE -java testalaqil1.i
     checkstat 'cache hit' 5
     checkstat 'cache miss' 5
 
-    # No cache hit due to different input file name, -nopreprocess should not be given twice to SWIG
-    $CCACHE_COMPILE -java -nopreprocess testswig1-preproc.i
+    # No cache hit due to different input file name, -nopreprocess should not be given twice to alaqil
+    $CCACHE_COMPILE -java -nopreprocess testalaqil1-preproc.i
     checkstat 'cache hit' 5
     checkstat 'cache miss' 6
 
-    $CCACHE_COMPILE -java -nopreprocess testswig1-preproc.i
+    $CCACHE_COMPILE -java -nopreprocess testalaqil1-preproc.i
     checkstat 'cache hit' 6
     checkstat 'cache miss' 6
 
     testname="stripc"
-    CCACHE_STRIPC=1 $CCACHE_COMPILE -java -O -O testswig1.i
+    CCACHE_STRIPC=1 $CCACHE_COMPILE -java -O -O testalaqil1.i
     checkstat 'cache hit' 7
     checkstat 'cache miss' 6
 
-    CCACHE_STRIPC=1 $CCACHE_COMPILE -java -O -O -O testswig1.i
+    CCACHE_STRIPC=1 $CCACHE_COMPILE -java -O -O -O testalaqil1.i
     checkstat 'cache hit' 7
     checkstat 'cache miss' 7
 
-    rm -f testswig1-preproc.i
-    rm -f testswig1.i
+    rm -f testalaqil1-preproc.i
+    rm -f testalaqil1.i
 }
 
 ######
@@ -437,7 +437,7 @@ unset CCACHE_HASHDIR
 unset CCACHE_UNIFY
 unset CCACHE_EXTENSION
 unset CCACHE_STRIPC
-unset CCACHE_SWIG
+unset CCACHE_alaqil
 
 CCACHE_DIR="ccache dir" # with space in directory name (like Windows default)
 mkdir "$CCACHE_DIR"
@@ -446,8 +446,8 @@ export CCACHE_DIR
 testsuite="base"
 CCACHE_COMPILE="$CCACHE $COMPILER"
 basetests
-CCACHE_COMPILE="$CCACHE $SWIG"
-swigtests
+CCACHE_COMPILE="$CCACHE $alaqil"
+alaqiltests
 
 if test -z "$NOSOFTLINKSTEST"; then
   testsuite="link"
@@ -456,10 +456,10 @@ if test -z "$NOSOFTLINKSTEST"; then
   CCACHE_COMPILE="./$compilername"
   basetests
   rm "./$compilername"
-  compilername=`basename $SWIG`
+  compilername=`basename $alaqil`
   ln -s $CCACHE ./$compilername
   CCACHE_COMPILE="./$compilername"
-  swigtests
+  alaqiltests
   rm "./$compilername"
 else
   echo "skipping testsuite link"
@@ -468,14 +468,14 @@ fi
 testsuite="hardlink"
 CCACHE_COMPILE="env CCACHE_NOCOMPRESS=1 CCACHE_HARDLINK=1 $CCACHE $COMPILER"
 basetests
-CCACHE_COMPILE="env CCACHE_NOCOMPRESS=1 CCACHE_HARDLINK=1 $CCACHE $SWIG"
-swigtests
+CCACHE_COMPILE="env CCACHE_NOCOMPRESS=1 CCACHE_HARDLINK=1 $CCACHE $alaqil"
+alaqiltests
 
 testsuite="cpp2"
 CCACHE_COMPILE="env CCACHE_CPP2=1 $CCACHE $COMPILER"
 basetests
-CCACHE_COMPILE="env CCACHE_CPP2=1 $CCACHE $SWIG"
-swigtests
+CCACHE_COMPILE="env CCACHE_CPP2=1 $CCACHE $alaqil"
+alaqiltests
 
 testsuite="nlevels4"
 CCACHE_COMPILE="env CCACHE_NLEVELS=4 $CCACHE $COMPILER"

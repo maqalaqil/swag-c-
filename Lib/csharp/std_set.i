@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_set.i
  *
- * SWIG typemaps for std::set<T>.
+ * alaqil typemaps for std::set<T>.
  *
  * Note that ISet<> used here requires .NET 4 or later.
  *
@@ -290,20 +290,20 @@ class set {
 
       // create_iterator_begin(), get_next() and destroy_iterator work together to provide a collection of items to C#
       %apply void *VOID_INT_PTR { std::set<T>::iterator *create_iterator_begin }
-      %apply void *VOID_INT_PTR { std::set<T>::iterator *swigiterator }
+      %apply void *VOID_INT_PTR { std::set<T>::iterator *alaqiliterator }
 
       std::set<T>::iterator *create_iterator_begin() {
         return new std::set<T>::iterator($self->begin());
       }
 
-      const key_type& get_next(std::set<T>::iterator *swigiterator) {
-        std::set<T>::iterator iter = *swigiterator;
-        (*swigiterator)++;
+      const key_type& get_next(std::set<T>::iterator *alaqiliterator) {
+        std::set<T>::iterator iter = *alaqiliterator;
+        (*alaqiliterator)++;
         return *iter;
       }
 
-      void destroy_iterator(std::set<T>::iterator *swigiterator) {
-        delete swigiterator;
+      void destroy_iterator(std::set<T>::iterator *alaqiliterator) {
+        delete alaqiliterator;
       }
     }
 };

@@ -2,7 +2,7 @@
 
 %include "cwstring.i"
 
-#ifndef SWIG_CWSTRING_UNIMPL
+#ifndef alaqil_CWSTRING_UNIMPL
 
 %cwstring_input_binary(wchar_t *str_in, int n);
 %cwstring_bounded_output(wchar_t *out1, 512);

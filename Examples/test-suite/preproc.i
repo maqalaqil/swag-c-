@@ -1,15 +1,15 @@
 %module preproc
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) one; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) two; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) three; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) __GMP_HAVE_CONST; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) __GMP_HAVE_PROTOTYPES; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) __GMP_HAVE_TOKEN_PASTE; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) __GMP_HAVE_TOKEN_PASTE; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) one; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) two; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) three; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) __GMP_HAVE_CONST; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) __GMP_HAVE_PROTOTYPES; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) __GMP_HAVE_TOKEN_PASTE; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) __GMP_HAVE_TOKEN_PASTE; /* Ruby, wrong constant name */
 
-#pragma SWIG nowarn=890                                      /* lots of Go name conflicts */
-#pragma SWIG nowarn=206                                      /* Unexpected tokens after #endif directive. */
+#pragma alaqil nowarn=890                                      /* lots of Go name conflicts */
+#pragma alaqil nowarn=206                                      /* Unexpected tokens after #endif directive. */
 
 %{
 #if defined(__clang__)
@@ -21,9 +21,9 @@
 #endif
 %}
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 /* check __cplusplus case */
@@ -41,16 +41,16 @@ extern "C"
 %}
 
 
-/* This interface file tests whether SWIG's extended C
+/* This interface file tests whether alaqil's extended C
    preprocessor is working right. 
 
-   In this example, SWIG 1.3.6 chokes on "//" in a #define with a
+   In this example, alaqil 1.3.6 chokes on "//" in a #define with a
    syntax error.
 */
 
 #define SLASHSLASH "//"
 
-/* This SWIG -*- c -*- interface is to test for some strange
+/* This alaqil -*- c -*- interface is to test for some strange
    preprocessor bug.
 
    I get syntax errors unless I remove the apostrophe in the comment
@@ -122,11 +122,11 @@ int f(int min);
 
 // preproc_5
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) A5;	// Ruby, wrong constant name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) a5;	// Ruby, wrong constant name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) b5;	// Ruby, wrong constant name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) c5;	// Ruby, wrong constant name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) d5;	// Ruby, wrong constant name
+%warnfilter(alaqilWARN_PARSE_REDEFINED) A5;	// Ruby, wrong constant name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) a5;	// Ruby, wrong constant name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) b5;	// Ruby, wrong constant name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) c5;	// Ruby, wrong constant name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) d5;	// Ruby, wrong constant name
 
 // Various preprocessor bits of nastiness.
 
@@ -170,11 +170,11 @@ NAME 42
 
 // preproc_6
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) A6; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) a6; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) b6; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) c6; /* Ruby, wrong constant name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) d6; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_PARSE_REDEFINED) A6; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) a6; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) b6; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) c6; /* Ruby, wrong constant name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) d6; /* Ruby, wrong constant name */
 
 #define add(a, b) (a + b)
 #define times(a, b) (a * b)
@@ -189,10 +189,10 @@ NAME 42
 /* expand to ((1 + 5) * 5) */
 %constant int d6 = times(op(add), 5);                 
 
-/* This interface file tests whether SWIG's extended C
+/* This interface file tests whether alaqil's extended C
    preprocessor is working right. 
 
-   In this example, SWIG 1.3a5 reports missing macro arguments, which
+   In this example, alaqil 1.3a5 reports missing macro arguments, which
    is bogus.
 */
 
@@ -220,8 +220,8 @@ This testcase tests for embedded defines and embedded %constants
 typedef struct EmbeddedDefines {
   int dummy;
 #define  EMBEDDED_DEFINE 44
-#ifdef SWIG
-%constant EMBEDDED_SWIG_CONSTANT = 55;
+#ifdef alaqil
+%constant EMBEDDED_alaqil_CONSTANT = 55;
 #endif
 } EmbeddedDefines;
 
@@ -298,15 +298,15 @@ inline const char* mangle_macro ## #@__VA_ARGS__ () {
 /* chiao */
 #endif;
 
-#ifdef SWIGCHICKEN
-/* define is a scheme keyword (and thus an invalid variable name), so SWIG warns about it */
-%warnfilter(SWIGWARN_PARSE_KEYWORD) define; 
+#ifdef alaqilCHICKEN
+/* define is a scheme keyword (and thus an invalid variable name), so alaqil warns about it */
+%warnfilter(alaqilWARN_PARSE_KEYWORD) define; 
 #endif
 
-#ifdef SWIGRUBY
+#ifdef alaqilRUBY
 %rename(ddefined) defined;
 #endif
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 %rename(endif_) endif;
 #endif
 %inline %{
@@ -320,12 +320,12 @@ int test(int defined)
  
 %}
 
-#pragma SWIG nowarn=SWIGWARN_PP_CPP_WARNING
+#pragma alaqil nowarn=alaqilWARN_PP_CPP_WARNING
 #warning "Some warning"
 
 /* check that #error can be turned into a warning, but suppress the warning message for the test-suite! */
-#pragma SWIG nowarn=SWIGWARN_PP_CPP_ERROR
-#pragma SWIG cpperraswarn=1
+#pragma alaqil nowarn=alaqilWARN_PP_CPP_ERROR
+#pragma alaqil cpperraswarn=1
 #error "Some error"
 
 
@@ -378,11 +378,11 @@ int methodX(int x);
 int methodX(int x) { return x+100; }
 %}
 
-// Comma in macro - https://github.com/swig/swig/issues/974 (for /* */)
-// and https://github.com/swig/swig/pull/1166 (for //)
+// Comma in macro - https://github.com/alaqil/alaqil/issues/974 (for /* */)
+// and https://github.com/alaqil/alaqil/pull/1166 (for //)
 %inline %{
-#define swig__attribute__(x)
-#define TCX_PACKED(d) d swig__attribute__ ((__packed__))
+#define alaqil__attribute__(x)
+#define TCX_PACKED(d) d alaqil__attribute__ ((__packed__))
 
 
 TCX_PACKED (typedef struct tcxMessageTestImpl
@@ -411,7 +411,7 @@ TCX_PACKED (typedef struct tcxMessageBugImpl2
 
 %}
 
-// Regression tests for https://github.com/swig/swig/pull/1111
+// Regression tests for https://github.com/alaqil/alaqil/pull/1111
 %{
 static int foo_func(int x) { return x; }
 static int foo_func2() { return 0; }

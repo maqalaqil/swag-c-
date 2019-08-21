@@ -2,7 +2,7 @@
 
 %include <std_except.i>
 
-%warnfilter(SWIGWARN_TYPEMAP_DIRECTORTHROWS_UNDEF) MyNS::Foo::directorthrows_warning;
+%warnfilter(alaqilWARN_TYPEMAP_DIRECTORTHROWS_UNDEF) MyNS::Foo::directorthrows_warning;
 
 %include <std_string.i>
 
@@ -32,14 +32,14 @@
 %feature("director:except") MyNS::Foo::ping {
   jthrowable $error = jenv->ExceptionOccurred();
   if ($error) {
-    if (Swig::ExceptionMatches(jenv,$error,"$packagepath/MyJavaException1")) {
+    if (alaqil::ExceptionMatches(jenv,$error,"$packagepath/MyJavaException1")) {
       throw 1;
-    } else if (Swig::ExceptionMatches(jenv,$error,"$packagepath/MyJavaException2")) {
-      std::string msg(Swig::JavaExceptionMessage(jenv,$error).message());
+    } else if (alaqil::ExceptionMatches(jenv,$error,"$packagepath/MyJavaException2")) {
+      std::string msg(alaqil::JavaExceptionMessage(jenv,$error).message());
       throw MyNS::Exception2(msg);
     } else {
       std::cerr << "Test failed, unexpected exception thrown: " <<
-	Swig::JavaExceptionMessage(jenv,$error).message() << std::endl;
+	alaqil::JavaExceptionMessage(jenv,$error).message() << std::endl;
       throw std::runtime_error("unexpected exception in Foo::ping");
     }
   }
@@ -49,8 +49,8 @@
 
 // directorthrows typemaps for java->c++ conversions
 %typemap(directorthrows) MyNS::Exception1,MyNS::Exception2,MyNS::Unexpected  %{
-  if (Swig::ExceptionMatches(jenv, $error, "$packagepath/$javaclassname")) {
-    std::string msg(Swig::JavaExceptionMessage(jenv,$error).message());
+  if (alaqil::ExceptionMatches(jenv, $error, "$packagepath/$javaclassname")) {
+    std::string msg(alaqil::JavaExceptionMessage(jenv,$error).message());
     throw $1_type(msg);
   }
 %}
@@ -61,7 +61,7 @@
   jthrowable $error = jenv->ExceptionOccurred();
   if ($error) {
     $directorthrowshandlers
-    throw ::MyNS::Unexpected(Swig::JavaExceptionMessage(jenv,$error).message());
+    throw ::MyNS::Unexpected(alaqil::JavaExceptionMessage(jenv,$error).message());
   }
 %}
 
@@ -109,11 +109,11 @@
 %feature("director:except") MyNS::Foo::genericpong {
   jthrowable $error = jenv->ExceptionOccurred();
   if ($error) {
-    if (Swig::ExceptionMatches(jenv,$error,"UnconstructableException")) {
+    if (alaqil::ExceptionMatches(jenv,$error,"UnconstructableException")) {
       // Purposefully test NULL
-      throw Swig::DirectorException(jenv, NULL);
+      throw alaqil::DirectorException(jenv, NULL);
     }
-    throw Swig::DirectorException(jenv,$error);
+    throw alaqil::DirectorException(jenv,$error);
   }
 }
 
@@ -124,7 +124,7 @@
 %feature ("except",throws="Exception")  MyNS::Bar::genericpong %{
   try {
     $action
-  } catch (Swig::DirectorException & direxcp) {
+  } catch (alaqil::DirectorException & direxcp) {
     direxcp.throwException(jenv);  // jenv always available in JNI code
     return $null;
   }

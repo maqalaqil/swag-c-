@@ -1,8 +1,8 @@
 %module template_tbase_template
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) traits<Double, Double>;	/* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) traits<Double, Double>;	/* Ruby, wrong class name */
 
-%warnfilter(SWIGWARN_PARSE_EXPLICIT_TEMPLATE);
+%warnfilter(alaqilWARN_PARSE_EXPLICIT_TEMPLATE);
 
 %inline %{
   typedef double Double;

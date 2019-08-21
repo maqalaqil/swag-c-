@@ -1,6 +1,6 @@
 // test matrix.i library
 
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // test matrix passed as output argument from function
 function test_outMatrix(func, valueType, expectedOutMatrix)
@@ -8,7 +8,7 @@ function test_outMatrix(func, valueType, expectedOutMatrix)
   cmd = msprintf("outMatrix = %s();", funcName);
   ierr = execstr(cmd, "errcatch");
   if ierr <> 0 then
-    swigtesterror(msprintf("Error %d in %s", ierr, funcName));
+    alaqiltesterror(msprintf("Error %d in %s", ierr, funcName));
   end
   checkequal(outMatrix, expectedOutMatrix, funcName);
 endfunction
@@ -19,7 +19,7 @@ function test_inMatrix(func, valueType, inMatrix, expectedInValue)
   cmd = msprintf("inValue = %s(inMatrix);", funcName);
   ierr = execstr(cmd, "errcatch");
   if ierr <> 0 then
-    swigtesterror(msprintf("Error %d in %s", ierr, funcName));
+    alaqiltesterror(msprintf("Error %d in %s", ierr, funcName));
   end
   checkequal(inValue, expectedInValue, funcName);
 endfunction
@@ -30,7 +30,7 @@ function test_inoutMatrix(func, valueType, inoutMatrix, expectedInoutMatrix)
   cmd = msprintf("inoutMatrix = %s(inoutMatrix);", funcName);
   ierr = execstr(cmd, "errcatch");
   if ierr <> 0 then
-    swigtesterror(msprintf("Error %d in %s", ierr, funcName));
+    alaqiltesterror(msprintf("Error %d in %s", ierr, funcName));
   end
   checkequal(inoutMatrix, expectedInoutMatrix, funcName);
 endfunction
@@ -64,4 +64,4 @@ m = [%T  %F;  %F  %T;  %T  %F];
 v = [%T  %F   %T  %F   %T  %F];
 test_matrix_typemaps("Bool", m, v, %T, ~m, ~v);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

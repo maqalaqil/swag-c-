@@ -1,14 +1,14 @@
 %module string_constants
 // Test unusual string constants
 
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK);
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK);
 
-#if defined(SWIGCSHARP)
+#if defined(alaqilCSHARP)
 %csconst(1);
 %csconstvalue("\"AEIOU\\n\"") SS1;
 %csconstvalue("\"AEIOU\\n\"") SS2;
 #endif
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javaconst(1);
 #endif
 %inline %{

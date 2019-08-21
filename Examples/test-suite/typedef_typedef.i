@@ -2,7 +2,7 @@
 
 // Check C::Bar::Foo resolves to A::Foo in typemap search 
 
-%typemap(in) SWIGTYPE, int "__wrong_in_typemap__will_not_compile__"
+%typemap(in) alaqilTYPE, int "__wrong_in_typemap__will_not_compile__"
 
 %typemap(in) A::Foo {
   $1 = 1234; /* A::Foo in typemap */

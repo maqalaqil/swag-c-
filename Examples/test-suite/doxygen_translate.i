@@ -1,6 +1,6 @@
 %module doxygen_translate
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javamethodmodifiers function "@Deprecated\npublic"
 #endif
 

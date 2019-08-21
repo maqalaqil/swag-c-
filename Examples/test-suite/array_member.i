@@ -1,6 +1,6 @@
 %module array_member
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(RayPkt) RayPacketData;
 #endif
 

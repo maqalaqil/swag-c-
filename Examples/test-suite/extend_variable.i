@@ -41,9 +41,9 @@ double ExtendMe_ExtendVar_get(ExtendMe *thisptr) {
   };
 %}
 
-#if SWIGJAVA
+#if alaqilJAVA
 %javaconst(1) AllBarOne;
-#elif SWIGCSHARP
+#elif alaqilCSHARP
 %csconst(1) AllBarOne;
 #endif
 

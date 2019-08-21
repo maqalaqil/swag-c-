@@ -89,14 +89,14 @@ namespace Space {
 }
 %}
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Space::Duplicate1;
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Space::Duplicate1;
 namespace Space {
   template <bool B> struct Duplicate1 { void ff(){}; };
   template <bool B> struct Duplicate1 { void ff(){}; };
 }
 
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Space::Duplicate2;
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Space::Duplicate2;
 %inline %{
 namespace Space {
   template <int I> struct Duplicate2 { void n(){}; };
@@ -106,7 +106,7 @@ namespace Space {
 %template(Duplicate2_0) Space::Duplicate2<0>;
 
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Space::Duplicate3;
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Space::Duplicate3;
 %inline %{
 namespace Space {
   template <int I> struct Duplicate3 { void n(){}; };
@@ -122,7 +122,7 @@ namespace Space {
 }
 %}
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Space::Duplicate4;
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Space::Duplicate4;
 namespace Space {
   template <bool B> struct Duplicate4 { void ff(){}; };
   template <bool B> struct Duplicate4 { void ff(){}; };

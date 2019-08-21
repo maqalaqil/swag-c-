@@ -1,32 +1,32 @@
-/* This testcase checks whether SWIG correctly parses the lambda expressions
+/* This testcase checks whether alaqil correctly parses the lambda expressions
    and closure syntax introduced in C++11.
-   SWIG supports only lambda syntax and doesn't produce any wrapper code for
+   alaqil supports only lambda syntax and doesn't produce any wrapper code for
    this.
 */
 %module cpp11_lambda_functions
 
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda1;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda2;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda3;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda4;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda5;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda6;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda7;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda8;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda9;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda10;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda11;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda12;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda13;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda14;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda15;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda16;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda17;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) lambda18;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) Space1::lambda19;
-%warnfilter(SWIGWARN_CPP11_LAMBDA) Space1::Space2::lambda20;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda1;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda2;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda3;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda4;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda5;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda6;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda7;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda8;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda9;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda10;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda11;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda12;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda13;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda14;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda15;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda16;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda17;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) lambda18;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) Space1::lambda19;
+%warnfilter(alaqilWARN_CPP11_LAMBDA) Space1::Space2::lambda20;
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW0() throw()
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
@@ -46,8 +46,8 @@ auto lambda2 = [](int x, int y) { return x+y; };
 auto lambda3 = [&](int x, int y) { return x+y; };
 auto lambda4 = [=](int x, int y) { return x+y; };
 int thing = 0;
-#ifdef SWIG
-// Not strictly correct as captured variables should have non-automatic storage duration, ie shouldn't capture globals. gcc-4.7 warns about this, but we check that SWIG can parse this anyway.
+#ifdef alaqil
+// Not strictly correct as captured variables should have non-automatic storage duration, ie shouldn't capture globals. gcc-4.7 warns about this, but we check that alaqil can parse this anyway.
 auto lambda5 = [=,&thing]() { return thing; };
 #else
 auto lambda5 = [=]() { return thing; };
@@ -69,7 +69,7 @@ auto lambda14 = [] () TESTCASE_THROW0() {};
 auto lambda15 = [] () mutable TESTCASE_THROW0() {};
 auto lambda16 = [] { return thing; };
 auto lambda17 = [] { return thing; }();
-#if defined(SWIG) || (defined(__cplusplus) && __cplusplus >= 201703L)
+#if defined(alaqil) || (defined(__cplusplus) && __cplusplus >= 201703L)
 #define CONSTEXPR constexpr
 #else
 #define CONSTEXPR

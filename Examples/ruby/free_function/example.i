@@ -6,7 +6,7 @@
 
 /* Specify that ownership is transferred to the zoo
 	when calling add_animal */
-%apply SWIGTYPE *DISOWN { Animal* animal };
+%apply alaqilTYPE *DISOWN { Animal* animal };
 
 /* Track objects */
 %trackobjects;
@@ -20,20 +20,20 @@
 	static void free_Zoo(void* ptr) {
 		Zoo* zoo = (Zoo*) ptr;
 
-		/* Loop over each object and call SWIG_RubyRemoveTracking */
+		/* Loop over each object and call alaqil_RubyRemoveTracking */
 		int count = zoo->get_num_animals();
 
 		for(int i = 0; i < count; ++i) {
 			/* Get an animal */
 			Animal* animal = zoo->get_animal(i);
 			/* Unlink the Ruby object from the C++ object */
-			SWIG_RubyUnlinkObjects(animal);
+			alaqil_RubyUnlinkObjects(animal);
 			/* Now remove the tracking for this animal */
-			SWIG_RubyRemoveTracking(animal);
+			alaqil_RubyRemoveTracking(animal);
 		}
 
-	   /* Now call SWIG_RubyRemoveTracking for the zoo */
-		SWIG_RubyRemoveTracking(ptr);
+	   /* Now call alaqil_RubyRemoveTracking for the zoo */
+		alaqil_RubyRemoveTracking(ptr);
 
 		/* Now free the zoo which will free the animals it contains */
 		delete zoo;

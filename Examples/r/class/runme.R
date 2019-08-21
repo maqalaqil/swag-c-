@@ -1,5 +1,5 @@
 # This file illustrates the proxy class C++ interface generated
-# by SWIG.
+# by alaqil.
 
 dyn.load(paste("example", .Platform$dynlib.ext, sep=""))
 source("example.R")

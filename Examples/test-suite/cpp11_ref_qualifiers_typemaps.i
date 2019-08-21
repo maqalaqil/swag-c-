@@ -1,6 +1,6 @@
 %module cpp11_ref_qualifiers_typemaps
 
-%typemap(in) SWIGTYPE (CLASS::*) %{
+%typemap(in) alaqilTYPE (CLASS::*) %{
   _this_will_fail_to_compile_if_used_
 %}
 

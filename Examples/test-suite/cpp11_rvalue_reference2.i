@@ -1,6 +1,6 @@
 %module cpp11_rvalue_reference2
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK) globalrrval;
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK) globalrrval;
 
 // This testcase tests lots of different places that rvalue reference syntax can be used
 

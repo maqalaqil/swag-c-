@@ -9,18 +9,18 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'std_containers'
 include Std_containers
 
-swig_assert_equal("[true, false]", "videntb([true, false])")
+alaqil_assert_equal("[true, false]", "videntb([true, false])")
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 
 cube = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 icube = cident(cube)
-icube.each_index { |i| swig_assert_equal("cube[#{i}]","icube[#{i}]", binding, 'cident') }
+icube.each_index { |i| alaqil_assert_equal("cube[#{i}]","icube[#{i}]", binding, 'cident') }
 
 
 p = [1,2]
@@ -28,12 +28,12 @@ p == pident(p)
 
 v = [1,2,3,4,5,6]
 iv = vident(v)
-iv.each_index { |i| swig_assert_equal("iv[#{i}]","v[#{i}]", binding, 'vident') }
+iv.each_index { |i| alaqil_assert_equal("iv[#{i}]","v[#{i}]", binding, 'vident') }
 
 
 
 iv = videntu(v)
-iv.each_index { |i| swig_assert_equal("iv[#{i}]","v[#{i}]", binding, 'videntu') }
+iv.each_index { |i| alaqil_assert_equal("iv[#{i}]","v[#{i}]", binding, 'videntu') }
 
 
 vu = Vector_ui.new(v)
@@ -44,13 +44,13 @@ v[0,3][1] == vu[0,3][1]
 m = [[1,2,3],[2,3],[3,4]]
 im = midenti(m)
 
-0.upto(m.size-1){ |i| 0.upto(m[i].size-1) { |j| swig_assert_equal("m[#{i}][#{j}]","im[#{i}][#{j}]", binding, 'getslice') } }
+0.upto(m.size-1){ |i| 0.upto(m[i].size-1) { |j| alaqil_assert_equal("m[#{i}][#{j}]","im[#{i}][#{j}]", binding, 'getslice') } }
 
 
 m = [[1,0,1],[1,1],[1,1]]
 im = midentb(m)
 
-0.upto(m.size-1){ |i| 0.upto(m[i].size-1) { |j| swig_assert_equal("(m[#{i}][#{j}]==1)","im[#{i}][#{j}]", binding, 'getslice') } }
+0.upto(m.size-1){ |i| 0.upto(m[i].size-1) { |j| alaqil_assert_equal("(m[#{i}][#{j}]==1)","im[#{i}][#{j}]", binding, 'getslice') } }
 
 mi = Imatrix.new(m)
 mc = Cmatrix.new(m)
@@ -62,7 +62,7 @@ map['hi'] = 2
 map['3'] = 2
 
 imap = Std_containers.mapident(map)
-map.each_key { |k| swig_assert_equal("map['#{k}']", "imap['#{k}']", binding) }
+map.each_key { |k| alaqil_assert_equal("map['#{k}']", "imap['#{k}']", binding) }
 
 mapc ={}
 c1 = C.new
@@ -81,7 +81,7 @@ v1.object_id != vi.object_id
 v = [1,2]
 v1 = v_inout(vi)
 vi[1] == v1[1]
-# vi.class == v1.class # only if SWIG_RUBY_EXTRA_NATIVE_CONTAINERS was set
+# vi.class == v1.class # only if alaqil_RUBY_EXTRA_NATIVE_CONTAINERS was set
 
 v1,v2 = [[1,2],[3,4]]
 v1,v2 = v_inout2(v1,v2)
@@ -114,7 +114,7 @@ s.push(1)
 s.push(2)
 s.push(3)
 j = 1
-s.each { |i| swig_assert_equal("#{i}","#{j}", binding, "for s[#{i}]"); j += 1 }
+s.each { |i| alaqil_assert_equal("#{i}","#{j}", binding, "for s[#{i}]"); j += 1 }
 
 
 EOF

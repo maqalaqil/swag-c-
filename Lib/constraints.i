@@ -1,10 +1,10 @@
 /* -----------------------------------------------------------------------------
  * constraints.i
  *
- * SWIG constraints library.
+ * alaqil constraints library.
  *
- * SWIG library file containing typemaps for implementing various kinds of 
- * constraints.  Depends upon the SWIG exception library for generating
+ * alaqil library file containing typemaps for implementing various kinds of 
+ * constraints.  Depends upon the alaqil exception library for generating
  * errors in a language-independent manner.
  * ----------------------------------------------------------------------------- */
 
@@ -67,17 +67,17 @@ If you have used typedef to change type-names, you can also do this :
 
 %include <exception.i>
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Required attribute for C# exception handling
-#define SWIGCSHARPCANTHROW , canthrow=1
+#define alaqilCSHARPCANTHROW , canthrow=1
 #else
-#define SWIGCSHARPCANTHROW
+#define alaqilCSHARPCANTHROW
 #endif
 
 
 // Positive numbers
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 int               POSITIVE,
                 short             POSITIVE,
                 long              POSITIVE,
@@ -91,13 +91,13 @@ If you have used typedef to change type-names, you can also do this :
                 Number            POSITIVE
 {
   if ($1 <= 0) {
-    SWIG_exception(SWIG_ValueError,"Expected a positive value.");
+    alaqil_exception(alaqil_ValueError,"Expected a positive value.");
   }
 }
 
 // Negative numbers
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 int               NEGATIVE,
                 short             NEGATIVE,
                 long              NEGATIVE,
@@ -111,13 +111,13 @@ If you have used typedef to change type-names, you can also do this :
                 Number            NEGATIVE
 {
   if ($1 >= 0) {
-    SWIG_exception(SWIG_ValueError,"Expected a negative value.");
+    alaqil_exception(alaqil_ValueError,"Expected a negative value.");
   }
 }
 
 // Nonzero numbers
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 int               NONZERO,
                 short             NONZERO,
                 long              NONZERO,
@@ -131,13 +131,13 @@ If you have used typedef to change type-names, you can also do this :
                 Number            NONZERO
 {
   if ($1 == 0) {
-    SWIG_exception(SWIG_ValueError,"Expected a nonzero value.");
+    alaqil_exception(alaqil_ValueError,"Expected a nonzero value.");
   }
 }
 
 // Nonnegative numbers
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 int               NONNEGATIVE,
                 short             NONNEGATIVE,
                 long              NONNEGATIVE,
@@ -151,13 +151,13 @@ If you have used typedef to change type-names, you can also do this :
                 Number            NONNEGATIVE
 {
   if ($1 < 0) {
-    SWIG_exception(SWIG_ValueError,"Expected a non-negative value.");
+    alaqil_exception(alaqil_ValueError,"Expected a non-negative value.");
   }
 }
 
 // Nonpositive numbers
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 int               NONPOSITIVE,
                 short             NONPOSITIVE,
                 long              NONPOSITIVE,
@@ -171,53 +171,53 @@ If you have used typedef to change type-names, you can also do this :
                 Number            NONPOSITIVE
 {
   if ($1 > 0) {
-    SWIG_exception(SWIG_ValueError,"Expected a non-positive value.");
+    alaqil_exception(alaqil_ValueError,"Expected a non-positive value.");
   }
 }
                 
 // Non-NULL pointer
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 void *            NONNULL,
                 Pointer           NONNULL
 {
   if (!$1) {
-    SWIG_exception(SWIG_ValueError,"Received a NULL pointer.");
+    alaqil_exception(alaqil_ValueError,"Received a NULL pointer.");
   }
 }
 
 // Aligned pointers
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 void *            ALIGN8,
                 Pointer           ALIGN8
 {
    unsigned long long tmp;
    tmp = (unsigned long long) $1;
    if (tmp & 7) {
-     SWIG_exception(SWIG_ValueError,"Pointer must be 8-byte aligned.");
+     alaqil_exception(alaqil_ValueError,"Pointer must be 8-byte aligned.");
    }
 }
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 void *            ALIGN4,
                 Pointer           ALIGN4
 {
    unsigned long long tmp;
    tmp = (unsigned long long) $1;
    if (tmp & 3) {
-     SWIG_exception(SWIG_ValueError,"Pointer must be 4-byte aligned.");
+     alaqil_exception(alaqil_ValueError,"Pointer must be 4-byte aligned.");
    }
 }
 
-%typemap(check SWIGCSHARPCANTHROW) 
+%typemap(check alaqilCSHARPCANTHROW) 
                 void *            ALIGN2,
                 Pointer           ALIGN2
 {
    unsigned long long tmp;
    tmp = (unsigned long long) $1;
    if (tmp & 1) {
-     SWIG_exception(SWIG_ValueError,"Pointer must be 2-byte aligned.");
+     alaqil_exception(alaqil_ValueError,"Pointer must be 2-byte aligned.");
    }
 }
 

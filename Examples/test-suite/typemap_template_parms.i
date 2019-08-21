@@ -12,7 +12,7 @@
 
 %inline %{
 template<typename T> struct X {
-#if defined(SWIG)
+#if defined(alaqil)
 %typemap(ret) T bake "/* ret bake X<T> */"
 %typemap(ret) T X<T>::make "/* ret make X<T> */"
 %typemap(ret) T take "_rake_T_this_will_not_compile_"

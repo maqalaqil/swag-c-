@@ -2,10 +2,10 @@
 
 %module namespace_template
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) test::vector<int>;        /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) test::vector<short>;      /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) test::vector<long>;       /* Ruby, wrong class name */
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) test::vector<test::Char>; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) test::vector<int>;        /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) test::vector<short>;      /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) test::vector<long>;       /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) test::vector<test::Char>; /* Ruby, wrong class name */
 
 %{
 #ifdef max

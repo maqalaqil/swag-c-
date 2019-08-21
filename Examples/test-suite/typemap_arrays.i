@@ -2,7 +2,7 @@
 
 // Test that previously non-working array typemaps special variables are working
 
-%typemap(in) SWIGTYPE[ANY] {
+%typemap(in) alaqilTYPE[ANY] {
   _should_not_be_used_and_will_not_compile_
 }
 

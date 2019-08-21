@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 a = new_Foo();
 b = new_Bar();
@@ -12,4 +12,4 @@ delete_Foo(a);
 delete_Bar(b);
 delete_Spam(c);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

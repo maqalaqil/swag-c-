@@ -56,7 +56,7 @@
   int retrieve_A_b(const struct A* self) { return self->b; }
 %}
 %inline %{
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 int is_python_builtin() { return 1; }
 #else
 int is_python_builtin() { return 0; }

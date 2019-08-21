@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Static_const_member
 
 let _ =

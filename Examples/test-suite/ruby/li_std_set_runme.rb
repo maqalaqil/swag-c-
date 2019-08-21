@@ -7,12 +7,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'li_std_set'
 include Li_std_set
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 s = Set_string.new
 
 s.push("a")
@@ -23,13 +23,13 @@ sum = ''
 s.each { |x| sum << x }
 sum == 'abc'
 
-b = s.begin  # only if swig iterators are on
+b = s.begin  # only if alaqil iterators are on
 e = s.end
 sum = ''
 while b != e; sum << b.value; b.next; end
 sum == 'abc'
 
-b = s.rbegin  # only if swig iterators are on
+b = s.rbegin  # only if alaqil iterators are on
 e = s.rend
 sum = ''
 while b != e; sum << b.value; b.next; end
@@ -66,5 +66,5 @@ EOF
 
 iv = Set_int.new([0,1,2,3,4,5,6])
 iv.delete_if { |x| x == 0 || x == 3 || x == 6 }
-swig_assert_equal(iv.to_s, '1245', binding)
+alaqil_assert_equal(iv.to_s, '1245', binding)
 

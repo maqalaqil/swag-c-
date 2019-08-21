@@ -4,10 +4,10 @@
 %feature("doxygen:ignore:compileroptions", range="line");
 %feature("doxygen:ignore:forcpponly", range="end");
 
-#ifdef SWIGJAVA
+#ifdef alaqilJAVA
 %feature("doxygen:ignore:beginJavaOnly", range="end:endJavaOnly", contents="parse");
 %feature("doxygen:ignore:beginPythonOnly", range="end:endPythonOnly");
-#elif defined(SWIGPYTHON)
+#elif defined(alaqilPYTHON)
 %feature("doxygen:ignore:beginJavaOnly", range="end:endJavaOnly");
 %feature("doxygen:ignore:beginPythonOnly", range="end:endPythonOnly", contents="parse");
 #else

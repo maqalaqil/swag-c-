@@ -17,7 +17,7 @@ def check(s1, s2):
     if s1 != s2:
         raise RuntimeError("{} != {}".format(s1, s2))
 
-# Testing SWIG_PYTHON_2_UNICODE flag which allows unicode strings to be passed to C
+# Testing alaqil_PYTHON_2_UNICODE flag which allows unicode strings to be passed to C
 if sys.version_info[0:2] < (3, 0):
     check(unicode_strings.charstring("hello1"), "hello1")
     check(unicode_strings.charstring(str(u"hello2")), "hello2")

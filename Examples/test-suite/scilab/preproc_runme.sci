@@ -1,8 +1,8 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
-if endif_get() <> 1 then swigtesterror(); end
-if define_get() <> 1 then swigtesterror(); end
-if defined_get() <> 1 then swigtesterror(); end
-if 2 * one_get() <> two_get() then swigtesterror(); end
+if endif_get() <> 1 then alaqiltesterror(); end
+if define_get() <> 1 then alaqiltesterror(); end
+if defined_get() <> 1 then alaqiltesterror(); end
+if 2 * one_get() <> two_get() then alaqiltesterror(); end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

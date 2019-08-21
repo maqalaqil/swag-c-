@@ -1,9 +1,9 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     a = get_test();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 // Test default values
@@ -15,7 +15,7 @@ try
     test_myInt_set(a, 42)
     test_myShort_set(a, 12)
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 // Read new values
@@ -25,4 +25,4 @@ checkequal(test_myShort_get(a), 12, "test_myShort_get() test fails.");
 // Destroy pointer
 delete_test(a);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

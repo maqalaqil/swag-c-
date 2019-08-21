@@ -1,4 +1,4 @@
-// This example illustrates how C++ classes can be used from C# using SWIG.
+// This example illustrates how C++ classes can be used from C# using alaqil.
 // The C# class gets mapped onto the C++ class and behaves as if it is a C# class.
 
 using System;

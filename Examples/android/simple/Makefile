@@ -1,13 +1,13 @@
 TOP        = ../..
-SWIGEXE    = $(TOP)/../swig
-SWIG_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
+alaqilEXE    = $(TOP)/../alaqil
+alaqil_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
 TARGET     = example
 INTERFACE  = example.i
 INTERFACEDIR = jni/
-PACKAGEDIR = $(SRCDIR)src/org/swig
-PACKAGENAME= org.swig.simple
-SWIGOPT    = -package $(PACKAGENAME) -outdir $(PACKAGEDIR)/simple
-PROJECTNAME= SwigSimple
+PACKAGEDIR = $(SRCDIR)src/org/alaqil
+PACKAGENAME= org.alaqil.simple
+alaqilOPT    = -package $(PACKAGENAME) -outdir $(PACKAGEDIR)/simple
+PROJECTNAME= alaqilSimple
 TARGETID  = 1
 #INSTALLOPTIONS = -s # To install on SD Card
 
@@ -15,8 +15,8 @@ check: build
 
 build:
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	SWIGOPT='$(SWIGOPT)' TARGET='$(TARGET)' INTERFACE='$(INTERFACE)' INTERFACEDIR='$(INTERFACEDIR)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	alaqilOPT='$(alaqilOPT)' TARGET='$(TARGET)' INTERFACE='$(INTERFACE)' INTERFACEDIR='$(INTERFACEDIR)' \
 	PROJECTNAME='$(PROJECTNAME)' TARGETID='$(TARGETID)' android
 
 install:

@@ -32,7 +32,7 @@ function example.sort_int2(t)
 end
 }
 
-// this way uses the SWIG-Lua typemaps to do the conversion for us
+// this way uses the alaqil-Lua typemaps to do the conversion for us
 // the %apply command states to apply this wherever the argument signature matches
 %include <typemaps.i>
 %apply (double *INOUT,int) {(double* arr,int len)};

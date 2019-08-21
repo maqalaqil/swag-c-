@@ -2,11 +2,11 @@
  * Test Java director typemaps and features
  */
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR); /* Thread/reentrant unsafe wrapping, consider returning by value instead. */
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR); /* Thread/reentrant unsafe wrapping, consider returning by value instead. */
 
 %module(directors="1") java_director
 
-%typemap(javafinalize) SWIGTYPE %{
+%typemap(javafinalize) alaqilTYPE %{
   @SuppressWarnings("deprecation")
   protected void finalize() {
 //    System.out.println("Finalizing " + this);
@@ -67,7 +67,7 @@ private:
 %include "std_string.i"
 
 %feature("director") Quux;
-SWIG_DIRECTOR_OWNED(Quux)
+alaqil_DIRECTOR_OWNED(Quux)
 
 class Quux {
 public:
@@ -99,7 +99,7 @@ public:
 
 %typemap(directordisconnect, methodname="disconnect_director") hi::Quux1 %{
   public void $methodname() {
-    swigCMemOwn = false;
+    alaqilCMemOwn = false;
     $jnicall;
     // add in a flag to check this method is really called
     disconnectMethodCalled = true;

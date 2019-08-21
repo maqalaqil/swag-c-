@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>SWIG:Examples:go:variables</title>
+<title>alaqil:Examples:go:variables</title>
 </head>
 
 <body bgcolor="#ffffff">
 
-<tt>SWIG/Examples/go/variables/</tt>
+<tt>alaqil/Examples/go/variables/</tt>
 <hr>
 
 <H2>Wrapping C Global Variables</H2>
 
 <p>
-When a C global variable appears in an interface file, SWIG provides
+When a C global variable appears in an interface file, alaqil provides
 getter and setter functions for the variable.  The getter function is
 named <tt>Get</tt> followed by the capitalized name of the variable.
 The setter variable starts with <tt>Set</tt> instead.  The getter
@@ -19,7 +19,7 @@ function takes no parameters and returns the value of the variable.
 The setter function takes a single parameter with the same type as the
 variable, and returns nothing.
 
-<p>Click <a href="example.i">here</a> to see a SWIG interface with
+<p>Click <a href="example.i">here</a> to see a alaqil interface with
 some variable declarations in it.
 
 <h2>Manipulating Variables from Go</h2>
@@ -49,7 +49,7 @@ technique.
 
 <ul>
 <li>The name of the variable is capitalized.
-<li>When a global variable has the type "<tt>char *</tt>", SWIG
+<li>When a global variable has the type "<tt>char *</tt>", alaqil
 manages it as a character string.
 <li><tt>signed char</tt> and <tt>unsigned char</tt> are handled as
 small 8-bit integers.

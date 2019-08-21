@@ -1,13 +1,13 @@
 %module(directors="1") director_wstring;
 %include <stl.i>
 
-#ifndef SWIG_STL_UNIMPL
+#ifndef alaqil_STL_UNIMPL
 
 %include std_vector.i
 %include std_wstring.i
 
 // Using thread unsafe wrapping
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) A;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) A;
 
 %{
 #include <vector>

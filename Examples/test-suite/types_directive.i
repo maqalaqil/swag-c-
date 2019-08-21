@@ -1,10 +1,10 @@
 %module types_directive
 
-#if defined(SWIGR)
+#if defined(alaqilR)
 // Avoid conflict with Date class in R
-#define Date DateSwig
+#define Date Datealaqil
 %inline %{
-#define Date DateSwig
+#define Date Datealaqil
 %}
 #endif
 

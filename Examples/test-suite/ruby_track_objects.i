@@ -13,10 +13,10 @@
 
 %typemap(argout) Foo** foo {
 	/* %typemap(argout) Foo** foo */
-	$result = SWIG_NewPointerObj((void *) *$1, $*1_descriptor, 0);
+	$result = alaqil_NewPointerObj((void *) *$1, $*1_descriptor, 0);
 }	
 
-%apply SWIGTYPE *DISOWN {Foo* ownedFoo};
+%apply alaqilTYPE *DISOWN {Foo* ownedFoo};
 
 
 %trackobjects ItemA;

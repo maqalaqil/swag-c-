@@ -7,7 +7,7 @@ public class enum_thorough_proper_runme {
     try {
         System.loadLibrary("enum_thorough_proper");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -53,11 +53,11 @@ public class enum_thorough_proper_runme {
       SpeedClass.speed lightning = SpeedClass.speed.lightning;
 
       if (s.getMySpeedtd1() != slow) throw new RuntimeException("mySpeedtd1 1 failed");
-      if (s.getMySpeedtd1().swigValue() != 10) throw new RuntimeException("mySpeedtd1 2 failed");
+      if (s.getMySpeedtd1().alaqilValue() != 10) throw new RuntimeException("mySpeedtd1 2 failed");
 
       s.setMySpeedtd1(lightning);
       if (s.getMySpeedtd1() != lightning) throw new RuntimeException("mySpeedtd1 3 failed");
-      if (s.getMySpeedtd1().swigValue() != 31) throw new RuntimeException("mySpeedtd1 4 failed");
+      if (s.getMySpeedtd1().alaqilValue() != 31) throw new RuntimeException("mySpeedtd1 4 failed");
     }
     {
       if (enum_thorough_proper.namedanonTest1(namedanon.NamedAnon2) != namedanon.NamedAnon2) throw new RuntimeException("namedanonTest 1 failed");
@@ -371,59 +371,59 @@ public class enum_thorough_proper_runme {
     }
     // ignore enum item tests start
     {
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_zero).swigValue() != 0) throw new RuntimeException("ignoreATest 0 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_three).swigValue() != 3) throw new RuntimeException("ignoreATest 3 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_ten).swigValue() != 10) throw new RuntimeException("ignoreATest 10 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_eleven).swigValue() != 11) throw new RuntimeException("ignoreATest 11 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirteen).swigValue() != 13) throw new RuntimeException("ignoreATest 13 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_fourteen).swigValue() != 14) throw new RuntimeException("ignoreATest 14 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_twenty).swigValue() != 20) throw new RuntimeException("ignoreATest 20 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirty).swigValue() != 30) throw new RuntimeException("ignoreATest 30 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirty_two).swigValue() != 32) throw new RuntimeException("ignoreATest 32 failed");
-      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirty_three).swigValue() != 33) throw new RuntimeException("ignoreATest 33 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_zero).alaqilValue() != 0) throw new RuntimeException("ignoreATest 0 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_three).alaqilValue() != 3) throw new RuntimeException("ignoreATest 3 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_ten).alaqilValue() != 10) throw new RuntimeException("ignoreATest 10 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_eleven).alaqilValue() != 11) throw new RuntimeException("ignoreATest 11 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirteen).alaqilValue() != 13) throw new RuntimeException("ignoreATest 13 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_fourteen).alaqilValue() != 14) throw new RuntimeException("ignoreATest 14 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_twenty).alaqilValue() != 20) throw new RuntimeException("ignoreATest 20 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirty).alaqilValue() != 30) throw new RuntimeException("ignoreATest 30 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirty_two).alaqilValue() != 32) throw new RuntimeException("ignoreATest 32 failed");
+      if (enum_thorough_proper.ignoreATest(IgnoreTest.IgnoreA.ignoreA_thirty_three).alaqilValue() != 33) throw new RuntimeException("ignoreATest 33 failed");
     }                                                         
     {                                                         
-      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_eleven).swigValue() != 11) throw new RuntimeException("ignoreBTest 11 failed");
-      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_twelve).swigValue() != 12) throw new RuntimeException("ignoreBTest 12 failed");
-      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_thirty_one).swigValue() != 31) throw new RuntimeException("ignoreBTest 31 failed");
-      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_thirty_two).swigValue() != 32) throw new RuntimeException("ignoreBTest 32 failed");
-      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_forty_one).swigValue() != 41) throw new RuntimeException("ignoreBTest 41 failed");
-      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_forty_two).swigValue() != 42) throw new RuntimeException("ignoreBTest 42 failed");
+      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_eleven).alaqilValue() != 11) throw new RuntimeException("ignoreBTest 11 failed");
+      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_twelve).alaqilValue() != 12) throw new RuntimeException("ignoreBTest 12 failed");
+      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_thirty_one).alaqilValue() != 31) throw new RuntimeException("ignoreBTest 31 failed");
+      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_thirty_two).alaqilValue() != 32) throw new RuntimeException("ignoreBTest 32 failed");
+      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_forty_one).alaqilValue() != 41) throw new RuntimeException("ignoreBTest 41 failed");
+      if (enum_thorough_proper.ignoreBTest(IgnoreTest.IgnoreB.ignoreB_forty_two).alaqilValue() != 42) throw new RuntimeException("ignoreBTest 42 failed");
     }                                                         
     {                                                         
-      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_ten).swigValue() != 10) throw new RuntimeException("ignoreCTest 10 failed");
-      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_twelve).swigValue() != 12) throw new RuntimeException("ignoreCTest 12 failed");
-      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_thirty).swigValue() != 30) throw new RuntimeException("ignoreCTest 30 failed");
-      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_thirty_two).swigValue() != 32) throw new RuntimeException("ignoreCTest 32 failed");
-      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_forty).swigValue() != 40) throw new RuntimeException("ignoreCTest 40 failed");
-      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_forty_two).swigValue() != 42) throw new RuntimeException("ignoreCTest 42 failed");
+      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_ten).alaqilValue() != 10) throw new RuntimeException("ignoreCTest 10 failed");
+      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_twelve).alaqilValue() != 12) throw new RuntimeException("ignoreCTest 12 failed");
+      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_thirty).alaqilValue() != 30) throw new RuntimeException("ignoreCTest 30 failed");
+      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_thirty_two).alaqilValue() != 32) throw new RuntimeException("ignoreCTest 32 failed");
+      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_forty).alaqilValue() != 40) throw new RuntimeException("ignoreCTest 40 failed");
+      if (enum_thorough_proper.ignoreCTest(IgnoreTest.IgnoreC.ignoreC_forty_two).alaqilValue() != 42) throw new RuntimeException("ignoreCTest 42 failed");
     }                                                         
     {                                                         
-      if (enum_thorough_proper.ignoreDTest(IgnoreTest.IgnoreD.ignoreD_twenty_one).swigValue() != 21) throw new RuntimeException("ignoreDTest 21 failed");
-      if (enum_thorough_proper.ignoreDTest(IgnoreTest.IgnoreD.ignoreD_twenty_two).swigValue() != 22) throw new RuntimeException("ignoreDTest 22 failed");
+      if (enum_thorough_proper.ignoreDTest(IgnoreTest.IgnoreD.ignoreD_twenty_one).alaqilValue() != 21) throw new RuntimeException("ignoreDTest 21 failed");
+      if (enum_thorough_proper.ignoreDTest(IgnoreTest.IgnoreD.ignoreD_twenty_two).alaqilValue() != 22) throw new RuntimeException("ignoreDTest 22 failed");
     }                                                         
     {                                                         
-      if (enum_thorough_proper.ignoreETest(IgnoreTest.IgnoreE.ignoreE_zero).swigValue() != 0) throw new RuntimeException("ignoreETest 0 failed");
-      if (enum_thorough_proper.ignoreETest(IgnoreTest.IgnoreE.ignoreE_twenty_one).swigValue() != 21) throw new RuntimeException("ignoreETest 21 failed");
-      if (enum_thorough_proper.ignoreETest(IgnoreTest.IgnoreE.ignoreE_twenty_two).swigValue() != 22) throw new RuntimeException("ignoreETest 22 failed");
+      if (enum_thorough_proper.ignoreETest(IgnoreTest.IgnoreE.ignoreE_zero).alaqilValue() != 0) throw new RuntimeException("ignoreETest 0 failed");
+      if (enum_thorough_proper.ignoreETest(IgnoreTest.IgnoreE.ignoreE_twenty_one).alaqilValue() != 21) throw new RuntimeException("ignoreETest 21 failed");
+      if (enum_thorough_proper.ignoreETest(IgnoreTest.IgnoreE.ignoreE_twenty_two).alaqilValue() != 22) throw new RuntimeException("ignoreETest 22 failed");
     }
     // ignore enum item tests end
     {
-      if (enum_thorough_proper.repeatTest(repeat.one).swigValue() != 1) throw new RuntimeException("repeatTest 1 failed");
-      if (enum_thorough_proper.repeatTest(repeat.initial).swigValue() != 1) throw new RuntimeException("repeatTest 2 failed");
-      if (enum_thorough_proper.repeatTest(repeat.two).swigValue() != 2) throw new RuntimeException("repeatTest 3 failed");
-      if (enum_thorough_proper.repeatTest(repeat.three).swigValue() != 3) throw new RuntimeException("repeatTest 4 failed");
-      if (enum_thorough_proper.repeatTest(repeat.llast).swigValue() != 3) throw new RuntimeException("repeatTest 5 failed");
-      if (enum_thorough_proper.repeatTest(repeat.end).swigValue() != 3) throw new RuntimeException("repeatTest 6 failed");
+      if (enum_thorough_proper.repeatTest(repeat.one).alaqilValue() != 1) throw new RuntimeException("repeatTest 1 failed");
+      if (enum_thorough_proper.repeatTest(repeat.initial).alaqilValue() != 1) throw new RuntimeException("repeatTest 2 failed");
+      if (enum_thorough_proper.repeatTest(repeat.two).alaqilValue() != 2) throw new RuntimeException("repeatTest 3 failed");
+      if (enum_thorough_proper.repeatTest(repeat.three).alaqilValue() != 3) throw new RuntimeException("repeatTest 4 failed");
+      if (enum_thorough_proper.repeatTest(repeat.llast).alaqilValue() != 3) throw new RuntimeException("repeatTest 5 failed");
+      if (enum_thorough_proper.repeatTest(repeat.end).alaqilValue() != 3) throw new RuntimeException("repeatTest 6 failed");
     }
     // different types
     {
-      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typeint).swigValue() != 10) throw new RuntimeException("differentTypes 1 failed");
-      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typeboolfalse).swigValue() != 0) throw new RuntimeException("differentTypes 2 failed");
-      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typebooltrue).swigValue() != 1) throw new RuntimeException("differentTypes 3 failed");
-      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typebooltwo).swigValue() != 2) throw new RuntimeException("differentTypes 4 failed");
-      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typechar).swigValue() != 'C') throw new RuntimeException("differentTypes 5 failed");
-      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typedefaultint).swigValue() != 'D') throw new RuntimeException("differentTypes 6 failed");
+      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typeint).alaqilValue() != 10) throw new RuntimeException("differentTypes 1 failed");
+      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typeboolfalse).alaqilValue() != 0) throw new RuntimeException("differentTypes 2 failed");
+      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typebooltrue).alaqilValue() != 1) throw new RuntimeException("differentTypes 3 failed");
+      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typebooltwo).alaqilValue() != 2) throw new RuntimeException("differentTypes 4 failed");
+      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typechar).alaqilValue() != 'C') throw new RuntimeException("differentTypes 5 failed");
+      if (enum_thorough_proper.differentTypesTest(DifferentTypes.typedefaultint).alaqilValue() != 'D') throw new RuntimeException("differentTypes 6 failed");
 
       int global_enum = enum_thorough_proper.global_typeint;
       if (enum_thorough_proper.globalDifferentTypesTest(global_enum) != 10) throw new RuntimeException("global differentTypes 1 failed");

@@ -1,7 +1,7 @@
 // File: runme.js
 
 // This file illustrates class C++ interface generated
-// by SWIG.
+// by alaqil.
 
 var example = require("example");
 

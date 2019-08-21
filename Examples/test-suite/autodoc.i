@@ -1,6 +1,6 @@
 %module(docstring="hello.") autodoc
 
-%warnfilter(SWIGWARN_PARSE_KEYWORD) inout;
+%warnfilter(alaqilWARN_PARSE_KEYWORD) inout;
 
 %feature("autodoc");
 
@@ -148,7 +148,7 @@ template<typename X> struct T {
 %template(TInteger) T<int>;
 
 %inline %{
-#ifdef SWIGPYTHON_BUILTIN
+#ifdef alaqilPYTHON_BUILTIN
 bool is_python_builtin() { return true; }
 #else
 bool is_python_builtin() { return false; }

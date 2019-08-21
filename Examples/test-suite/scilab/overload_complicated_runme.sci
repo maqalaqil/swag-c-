@@ -1,6 +1,6 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
-NULL = SWIG_ptr(0);
+NULL = alaqil_ptr(0);
 p = new_Pop(NULL);
 p = new_Pop(NULL, %T);
 
@@ -21,5 +21,5 @@ checkequal(Pop_bip(p, NULL), 2002, "Pop_bip(%T)");
 checkequal(muzak(%T), 3001, "muzak(%T)");
 checkequal(muzak(NULL), 3002, "muzak(%T)");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

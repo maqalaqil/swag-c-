@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Throw_exception
 
 let x = new_Foo '()

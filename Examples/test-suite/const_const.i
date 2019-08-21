@@ -1,7 +1,7 @@
-/* This interface file tests whether SWIG handles types like
+/* This interface file tests whether alaqil handles types like
    "const int *const" right.
 
-   SWIG 1.3a5 signals a syntax error.
+   alaqil 1.3a5 signals a syntax error.
 */
 
 %module const_const

@@ -1,6 +1,6 @@
 whenman(
 COMMENT(html output not great if included when using html2doc)
-manpage(ccache-swig)(1)()()()
+manpage(ccache-alaqil)(1)()()()
 )
 
 whenhtml(htmlcommand(
@@ -8,12 +8,12 @@ whenhtml(htmlcommand(
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>ccache-swig(1) manpage</title>
+<title>ccache-alaqil(1) manpage</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body bgcolor="#ffffff">
-<H1><a name="CCache"></a>Using SWIG with ccache - ccache-swig(1) manpage</H1>
+<H1><a name="CCache"></a>Using alaqil with ccache - ccache-alaqil(1) manpage</H1>
 <!-- INDEX -->
 <div class="sectiontoc">
 <!-- INDEX -->
@@ -21,30 +21,30 @@ whenhtml(htmlcommand(
 ))
 
 
-manpagename(ccache-swig)(a fast compiler cache)
+manpagename(ccache-alaqil)(a fast compiler cache)
 
 whenhtml(htmlcommand(
-ccache-swig - a fast compiler cache
+ccache-alaqil - a fast compiler cache
 ))
 
 manpagesynopsis()
 
-ccache-swig [OPTION]
+ccache-alaqil [OPTION]
 
-ccache-swig <compiler> [COMPILER OPTIONS]
+ccache-alaqil <compiler> [COMPILER OPTIONS]
 
 <compiler> [COMPILER OPTIONS]
 
 manpagedescription()
 
-ccache-swig is a compiler cache. It speeds up re-compilation of C/C++/SWIG code 
+ccache-alaqil is a compiler cache. It speeds up re-compilation of C/C++/alaqil code 
 by caching previous compiles and detecting when the same compile is
-being done again. ccache-swig is ccache plus support for SWIG. ccache
-and ccache-swig are used interchangeably in this document.
+being done again. ccache-alaqil is ccache plus support for alaqil. ccache
+and ccache-alaqil are used interchangeably in this document.
 
 manpagesection(OPTIONS SUMMARY)
 
-Here is a summary of the options to ccache-swig.
+Here is a summary of the options to ccache-alaqil.
 
 verb(
 -s                      show statistics summary
@@ -59,7 +59,7 @@ verb(
 
 manpageoptions()
 
-These options only apply when you invoke ccache as "ccache-swig". When
+These options only apply when you invoke ccache as "ccache-alaqil". When
 invoked as a compiler none of these options apply. In that case your
 normal compiler options apply and you should refer to your compilers
 documentation.
@@ -69,7 +69,7 @@ dit(bf(-h)) Print a options summary page
 
 dit(bf(-s)) Print the current statistics summary for the cache. The
 statistics are stored spread across the subdirectories of the
-cache. Using "ccache-swig -s" adds up the statistics across all
+cache. Using "ccache-alaqil -s" adds up the statistics across all
 subdirectories and prints the totals.
 
 dit(bf(-z)) Zero the cache statistics. 
@@ -100,22 +100,22 @@ enddit()
 manpagesection(INSTALLATION)
 
 There are two ways to use ccache. You can either prefix your compile
-commands with "ccache-swig" or you can create a symbolic link between
-ccache-swig and the names of your compilers. The first method is most
+commands with "ccache-alaqil" or you can create a symbolic link between
+ccache-alaqil and the names of your compilers. The first method is most
 convenient if you just want to try out ccache or wish to use it for
 some specific projects. The second method is most useful for when you
 wish to use ccache for all your compiles.
 
-To install for usage by the first method just copy ccache-swig to somewhere
+To install for usage by the first method just copy ccache-alaqil to somewhere
 in your path. 
 
 To install for the second method do something like this:
 verb(
-  cp ccache-swig /usr/local/bin/
-  ln -s /usr/local/bin/ccache-swig /usr/local/bin/gcc
-  ln -s /usr/local/bin/ccache-swig /usr/local/bin/g++
-  ln -s /usr/local/bin/ccache-swig /usr/local/bin/cc
-  ln -s /usr/local/bin/ccache-swig /usr/local/bin/swig
+  cp ccache-alaqil /usr/local/bin/
+  ln -s /usr/local/bin/ccache-alaqil /usr/local/bin/gcc
+  ln -s /usr/local/bin/ccache-alaqil /usr/local/bin/g++
+  ln -s /usr/local/bin/ccache-alaqil /usr/local/bin/cc
+  ln -s /usr/local/bin/ccache-alaqil /usr/local/bin/alaqil
 )
 This will work as long as /usr/local/bin comes before the path to gcc
 (which is usually in /usr/bin). After installing you may wish to run
@@ -268,14 +268,14 @@ C++ compiler as without this option an unwarranted warning is displayed:
 CC: Warning: "-E" redefines product from "object" to "source (stdout)"
 when -E and -c is used together.
 
-dit(bf(CCACHE_SWIG)) When using SWIG as the compiler and it does not
-have 'swig' in the executable name, then the CCACHE_SWIG environment 
+dit(bf(CCACHE_alaqil)) When using alaqil as the compiler and it does not
+have 'alaqil' in the executable name, then the CCACHE_alaqil environment 
 variable needs to be set in order for ccache to work correctly with 
-SWIG. The use of CCACHE_CPP2 is also recommended for SWIG due to some
+alaqil. The use of CCACHE_CPP2 is also recommended for alaqil due to some
 preprocessor quirks, however, use of CCACHE_CPP2 can often be skipped
 -- check your generated code with and without this option set. Known
 problems are using preprocessor directives within %inline blocks and
-the use of '#pragma SWIG'.
+the use of '#pragma alaqil'.
 
 enddit()
 
@@ -368,8 +368,8 @@ by Erik Thiele and I would like to thank him for an excellent piece of
 work. See 
 url(http://www.erikyyy.de/compilercache/)(http://www.erikyyy.de/compilercache/)
 for the Erik's scripts.
-ccache-swig is a port of the original ccache with support added for use
-with SWIG.
+ccache-alaqil is a port of the original ccache with support added for use
+with alaqil.
 
 I wrote ccache because I wanted to get a bit more speed out of a
 compiler cache and I wanted to remove some of the limitations of the
@@ -405,11 +405,11 @@ manpageauthor()
 
 ccache was written by Andrew Tridgell
 url(http://samba.org/~tridge/)(http://samba.org/~tridge/).
-ccache was adapted to create ccache-swig for use with SWIG by William Fulton.
+ccache was adapted to create ccache-alaqil for use with alaqil by William Fulton.
 
 If you wish to report a problem or make a suggestion then please email
-the SWIG developers on the swig-devel mailing list, see
-url(http://www.swig.org/mail.html)(http://www.swig.org/mail.html)
+the alaqil developers on the alaqil-devel mailing list, see
+url(http://www.alaqil.org/mail.html)(http://www.alaqil.org/mail.html)
 
 ccache is released under the GNU General Public License version 2 or
 later. Please see the file COPYING for license details.

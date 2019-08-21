@@ -6,10 +6,10 @@
  * ----------------------------------------------------------------------------- */
 
 /*
-  Use -DSWIG_DIRECTOR_STATIC if you prefer to avoid the use of the
-  'Swig' namespace. This could be useful for multi-modules projects.
+  Use -Dalaqil_DIRECTOR_STATIC if you prefer to avoid the use of the
+  'alaqil' namespace. This could be useful for multi-modules projects.
 */
-#ifdef SWIG_DIRECTOR_STATIC
+#ifdef alaqil_DIRECTOR_STATIC
 /* Force anonymous (static) namespace */
-#define Swig
+#define alaqil
 #endif

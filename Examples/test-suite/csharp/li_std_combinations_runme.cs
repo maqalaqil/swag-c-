@@ -23,7 +23,7 @@ public class li_std_combinations_runme {
     VectorPairDoubleString vpds = new VectorPairDoubleString();
     vpds.Add(pds);
 
-    // Check SWIG_STD_VECTOR_ENHANCED macro - it provides the Contains method
+    // Check alaqil_STD_VECTOR_ENHANCED macro - it provides the Contains method
     if (!vpds.Contains(pds))
       throw new ApplicationException("VectorPairDoubleString");
   }

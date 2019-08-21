@@ -1,8 +1,8 @@
 %module doxygen_alias
 
-#ifdef SWIGJAVA
+#ifdef alaqilJAVA
 %feature("doxygen:alias:nullptr") "null"
-#elif defined(SWIGPYTHON)
+#elif defined(alaqilPYTHON)
 %feature("doxygen:alias:nullptr") "None"
 #else
 %feature("doxygen:alias:nullptr") "NULL"

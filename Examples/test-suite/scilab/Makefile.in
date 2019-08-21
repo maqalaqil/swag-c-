@@ -38,22 +38,22 @@ RUNME_SCRIPT = $(SCRIPTPREFIX)$*$(SCRIPTSUFFIX)
 SRC_RUNME_SCRIPT = $(srcdir)/$(RUNME_SCRIPT)
 
 # Hide too long identifier warnings
-SWIGOPT += -w720
+alaqilOPT += -w720
 
 # Rules for the different types of tests
 %.cpptest:
 	$(setup)
-	+(cd $(TEST_DIR) && $(swig_and_compile_cpp))
+	+(cd $(TEST_DIR) && $(alaqil_and_compile_cpp))
 	cd $(TEST_DIR) && $(run_testcase)
 
 %.ctest:
 	$(setup)
-	+(cd $(TEST_DIR) && $(swig_and_compile_c))
+	+(cd $(TEST_DIR) && $(alaqil_and_compile_c))
 	cd $(TEST_DIR) && $(run_testcase)
 
 %.multicpptest:
 	$(setup)
-	+(cd $(TEST_DIR) && $(swig_and_compile_multi_cpp))
+	+(cd $(TEST_DIR) && $(alaqil_and_compile_multi_cpp))
 	cd $(TEST_DIR) && $(run_testcase)
 
 # Copies files and creates directories needed for the test case
@@ -66,11 +66,11 @@ setup = \
 	  if [ ! -f $(TEST_DIR) ]; then	\
 	    cp $(SRC_RUNME_SCRIPT) $(TEST_DIR); \
 	  fi; \
-	  if [ ! -f $(TEST_DIR)/swigtest.start ]; then	\
-	    cp $(srcdir)/swigtest.start $(TEST_DIR); \
+	  if [ ! -f $(TEST_DIR)/alaqiltest.start ]; then	\
+	    cp $(srcdir)/alaqiltest.start $(TEST_DIR); \
 	  fi; \
-	  if [ ! -f $(TEST_DIR)/swigtest.quit ]; then \
-	    cp $(srcdir)/swigtest.quit $(TEST_DIR); \
+	  if [ ! -f $(TEST_DIR)/alaqiltest.quit ]; then \
+	    cp $(srcdir)/alaqiltest.quit $(TEST_DIR); \
 	  fi; \
 	else \
 	  echo "$(ACTION)ing $(LANGUAGE) testcase $*" ; \

@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
- * swiginterface.i
+ * alaqilinterface.i
  *
- * SWIG interface feature and typemaps implementation providing:
+ * alaqil interface feature and typemaps implementation providing:
  *   %interface
  *   %interface_impl
  *   %interface_custom
@@ -13,20 +13,20 @@
 %typemap(cstype) CTYPE *const& "$*csinterfacename"
 %typemap(csin) CTYPE, CTYPE & "$csinput.GetInterfaceCPtr()"
 %typemap(csin) CTYPE *, CTYPE *const&, CTYPE [] "$csinput == null ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : $csinput.GetInterfaceCPtr()"
-%typemap(csout, excode=SWIGEXCODE) CTYPE {
+%typemap(csout, excode=alaqilEXCODE) CTYPE {
     $&csclassname ret = new $&csclassname($imcall, true);$excode
     return ($&csinterfacename)ret;
   }
-%typemap(csout, excode=SWIGEXCODE) CTYPE & {
+%typemap(csout, excode=alaqilEXCODE) CTYPE & {
     $csclassname ret = new $csclassname($imcall, $owner);$excode
     return ($csinterfacename)ret;
   }
-%typemap(csout, excode=SWIGEXCODE) CTYPE *, CTYPE [] {
+%typemap(csout, excode=alaqilEXCODE) CTYPE *, CTYPE [] {
     global::System.IntPtr cPtr = $imcall;
     $csclassname ret = (cPtr == global::System.IntPtr.Zero) ? null : new $csclassname(cPtr, $owner);$excode
     return ($csinterfacename)ret;
   }
-%typemap(csout, excode=SWIGEXCODE) CTYPE *const& {
+%typemap(csout, excode=alaqilEXCODE) CTYPE *const& {
     global::System.IntPtr cPtr = $imcall;
     $*csclassname ret = (cPtr == global::System.IntPtr.Zero) ? null : new $*csclassname(cPtr, $owner);$excode
     return ($*csinterfacename)ret;
@@ -39,19 +39,19 @@
 %typemap(csinterfacecode, declaration="  [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]\n  global::System.Runtime.InteropServices.HandleRef GetInterfaceCPtr();\n", cptrmethod="$interfacename_GetInterfaceCPtr") CTYPE %{
   [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
   global::System.Runtime.InteropServices.HandleRef $interfacename.GetInterfaceCPtr() {
-    return new global::System.Runtime.InteropServices.HandleRef(this, $imclassname.$csclazzname$interfacename_GetInterfaceCPtr(swigCPtr.Handle));
+    return new global::System.Runtime.InteropServices.HandleRef(this, $imclassname.$csclazzname$interfacename_GetInterfaceCPtr(alaqilCPtr.Handle));
   }
 %}
 %enddef
 
 %define %interface(CTYPE...)
-%feature("interface", name="%sSwigInterface") CTYPE;
+%feature("interface", name="%salaqilInterface") CTYPE;
 INTERFACE_TYPEMAPS(CTYPE)
 %enddef
 
 %define %interface_impl(CTYPE...)
-%rename("%sSwigImpl") CTYPE;
-%feature("interface", name="%(rstrip:[SwigImpl])s") CTYPE;
+%rename("%salaqilImpl") CTYPE;
+%feature("interface", name="%(rstrip:[alaqilImpl])s") CTYPE;
 INTERFACE_TYPEMAPS(CTYPE)
 %enddef
 

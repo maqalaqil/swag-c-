@@ -5,13 +5,13 @@ using multiple_inheritance_nspaceNamespace.Space;
 public class multiple_inheritance_nspace_runme {
 
   //Test base class as a parameter in C#
-  int jcbase1b(CBase1SwigInterface cb1){
+  int jcbase1b(CBase1alaqilInterface cb1){
     return cb1.cbase1y();
   }
-  int jabase1(ABase1SwigInterface ab1){
+  int jabase1(ABase1alaqilInterface ab1){
     return ab1.abase1();
   }
-  int jcbase2(CBase2SwigInterface cb2){
+  int jcbase2(CBase2alaqilInterface cb2){
     return cb2.cbase2();
   }
 
@@ -54,26 +54,26 @@ public class multiple_inheritance_nspace_runme {
     check(b3.abase1()!=309, "Bottom3::abase1() failed");
 
     //Test interfaces from c++ classes 
-    CBase1SwigInterface cb1=new CBase1();
-    CBase2SwigInterface cb2=new CBase2();
+    CBase1alaqilInterface cb1=new CBase1();
+    CBase2alaqilInterface cb2=new CBase2();
     check(cb1.cbase1y()!=1, "CBase1::cbase1y() failed");
     check(cb2.cbase2()!=2, "CBase2::cbase2() failed");
 
     //Test nspace class as return value
-    ABase1SwigInterface ab1=d3.cloneit();
+    ABase1alaqilInterface ab1=d3.cloneit();
     check(ab1.abase1()!=9, "Derived3::abase1() through ABase1 failed");
 
     //Test concrete base class as return value
-    CBase1SwigInterface cb6=d2.cloneit();
-    CBase2SwigInterface cb7=d1.cloneit();
+    CBase1alaqilInterface cb6=d2.cloneit();
+    CBase2alaqilInterface cb7=d1.cloneit();
     check(cb6.cbase1y()!=6, "Derived2::cbase1y() through CBase1 failed");
     check(cb7.cbase2()!=4, "Derived1:cbase2() through ABase1 failed");
 
     //Test multi inheritance 
-    CBase1SwigInterface cb3=new Derived1();
-    CBase1SwigInterface cb4=new Derived3();
-    CBase2SwigInterface cb5=new Derived3();
-    ABase1SwigInterface ab6=new Derived2();
+    CBase1alaqilInterface cb3=new Derived1();
+    CBase1alaqilInterface cb4=new Derived3();
+    CBase2alaqilInterface cb5=new Derived3();
+    ABase1alaqilInterface ab6=new Derived2();
     check(cb3.cbase1y()!=3, "Derived1::cbase1y() through CBase1 failed");
     check(cb4.cbase1y()!=7, "Derived3::cbase1y() through CBase1 failed");
     check(cb5.cbase2()!=8, "Derived3::cbase2() through CBase2 failed");

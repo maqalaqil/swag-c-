@@ -62,7 +62,7 @@ enum Fruit {
 };
 %}
 
-#if !defined(SWIGR)
+#if !defined(alaqilR)
 %template(IntPtrList) std::list<int *>;
 %template(IntConstPtrList) std::list<const int *>;
 #endif

@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Abstract_access
 
 let d = new_D '()

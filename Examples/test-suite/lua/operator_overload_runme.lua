@@ -1,4 +1,4 @@
--- demo of lua swig capacities (operator overloading)
+-- demo of lua alaqil capacities (operator overloading)
 require("import")	-- the import fn
 import("operator_overload")	-- import lib
 
@@ -51,7 +51,7 @@ assert(f/g==Op(1))
 --lua 5.0.2 defines that unary - is __unm(self,nil)
 --lua 5.1.2 defines that unary - is __unm(self,self)
 --C++ expects unary - as operator-()
---however the latest version of SWIG strictly checks the number of args
+--however the latest version of alaqil strictly checks the number of args
 --and will complain if too many args are provided
 --therefore disabling these tests for now
 -- (solution will to be not to check args for this test case)

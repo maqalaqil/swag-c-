@@ -3,7 +3,7 @@ module overload_complicated_runme;
 import overload_complicated;
 
 void main() {
-  SWIGTYPE_p_int pInt = null;
+  alaqilTYPE_p_int pInt = null;
 
   // Check the correct constructors are available
   Pop p = new Pop(pInt);

@@ -53,26 +53,26 @@ C_TEST_CASES += \
 include $(srcdir)/../common.mk
 
 # Overridden variables here
-SWIGOPT += -w801 -noautorename -features autodoc=4
+alaqilOPT += -w801 -noautorename -features autodoc=4
 
 # Custom tests - tests with additional commandline options
-ruby_alias_global_function.ctest: SWIGOPT += -globalmodule
-ruby_naming.cpptest: SWIGOPT += -autorename
+ruby_alias_global_function.ctest: alaqilOPT += -globalmodule
+ruby_naming.cpptest: alaqilOPT += -autorename
 
 # Rules for the different types of tests
 %.cpptest:
 	$(setup)
-	+$(swig_and_compile_cpp)
+	+$(alaqil_and_compile_cpp)
 	$(run_testcase)
 
 %.ctest:
 	$(setup)
-	+$(swig_and_compile_c)
+	+$(alaqil_and_compile_c)
 	$(run_testcase)
 
 %.multicpptest:
 	$(setup)
-	+$(swig_and_compile_multi_cpp)
+	+$(alaqil_and_compile_multi_cpp)
 	$(run_testcase)
 
 # Runs the testcase. A testcase is only run if

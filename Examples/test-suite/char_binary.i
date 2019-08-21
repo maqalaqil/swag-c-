@@ -25,8 +25,8 @@ pchar var_pchar;
 %}
 
 // Remove string handling typemaps and treat as pointer
-%typemap(freearg) SWIGTYPE * ""
-%apply SWIGTYPE * { char * }
+%typemap(freearg) alaqilTYPE * ""
+%apply alaqilTYPE * { char * }
 
 %include "carrays.i"
 %array_functions(char, pchar);

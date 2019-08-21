@@ -44,7 +44,7 @@ public:
 };
 %}
 
-#ifdef SWIGRUBY
+#ifdef alaqilRUBY
 %typemap(in) String {
   Check_Type($input, T_STRING);
   $1 = String(StringValuePtr($input));

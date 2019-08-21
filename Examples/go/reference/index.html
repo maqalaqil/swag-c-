@@ -1,18 +1,18 @@
 <html>
 <head>
-<title>SWIG:Examples:go:reference</title>
+<title>alaqil:Examples:go:reference</title>
 </head>
 
 <body bgcolor="#ffffff">
 
 
-<tt>SWIG/Examples/go/reference/</tt>
+<tt>alaqil/Examples/go/reference/</tt>
 <hr>
 
 <H2>C++ Reference Handling</H2>
 
 <p>
-This example tests SWIG's handling of C++ references.  A reference in
+This example tests alaqil's handling of C++ references.  A reference in
 C++ is much like a pointer.  Go represents C++ classes as pointers
 which are stored in interface values.  Therefore, a reference to a
 class in C++ simply becomes an object of the class type in Go.  For
@@ -36,7 +36,7 @@ Vector addv(const Vector &amp;a, const Vector &amp;b) {
 </pre>
 </blockquote>
 
-In these cases, SWIG transforms everything into a pointer and creates
+In these cases, alaqil transforms everything into a pointer and creates
 a wrapper that looks like this in C++.
 
 <blockquote>
@@ -85,9 +85,9 @@ Vector *wrap_Object_get(Object *self, int index) {
 The following <a href="example.h">header file</a> contains some class
 definitions with some operators and use of references.
 
-<h2>SWIG Interface</h2>
+<h2>alaqil Interface</h2>
 
-SWIG does NOT support overloaded operators so it can not directly
+alaqil does NOT support overloaded operators so it can not directly
 build an interface to the classes in the above file.  However, a
 number of workarounds can be made.  For example, an overloaded
 operator can be stuck behind a function call such as the <tt>addv</tt>
@@ -112,7 +112,7 @@ public:
 </pre>
 </blockquote>
 
-Click <a href="example.i">here</a> to see a SWIG interface file with
+Click <a href="example.i">here</a> to see a alaqil interface file with
 these additions.
 
 <h2>Sample Go program</h2>
@@ -132,7 +132,7 @@ doesn't much matter.
 return by value, memory is not allocated to hold the return result.
 
 <p>
-<li>SWIG has particular trouble handling various combinations of
+<li>alaqil has particular trouble handling various combinations of
 references and pointers.  This is side effect of an old parsing scheme
 and type representation that will be replaced in future versions.
 

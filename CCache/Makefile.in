@@ -14,8 +14,8 @@ NOSOFTLINKSTEST=
 
 CC=@CC@
 CFLAGS=@CFLAGS@ -I.
-SWIG=swig
-SWIG_LIB=../$(srcdir)/../Lib
+alaqil=alaqil
+alaqil_LIB=../$(srcdir)/../Lib
 EXEEXT=@EXEEXT@
 
 LIBS= @LIBS@
@@ -29,7 +29,7 @@ all: $(PACKAGE_NAME)$(EXEEXT)
 Makefile: $(srcdir)/Makefile.in ./config.status
 	$(SHELL) ./config.status
 
-# Note that HTML documentation is actually generated and used from the main SWIG documentation Makefile
+# Note that HTML documentation is actually generated and used from the main alaqil documentation Makefile
 docs: $(srcdir)/$(PACKAGE_NAME).1 $(srcdir)/web/$(PACKAGE_NAME)-man.html
 
 $(PACKAGE_NAME)$(EXEEXT): $(OBJS) $(HEADERS)
@@ -65,12 +65,12 @@ clean-docs:
 	rm -f $(srcdir)/$(PACKAGE_NAME).1 $(srcdir)/web/$(PACKAGE_NAME)-man.html
 
 test: test.sh
-	SWIG_LIB='$(SWIG_LIB)' PATH=../..:$$PATH SWIG='$(SWIG)' CC='$(CC)' NOSOFTLINKSTEST='$(NOSOFTLINKSTEST)' CCACHE='../$(PACKAGE_NAME)' CCACHE_PROG=$(PROGRAM_NAME) $(srcdir)/test.sh
+	alaqil_LIB='$(alaqil_LIB)' PATH=../..:$$PATH alaqil='$(alaqil)' CC='$(CC)' NOSOFTLINKSTEST='$(NOSOFTLINKSTEST)' CCACHE='../$(PACKAGE_NAME)' CCACHE_PROG=$(PROGRAM_NAME) $(srcdir)/test.sh
 
 check: test
 
 distclean: clean
-	/bin/rm -f Makefile config.h config.sub config.log build-stamp config.status ccache_swig_config.h config_win32.h
+	/bin/rm -f Makefile config.h config.sub config.log build-stamp config.status ccache_alaqil_config.h config_win32.h
 	/bin/rm -rf autom4te.cache
 
 maintainer-clean: distclean

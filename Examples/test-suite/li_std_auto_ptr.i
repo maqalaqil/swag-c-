@@ -6,7 +6,7 @@
 #endif
 %}
 
-#if defined(SWIGCSHARP) || defined(SWIGJAVA) || defined(SWIGPYTHON)
+#if defined(alaqilCSHARP) || defined(alaqilJAVA) || defined(alaqilPYTHON)
 
 %include "std_auto_ptr.i"
 
@@ -16,14 +16,14 @@
 
 #include <memory>
 #include <string>
-#include "swig_examples_lock.h"
+#include "alaqil_examples_lock.h"
 
 class Klass {
 public:
   explicit Klass(const char* label) :
     m_label(label)
   {
-    SwigExamples::Lock lock(critical_section);
+    alaqilExamples::Lock lock(critical_section);
     total_count++;
   }
 
@@ -31,20 +31,20 @@ public:
 
   ~Klass()
   {
-    SwigExamples::Lock lock(critical_section);
+    alaqilExamples::Lock lock(critical_section);
     total_count--;
   }
 
   static int getTotal_count() { return total_count; }
 
 private:
-  static SwigExamples::CriticalSection critical_section;
+  static alaqilExamples::CriticalSection critical_section;
   static int total_count;
 
   std::string m_label;
 };
 
-SwigExamples::CriticalSection Klass::critical_section;
+alaqilExamples::CriticalSection Klass::critical_section;
 int Klass::total_count = 0;
 
 %}

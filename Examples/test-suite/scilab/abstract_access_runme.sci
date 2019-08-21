@@ -1,16 +1,16 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     D = new_D();
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
-if A_do_x(D) <> 1 then swigtesterror(); end
+if A_do_x(D) <> 1 then alaqiltesterror(); end
 
 try
     delete_D(D);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

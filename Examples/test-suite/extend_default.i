@@ -2,9 +2,9 @@
 
 %module extend_default
 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Override::over; 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Override::overload; 
-%warnfilter(SWIGWARN_PARSE_REDEFINED) Override::ride; 
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Override::over; 
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Override::overload; 
+%warnfilter(alaqilWARN_PARSE_REDEFINED) Override::ride; 
 
 // %extend before the class definition
 %extend Before {
@@ -92,8 +92,8 @@ struct OverAfter {
 
 // %extend overrides the class definition
 %extend Override {
-  int over(int a) { return a*a; } // SWIG should give a warning then choose this one over the real one
-  int overload(int a) { return a*a; } // Similarly, but this one generated uncompilable code in SWIG-1.3.22
+  int over(int a) { return a*a; } // alaqil should give a warning then choose this one over the real one
+  int overload(int a) { return a*a; } // Similarly, but this one generated uncompilable code in alaqil-1.3.22
 }
 %inline %{
 struct Override {
@@ -104,7 +104,7 @@ struct Override {
 };
 %}
 %extend Override {
-  int ride(int a) { return a+a; } // SWIG should give a warning then ignore this one
+  int ride(int a) { return a+a; } // alaqil should give a warning then ignore this one
 }
 
 

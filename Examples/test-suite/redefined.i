@@ -1,15 +1,15 @@
 %module redefined
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) agua;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) agua;
 
 /* no redundant warnings */
-%warnfilter(SWIGWARN_PARSE_REDUNDANT);
+%warnfilter(alaqilWARN_PARSE_REDUNDANT);
 
 #if 1
  //
  // All these repeated declarations are not redefinitions,
  // and they are valid C++ code, therefore, we skip 
- // swig redefined warnings.
+ // alaqil redefined warnings.
  //
 %define uja
   aju;
@@ -72,7 +72,7 @@
 
 //
 // All these repeated declarations are really redefinitions,
-// therefore, swig must produce a redefined warning
+// therefore, alaqil must produce a redefined warning
 //
 
 %constant int agua = 0;

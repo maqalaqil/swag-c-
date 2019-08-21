@@ -1,8 +1,8 @@
 %module(directors="1") director_smartptr
 
-#ifdef SWIGJAVA
-SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
-SWIG_JAVABODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
+#ifdef alaqilJAVA
+alaqil_JAVABODY_PROXY(public, public, alaqilTYPE)
+alaqil_JAVABODY_TYPEWRAPPER(public, public, public, alaqilTYPE)
 #endif
 
 %{
@@ -34,7 +34,7 @@ public:
 
 %}
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGPYTHON) || defined(SWIGD) || defined(SWIGOCTAVE) || defined(SWIGRUBY)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilPYTHON) || defined(alaqilD) || defined(alaqilOCTAVE) || defined(alaqilRUBY)
 #define SHARED_PTR_WRAPPERS_IMPLEMENTED
 #endif
 

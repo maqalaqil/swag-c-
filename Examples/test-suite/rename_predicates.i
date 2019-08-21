@@ -57,7 +57,7 @@ void UnderCaseIt() {}
 %inline %{
 struct ExtendCheck {
   void RealMember1() {}
-#ifdef SWIG
+#ifdef alaqil
   %extend {
     void ExtendMethod2() {}
   }

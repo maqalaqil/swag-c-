@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 derived = new_Derived();
 
@@ -7,5 +7,5 @@ checkequal(test2(derived), 1, "test2(derived)");
 
 delete_Derived(derived);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

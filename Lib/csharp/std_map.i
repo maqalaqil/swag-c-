@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_map.i
  *
- * SWIG typemaps for std::map< K, T, C >
+ * alaqil typemaps for std::map< K, T, C >
  *
  * The C# wrapper is made to look and feel like a C# System.Collections.Generic.IDictionary<>.
  *
@@ -14,7 +14,7 @@
  * 1) IEnumerable<> is implemented in the proxy class which is useful for using LINQ with
  *    C++ std::map wrappers.
  *
- * Warning: heavy macro usage in this file. Use swig -E to get a sane view on the real file contents!
+ * Warning: heavy macro usage in this file. Use alaqil -E to get a sane view on the real file contents!
  * ----------------------------------------------------------------------------- */
 
 %{
@@ -24,7 +24,7 @@
 %}
 
 /* K is the C++ key type, T is the C++ value type */
-%define SWIG_STD_MAP_INTERNAL(K, T, C)
+%define alaqil_STD_MAP_INTERNAL(K, T, C)
 
 %typemap(csinterfaces) std::map< K, T, C > "global::System.IDisposable \n    , global::System.Collections.Generic.IDictionary<$typemap(cstype, K), $typemap(cstype, T)>\n";
 %proxycode %{
@@ -262,20 +262,20 @@
 
       // create_iterator_begin(), get_next_key() and destroy_iterator work together to provide a collection of keys to C#
       %apply void *VOID_INT_PTR { std::map< K, T, C >::iterator *create_iterator_begin }
-      %apply void *VOID_INT_PTR { std::map< K, T, C >::iterator *swigiterator }
+      %apply void *VOID_INT_PTR { std::map< K, T, C >::iterator *alaqiliterator }
 
       std::map< K, T, C >::iterator *create_iterator_begin() {
         return new std::map< K, T, C >::iterator($self->begin());
       }
 
-      const key_type& get_next_key(std::map< K, T, C >::iterator *swigiterator) {
-        std::map< K, T, C >::iterator iter = *swigiterator;
-        (*swigiterator)++;
+      const key_type& get_next_key(std::map< K, T, C >::iterator *alaqiliterator) {
+        std::map< K, T, C >::iterator iter = *alaqiliterator;
+        (*alaqiliterator)++;
         return (*iter).first;
       }
 
-      void destroy_iterator(std::map< K, T, C >::iterator *swigiterator) {
-        delete swigiterator;
+      void destroy_iterator(std::map< K, T, C >::iterator *alaqiliterator) {
+        delete alaqiliterator;
       }
     }
 
@@ -292,7 +292,7 @@
 // Default implementation
 namespace std {
   template<class K, class T, class C = std::less<K> > class map {
-    SWIG_STD_MAP_INTERNAL(K, T, C)
+    alaqil_STD_MAP_INTERNAL(K, T, C)
   };
 }
 

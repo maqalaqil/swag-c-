@@ -20,7 +20,7 @@ namespace TopLevel
 %include <std_string.i>
 
 // nspace feature only supported by these languages
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGD)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilD)
 %nspace;
 #else
 //#warning nspace feature not yet supported in this target language

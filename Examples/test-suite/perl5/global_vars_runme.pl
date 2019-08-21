@@ -9,7 +9,7 @@ isa_ok($an, 'global_vars::A');
 $global_vars::ap = $an;
 is($global_vars::ap, $an, "global var assignment");
 
-# Regression test for https://sourceforge.net/p/swig/bugs/564/ - changing the
+# Regression test for https://sourceforge.net/p/alaqil/bugs/564/ - changing the
 # value in C/C++ apparently wasn't reflected in Perl:
 $global_vars::x = 17;
 is($global_vars::x, 17, "global var assignment");

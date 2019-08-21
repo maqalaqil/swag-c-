@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Cast_operator
 
 let a = new_A '()

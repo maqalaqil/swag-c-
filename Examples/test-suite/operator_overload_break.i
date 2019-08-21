@@ -1,10 +1,10 @@
 %module operator_overload_break
 
-#if defined(SWIGPYTHON) || defined(SWIGD)
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_PLUSPLUS);
+#if defined(alaqilPYTHON) || defined(alaqilD)
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_PLUSPLUS);
 #endif
 
-#if !defined(SWIGLUA) && !defined(SWIGR) && !defined(SWIGPERL)
+#if !defined(alaqilLUA) && !defined(alaqilR) && !defined(alaqilPERL)
 %rename(Plus) operator +;
 %rename(Minus) operator -;
 %rename(EqualEqual) operator ==;

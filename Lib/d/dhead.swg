@@ -1,8 +1,8 @@
 /* -----------------------------------------------------------------------------
  * dhead.swg
  *
- * Support code for exceptions if the SWIG_D_NO_EXCEPTION_HELPER is not defined
- * Support code for strings if the SWIG_D_NO_STRING_HELPER is not defined
+ * Support code for exceptions if the alaqil_D_NO_EXCEPTION_HELPER is not defined
+ * Support code for strings if the alaqil_D_NO_STRING_HELPER is not defined
  *
  * Support code for function pointers. ----------------------------------------------------------------------------- */
 
@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 /* Contract support. */
-#define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_DSetPendingException(SWIG_DException, msg); return nullreturn; } else
+#define alaqil_contract_assert(nullreturn, expr, msg) if (!(expr)) {alaqil_DSetPendingException(alaqil_DException, msg); return nullreturn; } else
 %}
 
 
@@ -20,58 +20,58 @@
  * Exception support code.
  */
 
-#if !defined(SWIG_D_NO_EXCEPTION_HELPER)
+#if !defined(alaqil_D_NO_EXCEPTION_HELPER)
 %insert(runtime) %{
 // Support for throwing D exceptions from C/C++.
 typedef enum {
-  SWIG_DException = 0,
-  SWIG_DIllegalArgumentException,
-  SWIG_DIllegalElementException,
-  SWIG_DIOException,
-  SWIG_DNoSuchElementException
-} SWIG_DExceptionCodes;
+  alaqil_DException = 0,
+  alaqil_DIllegalArgumentException,
+  alaqil_DIllegalElementException,
+  alaqil_DIOException,
+  alaqil_DNoSuchElementException
+} alaqil_DExceptionCodes;
 
-typedef void (* SWIG_DExceptionCallback_t)(const char *);
+typedef void (* alaqil_DExceptionCallback_t)(const char *);
 
 typedef struct {
-  SWIG_DExceptionCodes code;
-  SWIG_DExceptionCallback_t callback;
-} SWIG_DException_t;
+  alaqil_DExceptionCodes code;
+  alaqil_DExceptionCallback_t callback;
+} alaqil_DException_t;
 
-static SWIG_DException_t SWIG_d_exceptions[] = {
-  { SWIG_DException, NULL },
-  { SWIG_DIllegalArgumentException, NULL },
-  { SWIG_DIllegalElementException, NULL },
-  { SWIG_DIOException, NULL },
-  { SWIG_DNoSuchElementException, NULL }
+static alaqil_DException_t alaqil_d_exceptions[] = {
+  { alaqil_DException, NULL },
+  { alaqil_DIllegalArgumentException, NULL },
+  { alaqil_DIllegalElementException, NULL },
+  { alaqil_DIOException, NULL },
+  { alaqil_DNoSuchElementException, NULL }
 };
 
-static void SWIGUNUSED SWIG_DSetPendingException(SWIG_DExceptionCodes code, const char *msg) {
-  if ((size_t)code < sizeof(SWIG_d_exceptions)/sizeof(SWIG_DException_t)) {
-    SWIG_d_exceptions[code].callback(msg);
+static void alaqilUNUSED alaqil_DSetPendingException(alaqil_DExceptionCodes code, const char *msg) {
+  if ((size_t)code < sizeof(alaqil_d_exceptions)/sizeof(alaqil_DException_t)) {
+    alaqil_d_exceptions[code].callback(msg);
   } else {
-    SWIG_d_exceptions[SWIG_DException].callback(msg);
+    alaqil_d_exceptions[alaqil_DException].callback(msg);
   }
 }
 
 #ifdef __cplusplus
 extern "C"
 #endif
-SWIGEXPORT void SWIGRegisterExceptionCallbacks_$module(
-  SWIG_DExceptionCallback_t exceptionCallback,
-  SWIG_DExceptionCallback_t illegalArgumentCallback,
-  SWIG_DExceptionCallback_t illegalElementCallback,
-  SWIG_DExceptionCallback_t ioCallback,
-  SWIG_DExceptionCallback_t noSuchElementCallback) {
-  SWIG_d_exceptions[SWIG_DException].callback = exceptionCallback;
-  SWIG_d_exceptions[SWIG_DIllegalArgumentException].callback = illegalArgumentCallback;
-  SWIG_d_exceptions[SWIG_DIllegalElementException].callback = illegalElementCallback;
-  SWIG_d_exceptions[SWIG_DIOException].callback = ioCallback;
-  SWIG_d_exceptions[SWIG_DNoSuchElementException].callback = noSuchElementCallback;
+alaqilEXPORT void alaqilRegisterExceptionCallbacks_$module(
+  alaqil_DExceptionCallback_t exceptionCallback,
+  alaqil_DExceptionCallback_t illegalArgumentCallback,
+  alaqil_DExceptionCallback_t illegalElementCallback,
+  alaqil_DExceptionCallback_t ioCallback,
+  alaqil_DExceptionCallback_t noSuchElementCallback) {
+  alaqil_d_exceptions[alaqil_DException].callback = exceptionCallback;
+  alaqil_d_exceptions[alaqil_DIllegalArgumentException].callback = illegalArgumentCallback;
+  alaqil_d_exceptions[alaqil_DIllegalElementException].callback = illegalElementCallback;
+  alaqil_d_exceptions[alaqil_DIOException].callback = ioCallback;
+  alaqil_d_exceptions[alaqil_DNoSuchElementException].callback = noSuchElementCallback;
 }
 %}
 
-#if (SWIG_D_VERSION == 1)
+#if (alaqil_D_VERSION == 1)
 %pragma(d) imdmoduleimports=%{
 // Exception throwing support currently requires Tango, but there is no reason
 // why it could not support Phobos.
@@ -81,9 +81,9 @@ static import tango.stdc.stringz;
 %}
 
 %pragma(d) imdmodulecode=%{
-private class SwigExceptionHelper {
+private class alaqilExceptionHelper {
   static this() {
-    swigRegisterExceptionCallbacks$module(
+    alaqilRegisterExceptionCallbacks$module(
       &setException,
       &setIllegalArgumentException,
       &setIllegalElementException,
@@ -93,31 +93,31 @@ private class SwigExceptionHelper {
 
   static void setException(char* message) {
     auto exception = new object.Exception(tango.stdc.stringz.fromStringz(message).dup);
-    SwigPendingException.set(exception);
+    alaqilPendingException.set(exception);
   }
 
   static void setIllegalArgumentException(char* message) {
     auto exception = new tango.core.Exception.IllegalArgumentException(tango.stdc.stringz.fromStringz(message).dup);
-    SwigPendingException.set(exception);
+    alaqilPendingException.set(exception);
   }
 
   static void setIllegalElementException(char* message) {
     auto exception = new tango.core.Exception.IllegalElementException(tango.stdc.stringz.fromStringz(message).dup);
-    SwigPendingException.set(exception);
+    alaqilPendingException.set(exception);
   }
 
   static void setIOException(char* message) {
     auto exception = new tango.core.Exception.IOException(tango.stdc.stringz.fromStringz(message).dup);
-    SwigPendingException.set(exception);
+    alaqilPendingException.set(exception);
   }
 
   static void setNoSuchElementException(char* message) {
     auto exception = new tango.core.Exception.NoSuchElementException(tango.stdc.stringz.fromStringz(message).dup);
-    SwigPendingException.set(exception);
+    alaqilPendingException.set(exception);
   }
 }
 
-package class SwigPendingException {
+package class alaqilPendingException {
 public:
   static this() {
     m_sPendingException = new ThreadLocalData(null);
@@ -149,7 +149,7 @@ private:
   alias tango.core.Thread.ThreadLocal!(object.Exception) ThreadLocalData;
   static ThreadLocalData m_sPendingException;
 }
-alias void function(char* message) SwigExceptionCallback;
+alias void function(char* message) alaqilExceptionCallback;
 %}
 #else
 %pragma(d) imdmoduleimports=%{
@@ -157,10 +157,10 @@ static import std.conv;
 %}
 
 %pragma(d) imdmodulecode=%{
-private class SwigExceptionHelper {
+private class alaqilExceptionHelper {
   static this() {
 	// The D1/Tango version maps C++ exceptions to multiple exception types.
-    swigRegisterExceptionCallbacks$module(
+    alaqilRegisterExceptionCallbacks$module(
       &setException,
       &setException,
       &setException,
@@ -171,11 +171,11 @@ private class SwigExceptionHelper {
 
   static void setException(const char* message) {
     auto exception = new object.Exception(std.conv.to!string(message));
-    SwigPendingException.set(exception);
+    alaqilPendingException.set(exception);
   }
 }
 
-package struct SwigPendingException {
+package struct alaqilPendingException {
 public:
   static this() {
     m_sPendingException = null;
@@ -206,38 +206,38 @@ private:
   // The reference to the pending exception (if any) is stored thread-local.
   static object.Exception m_sPendingException;
 }
-alias void function(const char* message) SwigExceptionCallback;
+alias void function(const char* message) alaqilExceptionCallback;
 %}
 #endif
 // Callback registering function in wrapperloader.swg.
-#endif // SWIG_D_NO_EXCEPTION_HELPER
+#endif // alaqil_D_NO_EXCEPTION_HELPER
 
 
 /*
  * String support code.
  */
 
-#if !defined(SWIG_D_NO_STRING_HELPER)
+#if !defined(alaqil_D_NO_STRING_HELPER)
 %insert(runtime) %{
 // Callback for returning strings to D without leaking memory.
-typedef char * (* SWIG_DStringHelperCallback)(const char *);
-static SWIG_DStringHelperCallback SWIG_d_string_callback = NULL;
+typedef char * (* alaqil_DStringHelperCallback)(const char *);
+static alaqil_DStringHelperCallback alaqil_d_string_callback = NULL;
 
 #ifdef __cplusplus
 extern "C"
 #endif
-SWIGEXPORT void SWIGRegisterStringCallback_$module(SWIG_DStringHelperCallback callback) {
-  SWIG_d_string_callback = callback;
+alaqilEXPORT void alaqilRegisterStringCallback_$module(alaqil_DStringHelperCallback callback) {
+  alaqil_d_string_callback = callback;
 }
 %}
 
-#if (SWIG_D_VERSION == 1)
+#if (alaqil_D_VERSION == 1)
 %pragma(d) imdmoduleimports = "static import tango.stdc.stringz;";
 
 %pragma(d) imdmodulecode = %{
-private class SwigStringHelper {
+private class alaqilStringHelper {
   static this() {
-    swigRegisterStringCallback$module(&createString);
+    alaqilRegisterStringCallback$module(&createString);
   }
 
   static char* createString(char* cString) {
@@ -245,7 +245,7 @@ private class SwigStringHelper {
     return tango.stdc.stringz.toStringz(tango.stdc.stringz.fromStringz(cString));
   }
 }
-alias char* function(char* cString) SwigStringCallback;
+alias char* function(char* cString) alaqilStringCallback;
 %}
 #else
 %pragma(d) imdmoduleimports = %{
@@ -254,9 +254,9 @@ static import std.string;
 %}
 
 %pragma(d) imdmodulecode = %{
-private class SwigStringHelper {
+private class alaqilStringHelper {
   static this() {
-    swigRegisterStringCallback$module(&createString);
+    alaqilRegisterStringCallback$module(&createString);
   }
 
   static const(char)* createString(const(char*) cString) {
@@ -265,32 +265,32 @@ private class SwigStringHelper {
     return std.string.toStringz(std.conv.to!string(cString));
   }
 }
-alias const(char)* function(const(char*) cString) SwigStringCallback;
+alias const(char)* function(const(char*) cString) alaqilStringCallback;
 %}
 #endif
 // Callback registering function in wrapperloader.swg.
-#endif // SWIG_D_NO_STRING_HELPER
+#endif // alaqil_D_NO_STRING_HELPER
 
 
 /*
  * Function pointer support code.
  */
-#if (SWIG_D_VERSION == 1)
+#if (alaqil_D_VERSION == 1)
 %pragma(d) imdmodulecode = %{
-template SwigExternC(T) {
+template alaqilExternC(T) {
   static if (is(typeof(*(T.init)) R == return)) {
     static if (is(typeof(*(T.init)) P == function)) {
-      alias extern(C) R function(P) SwigExternC;
+      alias extern(C) R function(P) alaqilExternC;
     }
   }
 }
 %}
 #else
 %pragma(d) imdmodulecode = %{
-template SwigExternC(T) if (is(typeof(*(T.init)) P == function)) {
+template alaqilExternC(T) if (is(typeof(*(T.init)) P == function)) {
   static if (is(typeof(*(T.init)) R == return)) {
     static if (is(typeof(*(T.init)) P == function)) {
-      alias extern(C) R function(P) SwigExternC;
+      alias extern(C) R function(P) alaqilExternC;
     }
   }
 }

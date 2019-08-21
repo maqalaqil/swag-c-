@@ -8,7 +8,7 @@ public class doxygen_misc_constructs_runme {
     try {
       System.loadLibrary("doxygen_misc_constructs");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -32,7 +32,7 @@ public class doxygen_misc_constructs_runme {
     		" This function returns connection id.\n" +
     		"\n" +
     		"");
-    wantedComments.put("doxygen_misc_constructs.doxygen_misc_constructs.getAddress(doxygen_misc_constructs.SWIGTYPE_p_int, int)",
+    wantedComments.put("doxygen_misc_constructs.doxygen_misc_constructs.getAddress(doxygen_misc_constructs.alaqilTYPE_p_int, int)",
     		" Returns address of file line.\n" +
     		" \n" +
     		" @param fileName name of the file, where the source line is located\n" +
@@ -83,7 +83,7 @@ public class doxygen_misc_constructs_runme {
     		" {@link advancedWinIDEALaunching.py Python example.  }<br>\n" +
     		"\n" +
     		"");
-    wantedComments.put("doxygen_misc_constructs.doxygen_misc_constructs.getAddress(doxygen_misc_constructs.SWIGTYPE_p_int, int, boolean)",
+    wantedComments.put("doxygen_misc_constructs.doxygen_misc_constructs.getAddress(doxygen_misc_constructs.alaqilTYPE_p_int, int, boolean)",
     		" Returns address of file line.\n" +
     		"\n" +
     		" @param fileName name of the file, where the source line is located\n" +
@@ -161,7 +161,7 @@ public class doxygen_misc_constructs_runme {
     		"\n");
 
    wantedComments.put("doxygen_misc_constructs.doxygen_misc_constructs.backslashC()",
-    		" Backslash e at end of <i>line</i> froze SWIG\n" +
+    		" Backslash e at end of <i>line</i> froze alaqil\n" +
     		" <i>with</i> old comment parser.\n" +
                 " @see MyClass#fun(char,float)\n" +
     		"");

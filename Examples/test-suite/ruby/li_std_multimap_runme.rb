@@ -7,10 +7,10 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'li_std_multimap'
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 
 a1 = Li_std_multimap::A.new(3)
 a2 = Li_std_multimap::A.new(7)

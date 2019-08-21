@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 b_set("hello");
 checkequal(b_get(), "hello", "b_get()");
@@ -28,4 +28,4 @@ delete_A(sa2);
 x_set(11);
 checkequal(x_get(), 11, "x_get()");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

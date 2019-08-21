@@ -2,8 +2,8 @@
 
 %module template_extend1
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Baz<long>;	// Ruby, wrong class name
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Baz<double>;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Baz<long>;	// Ruby, wrong class name
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Baz<double>;	// Ruby, wrong class name
 
 %{
 namespace Quux {

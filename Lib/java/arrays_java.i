@@ -21,16 +21,16 @@
  *   fs = example.getFiddleSticks();
  * ----------------------------------------------------------------------------- */
 
-/* Primitive array support is a combination of SWIG macros and functions in order to reduce 
- * code bloat and aid maintainability. The SWIG preprocessor expands the macros into functions 
+/* Primitive array support is a combination of alaqil macros and functions in order to reduce 
+ * code bloat and aid maintainability. The alaqil preprocessor expands the macros into functions 
  * for inclusion in the generated code. */
 
 /* Array support functions declarations macro */
 %define JAVA_ARRAYS_DECL(CTYPE, JNITYPE, JAVATYPE, JFUNCNAME)
 %{
-static int SWIG_JavaArrayIn##JFUNCNAME (JNIEnv *jenv, JNITYPE **jarr, CTYPE **carr, JNITYPE##Array input);
-static void SWIG_JavaArrayArgout##JFUNCNAME (JNIEnv *jenv, JNITYPE *jarr, CTYPE *carr, JNITYPE##Array input);
-static JNITYPE##Array SWIG_JavaArrayOut##JFUNCNAME (JNIEnv *jenv, CTYPE *result, jsize sz);
+static int alaqil_JavaArrayIn##JFUNCNAME (JNIEnv *jenv, JNITYPE **jarr, CTYPE **carr, JNITYPE##Array input);
+static void alaqil_JavaArrayArgout##JFUNCNAME (JNIEnv *jenv, JNITYPE *jarr, CTYPE *carr, JNITYPE##Array input);
+static JNITYPE##Array alaqil_JavaArrayOut##JFUNCNAME (JNIEnv *jenv, CTYPE *result, jsize sz);
 %}
 %enddef
 
@@ -38,11 +38,11 @@ static JNITYPE##Array SWIG_JavaArrayOut##JFUNCNAME (JNIEnv *jenv, CTYPE *result,
 %define JAVA_ARRAYS_IMPL(CTYPE, JNITYPE, JAVATYPE, JFUNCNAME)
 %{
 /* CTYPE[] support */
-static int SWIG_JavaArrayIn##JFUNCNAME (JNIEnv *jenv, JNITYPE **jarr, CTYPE **carr, JNITYPE##Array input) {
+static int alaqil_JavaArrayIn##JFUNCNAME (JNIEnv *jenv, JNITYPE **jarr, CTYPE **carr, JNITYPE##Array input) {
   int i;
   jsize sz;
   if (!input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null array");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null array");
     return 0;
   }
   sz = JCALL1(GetArrayLength, jenv, input);
@@ -55,7 +55,7 @@ static int SWIG_JavaArrayIn##JFUNCNAME (JNIEnv *jenv, JNITYPE **jarr, CTYPE **ca
 %{  *carr = (CTYPE*) malloc(sz * sizeof(CTYPE)); %}
 #endif
 %{  if (!*carr) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaOutOfMemoryError, "array memory allocation failed");
+    alaqil_JavaThrowException(jenv, alaqil_JavaOutOfMemoryError, "array memory allocation failed");
     return 0;
   }
   for (i=0; i<sz; i++)
@@ -63,7 +63,7 @@ static int SWIG_JavaArrayIn##JFUNCNAME (JNIEnv *jenv, JNITYPE **jarr, CTYPE **ca
   return 1;
 }
 
-static void SWIG_JavaArrayArgout##JFUNCNAME (JNIEnv *jenv, JNITYPE *jarr, CTYPE *carr, JNITYPE##Array input) {
+static void alaqil_JavaArrayArgout##JFUNCNAME (JNIEnv *jenv, JNITYPE *jarr, CTYPE *carr, JNITYPE##Array input) {
   int i;
   jsize sz = JCALL1(GetArrayLength, jenv, input);
   for (i=0; i<sz; i++)
@@ -71,7 +71,7 @@ static void SWIG_JavaArrayArgout##JFUNCNAME (JNIEnv *jenv, JNITYPE *jarr, CTYPE 
   JCALL3(Release##JAVATYPE##ArrayElements, jenv, input, jarr, 0);
 }
 
-static JNITYPE##Array SWIG_JavaArrayOut##JFUNCNAME (JNIEnv *jenv, CTYPE *result, jsize sz) {
+static JNITYPE##Array alaqil_JavaArrayOut##JFUNCNAME (JNIEnv *jenv, CTYPE *result, jsize sz) {
   JNITYPE *arr;
   int i;
   JNITYPE##Array jresult = JCALL1(New##JAVATYPE##Array, jenv, sz);
@@ -89,7 +89,7 @@ static JNITYPE##Array SWIG_JavaArrayOut##JFUNCNAME (JNIEnv *jenv, CTYPE *result,
 %enddef
 
 %{
-#if defined(SWIG_NOINCLUDE) || defined(SWIG_NOARRAYS)
+#if defined(alaqil_NOINCLUDE) || defined(alaqil_NOARRAYS)
 %}
 
 #ifdef __cplusplus
@@ -147,19 +147,19 @@ JAVA_ARRAYS_IMPL(double, jdouble, Double, Double)     /* double[] */
 %typemap(jstype) CTYPE[ANY], CTYPE[]            %{JTYPE[]%}
 
 %typemap(in) CTYPE[] (JNITYPE *jarr)
-%{  if (!SWIG_JavaArrayIn##JFUNCNAME(jenv, &jarr, (CTYPE **)&$1, $input)) return $null; %}
+%{  if (!alaqil_JavaArrayIn##JFUNCNAME(jenv, &jarr, (CTYPE **)&$1, $input)) return $null; %}
 %typemap(in) CTYPE[ANY] (JNITYPE *jarr)
 %{  if ($input && JCALL1(GetArrayLength, jenv, $input) != $1_size) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "incorrect array size");
+    alaqil_JavaThrowException(jenv, alaqil_JavaIndexOutOfBoundsException, "incorrect array size");
     return $null;
   }
-  if (!SWIG_JavaArrayIn##JFUNCNAME(jenv, &jarr, (CTYPE **)&$1, $input)) return $null; %}
+  if (!alaqil_JavaArrayIn##JFUNCNAME(jenv, &jarr, (CTYPE **)&$1, $input)) return $null; %}
 %typemap(argout) CTYPE[ANY], CTYPE[] 
-%{ SWIG_JavaArrayArgout##JFUNCNAME(jenv, jarr$argnum, (CTYPE *)$1, $input); %}
+%{ alaqil_JavaArrayArgout##JFUNCNAME(jenv, jarr$argnum, (CTYPE *)$1, $input); %}
 %typemap(out) CTYPE[ANY]
-%{$result = SWIG_JavaArrayOut##JFUNCNAME(jenv, (CTYPE *)$1, $1_dim0); %}
+%{$result = alaqil_JavaArrayOut##JFUNCNAME(jenv, (CTYPE *)$1, $1_dim0); %}
 %typemap(out) CTYPE[] 
-%{$result = SWIG_JavaArrayOut##JFUNCNAME(jenv, (CTYPE *)$1, FillMeInAsSizeCannotBeDeterminedAutomatically); %}
+%{$result = alaqil_JavaArrayOut##JFUNCNAME(jenv, (CTYPE *)$1, FillMeInAsSizeCannotBeDeterminedAutomatically); %}
 %typemap(freearg) CTYPE[ANY], CTYPE[] 
 #ifdef __cplusplus
 %{ delete [] $1; %}
@@ -190,40 +190,40 @@ JAVA_ARRAYS_TYPEMAPS(float, float, jfloat, Float, "[F")         /* float[ANY] */
 JAVA_ARRAYS_TYPEMAPS(double, double, jdouble, Double, "[D")     /* double[ANY] */
 
 
-%typecheck(SWIG_TYPECHECK_BOOL_ARRAY) /* Java boolean[] */
+%typecheck(alaqil_TYPECHECK_BOOL_ARRAY) /* Java boolean[] */
     bool[ANY], bool[]
     ""
 
-%typecheck(SWIG_TYPECHECK_INT8_ARRAY) /* Java byte[] */
+%typecheck(alaqil_TYPECHECK_INT8_ARRAY) /* Java byte[] */
     signed char[ANY], signed char[]
     ""
 
-%typecheck(SWIG_TYPECHECK_INT16_ARRAY) /* Java short[] */
+%typecheck(alaqil_TYPECHECK_INT16_ARRAY) /* Java short[] */
     unsigned char[ANY], unsigned char[],
     short[ANY], short[]
     ""
 
-%typecheck(SWIG_TYPECHECK_INT32_ARRAY) /* Java int[] */
+%typecheck(alaqil_TYPECHECK_INT32_ARRAY) /* Java int[] */
     unsigned short[ANY], unsigned short[],
     int[ANY], int[],
     long[ANY], long[]
     ""
 
-%typecheck(SWIG_TYPECHECK_INT64_ARRAY) /* Java long[] */
+%typecheck(alaqil_TYPECHECK_INT64_ARRAY) /* Java long[] */
     unsigned int[ANY], unsigned int[],
     unsigned long[ANY], unsigned long[],
     long long[ANY], long long[]
     ""
 
-%typecheck(SWIG_TYPECHECK_INT128_ARRAY) /* Java BigInteger[] */
+%typecheck(alaqil_TYPECHECK_INT128_ARRAY) /* Java BigInteger[] */
     unsigned long long[ANY], unsigned long long[]
     ""
 
-%typecheck(SWIG_TYPECHECK_FLOAT_ARRAY) /* Java float[] */
+%typecheck(alaqil_TYPECHECK_FLOAT_ARRAY) /* Java float[] */
     float[ANY], float[]
     ""
 
-%typecheck(SWIG_TYPECHECK_DOUBLE_ARRAY) /* Java double[] */
+%typecheck(alaqil_TYPECHECK_DOUBLE_ARRAY) /* Java double[] */
     double[ANY], double[]
     ""
 
@@ -248,7 +248,7 @@ JAVA_ARRAYS_TYPEMAPS(double, double, jdouble, Double, "[D")     /* double[ANY] *
 {
   int i;
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null array");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null array");
     return $null;
   }
   sz = JCALL1(GetArrayLength, jenv, $input);
@@ -262,7 +262,7 @@ JAVA_ARRAYS_TYPEMAPS(double, double, jdouble, Double, "[D")     /* double[ANY] *
   $1 = ($1_ltype) malloc(sz * sizeof($*1_ltype));
 #endif
   if (!$1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaOutOfMemoryError, "array memory allocation failed");
+    alaqil_JavaThrowException(jenv, alaqil_JavaOutOfMemoryError, "array memory allocation failed");
     return $null;
   }
   for (i=0; i<sz; i++) {
@@ -274,12 +274,12 @@ JAVA_ARRAYS_TYPEMAPS(double, double, jdouble, Double, "[D")     /* double[ANY] *
 {
   int i;
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null array");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null array");
     return $null;
   }
   sz = JCALL1(GetArrayLength, jenv, $input);
   if (sz != $1_size) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "incorrect array size");
+    alaqil_JavaThrowException(jenv, alaqil_JavaIndexOutOfBoundsException, "incorrect array size");
     return $null;
   }
   jarr = JCALL2(GetLongArrayElements, jenv, $input, 0);
@@ -292,7 +292,7 @@ JAVA_ARRAYS_TYPEMAPS(double, double, jdouble, Double, "[D")     /* double[ANY] *
   $1 = ($1_ltype) malloc(sz * sizeof($*1_ltype));
 #endif
   if (!$1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaOutOfMemoryError, "array memory allocation failed");
+    alaqil_JavaThrowException(jenv, alaqil_JavaOutOfMemoryError, "array memory allocation failed");
     return $null;
   }
   for (i=0; i<sz; i++) {
@@ -371,18 +371,18 @@ JAVA_ARRAYS_TYPEMAPS(double, double, jdouble, Double, "[D")     /* double[ANY] *
   }
 
 %typemap(in) ARRAYSOFENUMS[] (jint *jarr)
-%{  if (!SWIG_JavaArrayInInt(jenv, &jarr, (int **)&$1, $input)) return $null; %}
+%{  if (!alaqil_JavaArrayInInt(jenv, &jarr, (int **)&$1, $input)) return $null; %}
 %typemap(in) ARRAYSOFENUMS[ANY] (jint *jarr) {
   if ($input && JCALL1(GetArrayLength, jenv, $input) != $1_size) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "incorrect array size");
+    alaqil_JavaThrowException(jenv, alaqil_JavaIndexOutOfBoundsException, "incorrect array size");
     return $null;
   }
-  if (!SWIG_JavaArrayInInt(jenv, &jarr, (int **)&$1, $input)) return $null;
+  if (!alaqil_JavaArrayInInt(jenv, &jarr, (int **)&$1, $input)) return $null;
 }
 %typemap(argout) ARRAYSOFENUMS[ANY], ARRAYSOFENUMS[] 
-%{ SWIG_JavaArrayArgoutInt(jenv, jarr$argnum, (int *)$1, $input); %}
+%{ alaqil_JavaArrayArgoutInt(jenv, jarr$argnum, (int *)$1, $input); %}
 %typemap(out) ARRAYSOFENUMS[ANY] 
-%{$result = SWIG_JavaArrayOutInt(jenv, (int *)$1, $1_dim0); %}
+%{$result = alaqil_JavaArrayOutInt(jenv, (int *)$1, $1_dim0); %}
 %typemap(freearg) ARRAYSOFENUMS[ANY], ARRAYSOFENUMS[] 
 #ifdef __cplusplus
 %{ delete [] $1; %}

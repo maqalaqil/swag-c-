@@ -1,6 +1,6 @@
 %module smart_pointer_inherit
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Test that the override is removed in the smart pointer for custom method modifiers
 %csmethodmodifiers hi::Derived::value3 "/*csmethodmodifiers*/ public override";
 #endif
@@ -51,7 +51,7 @@ class ItkLevelSetNodeUS2 {
 };
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Get rid of C# compiler warnings.
 // Really the itkVectorContainerUILSNUS2_Pointer class should be manually modified to contain the same %extend methods that are in std_vector.i
 %csmethodmodifiers std::vector<ItkLevelSetNodeUS2>::getitemcopy "protected"

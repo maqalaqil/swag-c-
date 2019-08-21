@@ -2,8 +2,8 @@
 
 %module class_scope_namespace
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) H::HH;
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) Space8::I_::II;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) H::HH;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) Space8::I_::II;
 
 %inline %{
 struct A;
@@ -61,7 +61,7 @@ namespace Space4 {
 }
 using namespace Space4;
 using SubSpace4::E;
-// Was added to incorrect namespace in swig-3.0.12
+// Was added to incorrect namespace in alaqil-3.0.12
 struct SubSpace4::E {
   void ee(Space4::SubSpace4::E, SubSpace4::E, E) {}
 };
@@ -77,7 +77,7 @@ namespace Space5 {
 namespace Space5 {
   using namespace SubSpace5;
   using SubSubSpace5::F;
-  // Was added to incorrect namespace in swig-3.0.12
+  // Was added to incorrect namespace in alaqil-3.0.12
   struct SubSubSpace5::F {
     void ff(Space5::SubSpace5::SubSubSpace5::F, SubSpace5::SubSubSpace5::F, SubSubSpace5::F, F) {}
   };

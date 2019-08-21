@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // Test constructors for std::deque<int>
 intDeque  = new_IntDeque();
@@ -43,7 +43,7 @@ delete_IntDeque(intDeque);
 delete_DoubleDeque(doubleDeque);
 delete_RealDeque(realDeque);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 
 
 

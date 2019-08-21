@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * various.i
  *
- * SWIG Typemap library for Java.
+ * alaqil Typemap library for Java.
  * Various useful typemaps.
  * ----------------------------------------------------------------------------- */
 
@@ -107,11 +107,11 @@
 
 %typemap(in) char **STRING_OUT($*1_ltype temp) {
   if (!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "array null");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "array null");
     return $null;
   }
   if (JCALL1(GetArrayLength, jenv, $input) == 0) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
+    alaqil_JavaThrowException(jenv, alaqil_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
     return $null;
   }
   $1 = &temp; 
@@ -180,7 +180,7 @@
 %typemap(in) unsigned char *NIOBUFFER {  
   $1 = (unsigned char *) JCALL1(GetDirectBufferAddress, jenv, $input); 
   if ($1 == NULL) {  
-    SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, "Unable to get address of a java.nio.ByteBuffer direct byte buffer. Buffer must be a direct buffer and not a non-direct buffer.");  
+    alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, "Unable to get address of a java.nio.ByteBuffer direct byte buffer. Buffer must be a direct buffer and not a non-direct buffer.");  
   }  
 }  
 %typemap(memberin) unsigned char *NIOBUFFER {  

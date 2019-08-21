@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 function checkPair(pair, expected_first, expected_second, func)
   checkequal(IntPair_first_get(pair), expected_first, func + ": first");;
@@ -35,4 +35,4 @@ checkequal(product1(intPairConstRef), 42, "product3(intPairConstRef)");
 checkequal(product2(intPairConstRef), 42, "product2(intPairConstRef)");
 checkequal(product3(intPairConstRef), 42, "product1(intPairConstRef)");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

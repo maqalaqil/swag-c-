@@ -1,6 +1,6 @@
 %module nested_in_template
 
-#if !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+#if !defined(alaqilCSHARP) && !defined(alaqilJAVA)
 %feature("flatnested");
 #endif
 

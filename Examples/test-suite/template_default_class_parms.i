@@ -1,7 +1,7 @@
 %module template_default_class_parms
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %inline %{
@@ -62,7 +62,7 @@ namespace Tpetra {
 }
 %}
 
-#ifdef SWIGJAVA
+#ifdef alaqilJAVA
 // Fixes still required for other languages
 %template(MapDefaults) Tpetra::Map<>;
 #endif

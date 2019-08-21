@@ -1,4 +1,4 @@
-// This test checks SWIG's code generation for C++ functions
+// This test checks alaqil's code generation for C++ functions
 // and methods that differ only in constness.  
 
 %module constover

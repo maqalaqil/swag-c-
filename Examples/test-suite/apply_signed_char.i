@@ -2,9 +2,9 @@
 
 %module(directors="1") apply_signed_char
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) DirectorTest;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) DirectorTest;
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(DirTest) DirectorTest;
 #endif
 

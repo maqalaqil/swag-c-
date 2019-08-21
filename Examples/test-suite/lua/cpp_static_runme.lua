@@ -1,4 +1,4 @@
--- demo of lua swig capacilities (operator overloading)
+-- demo of lua alaqil capacilities (operator overloading)
 require("import")	-- the import fn
 import("cpp_static")	-- import lib into global
 cs=cpp_static --alias

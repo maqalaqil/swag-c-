@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Using_pointers
 
 let f = new_FooBar '()

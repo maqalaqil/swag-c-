@@ -9,8 +9,8 @@
     struct A
     {
     public:
-      A() {}    // *** Here, the const. breaks swig ***
-                // *** swig  works without it     ***
+      A() {}    // *** Here, the const. breaks alaqil ***
+                // *** alaqil  works without it     ***
     };
  
     namespace hello

@@ -12,7 +12,7 @@ template <typename T> struct MyTemplate {
   T& ttr(T& t) { return t; }
 };
 
-#ifndef SWIG
+#ifndef alaqil
 // This is added so that the code will not compile, if the global scope operator on Dingaling is omitted in the generated code
 namespace Spac {
   class Dingaling {

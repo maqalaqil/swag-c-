@@ -14,7 +14,7 @@
 /* EmployeeList::addEmployee(Employee *p) gives ownership of the
  * employee to the EmployeeList object.  The wrapper code should
  * understand this. */
-%apply SWIGTYPE *DISOWN { Employee *p };
+%apply alaqilTYPE *DISOWN { Employee *p };
 
 %include "example.h"
 

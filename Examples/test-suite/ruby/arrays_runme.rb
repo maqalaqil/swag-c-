@@ -4,7 +4,7 @@
 #
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'arrays'
 
 include Arrays

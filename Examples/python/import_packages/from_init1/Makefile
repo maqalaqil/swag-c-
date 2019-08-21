@@ -11,10 +11,10 @@ check: build
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' python_run
 
 build:
-	cd $(PKG1DIR) && $(MAKE) SWIGOPT='$(SWIGOPT) -relativeimport' LIBS='$(LIBS)' build
+	cd $(PKG1DIR) && $(MAKE) alaqilOPT='$(alaqilOPT) -relativeimport' LIBS='$(LIBS)' build
 
 static:
-	cd $(PKG1DIR) && $(MAKE) SWIGOPT='$(SWIGOPT) -relativeimport' LIBS='$(LIBS)' static
+	cd $(PKG1DIR) && $(MAKE) alaqilOPT='$(alaqilOPT) -relativeimport' LIBS='$(LIBS)' static
 
 clean:
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' python_clean

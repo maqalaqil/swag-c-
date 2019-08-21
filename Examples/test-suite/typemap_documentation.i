@@ -16,10 +16,10 @@ public:
 };
 %}
 
-#if defined(SWIGUTL)
+#if defined(alaqilUTL)
 %typemap(in) Foo * {
-  if (!SWIG_IsOK(SWIG_ConvertPtr($input, (void **) &$1, $1_descriptor, 0))) {
-    SWIG_exception_fail(SWIG_TypeError, "in method '$symname', expecting type Foo");
+  if (!alaqil_IsOK(alaqil_ConvertPtr($input, (void **) &$1, $1_descriptor, 0))) {
+    alaqil_exception_fail(alaqil_TypeError, "in method '$symname', expecting type Foo");
   }
 }
 #endif
@@ -31,12 +31,12 @@ int GrabVal(Foo *f) {
 %}
 
 
-#if defined(SWIGUTL)
+#if defined(alaqilUTL)
 %typemap(in) Foo * {
-  if (!SWIG_IsOK(SWIG_ConvertPtr($input, (void **) &$1, $1_descriptor, 0))) {
+  if (!alaqil_IsOK(alaqil_ConvertPtr($input, (void **) &$1, $1_descriptor, 0))) {
     Bar *temp;
-    if (!SWIG_IsOK(SWIG_ConvertPtr($input, (void **) &temp, $descriptor(Bar *), 0))) {
-      SWIG_exception_fail(SWIG_TypeError, "in method '$symname', expecting type Foo or Bar");
+    if (!alaqil_IsOK(alaqil_ConvertPtr($input, (void **) &temp, $descriptor(Bar *), 0))) {
+      alaqil_exception_fail(alaqil_TypeError, "in method '$symname', expecting type Foo or Bar");
     }
     $1 = (Foo *)temp;
   }

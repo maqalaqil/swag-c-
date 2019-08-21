@@ -1,4 +1,4 @@
-/* This test a return by value constant SWIGTYPE.
+/* This test a return by value constant alaqilTYPE.
 It was reported in bug 899332 by Jermey Brown (jhbrown94) */
 
 %module return_const_value

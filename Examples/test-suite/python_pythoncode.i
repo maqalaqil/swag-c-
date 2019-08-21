@@ -31,7 +31,7 @@ struct TYPE2 { };
 %}
 
 
-// Overriding __new__ test: https://github.com/swig/swig/pull/1357
+// Overriding __new__ test: https://github.com/alaqil/alaqil/pull/1357
 %inline %{
 class Foo {
   public:

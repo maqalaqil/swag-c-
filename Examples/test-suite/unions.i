@@ -38,7 +38,7 @@ typedef struct {
   } uni;
   int           number;
 }
-#if !defined(SWIGSCILAB)
+#if !defined(alaqilSCILAB)
 EmbeddedUnionTest;
 #else
 EmbedUnionTst;

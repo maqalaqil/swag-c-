@@ -5,82 +5,82 @@
  * Note that the PINVOKE layer handles the enum as an int.
  * ----------------------------------------------------------------------------- */
 
-// const enum SWIGTYPE & typemaps
-%typemap(ctype) const enum SWIGTYPE & "int"
-%typemap(imtype) const enum SWIGTYPE & "int"
-%typemap(cstype) const enum SWIGTYPE & "$*csclassname"
+// const enum alaqilTYPE & typemaps
+%typemap(ctype) const enum alaqilTYPE & "int"
+%typemap(imtype) const enum alaqilTYPE & "int"
+%typemap(cstype) const enum alaqilTYPE & "$*csclassname"
 
-%typemap(in) const enum SWIGTYPE & ($*1_ltype temp)
+%typemap(in) const enum alaqilTYPE & ($*1_ltype temp)
 %{ temp = ($*1_ltype)$input; 
    $1 = &temp; %}
-%typemap(out) const enum SWIGTYPE & %{ $result = (int)*$1; %}
+%typemap(out) const enum alaqilTYPE & %{ $result = (int)*$1; %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const enum SWIGTYPE &
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const enum alaqilTYPE &
 %{ static $*1_ltype temp = ($*1_ltype)$input; 
    $result = &temp; %}
-%typemap(directorin) const enum SWIGTYPE & "$input = (int)$1;"
-%typemap(csdirectorin) const enum SWIGTYPE & "($*csclassname)$iminput"
-%typemap(csdirectorout) const enum SWIGTYPE & "(int)$cscall"
+%typemap(directorin) const enum alaqilTYPE & "$input = (int)$1;"
+%typemap(csdirectorin) const enum alaqilTYPE & "($*csclassname)$iminput"
+%typemap(csdirectorout) const enum alaqilTYPE & "(int)$cscall"
 
-%typecheck(SWIG_TYPECHECK_POINTER) const enum SWIGTYPE & ""
+%typecheck(alaqil_TYPECHECK_POINTER) const enum alaqilTYPE & ""
 
-%typemap(throws, canthrow=1) const enum SWIGTYPE &
+%typemap(throws, canthrow=1) const enum alaqilTYPE &
 %{ (void)$1;
-   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, "C++ $1_type exception thrown");
+   alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, "C++ $1_type exception thrown");
    return $null; %}
 
-%typemap(csin) const enum SWIGTYPE & "(int)$csinput"
-%typemap(csout, excode=SWIGEXCODE) const enum SWIGTYPE & {
+%typemap(csin) const enum alaqilTYPE & "(int)$csinput"
+%typemap(csout, excode=alaqilEXCODE) const enum alaqilTYPE & {
     $*csclassname ret = ($*csclassname)$imcall;$excode
     return ret;
   }
 
-%typemap(csvarout, excode=SWIGEXCODE2) const enum SWIGTYPE & %{
+%typemap(csvarout, excode=alaqilEXCODE2) const enum alaqilTYPE & %{
     get {
       $*csclassname ret = ($*csclassname)$imcall;$excode
       return ret;
     } %}
 
 
-// enum SWIGTYPE typemaps
-%typemap(ctype) enum SWIGTYPE "int"
-%typemap(imtype) enum SWIGTYPE "int"
-%typemap(cstype) enum SWIGTYPE "$csclassname"
+// enum alaqilTYPE typemaps
+%typemap(ctype) enum alaqilTYPE "int"
+%typemap(imtype) enum alaqilTYPE "int"
+%typemap(cstype) enum alaqilTYPE "$csclassname"
 
-%typemap(in) enum SWIGTYPE %{ $1 = ($1_ltype)$input; %}
-%typemap(out) enum SWIGTYPE %{ $result = (int)$1; %}
+%typemap(in) enum alaqilTYPE %{ $1 = ($1_ltype)$input; %}
+%typemap(out) enum alaqilTYPE %{ $result = (int)$1; %}
 
-%typemap(directorout) enum SWIGTYPE  %{ $result = ($1_ltype)$input; %}
-%typemap(directorin) enum SWIGTYPE "$input = (int)$1;"
-%typemap(csdirectorin) enum SWIGTYPE "($csclassname)$iminput"
-%typemap(csdirectorout) enum SWIGTYPE "(int)$cscall"
+%typemap(directorout) enum alaqilTYPE  %{ $result = ($1_ltype)$input; %}
+%typemap(directorin) enum alaqilTYPE "$input = (int)$1;"
+%typemap(csdirectorin) enum alaqilTYPE "($csclassname)$iminput"
+%typemap(csdirectorout) enum alaqilTYPE "(int)$cscall"
 
-%typecheck(SWIG_TYPECHECK_POINTER) enum SWIGTYPE ""
+%typecheck(alaqil_TYPECHECK_POINTER) enum alaqilTYPE ""
 
-%typemap(throws, canthrow=1) enum SWIGTYPE
+%typemap(throws, canthrow=1) enum alaqilTYPE
 %{ (void)$1;
-   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, "C++ $1_type exception thrown");
+   alaqil_CSharpSetPendingException(alaqil_CSharpApplicationException, "C++ $1_type exception thrown");
    return $null; %}
 
-%typemap(csin) enum SWIGTYPE "(int)$csinput"
-%typemap(csout, excode=SWIGEXCODE) enum SWIGTYPE {
+%typemap(csin) enum alaqilTYPE "(int)$csinput"
+%typemap(csout, excode=alaqilEXCODE) enum alaqilTYPE {
     $csclassname ret = ($csclassname)$imcall;$excode
     return ret;
   }
 
-%typemap(csvarout, excode=SWIGEXCODE2) enum SWIGTYPE %{
+%typemap(csvarout, excode=alaqilEXCODE2) enum alaqilTYPE %{
     get {
       $csclassname ret = ($csclassname)$imcall;$excode
       return ret;
     } %}
 
-%typemap(csbase)           enum SWIGTYPE ""
-%typemap(csclassmodifiers) enum SWIGTYPE "public enum"
-%typemap(cscode)           enum SWIGTYPE ""
-%typemap(csimports)        enum SWIGTYPE ""
-%typemap(csinterfaces)     enum SWIGTYPE ""
+%typemap(csbase)           enum alaqilTYPE ""
+%typemap(csclassmodifiers) enum alaqilTYPE "public enum"
+%typemap(cscode)           enum alaqilTYPE ""
+%typemap(csimports)        enum alaqilTYPE ""
+%typemap(csinterfaces)     enum alaqilTYPE ""
 
-%typemap(csbody) enum SWIGTYPE ""
+%typemap(csbody) enum alaqilTYPE ""
 
 %csenum(proper);
 

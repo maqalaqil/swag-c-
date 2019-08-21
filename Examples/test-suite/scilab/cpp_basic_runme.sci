@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 f = new_Foo(4);
 checkequal(Foo_num_get(f), 4, "Foo_num_get(f)");
@@ -61,4 +61,4 @@ checkequal(test_func_ptr(f, 2), 16, "Foo_test_func_ptr(f, 2)");
 Foo_func_ptr_set(f, func2_ptr);
 checkequal(test_func_ptr(f, 2), -8, "Foo_test_func_ptr(f, 2)");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

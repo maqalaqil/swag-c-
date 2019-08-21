@@ -5,12 +5,12 @@ endif
 
 # This file illustrates the cross language polymorphism using directors.
 
-swigexample
+alaqilexample
 
 
 # CEO class, which overrides Employee::getPosition().
 
-CEO=@(name) subclass(swigexample.Manager(name),'getPosition',@(self) "CEO");
+CEO=@(name) subclass(alaqilexample.Manager(name),'getPosition',@(self) "CEO");
 
 # Create an instance of our employee extension class, CEO. The calls to
 # getName() and getPosition() are standard, the call to getTitle() uses
@@ -25,7 +25,7 @@ printf("----------------------\n");
 # Create a new EmployeeList instance.  This class does not have a C++
 # director wrapper, but can be used freely with other classes that do.
 
-list = swigexample.EmployeeList();
+list = alaqilexample.EmployeeList();
 
 # EmployeeList owns its items, so we must surrender ownership of objects
 # we add. This involves first calling the __disown__ method to tell the

@@ -18,7 +18,7 @@ private:
 template <typename KernelPixelT>
 struct DiffImContainer {
     int id;
-// static members seem to be can of worms. Note that SWIG wraps them as non-static members. Why?
+// static members seem to be can of worms. Note that alaqil wraps them as non-static members. Why?
 // Note CHANGES entry 10/14/2003. Static const variables are not wrapped as constants but as a read only variable. Why?
 //    static short xyz;
 //    static const short constvar = 555;

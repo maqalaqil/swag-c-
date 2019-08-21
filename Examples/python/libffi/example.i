@@ -20,7 +20,7 @@
       PyObject *o = PyTuple_GetItem(varargs,i);
       if (!PyString_Check(o)) {
           PyErr_SetString(PyExc_ValueError,"Expected a string");
-          SWIG_fail;
+          alaqil_fail;
       }
       argv[i] = PyString_AsString(o);
    }
@@ -62,7 +62,7 @@
     free(values);
     free(arg3);
     PyErr_SetString(PyExc_RuntimeError, "Whoa!!!!!");
-    SWIG_fail;
+    alaqil_fail;
   }
   free(types);
   free(values);
@@ -109,7 +109,7 @@ int execlp(const char *path, const char *arg1, ...);
     } else {
       free(argv);
       PyErr_SetString(PyExc_ValueError,"Unsupported argument type");
-      SWIG_fail;
+      alaqil_fail;
     }
   }
 
@@ -161,7 +161,7 @@ int execlp(const char *path, const char *arg1, ...);
     free(values);
     free(args);
     PyErr_SetString(PyExc_RuntimeError, "Whoa!!!!!");
-    SWIG_fail;
+    alaqil_fail;
   }
   free(types);
   free(values);

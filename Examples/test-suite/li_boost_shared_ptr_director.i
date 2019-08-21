@@ -4,7 +4,7 @@
 #include <boost/shared_ptr.hpp>
 %}
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGPYTHON) || defined(SWIGD) || defined(SWIGOCTAVE) || defined(SWIGRUBY) || defined(SWIGR)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilPYTHON) || defined(alaqilD) || defined(alaqilOCTAVE) || defined(alaqilRUBY) || defined(alaqilR)
 #define SHARED_PTR_WRAPPERS_IMPLEMENTED
 #endif
 

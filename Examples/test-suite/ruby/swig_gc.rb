@@ -6,7 +6,7 @@
 #
 # Usage can be:
 #
-#     require 'swig_gc'
+#     require 'alaqil_gc'
 #
 #     GC.stats
 #     # do some stuff..
@@ -16,7 +16,7 @@
 #
 # or:
 #
-#     require 'swig_gc'
+#     require 'alaqil_gc'
 #
 #     GC.track_class = String  # track just String classes
 #     GC.stats

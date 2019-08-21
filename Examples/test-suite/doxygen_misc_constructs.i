@@ -3,7 +3,7 @@
 
 %module doxygen_misc_constructs
 
-%warnfilter(SWIGWARN_DOXYGEN_UNKNOWN_COMMAND) backslashB;
+%warnfilter(alaqilWARN_DOXYGEN_UNKNOWN_COMMAND) backslashB;
 
 %inline %{
 

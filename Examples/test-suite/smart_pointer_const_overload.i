@@ -1,7 +1,7 @@
 %module smart_pointer_const_overload
 
-%warnfilter(SWIGWARN_LANG_OVERLOAD_IGNORED) Bar::operator->;      // Overloaded method Bar::operator ->() ignored
-%warnfilter(SWIGWARN_LANG_OVERLOAD_IGNORED) Bar2::operator->;     // Overloaded method Bar2::operator ->() ignored
+%warnfilter(alaqilWARN_LANG_OVERLOAD_IGNORED) Bar::operator->;      // Overloaded method Bar::operator ->() ignored
+%warnfilter(alaqilWARN_LANG_OVERLOAD_IGNORED) Bar2::operator->;     // Overloaded method Bar2::operator ->() ignored
 
 %inline %{
 int CONST_ACCESS = 1;

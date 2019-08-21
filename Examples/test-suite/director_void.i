@@ -1,10 +1,10 @@
 %module(directors="1") director_void
 
-%warnfilter(SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) voidPtrOut;
+%warnfilter(alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) voidPtrOut;
 
 %feature("director") DirectorVoidPointer;
 
-#if defined(SWIGCSHARP)
+#if defined(alaqilCSHARP)
 %apply void *VOID_INT_PTR { void * }
 #endif
 

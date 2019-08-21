@@ -1,19 +1,19 @@
 /*
 This testcase tests that nested structs/unions work. Named structs/unions declared within
-a struct produced redefinition errors in SWIG 1.3.6 as reported by SF bug #447488.
+a struct produced redefinition errors in alaqil 1.3.6 as reported by SF bug #447488.
 Also tests reported error when a #define placed in a deeply embedded struct/union.
 */
 
 %module nested
 
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %rename(OutStNamed) OuterStructNamed;
 %rename(InStNamed) OuterStructNamed::InnerStructNamed;
 %rename(InUnNamed) OuterStructNamed::Inner_union_named;
 #endif
 
-#if defined(SWIG_JAVASCRIPT_V8)
+#if defined(alaqil_JAVASCRIPT_V8)
 
 %inline %{
 #if __GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)

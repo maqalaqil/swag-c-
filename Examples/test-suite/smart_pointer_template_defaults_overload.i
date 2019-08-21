@@ -4,8 +4,8 @@
 // Problem with method overloading when some methods are added by %extend and others are real methods
 // and using template default parameters with smart pointers.
 
-%warnfilter(SWIGWARN_LANG_OVERLOAD_IGNORED) Wrap::operator->;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) Container::rubout;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_IGNORED) Wrap::operator->;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) Container::rubout;
 
 %include <std_string.i>
 %include <std_map.i>
@@ -39,7 +39,7 @@ public:
     static Container* factory() { return new Container(); }
     static Container* factory(bool b) { return new Container(); }
     static void staticstuff(bool) {}
-#ifdef SWIG
+#ifdef alaqil
   %extend {
     void rubout(bool) {}
   }

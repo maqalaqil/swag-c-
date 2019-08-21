@@ -1,15 +1,15 @@
 %module typemap_various
 
-// %copyctor need to be disables since 'const SWIGTYPE &' is intended to generate errors
+// %copyctor need to be disables since 'const alaqilTYPE &' is intended to generate errors
 %nocopyctor;
 
-%typemap(in) SWIGTYPE "_this_will_not_compile_SWIGTYPE_"
-%typemap(in) const SWIGTYPE & "_this_will_not_compile_const_SWIGTYPE_REF_"
+%typemap(in) alaqilTYPE "_this_will_not_compile_alaqilTYPE_"
+%typemap(in) const alaqilTYPE & "_this_will_not_compile_const_alaqilTYPE_REF_"
 
 %inline %{
 template <class T> struct Foo {
   Foo() {}
-#ifdef SWIG
+#ifdef alaqil
   // These typemaps should be used by foo1 and foo2
   %typemap(in) Foo<T>      "/*in typemap for Foo<T> */"
   %typemap(in) const Foo & "/*in typemap for const Foo&, with type T*/"
@@ -65,7 +65,7 @@ void CheckRetTypemapUsed() {
   };
 }
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 #define TYPEMAP_OUT_INIT $result = 0;
 #else
 #define TYPEMAP_OUT_INIT

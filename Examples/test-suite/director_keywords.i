@@ -2,7 +2,7 @@
 // resolved properly when directors are used
 %module(directors="1") director_keywords
 
-%warnfilter(SWIGWARN_PARSE_KEYWORD);
+%warnfilter(alaqilWARN_PARSE_KEYWORD);
 
 %feature("director") Foo;
 

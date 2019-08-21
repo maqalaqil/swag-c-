@@ -342,7 +342,7 @@ void runTest() {
     auto k = scoped!Klass3rdDerived("me oh my");
     string val = k.getValue();
     verifyValue("me oh my-3rdDerived", val);
-    verifyCount(3, k); // 3 classes in inheritance chain == 3 swigCPtr values
+    verifyCount(3, k); // 3 classes in inheritance chain == 3 alaqilCPtr values
     val = test3rdupcast(k);
     verifyValue("me oh my-3rdDerived", val);
     verifyCount(3, k);

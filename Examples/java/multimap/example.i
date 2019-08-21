@@ -23,7 +23,7 @@ int i;
 
   $1 = (*jenv)->GetArrayLength(jenv, $input);
   if ($1 == 0) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
+    alaqil_JavaThrowException(jenv, alaqil_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
     return $null;
   }
   $2 = (char **) malloc(($1+1)*sizeof(char *));
@@ -99,7 +99,7 @@ extern void capitalize(char *str, int len);
 %typemap(check) (double cx, double cy) {
    double a = $1*$1 + $2*$2;
    if (a > 1.0) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaIllegalArgumentException, "$1_name and $2_name must be in unit circle");
+    alaqil_JavaThrowException(jenv, alaqil_JavaIllegalArgumentException, "$1_name and $2_name must be in unit circle");
     return;
    }
 }

@@ -1,6 +1,6 @@
 /*
  * This file contains comments which demonstrate details about Doxygen processing,
- * so they can be emulated in SWIG doxy comment translation
+ * so they can be emulated in alaqil doxy comment translation
  */
 
 
@@ -55,7 +55,7 @@ void backslashB()
 {}
 
 /**
- * Backslash e at end of \e line froze SWIG \e
+ * Backslash e at end of \e line froze alaqil \e
  * with old comment parser. 
  *
  * @see MyClass::fun(char,

@@ -1,4 +1,4 @@
-package org.swig.classexample;
+package org.alaqil.classexample;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.ScrollView;
 import android.text.method.ScrollingMovementMethod;
 
-public class SwigClass extends Activity
+public class alaqilClass extends Activity
 {
     TextView outputText = null;
     ScrollView scroller = null;

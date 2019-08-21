@@ -1,41 +1,41 @@
 /* -----------------------------------------------------------------------------
  * cdata.i
  *
- * SWIG library file containing macros for manipulating raw C data as strings.
+ * alaqil library file containing macros for manipulating raw C data as strings.
  * ----------------------------------------------------------------------------- */
 
 %{
-typedef struct SWIGCDATA {
+typedef struct alaqilCDATA {
     char *data;
     int   len;
-} SWIGCDATA;
+} alaqilCDATA;
 %}
 
 /* -----------------------------------------------------------------------------
  * Typemaps for returning binary data
  * ----------------------------------------------------------------------------- */
 
-#if SWIGGUILE
-%typemap(out) SWIGCDATA {
+#if alaqilGUILE
+%typemap(out) alaqilCDATA {
    $result = scm_from_locale_stringn($1.data,$1.len);
 }
 %typemap(in) (const void *indata, int inlen) = (char *STRING, int LENGTH);
 
-#elif SWIGPHP7
+#elif alaqilPHP7
 
-%typemap(out) SWIGCDATA {
+%typemap(out) alaqilCDATA {
   ZVAL_STRINGL($result, $1.data, $1.len);
 }
 %typemap(in) (const void *indata, int inlen) = (char *STRING, int LENGTH);
 
-#elif SWIGJAVA
+#elif alaqilJAVA
 
 %apply (char *STRING, int LENGTH) { (const void *indata, int inlen) }
-%typemap(jni) SWIGCDATA "jbyteArray"
-%typemap(jtype) SWIGCDATA "byte[]"
-%typemap(jstype) SWIGCDATA "byte[]"
-%fragment("SWIG_JavaArrayOutCDATA", "header") {
-static jbyteArray SWIG_JavaArrayOutCDATA(JNIEnv *jenv, char *result, jsize sz) {
+%typemap(jni) alaqilCDATA "jbyteArray"
+%typemap(jtype) alaqilCDATA "byte[]"
+%typemap(jstype) alaqilCDATA "byte[]"
+%fragment("alaqil_JavaArrayOutCDATA", "header") {
+static jbyteArray alaqil_JavaArrayOutCDATA(JNIEnv *jenv, char *result, jsize sz) {
   jbyte *arr;
   int i;
   jbyteArray jresult = JCALL1(NewByteArray, jenv, sz);
@@ -50,9 +50,9 @@ static jbyteArray SWIG_JavaArrayOutCDATA(JNIEnv *jenv, char *result, jsize sz) {
   return jresult;
 }
 }
-%typemap(out, fragment="SWIG_JavaArrayOutCDATA") SWIGCDATA
-%{$result = SWIG_JavaArrayOutCDATA(jenv, (char *)$1.data, $1.len); %}
-%typemap(javaout) SWIGCDATA {
+%typemap(out, fragment="alaqil_JavaArrayOutCDATA") alaqilCDATA
+%{$result = alaqil_JavaArrayOutCDATA(jenv, (char *)$1.data, $1.len); %}
+%typemap(javaout) alaqilCDATA {
     return $jnicall;
   }
 
@@ -69,11 +69,11 @@ static jbyteArray SWIG_JavaArrayOutCDATA(JNIEnv *jenv, char *result, jsize sz) {
 
 %insert("header") {
 #if #NAME == ""
-static SWIGCDATA cdata_##TYPE(TYPE *ptr, int nelements) {
+static alaqilCDATA cdata_##TYPE(TYPE *ptr, int nelements) {
 #else
-static SWIGCDATA cdata_##NAME(TYPE *ptr, int nelements) {
+static alaqilCDATA cdata_##NAME(TYPE *ptr, int nelements) {
 #endif
-   SWIGCDATA d;
+   alaqilCDATA d;
    d.data = (char *) ptr;
 #if #TYPE != "void"
    d.len  = nelements*sizeof(TYPE);
@@ -87,9 +87,9 @@ static SWIGCDATA cdata_##NAME(TYPE *ptr, int nelements) {
 %typemap(default) int nelements "$1 = 1;"
 
 #if #NAME == ""
-SWIGCDATA cdata_##TYPE(TYPE *ptr, int nelements);
+alaqilCDATA cdata_##TYPE(TYPE *ptr, int nelements);
 #else
-SWIGCDATA cdata_##NAME(TYPE *ptr, int nelements);
+alaqilCDATA cdata_##NAME(TYPE *ptr, int nelements);
 #endif
 %enddef
 

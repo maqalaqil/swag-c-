@@ -68,25 +68,25 @@ public:
 %template(Bard) Bar<double>;
 
 
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGUTL)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilUTL)
 
 
 %include "std_vector.i"
 
-#if defined(SWIGCSHARP) || defined(SWIGPYTHON) || defined(SWIGR) || defined(SWIGOCTAVE) || defined(SWIGRUBY) || defined(SWIGJAVASCRIPT) || defined(SWIGSCILAB)
-#define SWIG_GOOD_VECTOR
+#if defined(alaqilCSHARP) || defined(alaqilPYTHON) || defined(alaqilR) || defined(alaqilOCTAVE) || defined(alaqilRUBY) || defined(alaqilJAVASCRIPT) || defined(alaqilSCILAB)
+#define alaqil_GOOD_VECTOR
 %ignore std::vector<Space::Flow>::vector(size_type);
 %ignore std::vector<Space::Flow>::resize(size_type);
 #endif
 
-#if defined(SWIGJAVA)
-#define SWIG_GOOD_VECTOR
+#if defined(alaqilJAVA)
+#define alaqil_GOOD_VECTOR
 %ignore std::vector<Space::Flow>::vector(jint);
 %ignore std::vector<Space::Flow>::resize(jint);
 #endif
 
-#if defined(SWIGTCL) || defined(SWIGPERL)
-#define SWIG_GOOD_VECTOR
+#if defined(alaqilTCL) || defined(alaqilPERL)
+#define alaqil_GOOD_VECTOR
 /* here, for languages with bad declaration */
 %ignore std::vector<Space::Flow>::vector(unsigned int);
 %ignore std::vector<Space::Flow>::resize(unsigned int);

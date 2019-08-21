@@ -19,7 +19,7 @@ func (fbgs *fooBarGo) deleteFooBarAbstract() {
 }
 
 // The IsFooBarGo method ensures that FooBarGo is a superset of FooBarAbstract.
-// This is also how the class hierarchy gets represented by the SWIG generated
+// This is also how the class hierarchy gets represented by the alaqil generated
 // wrapper code.  For an instance FooBarCpp has the IsFooBarAbstract and
 // IsFooBarCpp methods.
 func (fbgs *fooBarGo) IsFooBarGo() {}

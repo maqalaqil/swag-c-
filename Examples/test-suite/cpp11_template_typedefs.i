@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly handles alias templates. */
+/* This testcase checks whether alaqil correctly handles alias templates. */
 %module cpp11_template_typedefs
 
 %inline %{

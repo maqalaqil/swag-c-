@@ -97,7 +97,7 @@ $ @ \ & ~ < > # % " . :: @text ::text"""
 )
 
 comment_verifier.check(inspect.getdoc(doxygen_misc_constructs.backslashC),
-    r"""Backslash e at end of *line* froze SWIG
+    r"""Backslash e at end of *line* froze alaqil
 *with* old comment parser.
 
 See also: MyClass::fun(char,

@@ -3,9 +3,9 @@
  * ----------------------------------------------------------------------------- */
 
 /* Define a C preprocessor symbol that can be used in interface files
-   to distinguish between the SWIG language modules. */ 
+   to distinguish between the alaqil language modules. */ 
 
-#define SWIG_CLISP
+#define alaqil_CLISP
 
 /* Typespecs for basic types. */
 

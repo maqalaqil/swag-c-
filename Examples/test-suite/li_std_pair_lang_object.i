@@ -3,6 +3,6 @@
 %include <std_pair.i>
 
 namespace std {
-  %template(ValuePair) pair< swig::LANGUAGE_OBJ, swig::LANGUAGE_OBJ >;
+  %template(ValuePair) pair< alaqil::LANGUAGE_OBJ, alaqil::LANGUAGE_OBJ >;
 }
 

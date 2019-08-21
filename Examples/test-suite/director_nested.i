@@ -1,5 +1,5 @@
 %module(directors="1",dirprot="1") director_nested
-#pragma SWIG nowarn=SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR
+#pragma alaqil nowarn=alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR
 
 %{
 #include <string>
@@ -50,8 +50,8 @@
     }
     
 
-#if defined(SWIGPYTHON) || defined(SWIGRUBY) || \
-  defined(SWIGJAVA) || defined(SWIGOCAML) || defined(SWIGCSHARP)
+#if defined(alaqilPYTHON) || defined(alaqilRUBY) || \
+  defined(alaqilJAVA) || defined(alaqilOCAML) || defined(alaqilCSHARP)
     virtual std::string do_step() const = 0;
 #else
     virtual std::string do_step() const {return "";};

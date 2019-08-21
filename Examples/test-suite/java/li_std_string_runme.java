@@ -6,7 +6,7 @@ public class li_std_string_runme {
     try {
         System.loadLibrary("li_std_string");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -47,7 +47,7 @@ public class li_std_string_runme {
       // that none of these cases are slipping through.
       //
 
-      SWIGTYPE_p_std__string stringPtr = null;
+      alaqilTYPE_p_std__string stringPtr = null;
 
       stringPtr = li_std_string.test_pointer_out();
 

@@ -4,15 +4,15 @@
  * Mapping of C++ operator overloading methods to D.
  * ----------------------------------------------------------------------------- */
 
-#if (SWIG_D_VERSION == 1)
+#if (alaqil_D_VERSION == 1)
 
 %pragma(d) imdmodulecode=%{
-template SwigOperatorDefinitions() {
+template alaqilOperatorDefinitions() {
   public override int opEquals(Object o) {
     if (auto rhs = cast(typeof(this))o) {
-      if (swigCPtr == rhs.swigCPtr) return 1;
-      static if (is(typeof(swigOpEquals(rhs)))) {
-        return swigOpEquals(rhs) ? 1 : 0;
+      if (alaqilCPtr == rhs.alaqilCPtr) return 1;
+      static if (is(typeof(alaqilOpEquals(rhs)))) {
+        return alaqilOpEquals(rhs) ? 1 : 0;
       } else {
         return 0; 
       }
@@ -62,11 +62,11 @@ template SwigOperatorDefinitions() {
 %ignoreoperator(LNOT) operator!;
 
 // opCmp is used in D.
-%rename(swigOpEquals) *::operator==;
-%rename(swigOpLt) *::operator<;
-%rename(swigOpLtEquals) *::operator<=;
-%rename(swigOpGt) *::operator>;
-%rename(swigOpGtEquals) *::operator>=;
+%rename(alaqilOpEquals) *::operator==;
+%rename(alaqilOpLt) *::operator<;
+%rename(alaqilOpLtEquals) *::operator<=;
+%rename(alaqilOpGt) *::operator>;
+%rename(alaqilOpGtEquals) *::operator>=;
 
 // a != b is rewritten as !a.opEquals(b) in D.
 %ignoreoperator(NOTEQUAL) operator!=;
@@ -78,8 +78,8 @@ template SwigOperatorDefinitions() {
 // ++/--a is rewritten as a +/-= 1 in D1,so ignore the prefix operators.
 %ignoreoperator(PLUSPLUS) *::operator++();
 %ignoreoperator(MINUSMINUS) *::operator--();
-%rename(swigOpInc) *::operator++(int);
-%rename(swigOpDec) *::operator--(int);
+%rename(alaqilOpInc) *::operator++(int);
+%rename(alaqilOpDec) *::operator--(int);
 
 // The C++ assignment operator does not translate well to D where the proxy
 // classes have reference semantics.
@@ -87,12 +87,12 @@ template SwigOperatorDefinitions() {
 
 %pragma(d) imdmodulecode=%{
   public override int opCmp(Object o) {
-    static if (is(typeof(swigOpLt(typeof(this).init) &&
-        swigOpEquals(typeof(this).init)))) {
+    static if (is(typeof(alaqilOpLt(typeof(this).init) &&
+        alaqilOpEquals(typeof(this).init)))) {
       if (auto rhs = cast(typeof(this))o) {
-        if (swigOpLt(rhs)) {
+        if (alaqilOpLt(rhs)) {
           return -1;
-        } else if (swigOpEquals(rhs)) {
+        } else if (alaqilOpEquals(rhs)) {
           return 0;
         } else {
           return 1;
@@ -104,20 +104,20 @@ template SwigOperatorDefinitions() {
 
   public typeof(this) opPostInc(T = int)(T unused = 0) {
     static assert(
-      is(typeof(swigOpInc(int.init))),
+      is(typeof(alaqilOpInc(int.init))),
       "opPostInc called on " ~ typeof(this).stringof ~ ", but no postfix " ~
         "increment operator exists in the corresponding C++ class."
     );
-    return swigOpInc(int.init);
+    return alaqilOpInc(int.init);
   }
 
   public typeof(this) opPostDec(T = int)(T unused = 0) {
     static assert(
-      is(typeof(swigOpDec(int.init))),
+      is(typeof(alaqilOpDec(int.init))),
       "opPostInc called on " ~ typeof(this).stringof ~ ", but no postfix " ~
         "decrement operator exists in the corresponding C++ class."
     );
-    return swigOpDec(int.init);
+    return alaqilOpDec(int.init);
   }
 %}
 #endif
@@ -128,12 +128,12 @@ template SwigOperatorDefinitions() {
 
 #else
 %pragma(d) imdmodulecode=%{
-mixin template SwigOperatorDefinitions() {
+mixin template alaqilOperatorDefinitions() {
   public override bool opEquals(Object o) {
     if (auto rhs = cast(typeof(this))o) {
-      if (swigCPtr == rhs.swigCPtr) return true;
-      static if (is(typeof(swigOpEquals(rhs)))) {
-        return swigOpEquals(rhs);
+      if (alaqilCPtr == rhs.alaqilCPtr) return true;
+      static if (is(typeof(alaqilOpEquals(rhs)))) {
+        return alaqilOpEquals(rhs);
       } else {
         return false; 
       }
@@ -145,14 +145,14 @@ mixin template SwigOperatorDefinitions() {
 // pointing to the same struct as equal.
 
 #ifdef __cplusplus
-%rename(swigOpPos) *::operator+();
-%rename(swigOpPos) *::operator+() const;
-%rename(swigOpNeg) *::operator-();
-%rename(swigOpNeg) *::operator-() const;
-%rename(swigOpCom) *::operator~();
-%rename(swigOpCom) *::operator~() const;
-%rename(swigOpInc) *::operator++();
-%rename(swigOpDec) *::operator--();
+%rename(alaqilOpPos) *::operator+();
+%rename(alaqilOpPos) *::operator+() const;
+%rename(alaqilOpNeg) *::operator-();
+%rename(alaqilOpNeg) *::operator-() const;
+%rename(alaqilOpCom) *::operator~();
+%rename(alaqilOpCom) *::operator~() const;
+%rename(alaqilOpInc) *::operator++();
+%rename(alaqilOpDec) *::operator--();
 %ignoreoperator(PLUSPLUS) *::operator++(int);
 %ignoreoperator(MINUSMINUS) *::operator--(int);
 // The postfix increment/decrement operators are ignored because they are
@@ -161,27 +161,27 @@ mixin template SwigOperatorDefinitions() {
 // despite this would be possible in D2 – the difference in member access
 // semantics would only lead to confusion in most cases.
 
-%rename(swigOpAdd) *::operator+;
-%rename(swigOpSub) *::operator-;
-%rename(swigOpMul) *::operator*;
-%rename(swigOpDiv) *::operator/;
-%rename(swigOpMod) *::operator%;
-%rename(swigOpAnd) *::operator&;
-%rename(swigOpOr) *::operator|;
-%rename(swigOpXor) *::operator^;
-%rename(swigOpShl) *::operator<<;
-%rename(swigOpShr) *::operator>>;
+%rename(alaqilOpAdd) *::operator+;
+%rename(alaqilOpSub) *::operator-;
+%rename(alaqilOpMul) *::operator*;
+%rename(alaqilOpDiv) *::operator/;
+%rename(alaqilOpMod) *::operator%;
+%rename(alaqilOpAnd) *::operator&;
+%rename(alaqilOpOr) *::operator|;
+%rename(alaqilOpXor) *::operator^;
+%rename(alaqilOpShl) *::operator<<;
+%rename(alaqilOpShr) *::operator>>;
 
-%rename(swigOpAddAssign) *::operator+=;
-%rename(swigOpSubAssign) *::operator-=;
-%rename(swigOpMulAssign) *::operator*=;
-%rename(swigOpDivAssign) *::operator/=;
-%rename(swigOpModAssign) *::operator%=;
-%rename(swigOpAndAssign) *::operator&=;
-%rename(swigOpOrAssign) *::operator|=;
-%rename(swigOpXorAssign) *::operator^=;
-%rename(swigOpShlAssign) *::operator<<=;
-%rename(swigOpShrAssign) *::operator>>=;
+%rename(alaqilOpAddAssign) *::operator+=;
+%rename(alaqilOpSubAssign) *::operator-=;
+%rename(alaqilOpMulAssign) *::operator*=;
+%rename(alaqilOpDivAssign) *::operator/=;
+%rename(alaqilOpModAssign) *::operator%=;
+%rename(alaqilOpAndAssign) *::operator&=;
+%rename(alaqilOpOrAssign) *::operator|=;
+%rename(alaqilOpXorAssign) *::operator^=;
+%rename(alaqilOpShlAssign) *::operator<<=;
+%rename(alaqilOpShrAssign) *::operator>>=;
 
 %rename(opIndex) *::operator[];
 // opIndexAssign is not currently generated, it needs more extensive support
@@ -189,11 +189,11 @@ mixin template SwigOperatorDefinitions() {
 
 %rename(opCall) *::operator();
 
-%rename(swigOpEquals) *::operator==;
-%rename(swigOpLt) *::operator<;
-%rename(swigOpLtEquals) *::operator<=;
-%rename(swigOpGt) *::operator>;
-%rename(swigOpGtEquals) *::operator>=;
+%rename(alaqilOpEquals) *::operator==;
+%rename(alaqilOpLt) *::operator<;
+%rename(alaqilOpLtEquals) *::operator<=;
+%rename(alaqilOpGt) *::operator>;
+%rename(alaqilOpGtEquals) *::operator>=;
 
 // a != b is rewritten as !a.opEquals(b) in D.
 %ignoreoperator(NOTEQUAL) operator!=;
@@ -208,12 +208,12 @@ mixin template SwigOperatorDefinitions() {
 
 %pragma(d) imdmodulecode=%{  
   public override int opCmp(Object o) {
-    static if (__traits(compiles, swigOpLt(typeof(this).init) &&
-        swigOpEquals(typeof(this).init))) {
+    static if (__traits(compiles, alaqilOpLt(typeof(this).init) &&
+        alaqilOpEquals(typeof(this).init))) {
       if (auto rhs = cast(typeof(this))o) {
-        if (swigOpLt(rhs)) {
+        if (alaqilOpLt(rhs)) {
           return -1;
-        } else if (swigOpEquals(rhs)) {
+        } else if (alaqilOpEquals(rhs)) {
           return 0;
         } else {
           return 1;
@@ -223,32 +223,32 @@ mixin template SwigOperatorDefinitions() {
     return super.opCmp(o);
   }
 
-  private template swigOpBinary(string operator, string name) {
-    enum swigOpBinary = `public void opOpAssign(string op, T)(T rhs) if (op == "` ~ operator ~
-      `" && __traits(compiles, swigOp` ~ name ~ `Assign(rhs))) { swigOp` ~ name ~ `Assign(rhs);}` ~
+  private template alaqilOpBinary(string operator, string name) {
+    enum alaqilOpBinary = `public void opOpAssign(string op, T)(T rhs) if (op == "` ~ operator ~
+      `" && __traits(compiles, alaqilOp` ~ name ~ `Assign(rhs))) { alaqilOp` ~ name ~ `Assign(rhs);}` ~
       `public auto opBinary(string op, T)(T rhs) if (op == "` ~ operator ~
-      `" && __traits(compiles, swigOp` ~ name ~ `(rhs))) { return swigOp` ~ name ~ `(rhs);}`;
+      `" && __traits(compiles, alaqilOp` ~ name ~ `(rhs))) { return alaqilOp` ~ name ~ `(rhs);}`;
   }
-  mixin(swigOpBinary!("+", "Add"));
-  mixin(swigOpBinary!("-", "Sub"));
-  mixin(swigOpBinary!("*", "Mul"));
-  mixin(swigOpBinary!("/", "Div"));
-  mixin(swigOpBinary!("%", "Mod"));
-  mixin(swigOpBinary!("&", "And"));
-  mixin(swigOpBinary!("|", "Or"));
-  mixin(swigOpBinary!("^", "Xor"));
-  mixin(swigOpBinary!("<<", "Shl"));
-  mixin(swigOpBinary!(">>", "Shr"));
+  mixin(alaqilOpBinary!("+", "Add"));
+  mixin(alaqilOpBinary!("-", "Sub"));
+  mixin(alaqilOpBinary!("*", "Mul"));
+  mixin(alaqilOpBinary!("/", "Div"));
+  mixin(alaqilOpBinary!("%", "Mod"));
+  mixin(alaqilOpBinary!("&", "And"));
+  mixin(alaqilOpBinary!("|", "Or"));
+  mixin(alaqilOpBinary!("^", "Xor"));
+  mixin(alaqilOpBinary!("<<", "Shl"));
+  mixin(alaqilOpBinary!(">>", "Shr"));
   
-  private template swigOpUnary(string operator, string name) {
-    enum swigOpUnary = `public auto opUnary(string op)() if (op == "` ~ operator ~
-      `" && __traits(compiles, swigOp` ~ name ~ `())) { return swigOp` ~ name ~ `();}`;   
+  private template alaqilOpUnary(string operator, string name) {
+    enum alaqilOpUnary = `public auto opUnary(string op)() if (op == "` ~ operator ~
+      `" && __traits(compiles, alaqilOp` ~ name ~ `())) { return alaqilOp` ~ name ~ `();}`;   
   }
-  mixin(swigOpUnary!("+", "Pos"));
-  mixin(swigOpUnary!("-", "Neg"));
-  mixin(swigOpUnary!("~", "Com"));
-  mixin(swigOpUnary!("++", "Inc"));
-  mixin(swigOpUnary!("--", "Dec"));
+  mixin(alaqilOpUnary!("+", "Pos"));
+  mixin(alaqilOpUnary!("-", "Neg"));
+  mixin(alaqilOpUnary!("~", "Com"));
+  mixin(alaqilOpUnary!("++", "Inc"));
+  mixin(alaqilOpUnary!("--", "Dec"));
 %}
 #endif
 

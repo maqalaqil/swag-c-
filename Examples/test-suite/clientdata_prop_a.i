@@ -1,4 +1,4 @@
-/* This file tests the clientdata propagation at swig wrapper
+/* This file tests the clientdata propagation at alaqil wrapper
    generation.  It tests a bug in the TCL module where the
    clientdata was not propagated correctly to all classes */
 

@@ -2,7 +2,7 @@
 
 // Tests nocastmode
 
-#pragma SWIG nowarn=SWIGWARN_PP_CPP_WARNING
+#pragma alaqil nowarn=alaqilWARN_PP_CPP_WARNING
 %include implicit.i
 
 %inline 

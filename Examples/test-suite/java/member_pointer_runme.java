@@ -6,18 +6,18 @@ public class member_pointer_runme {
     try {
         System.loadLibrary("member_pointer");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
 
-  public static SWIGTYPE_m_Shape__f_void__double memberPtr = null;
+  public static alaqilTYPE_m_Shape__f_void__double memberPtr = null;
 
   public static void main(String argv[]) {
     // Get the pointers
 
-    SWIGTYPE_m_Shape__f_void__double area_pt = member_pointer.areapt();
-    SWIGTYPE_m_Shape__f_void__double perim_pt = member_pointer.perimeterpt();
+    alaqilTYPE_m_Shape__f_void__double area_pt = member_pointer.areapt();
+    alaqilTYPE_m_Shape__f_void__double perim_pt = member_pointer.perimeterpt();
 
     // Create some objects
 

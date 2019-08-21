@@ -1,7 +1,7 @@
 /*
 dual.cpp a test for multiple modules and multiple interpreters statically linked together.
 
-Earlier version of lua bindings for SWIG would fail if statically linked.
+Earlier version of lua bindings for alaqil would fail if statically linked.
 
 What is happening is as follows:
 example.i declares a type Foo
@@ -23,12 +23,12 @@ the two modules are now linked together, and all can now find
 both Foo and Bar.
 */
 
-#include "swigluarun.h"	// the swig runtimes
+#include "alaqilluarun.h"	// the alaqil runtimes
 
 #include <stdio.h>
 #include <stdlib.h>
 
-// the 2 libraries which are wrapped via SWIG
+// the 2 libraries which are wrapped via alaqil
 extern "C" int luaopen_example(lua_State*L);
 extern "C" int luaopen_example2(lua_State*L);
 
@@ -42,15 +42,15 @@ extern "C" int luaopen_example2(lua_State*L);
 
 void testModule(lua_State *L)
 {
-  swig_type_info *pTypeInfo=0,*pTypeInfo2=0;
-  swig_module_info *pModule=0;
-  pModule=SWIG_GetModule(L);
-  DEBUG2("  SWIG_GetModule() returns %p\n", (void *)pModule)
+  alaqil_type_info *pTypeInfo=0,*pTypeInfo2=0;
+  alaqil_module_info *pModule=0;
+  pModule=alaqil_GetModule(L);
+  DEBUG2("  alaqil_GetModule() returns %p\n", (void *)pModule)
   if(pModule==0) return;
-  pTypeInfo = SWIG_TypeQuery(L,"Foo *");
+  pTypeInfo = alaqil_TypeQuery(L,"Foo *");
   DEBUG2("  Type (Foo*) is %s\n",pTypeInfo==0?"unknown":"known");
   DEBUG3("    Module %p typeinfo(Foo*) %p\n", (void *)pModule, (void *)pTypeInfo);
-  pTypeInfo2 = SWIG_TypeQuery(L,"Bar *");
+  pTypeInfo2 = alaqil_TypeQuery(L,"Bar *");
   DEBUG2("  Type (Bar*) is %s\n",pTypeInfo2==0?"unknown":"known");
   DEBUG3("    Module %p typeinfo(Bar*) %p\n", (void *)pModule, (void *)pTypeInfo2);
 }
@@ -59,7 +59,7 @@ int main(int argc,char* argv[])
 {
   lua_State *L1=0,*L2=0,*L3=0;
 
-  printf("This is a test of having two SWIG'ed modules and three lua states\n"
+  printf("This is a test of having two alaqil'ed modules and three lua states\n"
 	"statically linked together.\n"
 	"Its mainly to check that all the types are correctly managed\n\n");
 	

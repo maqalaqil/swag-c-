@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Cpp_nodefault
 
 let foo1 = new_Foo '(1, 2)

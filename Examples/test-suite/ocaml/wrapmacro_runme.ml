@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Wrapmacro
 
 let _ =

@@ -1,6 +1,6 @@
 %module(directors="1") cpp11_director_enums
 
-%warnfilter(SWIGWARN_TYPEMAP_THREAD_UNSAFE,SWIGWARN_TYPEMAP_DIRECTOROUT_PTR) Cpp11DirectorEnumsCallback::g;
+%warnfilter(alaqilWARN_TYPEMAP_THREAD_UNSAFE,alaqilWARN_TYPEMAP_DIRECTOROUT_PTR) Cpp11DirectorEnumsCallback::g;
 
 %director Cpp11DirectorEnumsCallback;
 

@@ -58,7 +58,7 @@ void toestest(toe *t, toe tt[], toe ttt[2]) {}
 
 JAVA_ARRAYS_IMPL(char, jbyte, Byte, Char)
 JAVA_ARRAYS_TYPEMAPS(char, byte, jbyte, Char, "[B")
-%typecheck(SWIG_TYPECHECK_INT8_ARRAY) /* Java byte[] */
+%typecheck(alaqil_TYPECHECK_INT8_ARRAY) /* Java byte[] */
     signed char[ANY], signed char[]
     ""
 

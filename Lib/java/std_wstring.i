@@ -27,7 +27,7 @@ class wstring;
 
 %typemap(in) wstring
 %{if(!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::wstring");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null std::wstring");
     return $null;
   }
   const jchar *$1_pstr = jenv->GetStringChars($input, 0);
@@ -44,7 +44,7 @@ class wstring;
 
 %typemap(directorout) wstring
 %{if(!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::wstring");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null std::wstring");
     return $null;
   }
   const jchar *$1_pstr = jenv->GetStringChars($input, 0);
@@ -66,7 +66,7 @@ class wstring;
     $1_conv_buf[i] = (jchar)$1[i];
   }
   $input = jenv->NewString($1_conv_buf, $1_len);
-  Swig::LocalRefGuard $1_refguard(jenv, $input);
+  alaqil::LocalRefGuard $1_refguard(jenv, $input);
   delete [] $1_conv_buf;
 %}
 
@@ -89,7 +89,7 @@ class wstring;
 
 %typemap(throws) wstring
 %{ std::string message($1.begin(), $1.end());
-   SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, message.c_str());
+   alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, message.c_str());
    return $null; %}
 
 // const wstring &
@@ -101,7 +101,7 @@ class wstring;
 
 %typemap(in) const wstring &
 %{if(!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::wstring");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null std::wstring");
     return $null;
   }
   const jchar *$1_pstr = jenv->GetStringChars($input, 0);
@@ -118,9 +118,9 @@ class wstring;
   jenv->ReleaseStringChars($input, $1_pstr);
  %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const wstring & 
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const wstring & 
 %{if(!$input) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::wstring");
+    alaqil_JavaThrowException(jenv, alaqil_JavaNullPointerException, "null std::wstring");
     return $null;
   }
   const jchar *$1_pstr = jenv->GetStringChars($input, 0);
@@ -144,7 +144,7 @@ class wstring;
     $1_conv_buf[i] = (jchar)($1)[i];
   }
   $input = jenv->NewString($1_conv_buf, $1_len);
-  Swig::LocalRefGuard $1_refguard(jenv, $input);
+  alaqil::LocalRefGuard $1_refguard(jenv, $input);
   delete [] $1_conv_buf;
 %}
 
@@ -167,7 +167,7 @@ class wstring;
 
 %typemap(throws) const wstring &
 %{ std::string message($1.begin(), $1.end());
-   SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, message.c_str());
+   alaqil_JavaThrowException(jenv, alaqil_JavaRuntimeException, message.c_str());
    return $null; %}
 
 }

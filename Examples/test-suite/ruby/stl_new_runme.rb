@@ -9,12 +9,12 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'stl_new'
 
 
 def _sequence(container)
-  swig_assert_each_line(<<'EOF', binding)
+  alaqil_assert_each_line(<<'EOF', binding)
 cont = container.new([9,1,8,2,7,3,6,4,5])
 cont.to_a == [9,1,8,2,7,3,6,4,5]
 cont.size == 9
@@ -48,7 +48,7 @@ EOF
 end
 
 def _random_iterator(container)
-  swig_assert_each_line(<<EOF, binding)
+  alaqil_assert_each_line(<<EOF, binding)
   cont = #{container}.new([9,1,8,2,7,3,6,4,5])
   Stl_new.nth_element(cont.begin,cont.begin+cont.size/2,cont.end)
   cont.to_a == [3, 1, 2, 4, 5, 6, 7, 8, 9]
@@ -58,7 +58,7 @@ EOF
 end
 
 def _set(container)
-  swig_assert_each_line(<<EOF, binding)
+  alaqil_assert_each_line(<<EOF, binding)
     cont = #{container}.new
     [9,1,8,2,7,3,6,4,5].each { |x| cont.insert(x) }
     i0 = cont.begin()
@@ -79,7 +79,7 @@ EOF
 end
     
 def _map(container)
-  swig_assert_each_line(<<EOF, binding)
+  alaqil_assert_each_line(<<EOF, binding)
     cont = #{container}.new
     cont['z'] = 9
     cont['y'] = 1

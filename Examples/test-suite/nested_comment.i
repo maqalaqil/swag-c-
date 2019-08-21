@@ -1,6 +1,6 @@
 %module nested_comment
 
-#pragma SWIG nowarn=SWIGWARN_PARSE_UNNAMED_NESTED_CLASS
+#pragma alaqil nowarn=alaqilWARN_PARSE_UNNAMED_NESTED_CLASS
 
 // this example shows a problem with 'dump_nested' (parser.y).
 

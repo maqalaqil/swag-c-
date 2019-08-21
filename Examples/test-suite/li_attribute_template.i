@@ -2,7 +2,7 @@
 
 %include <exception.i>
 
-//#define SWIG_ATTRIBUTE_TEMPLATE
+//#define alaqil_ATTRIBUTE_TEMPLATE
 %include <attribute.i>
 %include <std_string.i>
 

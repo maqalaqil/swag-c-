@@ -1,23 +1,23 @@
-<swigxml:swig name="namespaces" xmlns:swigxml="http://jniplusplus.sourceforge.net" xmlns:swig="http://swig.sourceforge.net" xmlns:c="http://www.ansi.org" >
-  <swig:top >
-    <swigxml:child >
-      <swig:file name="../../Lib/swig.swg" >
-        <swigxml:type string="include"  />
-      </swig:file>
-      <swig:file name="example_ro.i" >
-        <swigxml:child >
-          <swig:pragma name="readonly"  />
+<alaqilxml:alaqil name="namespaces" xmlns:alaqilxml="http://jniplusplus.sourceforge.net" xmlns:alaqil="http://alaqil.sourceforge.net" xmlns:c="http://www.ansi.org" >
+  <alaqil:top >
+    <alaqilxml:child >
+      <alaqil:file name="../../Lib/alaqil.swg" >
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+      <alaqil:file name="example_ro.i" >
+        <alaqilxml:child >
+          <alaqil:pragma name="readonly"  />
           <c:variable name="status" >
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="int"  />
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="int"  />
           </c:variable>
           <c:variable name="path" >
-            <swigxml:storage string="extern"  />
-            <swigxml:type string="a(256).char"  />
+            <alaqilxml:storage string="extern"  />
+            <alaqilxml:type string="a(256).char"  />
           </c:variable>
-        </swigxml:child>
-        <swigxml:type string="include"  />
-      </swig:file>
-    </swigxml:child>
-  </swig:top>
-</swigxml:swig>
+        </alaqilxml:child>
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+    </alaqilxml:child>
+  </alaqil:top>
+</alaqilxml:alaqil>

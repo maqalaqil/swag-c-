@@ -1,6 +1,6 @@
 This example tests the %import directive and python import from __init__.py.
 
-This case is not correctly handled by swig 2.
+This case is not correctly handled by alaqil 2.
 
 The issue was reported as Source Forge bug #1297 and later as GitHub issue #7.
 
@@ -28,7 +28,7 @@ as follows
     from bar import Pkg2_Bar                    # [1]
 
 Such cases doesn't work when fully qualified python module names are used by
-swig (swig 2.0.10, e.g.) to generate python import directives (SF bug #1297).
+alaqil (alaqil 2.0.10, e.g.) to generate python import directives (SF bug #1297).
 The generated file "py2/pkg2/bar.py" has following lines:
 
     import py2.pkg2.foo                        # [2]
@@ -52,7 +52,7 @@ Traceback (most recent call last):
 
 It seems like during the import [1], the sub-package pkg2 is not yet fully
 initialized, so py2.pkg2 is not known. The above exception is raised at
-line [3]. The problem disappears, for example, if we force swig to use relative
+line [3]. The problem disappears, for example, if we force alaqil to use relative
 package names.
 
 If everything works well, the package py2.pkg2 shall load properly.

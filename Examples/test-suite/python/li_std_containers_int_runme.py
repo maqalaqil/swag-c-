@@ -17,9 +17,9 @@ def compare_sequences(a, b):
             failed(a, b, "elements are different")
 
 
-def compare_containers(pythonlist, swigvector, swiglist):
-    compare_sequences(pythonlist, swigvector)
-    compare_sequences(pythonlist, swiglist)
+def compare_containers(pythonlist, alaqilvector, alaqillist):
+    compare_sequences(pythonlist, alaqilvector)
+    compare_sequences(pythonlist, alaqillist)
 
 # Check std::vector and std::list assignment behaves same as Python list
 # assignment including exceptions

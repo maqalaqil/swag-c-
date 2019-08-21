@@ -1,6 +1,6 @@
 %module cpp11_rvalue_reference3
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);
 
 %inline %{
 #include <utility>

@@ -2,7 +2,7 @@
 
 %module java_throws
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 %{
 #define TESTCASE_THROW1(T1)
@@ -126,7 +126,7 @@ JAVAEXCEPTION(FeatureTest::staticMethod)
     };
 %}
 
-%include <swiginterface.i>
+%include <alaqilinterface.i>
 %interface_impl(InterfaceTest);
 JAVAEXCEPTION(imethod)
 
@@ -182,7 +182,7 @@ try {
 %nojavaexception NoExceptTest::NoExceptTest();
 
 // Need to handle the checked exception in NoExceptTest.delete()
-%typemap(javafinalize) SWIGTYPE %{
+%typemap(javafinalize) alaqilTYPE %{
   @SuppressWarnings("deprecation")
   protected void finalize() {
     try {

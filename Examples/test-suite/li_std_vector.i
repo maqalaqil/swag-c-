@@ -75,7 +75,7 @@ const std::vector<Struct *> & vecstructptr(const std::vector<Struct *> & vec) { 
 const std::vector<const Struct *> & vecstructconstptr(const std::vector<const Struct *> & vec) { return vec; }
 %}
 
-#if !defined(SWIGR)
+#if !defined(alaqilR)
 %template(IntPtrVector) std::vector<int *>;
 %template(IntConstPtrVector) std::vector<const int *>;
 #endif
@@ -101,11 +101,11 @@ const std::vector<const Struct *> & vecstructconstptr(const std::vector<const St
   };
 }
 
-#if defined(SWIGRUBY)
-%template(LanguageVector) std::vector< swig::LANGUAGE_OBJ >;
+#if defined(alaqilRUBY)
+%template(LanguageVector) std::vector< alaqil::LANGUAGE_OBJ >;
 
 %inline {
-  std::vector< swig::LANGUAGE_OBJ > LanguageVector; 
+  std::vector< alaqil::LANGUAGE_OBJ > LanguageVector; 
 }
 #endif
 
@@ -122,7 +122,7 @@ namespace aa {
 }
 %}
 
-#if !defined(SWIGOCTAVE)
+#if !defined(alaqilOCTAVE)
 // To fix: something different in Octave is preventing this from working
 %template(VectorTest) std::vector< ::aa::Holder >;
 

@@ -1,51 +1,51 @@
-<swigxml:swig name="namespaces" xmlns:swigxml="http://jniplusplus.sourceforge.net" xmlns:swig="http://swig.sourceforge.net" xmlns:c="http://www.ansi.org" >
-  <swig:top >
-    <swigxml:child >
-      <swig:file name="../../Lib/swig.swg" >
-        <swigxml:type string="include"  />
-      </swig:file>
-      <swig:file name="example_const.i" >
-        <swigxml:child >
-          <swig:module name="example"  />
-          <swig:constant name="ICONST" >
-            <swigxml:value string="42"  />
-            <swigxml:type string="int"  />
-          </swig:constant>
-          <swig:constant name="FCONST" >
-            <swigxml:value string="2.1828"  />
-            <swigxml:type string="double"  />
-          </swig:constant>
-          <swig:constant name="CCONST" >
-            <swigxml:value string="x"  />
-            <swigxml:type string="char"  />
-          </swig:constant>
-          <swig:constant name="CCONST2" >
-            <swigxml:value string="\n"  />
-            <swigxml:type string="char"  />
-          </swig:constant>
-          <swig:constant name="SCONST" >
-            <swigxml:value string="Hello World"  />
-            <swigxml:type string="p.char"  />
-          </swig:constant>
-          <swig:constant name="SCONST2" >
-            <swigxml:value string="\&quot;Hello World\&quot;"  />
-            <swigxml:type string="p.char"  />
-          </swig:constant>
-          <swig:constant name="EXPR" >
-            <swigxml:value string="42+3*(2.1828)"  />
-            <swigxml:type string="double"  />
-          </swig:constant>
+<alaqilxml:alaqil name="namespaces" xmlns:alaqilxml="http://jniplusplus.sourceforge.net" xmlns:alaqil="http://alaqil.sourceforge.net" xmlns:c="http://www.ansi.org" >
+  <alaqil:top >
+    <alaqilxml:child >
+      <alaqil:file name="../../Lib/alaqil.swg" >
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+      <alaqil:file name="example_const.i" >
+        <alaqilxml:child >
+          <alaqil:module name="example"  />
+          <alaqil:constant name="ICONST" >
+            <alaqilxml:value string="42"  />
+            <alaqilxml:type string="int"  />
+          </alaqil:constant>
+          <alaqil:constant name="FCONST" >
+            <alaqilxml:value string="2.1828"  />
+            <alaqilxml:type string="double"  />
+          </alaqil:constant>
+          <alaqil:constant name="CCONST" >
+            <alaqilxml:value string="x"  />
+            <alaqilxml:type string="char"  />
+          </alaqil:constant>
+          <alaqil:constant name="CCONST2" >
+            <alaqilxml:value string="\n"  />
+            <alaqilxml:type string="char"  />
+          </alaqil:constant>
+          <alaqil:constant name="SCONST" >
+            <alaqilxml:value string="Hello World"  />
+            <alaqilxml:type string="p.char"  />
+          </alaqil:constant>
+          <alaqil:constant name="SCONST2" >
+            <alaqilxml:value string="\&quot;Hello World\&quot;"  />
+            <alaqilxml:type string="p.char"  />
+          </alaqil:constant>
+          <alaqil:constant name="EXPR" >
+            <alaqilxml:value string="42+3*(2.1828)"  />
+            <alaqilxml:type string="double"  />
+          </alaqil:constant>
           <c:variable name="iconst" >
-            <swigxml:value string="37"  />
-            <swigxml:type string="q(const).int"  />
+            <alaqilxml:value string="37"  />
+            <alaqilxml:type string="q(const).int"  />
           </c:variable>
           <c:variable name="fconst" >
-            <swigxml:value string="3.14"  />
-            <swigxml:type string="q(const).double"  />
+            <alaqilxml:value string="3.14"  />
+            <alaqilxml:type string="q(const).double"  />
           </c:variable>
-        </swigxml:child>
-        <swigxml:type string="include"  />
-      </swig:file>
-    </swigxml:child>
-  </swig:top>
-</swigxml:swig>
+        </alaqilxml:child>
+        <alaqilxml:type string="include"  />
+      </alaqil:file>
+    </alaqilxml:child>
+  </alaqil:top>
+</alaqilxml:alaqil>

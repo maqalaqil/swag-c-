@@ -1,5 +1,5 @@
 # ------------------------------------------------------------
-# SWIG Examples Makefile
+# alaqil Examples Makefile
 #
 # This file is used by the examples to build modules.  Assuming
 # you ran configure, this file will probably work.  However,
@@ -7,7 +7,7 @@
 #
 # Other notes:
 #
-# 1.   Take a look at the prefixes below.   Since SWIG works with
+# 1.   Take a look at the prefixes below.   Since alaqil works with
 #      multiple target languages, you may need to find out where
 #      certain packages have been installed.   Set the prefixes
 #      accordingly.
@@ -57,14 +57,14 @@ LIBS       =
 INTERFACE  =
 INTERFACEDIR  =
 INTERFACEPATH = $(SRCDIR)$(INTERFACEDIR)$(INTERFACE)
-SWIGOPT    =
+alaqilOPT    =
 
-# SWIG_LIB_DIR and SWIGEXE must be explicitly set by Makefiles using this Makefile
-SWIG_LIB_DIR = ./Lib
-SWIGEXE    = swig
-SWIG_LIB_SET = @SWIG_LIB_SET@
-SWIGTOOL   =
-SWIG       = $(SWIG_LIB_SET) $(SWIGTOOL) $(SWIGEXE)
+# alaqil_LIB_DIR and alaqilEXE must be explicitly set by Makefiles using this Makefile
+alaqil_LIB_DIR = ./Lib
+alaqilEXE    = alaqil
+alaqil_LIB_SET = @alaqil_LIB_SET@
+alaqilTOOL   =
+alaqil       = $(alaqil_LIB_SET) $(alaqilTOOL) $(alaqilEXE)
 
 LIBM       = @LIBM@
 LIBC       = @LIBC@
@@ -140,11 +140,11 @@ distclean:
 	rm -f xml/Makefile
 
 ##################################################################
-# Very generic invocation of swig
+# Very generic invocation of alaqil
 ##################################################################
 
-swiginvoke:
-	$(SWIG) $(SWIGOPT)
+alaqilinvoke:
+	$(alaqil) $(alaqilOPT)
 
 ##################################################################
 #####                       Tcl/Tk                          ######
@@ -170,12 +170,12 @@ TCL_SCRIPT = $(SRCDIR)$(RUNME).tcl
 # -----------------------------------------------------------
 
 tclsh: $(SRCDIR_SRCS)
-	$(SWIG) -tcl8 $(SWIGOPT) $(TCL_SWIGOPTS) -ltclsh.i -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -tcl8 $(alaqilOPT) $(TCL_alaqilOPTS) -ltclsh.i -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES) $(TCL_INCLUDE) \
 	$(TCL_LIB)  $(TCL_OPTS) $(LIBS) $(SYSLIBS) -o $(TARGET)
 
 tclsh_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -tcl8 -c++ $(SWIGOPT) $(TCL_SWIGOPTS) -ltclsh.i -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -tcl8 -c++ $(alaqilOPT) $(TCL_alaqilOPTS) -ltclsh.i -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES) $(TCL_INCLUDE) \
 	$(TCL_LIB) $(TCL_OPTS) $(LIBS) $(SYSLIBS) -o $(TARGET)
 
@@ -184,7 +184,7 @@ tclsh_cpp: $(SRCDIR_SRCS)
 # -----------------------------------------------------------
 
 tcl:  $(SRCDIR_SRCS)
-	$(SWIG) -tcl8 $(SWIGOPT) $(TCL_SWIGOPTS) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -tcl8 $(alaqilOPT) $(TCL_alaqilOPTS) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES) $(TCL_INCLUDE)
 	$(TCLLDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(TCL_DLNK) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(TCL_SO)
 
@@ -193,7 +193,7 @@ tcl:  $(SRCDIR_SRCS)
 # -----------------------------------------------------------
 
 tcl_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -tcl8 -c++ $(SWIGOPT) $(TCL_SWIGOPTS) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -tcl8 -c++ $(alaqilOPT) $(TCL_alaqilOPTS) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES) $(TCL_INCLUDE)
 	$(TCLCXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(TCL_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(TCL_SO)
 
@@ -245,7 +245,7 @@ PERL5_SCRIPT = $(SRCDIR)$(RUNME).pl
 # ----------------------------------------------------------------
 
 perl5: $(SRCDIR_SRCS)
-	$(SWIG) -perl5 $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -perl5 $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c -Dbool=char $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES) $(PERL5_CCFLAGS) $(PERL5_CCCDLFLAGS) -I$(PERL5_INCLUDE)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(PERL5_CCDLFLAGS) $(OBJS) $(IOBJS) $(PERL5_LDFLAGS) $(PERL5_DLNK) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
@@ -254,7 +254,7 @@ perl5: $(SRCDIR_SRCS)
 # ----------------------------------------------------------------
 
 perl5_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -perl5 -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -perl5 -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES) $(PERL5_CCFLAGS) $(PERL5_CCCDLFLAGS) -I$(PERL5_INCLUDE)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(PERL5_CCDLFLAGS) $(OBJS) $(IOBJS) $(PERL5_LDFLAGS) $(PERL5_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
@@ -270,11 +270,11 @@ perl5_xs: $(SRCDIR_SRCS)
 # ----------------------------------------------------------------
 
 perl5_static: $(SRCDIR_SRCS)
-	$(SWIG) -perl5 -static -lperlmain.i $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -perl5 -static -lperlmain.i $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -Dbool=char $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES) -I$(PERL5_INCLUDE) $(PERL5_LIB) $(LIBS) -o $(TARGET)
 
 perl5_static_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -perl5 -c++ -static -lperlmain.i $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -perl5 -c++ -static -lperlmain.i $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES) -I$(PERL5_INCLUDE) $(PERL5_LIB) $(LIBS) -o $(TARGET)
 
 # -----------------------------------------------------------------
@@ -327,11 +327,11 @@ else
 endif
 PYTHON_SO     = @PYTHON_SO@
 
-# SWIG option for Python3
+# alaqil option for Python3
 ifeq (,$(PY3))
-  SWIGOPTPY3 =
+  alaqilOPTPY3 =
 else
-  SWIGOPTPY3 = -py3
+  alaqilOPTPY3 = -py3
 endif
 
 PYCODESTYLE       = @PYCODESTYLE@
@@ -342,7 +342,7 @@ PYCODESTYLE_FLAGS = --ignore=E252,E30,E402,E501,E731,W291,W391
 # ----------------------------------------------------------------
 
 python: $(SRCDIR_SRCS)
-	$(SWIG) -python $(SWIGOPTPY3) $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -python $(alaqilOPTPY3) $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) $(PYTHON_INCLUDE)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(PYTHON_DLNK) $(LIBS) -o $(LIBPREFIX)_$(TARGET)$(PYTHON_SO)
 
@@ -351,7 +351,7 @@ python: $(SRCDIR_SRCS)
 # -----------------------------------------------------------------
 
 python_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -python $(SWIGOPTPY3) -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -python $(alaqilOPTPY3) -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) $(PYTHON_INCLUDE)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(PYTHON_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)_$(TARGET)$(PYTHON_SO)
 
@@ -367,12 +367,12 @@ TKINTER =
 PYTHON_LIBOPTS = $(PYTHON_LINK) @LIBS@ $(TKINTER) $(SYSLIBS)
 
 python_static: $(SRCDIR_SRCS)
-	$(SWIG) -python $(SWIGOPTPY3) -lembed.i $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -python $(alaqilOPTPY3) -lembed.i $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) @LINKFORSHARED@ $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) \
 	$(PYTHON_INCLUDE) $(LIBS) -L$(PYTHON_LIB) $(PYTHON_LIBOPTS) -o $(TARGET)
 
 python_static_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -python $(SWIGOPTPY3) -c++ -lembed.i $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -python $(alaqilOPTPY3) -c++ -lembed.i $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) \
 	$(PYTHON_INCLUDE) $(LIBS)  -L$(PYTHON_LIB) $(PYTHON_LIBOPTS) -o $(TARGET)
 
@@ -444,7 +444,7 @@ OCTAVE_SCRIPT = $(SRCDIR)$(RUNME).m
 # ----------------------------------------------------------------
 
 octave: $(SRCDIR_SRCS)
-	$(SWIG) -octave $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -octave $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -g -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(INCLUDES) $(OCTAVE_CXX)
 	$(CC) -g -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CSRCS) $(INCLUDES)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(OCTAVE_DLNK) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(OCTAVE_SO)
@@ -454,7 +454,7 @@ octave: $(SRCDIR_SRCS)
 # -----------------------------------------------------------------
 
 octave_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -octave $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -octave $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -g -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) $(OCTAVE_CXX)
 	$(CXXSHARED) -g $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(OCTAVE_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(OCTAVE_SO)
 
@@ -499,24 +499,24 @@ GUILE_SCRIPT  = $(SRCDIR)$(RUNME).scm
 # Build a dynamically loaded module with passive linkage
 #------------------------------------------------------------------
 guile: $(SRCDIR_SRCS)
-	$(SWIG) -guile -Linkage passive $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -guile -Linkage passive $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) $(GUILE_CFLAGS) $(ISRCS) $(SRCDIR_SRCS)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(GUILE_LIBS) $(LIBS) -o $(GUILE_LIBPREFIX)$(TARGET)$(GUILE_SO)
 
 guile_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -guile -Linkage passive $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -guile -Linkage passive $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(GUILE_CFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(GUILE_LIBS) $(LIBS) $(CPP_DLLIBS) -o $(GUILE_LIBPREFIX)$(TARGET)$(GUILE_SO)
 
 guile_externalhdr:
-	$(SWIG) -guile -external-runtime $(TARGET)
+	$(alaqil) -guile -external-runtime $(TARGET)
 
 # -----------------------------------------------------------------
 # Build Guile interpreter augmented with extra functions
 # -----------------------------------------------------------------
 
 guile_augmented: $(SRCDIR_SRCS)
-	$(SWIG) -guile $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -guile $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(GUILE_CFLAGS) $(GUILE_LIBS) $(LIBS) -o $(TARGET)
 
 # -----------------------------------------------------------------
@@ -524,24 +524,24 @@ guile_augmented: $(SRCDIR_SRCS)
 # -----------------------------------------------------------------
 
 guile_static: $(SRCDIR_SRCS)
-	$(SWIG) -guile -lguilemain.i -Linkage ltdlmod $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -guile -lguilemain.i -Linkage ltdlmod $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) \
-	  -DSWIGINIT="SCM scm_init_$(TARGET)_module(void); scm_init_$(TARGET)_module();" \
+	  -DalaqilINIT="SCM scm_init_$(TARGET)_module(void); scm_init_$(TARGET)_module();" \
 	  $(GUILE_CFLAGS) $(GUILE_LIBS) $(LIBS) $(GUILE_LIBOPTS) -o $(TARGET)-guile
 
 guile_static_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -guile -lguilemain.i -Linkage ltdlmod $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -guile -lguilemain.i -Linkage ltdlmod $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) \
-	  -DSWIGINIT="SCM scm_init_$(TARGET)_module(void); scm_init_$(TARGET)_module();" \
+	  -DalaqilINIT="SCM scm_init_$(TARGET)_module(void); scm_init_$(TARGET)_module();" \
 	  $(GUILE_CFLAGS) $(GUILE_LIBS) $(LIBS) $(GUILE_LIBOPTS) -o $(TARGET)-guile
 
 guile_simple: $(SRCDIR_SRCS)
-	$(SWIG) -guile -lguilemain.i -Linkage simple $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -guile -lguilemain.i -Linkage simple $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) \
 	  $(GUILE_CFLAGS) $(GUILE_LIBS) $(LIBS) $(GUILE_LIBOPTS) -o $(TARGET)-guile
 
 guile_simple_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -guile -lguilemain.i -Linkage simple $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -guile -lguilemain.i -Linkage simple $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) \
 	  $(GUILE_CFLAGS) $(GUILE_LIBS) $(LIBS) $(GUILE_LIBOPTS) -o $(TARGET)-guile
 
@@ -596,7 +596,7 @@ JAVAC = @JAVAC@ -d .
 # ----------------------------------------------------------------
 
 java: $(SRCDIR_SRCS)
-	$(SWIG) -java $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -java $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(JAVACFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES) $(JAVA_INCLUDE)
 	$(JAVALDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(JAVA_DLNK) $(LIBS) -o $(JAVA_LIBPREFIX)$(TARGET)$(JAVASO)
 
@@ -605,7 +605,7 @@ java: $(SRCDIR_SRCS)
 # ----------------------------------------------------------------
 
 java_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -java -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -java -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(JAVACFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES) $(JAVA_INCLUDE)
 	$(JAVACXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(JAVA_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(JAVA_LIBPREFIX)$(TARGET)$(JAVASO)
 
@@ -659,10 +659,10 @@ NODEGYP = @NODEGYP@
 # ----------------------------------------------------------------
 
 javascript_wrapper:
-	$(SWIG) -javascript $(SWIGOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.c $(INTERFACEPATH)
+	$(alaqil) -javascript $(alaqilOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.c $(INTERFACEPATH)
 
 javascript_wrapper_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -javascript -c++ $(SWIGOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.cxx $(INTERFACEPATH)
+	$(alaqil) -javascript -c++ $(alaqilOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.cxx $(INTERFACEPATH)
 
 javascript_build: $(SRCDIR_SRCS)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) $(JSINCLUDES)
@@ -681,7 +681,7 @@ endif
 # These targets are used by the test-suite:
 
 javascript: $(SRCDIR_SRCS) javascript_custom_interpreter
-	$(SWIG) -javascript $(SWIGOPT) $(INTERFACEPATH)
+	$(alaqil) -javascript $(alaqilOPT) $(INTERFACEPATH)
 ifeq (jsc, $(ENGINE))
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) $(JSINCLUDES)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(JSDYNAMICLINKING) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
@@ -691,7 +691,7 @@ else # (v8 | node) # v8 and node must be compiled as c++
 endif
 
 javascript_cpp: $(SRCDIR_SRCS) javascript_custom_interpreter
-	$(SWIG) -javascript -c++ $(SWIGOPT) $(INTERFACEPATH)
+	$(alaqil) -javascript -c++ $(alaqilOPT) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) $(JSINCLUDES)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(JSDYNAMICLINKING) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
@@ -766,7 +766,7 @@ TARGETID = 1
 
 android: $(SRCDIR_SRCS)
 	$(ANDROID) $(SILENT_OPTION) update project --target $(TARGETID) --name $(PROJECTNAME) --path .
-	$(SWIG) -java $(SWIGOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.c $(INTERFACEPATH)
+	$(alaqil) -java $(alaqilOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.c $(INTERFACEPATH)
 	+$(ANDROID_NDK_BUILD) $(SILENT_PIPE)
 	$(ANT) $(ANT_QUIET) debug
 
@@ -776,7 +776,7 @@ android: $(SRCDIR_SRCS)
 
 android_cpp: $(SRCDIR_SRCS)
 	$(ANDROID) $(SILENT_OPTION) update project --target $(TARGETID) --name $(PROJECTNAME) --path .
-	$(SWIG) -java -c++ $(SWIGOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.cpp $(INTERFACEPATH)
+	$(alaqil) -java -c++ $(alaqilOPT) -o $(INTERFACEDIR)$(TARGET)_wrap.cpp $(INTERFACEPATH)
 	+$(ANDROID_NDK_BUILD) $(SILENT_PIPE)
 	$(ANT) $(ANT_QUIET) debug
 
@@ -820,12 +820,12 @@ MZSCHEME_SCRIPT = $(SRCDIR)$(RUNME).scm
 # ----------------------------------------------------------------
 
 mzscheme: $(SRCDIR_SRCS)
-	$(SWIG) -mzscheme $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -mzscheme $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(COMPILETOOL) $(MZC) `echo " $(CPPFLAGS) $(INCLUDES) $(CFLAGS)" | sed 's/ -/ ++ccf -/g'` --cc $(ISRCS) $(SRCDIR_SRCS)
 	$(COMPILETOOL) $(MZC) --ld $(TARGET)$(MZSCHEME_SO) $(OBJS) $(IOBJS)
 
 mzscheme_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -mzscheme -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -mzscheme -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	env CFLAGS= $(COMPILETOOL) $(MZC) `echo " $(CPPFLAGS) $(INCLUDES) $(CXXFLAGS)" | sed 's/ -/ ++ccf -/g'` --cc $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS)
 	$(CXXSHARED) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $(LIBPREFIX)$(TARGET)$(MZSCHEME_SO) $(OBJS) $(IOBJS) $(MZDYNOBJ) $(CPP_DLLIBS)
 
@@ -864,28 +864,28 @@ OCAMLDLGEN=$(COMPILETOOL) @OCAMLDLGEN@
 OCAMLFIND=$(COMPILETOOL) @OCAMLFIND@
 OCAMLMKTOP=$(COMPILETOOL) @OCAMLMKTOP@
 NOLINK ?= false
-OCAMLPP= -pp "camlp4o ./swigp4.cmo"
+OCAMLPP= -pp "camlp4o ./alaqilp4.cmo"
 OCAMLP4WHERE=`$(COMPILETOOL) @CAMLP4@ -where`
 
 ocaml_core:
 	mkdir -p ./localtmp
-	$(SWIG) -ocaml -co swig.mli 2>/dev/null
-	$(SWIG) -ocaml -co swig.ml 2>/dev/null
-	$(SWIG) -ocaml -co swigp4.ml 2>/dev/null
-	$(OCC) -c swig.mli
-	$(OCC) -c swig.ml
-	$(OCC_WITH_PP) -I $(OCAMLP4WHERE) -pp "camlp4o pa_extend.cmo q_MLast.cmo" -c swigp4.ml
+	$(alaqil) -ocaml -co alaqil.mli 2>/dev/null
+	$(alaqil) -ocaml -co alaqil.ml 2>/dev/null
+	$(alaqil) -ocaml -co alaqilp4.ml 2>/dev/null
+	$(OCC) -c alaqil.mli
+	$(OCC) -c alaqil.ml
+	$(OCC_WITH_PP) -I $(OCAMLP4WHERE) -pp "camlp4o pa_extend.cmo q_MLast.cmo" -c alaqilp4.ml
 
 ocaml_static: $(SRCDIR_SRCS)
-	$(SWIG) -ocaml $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -ocaml $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(OCC) -g -c -ccopt -g -ccopt "$(INCLUDES)" $(ISRCS) $(SRCDIR_SRCS)
 	$(OCC) -g -c $(INTERFACE:%.i=%.mli)
 	$(OCC) -w -U -g -c $(INTERFACE:%.i=%.ml)
 	test -z "$(PROGFILE)" || $(OCC_WITH_PP) -o $(PROGFILE:%.ml=%) $(OCAMLPP) -c $(SRCDIR)$(PROGFILE)
-	$(NOLINK) || $(OCC) -g -ccopt -g -cclib -g -custom -o $(RUNME) swig.cmo $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS) -cclib "$(LIBS)"
+	$(NOLINK) || $(OCC) -g -ccopt -g -cclib -g -custom -o $(RUNME) alaqil.cmo $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS) -cclib "$(LIBS)"
 
 ocaml_dynamic: $(SRCDIR_SRCS)
-	$(SWIG) -ocaml $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -ocaml $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(OCC) -g -c -ccopt -g -ccopt "$(INCLUDES)" $(ISRCS) $(SRCDIR_SRCS)
 	$(CXXSHARED) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(CCSHARED) -o $(INTERFACE:%.i=%@SO@) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS) $(LIBS)
 	$(OCAMLDLGEN) $(INTERFACE:%.i=%.ml) $(INTERFACE:%.i=%@SO@) > $(INTERFACE:%.i=%_dynamic.ml)
@@ -893,36 +893,36 @@ ocaml_dynamic: $(SRCDIR_SRCS)
 	rm $(INTERFACE:%.i=%.mli)
 	$(OCAMLFIND) $(OCC) -g -c -package dl $(INTERFACE:%.i=%.ml)
 	test -z "$(PROGFILE)" || $(OCC_WITH_PP) -o $(PROGFILE:%.ml=%) $(OCAMLPP) -c $(SRCDIR)$(PROGFILE)
-	$(NOLINK) || $(OCAMLFIND) $(OCC) -g -ccopt -g -cclib -g -custom -o $(RUNME) swig.cmo -package dl -linkpkg $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo)
+	$(NOLINK) || $(OCAMLFIND) $(OCC) -g -ccopt -g -cclib -g -custom -o $(RUNME) alaqil.cmo -package dl -linkpkg $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo)
 
 ocaml_static_toplevel: $(SRCDIR_SRCS)
-	$(SWIG) -ocaml $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -ocaml $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(OCC) -g -c -ccopt -g -ccopt "$(INCLUDES)" $(ISRCS) $(SRCDIR_SRCS)
 	$(OCC) -g -c $(INTERFACE:%.i=%.mli)
 	$(OCC) -w -U -g -c $(INTERFACE:%.i=%.ml)
 	test -z "$(PROGFILE)" || $(OCC_WITH_PP) -o $(PROGFILE:%.ml=%) $(OCAMLPP) -c $(SRCDIR)$(PROGFILE)
-	$(NOLINK) || $(OCAMLMKTOP) swig.cmo -I $(OCAMLP4WHERE) dynlink.cma camlp4o.cma swigp4.cmo -cclib "$(LIBS)" -g -ccopt -g -cclib -g -custom -o $(RUNME)_top $(INTERFACE:%.i=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS)
+	$(NOLINK) || $(OCAMLMKTOP) alaqil.cmo -I $(OCAMLP4WHERE) dynlink.cma camlp4o.cma alaqilp4.cmo -cclib "$(LIBS)" -g -ccopt -g -cclib -g -custom -o $(RUNME)_top $(INTERFACE:%.i=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS)
 
 ocaml_static_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -ocaml -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -ocaml -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	cp $(ICXXSRCS) $(ICXXSRCS:%.cxx=%.c)
 	$(OCC) -cc '$(CXX) $(CPPFLAGS)' -g -c -ccopt -g -ccopt "-xc++ $(INCLUDES)" $(ICXXSRCS:%.cxx=%.c) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS)
 	$(OCC) -g -c $(INTERFACE:%.i=%.mli)
 	$(OCC) -w -U -g -c $(INTERFACE:%.i=%.ml)
 	test -z "$(PROGFILE)" || $(OCC_WITH_PP) -o $(PROGFILE:%.ml=%) $(OCAMLPP) -c $(SRCDIR)$(PROGFILE)
-	$(NOLINK) || $(OCC) -g -ccopt -g -cclib -g -custom -o $(RUNME) swig.cmo $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS) -cclib "$(LIBS)" -cc '$(CXX)'
+	$(NOLINK) || $(OCC) -g -ccopt -g -cclib -g -custom -o $(RUNME) alaqil.cmo $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS) -cclib "$(LIBS)" -cc '$(CXX)'
 
 ocaml_static_cpp_toplevel: $(SRCDIR_SRCS)
-	$(SWIG) -ocaml -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -ocaml -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	cp $(ICXXSRCS) $(ICXXSRCS:%.cxx=%.c)
 	$(OCC) -cc '$(CXX) $(CPPFLAGS)' -g -c -ccopt -g -ccopt "-xc++ $(INCLUDES)" $(ICXXSRCS:%.cxx=%.c) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS)
 	$(OCC) -g -c $(INTERFACE:%.i=%.mli)
 	$(OCC) -w -U -g -c $(INTERFACE:%.i=%.ml)
 	test -z "$(PROGFILE)" || $(OCC_WITH_PP) -o $(PROGFILE:%.ml=%) $(OCAMLPP) -c $(SRCDIR)$(PROGFILE)
-	$(NOLINK) || $(OCAMLMKTOP) -cc '$(CXX) $(CPPFLAGS)' swig.cmo -I $(OCAMLP4WHERE) dynlink.cma camlp4o.cma swigp4.cmo -cclib "$(LIBS)" -g -ccopt -g -cclib -g -custom -o $(RUNME)_top $(INTERFACE:%.i=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS)
+	$(NOLINK) || $(OCAMLMKTOP) -cc '$(CXX) $(CPPFLAGS)' alaqil.cmo -I $(OCAMLP4WHERE) dynlink.cma camlp4o.cma alaqilp4.cmo -cclib "$(LIBS)" -g -ccopt -g -cclib -g -custom -o $(RUNME)_top $(INTERFACE:%.i=%.cmo) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS)
 
 ocaml_dynamic_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -ocaml -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -ocaml -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	cp $(ICXXSRCS) $(ICXXSRCS:%.cxx=%.c)
 	$(OCC) -cc '$(CXX) $(CPPFLAGS)' -g -c -ccopt -g -ccopt "-xc++ $(INCLUDES)" $(ICXXSRCS:%.cxx=%.c) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) -ccopt -fPIC
 	$(CXXSHARED) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $(INTERFACE:%.i=%@SO@) $(INTERFACE:%.i=%_wrap.@OBJEXT@) $(OBJS) $(CPP_DLLIBS) $(LIBS)
@@ -931,7 +931,7 @@ ocaml_dynamic_cpp: $(SRCDIR_SRCS)
 	rm $(INTERFACE:%.i=%.mli)
 	$(OCAMLFIND) $(OCC) -g -c -package dl $(INTERFACE:%.i=%.ml)
 	test -z "$(PROGFILE)" || $(OCC_WITH_PP) -o $(PROGFILE:%.ml=%) $(OCAMLPP) -c $(SRCDIR)$(PROGFILE)
-	$(NOLINK) || $(OCAMLFIND) swig.cmo $(OCC) -cclib -export-dynamic -g -ccopt -g -cclib -g -custom -o $(RUNME) -package dl -linkpkg $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo) -cc '$(CXX)'
+	$(NOLINK) || $(OCAMLFIND) alaqil.cmo $(OCC) -cclib -export-dynamic -g -ccopt -g -cclib -g -custom -o $(RUNME) -package dl -linkpkg $(INTERFACE:%.i=%.cmo) $(PROGFILE:%.ml=%.cmo) -cc '$(CXX)'
 
 # -----------------------------------------------------------------
 # Run ocaml example
@@ -952,7 +952,7 @@ ocaml_version:
 # -----------------------------------------------------------------
 
 ocaml_clean:
-	rm -f *_wrap* *~ .~* *.cmo *.cmi *.mli $(TARGET).ml $(RUNME) $(RUNME)_top swig.ml swigp4.ml
+	rm -f *_wrap* *~ .~* *.cmo *.cmi *.mli $(TARGET).ml $(RUNME) $(RUNME)_top alaqil.ml alaqilp4.ml
 	rm -f core @EXTRA_CLEAN@
 	rm -f *.@OBJEXT@ *@SO@
 	rm -rf ./localtmp
@@ -977,7 +977,7 @@ RUBY_SCRIPT = $(SRCDIR)$(RUNME).rb
 # ----------------------------------------------------------------
 
 ruby: $(SRCDIR_SRCS)
-	$(SWIG) -ruby $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -ruby $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(RUBY_CFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) $(RUBY_INCLUDE)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(RUBY_DLNK) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(RUBY_SO)
 
@@ -986,7 +986,7 @@ ruby: $(SRCDIR_SRCS)
 # -----------------------------------------------------------------
 
 ruby_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -ruby $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -ruby $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(RUBY_CFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) $(RUBY_INCLUDE)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(RUBY_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(RUBY_SO)
 
@@ -998,12 +998,12 @@ ruby_cpp: $(SRCDIR_SRCS)
 # -----------------------------------------------------------------
 
 ruby_static: $(SRCDIR_SRCS)
-	$(SWIG) -ruby -lembed.i $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -ruby -lembed.i $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(RUBY_CFLAGS) @LINKFORSHARED@ $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) \
 	$(RUBY_INCLUDE) $(LIBS) -L$(RUBY_LIB) $(RUBY_LIBOPTS) -o $(TARGET)
 
 ruby_cpp_static: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -ruby -lembed.i $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -ruby -lembed.i $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(RUBY_CFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES) \
 	$(RUBY_INCLUDE) $(LIBS)  -L$(RUBY_LIB) $(RUBY_LIBOPTS) -o $(TARGET)
 
@@ -1044,7 +1044,7 @@ PHP_SCRIPT  = $(SRCDIR)$(RUNME).php
 # -------------------------------------------------------------------
 
 php: $(SRCDIR_SRCS)
-	$(SWIG) -php7 $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -php7 $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES) $(PHP_INCLUDE)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(PHP_SO)
 
@@ -1053,7 +1053,7 @@ php: $(SRCDIR_SRCS)
 # --------------------------------------------------------------------
 
 php_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -php7 -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -php7 -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES) $(PHP_INCLUDE)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(PHP_SO)
 
@@ -1101,7 +1101,7 @@ CSHARP_RUNME = $(CSHARPCILINTERPRETER) $(CSHARPCILINTERPRETER_FLAGS) ./$(RUNME).
 # ----------------------------------------------------------------
 
 csharp: $(SRCDIR_SRCS)
-	$(SWIG) -csharp $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -csharp $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(CSHARPCFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(CSHARP_DLNK) $(LIBS) -o $(CSHARP_LIBPREFIX)$(TARGET)$(CSHARPSO)
 
@@ -1110,7 +1110,7 @@ csharp: $(SRCDIR_SRCS)
 # ----------------------------------------------------------------
 
 csharp_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -csharp -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -csharp -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(CSHARPCFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(CSHARP_DLNK) $(LIBS) $(CPP_DLLIBS) -o $(CSHARP_LIBPREFIX)$(TARGET)$(CSHARPSO)
 
@@ -1175,7 +1175,7 @@ LUA_INTERP = ../lua.c
 # ----------------------------------------------------------------
 
 lua: $(SRCDIR_SRCS)
-	$(SWIG) -lua $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -lua $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(ISRCS) $(SRCDIR_SRCS) $(INCLUDES) $(LUA_INCLUDE)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) $(LUA_LIB) -o $(LIBPREFIX)$(TARGET)$(LUA_SO)
 
@@ -1184,27 +1184,27 @@ lua: $(SRCDIR_SRCS)
 # -----------------------------------------------------------------
 
 lua_cpp: $(SRCDIR_SRCS) $(GENCXXSRCS)
-	$(SWIG) -c++ -lua $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -lua $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(GENCXXSRCS) $(INCLUDES) $(LUA_INCLUDE)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) $(LUA_LIB) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(LUA_SO)
 
 lua_externalhdr:
-	$(SWIG) -lua -external-runtime $(TARGET)
+	$(alaqil) -lua -external-runtime $(TARGET)
 
-lua_swig_cpp:
-	$(SWIG) -c++ -lua $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+lua_alaqil_cpp:
+	$(alaqil) -c++ -lua $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 
 # -----------------------------------------------------------------
 # Build statically linked Lua interpreter
 # -----------------------------------------------------------------
 
 lua_static: $(SRCDIR_SRCS)
-	$(SWIG) -lua -module example $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -lua -module example $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)  $(ISRCS) $(SRCDIR_SRCS) $(SRCDIR)$(LUA_INTERP) $(INCLUDES) \
 	$(LUA_INCLUDE) $(LIBS) $(LUA_LIB) -o $(TARGET)
 
 lua_static_cpp: $(SRCDIR_SRCS) $(GENCXXSRCS)
-	$(SWIG) -c++ -lua -module example $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -lua -module example $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(GENCXXSRCS) $(SRCDIR)$(LUA_INTERP) $(INCLUDES) \
 	$(LUA_INCLUDE) $(LIBS)  $(LUA_LIB) -o $(TARGET)
 
@@ -1242,12 +1242,12 @@ ALLEGROCL    = @ALLEGROCLBIN@
 ALLEGROCL_SCRIPT=$(RUNME).lisp
 
 allegrocl: $(SRCDIR_SRCS)
-	$(SWIG) -allegrocl -cwrap $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -allegrocl -cwrap $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(ISRCS) $(INCLUDES) $(SRCDIR_SRCS)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
 allegrocl_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -allegrocl $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -allegrocl $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
@@ -1282,12 +1282,12 @@ CFFI = @CFFIBIN@
 CFFI_SCRIPT=$(RUNME).lisp
 
 cffi: $(SRCDIR_SRCS)
-	$(SWIG) -cffi $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -cffi $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 #	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(ISRCS) $(INCLUDES) $(SRCDIR_SRCS)
 #	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
 cffi_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -c++ -cffi $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -cffi $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(INCLUDES)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) $(CPP_DLLIBS) -o $(LIBPREFIX)$(TARGET)$(SO)
 
@@ -1334,7 +1334,7 @@ R_SCRIPT=$(SRCDIR)$(RUNME).R
 # ----------------------------------------------------------------
 
 r: $(SRCDIR_SRCS)
-	$(SWIG) -r $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -r $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 ifneq ($(SRCDIR_SRCS),)
 	$(CC) -g -c $(CPPFLAGS) $(CFLAGS) $(R_CFLAGS) $(SRCDIR_SRCS) $(INCLUDES)
 endif
@@ -1344,7 +1344,7 @@ endif
 # Build a R dynamically loadable module (C++)
 # ----------------------------------------------------------------
 r_cpp: $(SRCDIR_CXXSRCS)
-	$(SWIG) -c++ -r $(SWIGOPT) -o $(RCXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -r $(alaqilOPT) -o $(RCXXSRCS) $(INTERFACEPATH)
 ifneq ($(SRCDIR_CXXSRCS),)
 	$(CXX) -g -c $(CPPFLAGS) $(CXXFLAGS) $(R_CFLAGS) $(SRCDIR_CXXSRCS) $(INCLUDES)
 endif
@@ -1388,7 +1388,7 @@ SCILAB_LIBPREFIX = lib
 # ----------------------------------------------------------------
 
 scilab:
-	$(SWIG) -scilab $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -scilab $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -g -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(SCILAB_INC) $(INCLUDES) $(ISRCS) $(SRCDIR_SRCS) $(SRCDIR_CSRCS)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(IOBJS) $(OBJS) $(LIBS) -o $(SCILAB_LIBPREFIX)$(TARGET)$(SO)
 
@@ -1397,7 +1397,7 @@ scilab:
 # ----------------------------------------------------------------
 
 scilab_cpp:
-	$(SWIG) -c++ -scilab $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -c++ -scilab $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -g -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(SCILAB_INC) $(INCLUDES) $(ICXXSRCS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(IOBJS) $(OBJS) $(LIBS) $(CPP_DLLIBS) -o $(SCILAB_LIBPREFIX)$(TARGET)$(SO)
 
@@ -1445,7 +1445,7 @@ GOOPT = @GOOPT@
 GCCGOOPT = @GCCGOOPT@
 GOVERSIONOPTION = @GOVERSIONOPTION@
 
-GOSWIGARG = `if $(GOGCC) ; then echo -gccgo; fi`
+GOalaqilARG = `if $(GOGCC) ; then echo -gccgo; fi`
 GOCOMPILEARG = `if $(GO15); then echo tool compile; elif $(GO1) ; then echo tool $(GOC:c=g) ; fi` `if $(GO13) || $(GO15); then echo -pack ; fi`
 
 GOSRCS = $(INTERFACE:.i=.go)
@@ -1468,7 +1468,7 @@ GOGCCOBJS = $(GOSRCS:.go=.@OBJEXT@)
 # ----------------------------------------------------------------
 
 go_nocgo: $(SRCDIR_SRCS)
-	$(SWIG) -go $(GOOPT) $(GOSWIGARG) $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -go $(GOOPT) $(GOalaqilARG) $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	if $(GO12) || $(GO13) || $(GO15) || $(GOGCC); then \
 	  $(CC) -g -c $(CPPFLAGS) $(CFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES); \
 	else \
@@ -1504,7 +1504,7 @@ go_nocgo: $(SRCDIR_SRCS)
 	fi
 
 go: $(SRCDIR_SRCS)
-	$(SWIG) -go -cgo $(GOOPT) $(GOSWIGARG) $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqil) -go -cgo $(GOOPT) $(GOalaqilARG) $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	@mkdir gopath 2>/dev/null || true
 	@mkdir gopath/src 2>/dev/null || true
 	@mkdir gopath/src/$(INTERFACE:.i=) 2>/dev/null || true
@@ -1548,7 +1548,7 @@ go: $(SRCDIR_SRCS)
 # ----------------------------------------------------------------
 
 go_cpp_nocgo: $(SRCDIR_SRCS)
-	$(SWIG) -go -c++ $(GOOPT) $(GOSWIGARG) $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -go -c++ $(GOOPT) $(GOalaqilARG) $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	if $(GO12) || $(GO13) || $(GO15) || $(GOGCC); then \
 	  if test -n "$(SRCDIR_CXXSRCS)$(SRCDIR_SRCS)"; then \
 	    $(CXX) -g -c $(CPPFLAGS) $(CXXFLAGS) $(SRCDIR_CXXSRCS) $(SRCDIR_SRCS) $(INCLUDES); \
@@ -1596,7 +1596,7 @@ go_cpp_nocgo: $(SRCDIR_SRCS)
 	fi
 
 go_cpp: $(SRCDIR_SRCS)
-	$(SWIG) -go -c++ -cgo $(GOOPT) $(GOSWIGARG) $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqil) -go -c++ -cgo $(GOOPT) $(GOalaqilARG) $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	@mkdir gopath 2>/dev/null || true
 	@mkdir gopath/src 2>/dev/null || true
 	@mkdir gopath/src/$(INTERFACE:.i=) 2>/dev/null || true
@@ -1675,10 +1675,10 @@ ifeq (,$(D_VERSION))
 endif
 
 ifeq (2,$(D_VERSION))
-  SWIGD = $(SWIG) -d -d2
+  alaqilD = $(alaqil) -d -d2
   DCOMPILER = @D2COMPILER@
 else
-  SWIGD = $(SWIG) -d
+  alaqilD = $(alaqil) -d
   DCOMPILER = @D1COMPILER@
 endif
 
@@ -1689,7 +1689,7 @@ D_RUNME = ./$(RUNME)
 # ----------------------------------------------------------------
 
 d: $(SRCDIR_SRCS)
-	$(SWIGD) $(SWIGOPT) -o $(ISRCS) $(INTERFACEPATH)
+	$(alaqilD) $(alaqilOPT) -o $(ISRCS) $(INTERFACEPATH)
 	$(CC) -c $(CCSHARED) $(CPPFLAGS) $(CFLAGS) $(DCFLAGS) $(EXTRA_CFLAGS) $(SRCDIR_SRCS) $(ISRCS) $(INCLUDES)
 	$(LDSHARED) $(CFLAGS) $(LDFLAGS) $(DCFLAGS) $(EXTRA_LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) -o $(DLIBPREFIX)$(TARGET)$(SO)
 
@@ -1698,7 +1698,7 @@ d: $(SRCDIR_SRCS)
 # ----------------------------------------------------------------
 
 d_cpp: $(SRCDIR_SRCS)
-	$(SWIGD) -c++ $(SWIGOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
+	$(alaqilD) -c++ $(alaqilOPT) -o $(ICXXSRCS) $(INTERFACEPATH)
 	$(CXX) -c $(CCSHARED) $(CPPFLAGS) $(CXXFLAGS) $(DCFLAGS) $(EXTRA_CFLAGS) $(SRCDIR_SRCS) $(SRCDIR_CXXSRCS) $(ICXXSRCS) $(INCLUDES)
 	$(CXXSHARED) $(CXXFLAGS) $(LDFLAGS) $(DCFLAGS) $(EXTRA_LDFLAGS) $(OBJS) $(IOBJS) $(LIBS) $(CPP_DLLIBS) -o $(DLIBPREFIX)$(TARGET)$(SO)
 

@@ -1,8 +1,8 @@
 %module(directors="1") director_nspace
 
-#ifdef SWIGJAVA
-SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
-SWIG_JAVABODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
+#ifdef alaqilJAVA
+alaqil_JAVABODY_PROXY(public, public, alaqilTYPE)
+alaqil_JAVABODY_TYPEWRAPPER(public, public, public, alaqilTYPE)
 #endif
 
 %{
@@ -40,7 +40,7 @@ namespace TopLevel
 %include <std_string.i>
 
 // nspace feature only supported by these languages
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGD) || defined(SWIGLUA) || defined(SWIGJAVASCRIPT)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilD) || defined(alaqilLUA) || defined(alaqilJAVASCRIPT)
 %nspace TopLevel::Bar::Foo;
 %nspace TopLevel::Bar::FooBar;
 #else

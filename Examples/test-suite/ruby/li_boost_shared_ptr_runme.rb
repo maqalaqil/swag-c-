@@ -1,5 +1,5 @@
 require 'li_boost_shared_ptr'
-require 'swig_gc'
+require 'alaqil_gc'
 
 #debug = $VERBOSE
 debug = false

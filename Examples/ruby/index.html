@@ -1,16 +1,16 @@
 <html>
 <head>
-<title>SWIG:Examples:ruby</title>
+<title>alaqil:Examples:ruby</title>
 </head>
 
 <body bgcolor="#ffffff">
-<H1>SWIG Ruby Examples</H1>
+<H1>alaqil Ruby Examples</H1>
 
 <p>
-The following examples illustrate the use of SWIG with Ruby.
+The following examples illustrate the use of alaqil with Ruby.
 
 <ul>
-<li><a href="simple/index.html">simple</a>.  A minimal example showing how SWIG can
+<li><a href="simple/index.html">simple</a>.  A minimal example showing how alaqil can
 be used to wrap a C function, a global variable, and a constant.
 <li><a href="constants/index.html">constants</a>.  This shows how preprocessor macros and
 certain C declarations are turned into constants.
@@ -26,11 +26,11 @@ certain C declarations are turned into constants.
 <h2>Compilation Issues</h2>
 
 <ul>
-<li>To create a Ruby extension, SWIG is run with the following options:
+<li>To create a Ruby extension, alaqil is run with the following options:
 
 <blockquote>
 <pre>
-% swig -ruby interface.i
+% alaqil -ruby interface.i
 </pre>
 </blockquote>
 
@@ -44,7 +44,7 @@ the steps look like this (Linux):
 
 <blockquote>
 <pre>
-% swig -ruby interface.i
+% alaqil -ruby interface.i
 % gcc -fpic -c interface_wrap.c -I/usr/local/lib/ruby/1.4/i686-linux
 % gcc -shared interface_wrap.o $(OBJS) -o interface.so 
 % ruby
@@ -87,7 +87,7 @@ The examples have been extensively tested on the following platforms:
 </ul>
 
 Your mileage may vary.  If you experience a problem, please let us know by 
-contacting us on the <a href="http://www.swig.org/mail.html">mailing lists</a>.
+contacting us on the <a href="http://www.alaqil.org/mail.html">mailing lists</a>.
 </body>
 </html>
 

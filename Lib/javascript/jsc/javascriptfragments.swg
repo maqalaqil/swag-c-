@@ -2,13 +2,13 @@
 
   Create a file with this name, 'javascriptfragments.swg', in your working
   directory and add all the %fragments you want to take precedence
-  over the default ones defined by swig.
+  over the default ones defined by alaqil.
 
   For example, if you add:
   
-  %fragment(SWIG_AsVal_frag(int),"header") {
-   SWIGINTERNINLINE int
-   SWIG_AsVal(int)(PyObject *obj, int *val)
+  %fragment(alaqil_AsVal_frag(int),"header") {
+   alaqilINTERNINLINE int
+   alaqil_AsVal(int)(PyObject *obj, int *val)
    { 
      <your code here>;
    }

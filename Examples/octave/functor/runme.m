@@ -4,10 +4,10 @@ if exist("crash_dumps_octave_core", "builtin")
 endif
 
 # Operator overloading example
-swigexample
+alaqilexample
 
-a = swigexample.intSum(0);
-b = swigexample.doubleSum(100.0);
+a = alaqilexample.intSum(0);
+b = alaqilexample.doubleSum(100.0);
 
 # Use the objects.  They should be callable just like a normal
 # python function.

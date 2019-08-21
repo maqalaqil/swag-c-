@@ -1,10 +1,10 @@
-/* This interface files tests whether SWIG handles overloaded
+/* This interface files tests whether alaqil handles overloaded
    renamed functions. 
 */
 
 %module name_cxx
 
-#pragma SWIG nowarn=SWIGWARN_DEPRECATED_NAME // %name is deprecated. Use %rename instead.
+#pragma alaqil nowarn=alaqilWARN_DEPRECATED_NAME // %name is deprecated. Use %rename instead.
 
 %name("bar_int")
 %inline %{

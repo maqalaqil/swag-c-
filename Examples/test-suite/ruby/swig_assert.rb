@@ -4,24 +4,24 @@
 #
 
 #
-# Exception raised when some swig binding test fails
+# Exception raised when some alaqil binding test fails
 #
-class SwigRubyError < RuntimeError
+class alaqilRubyError < RuntimeError
 end
 
 
 #
 # Simple assertions. Strings are not needed as arguments.
 #
-def swig_assert_equal_simple(a, b)
+def alaqil_assert_equal_simple(a, b)
   unless a == b
-    raise SwigRubyError.new("\n#{a} expected but was \n#{b}")
+    raise alaqilRubyError.new("\n#{a} expected but was \n#{b}")
   end
 end
 
-def swig_assert_simple(a)
+def alaqil_assert_simple(a)
   unless a
-    raise SwigRubyError.new("assertion failed.")
+    raise alaqilRubyError.new("assertion failed.")
   end
 end
 
@@ -31,7 +31,7 @@ end
 # scope - optional Binding where to run the code
 # msg   - optional additional message to print
 #
-def swig_assert_equal( a, b, scope = nil, msg = nil )
+def alaqil_assert_equal( a, b, scope = nil, msg = nil )
   a = 'nil' if a == nil
   b = 'nil' if b == nil
   begin
@@ -52,7 +52,7 @@ def swig_assert_equal( a, b, scope = nil, msg = nil )
   unless ok
     valA = eval(a, scope)
     valB = eval(b, scope)
-    raise SwigRubyError.new("FAILED EQUALITY: #{check} was #{valA} not #{valB}")
+    raise alaqilRubyError.new("FAILED EQUALITY: #{check} was #{valA} not #{valB}")
   end
 
   if $VERBOSE
@@ -76,7 +76,7 @@ end
 # scope - optional Binding where to run the code
 # msg   - optional additional message to print
 #
-def swig_assert( expr, scope = nil, msg = nil )
+def alaqil_assert( expr, scope = nil, msg = nil )
   begin
     if scope.kind_of? Binding
       ok = eval(expr.to_s, scope)
@@ -88,7 +88,7 @@ def swig_assert( expr, scope = nil, msg = nil )
     raise
   end
 
-  raise SwigRubyError.new("FAILED: #{expr.to_s} - #{msg}") unless ok
+  raise alaqilRubyError.new("FAILED: #{expr.to_s} - #{msg}") unless ok
 
   if $VERBOSE
     $stdout.puts "\tPASSED #{expr} #{msg}"
@@ -108,7 +108,7 @@ end
 # scope - optional Binding where to run the code
 # msg   - optional additional message to print
 #
-def swig_eval( expr, scope = nil, msg = nil )
+def alaqil_eval( expr, scope = nil, msg = nil )
   begin
     if scope.kind_of? Binding
       eval(expr.to_s, scope)
@@ -117,7 +117,7 @@ def swig_eval( expr, scope = nil, msg = nil )
       msg = scope if !msg
     end
   rescue => e
-    raise SwigRubyError.new("Wrong assert: #{expr.to_s} - #{e}")
+    raise alaqilRubyError.new("Wrong assert: #{expr.to_s} - #{e}")
   end
   if $VERBOSE
     $stdout.puts "\tPASSED #{expr} #{msg}"
@@ -135,19 +135,19 @@ end
 #
 # Given a set of lines as text, runs each of them, asserting them.
 # Lines that are of the form:
-#     a == b  are run with swig_assert_equal
-#             others are run with swig_eval.
+#     a == b  are run with alaqil_assert_equal
+#             others are run with alaqil_eval.
 #
 # scope - optional Binding where to run the code
 # msg   - optional additional message to print
 #
-def swig_assert_each_line( lines, scope = nil, msg = nil )
+def alaqil_assert_each_line( lines, scope = nil, msg = nil )
   lines.split("\n").each do |line|
     next if line.empty? or line =~ /^\s*#.*/
       if line =~ /^\s*([^\s]*)\s*==\s*(.*)\s*$/
-        swig_assert_equal($1, $2, scope, msg)
+        alaqil_assert_equal($1, $2, scope, msg)
       else
-        swig_eval(line, scope, msg)
+        alaqil_eval(line, scope, msg)
       end
   end
 end

@@ -1,25 +1,25 @@
 <html>
 <head>
-<title>SWIG:Examples:go:constants</title>
+<title>alaqil:Examples:go:constants</title>
 </head>
 
 <body bgcolor="#ffffff">
 
-<tt>SWIG/Examples/go/constants/</tt>
+<tt>alaqil/Examples/go/constants/</tt>
 <hr>
 
 <H2>Wrapping C Constants</H2>
 
 <p>
-When SWIG encounters C preprocessor macros and C declarations that
+When alaqil encounters C preprocessor macros and C declarations that
 look like constants, it creates a Go constant with an identical value.
-Click <a href="example.i">here</a> to see a SWIG interface with some
+Click <a href="example.i">here</a> to see a alaqil interface with some
 constant declarations in it.
 
 
 <h2>Accessing Constants from Go</h2>
 Click <a href="../../../Doc/Manual/Go.html#go_constants">here</a> for
-the section on constants in the SWIG and Go documentation.
+the section on constants in the alaqil and Go documentation.
 <p>
 
 Click <a href="runme.go">here</a> to see a Go program that prints out
@@ -35,7 +35,7 @@ the values of the constants contained in the above file.</p>
 #define EXTERN extern
 </pre>
 </blockquote>
-is ignored because SWIG has no idea what type of variable this would be.
+is ignored because alaqil has no idea what type of variable this would be.
 
 <p>
 <li>Expressions are allowed provided that all of their components are
@@ -43,7 +43,7 @@ defined. Otherwise, the constant is ignored.
 
 <li>Certain C declarations involving 'const' are also turned into Go
 constants.
-<li>The constants that appear in a SWIG interface file do not have to
+<li>The constants that appear in a alaqil interface file do not have to
 appear in any sort of matching C source file since the creation of a
 constant does not require linkage to a stored value (i.e., a value
 held in a C global variable or memory location).

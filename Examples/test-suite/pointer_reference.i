@@ -1,14 +1,14 @@
-/* This interface file tests whether SWIG handles pointer-reference
+/* This interface file tests whether alaqil handles pointer-reference
    (*&) arguments.
 
-   SWIG 1.3a5 signals a syntax error.
+   alaqil 1.3a5 signals a syntax error.
 */
 
 %module pointer_reference
 
-%warnfilter(SWIGWARN_TYPEMAP_SWIGTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
+%warnfilter(alaqilWARN_TYPEMAP_alaqilTYPELEAK);                   /* memory leak when setting a ptr/ref variable */
 
-#ifdef SWIGGUILE
+#ifdef alaqilGUILE
 /* A silly testing typemap for feeding a doubly indirect integer */
 %typemap(in) int *&XYZZY (int temp1, int *temp2) {
    temp1 = scm_to_int($input); temp2 = &temp1; $1 = &temp2;
@@ -20,7 +20,7 @@ void foo(int *&XYZZY) {}
 %}
 
 
-// Test pointer reference typemaps shipped with SWIG (add in SWIG 1.3.28 for many languages)
+// Test pointer reference typemaps shipped with alaqil (add in alaqil 1.3.28 for many languages)
 %inline %{
 struct Struct {
   int value;

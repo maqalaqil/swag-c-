@@ -2,12 +2,12 @@ using System;
 using member_pointerNamespace;
 
 public class runme {
-  public static SWIGTYPE_m_Shape__f_void__double memberPtr = null;
+  public static alaqilTYPE_m_Shape__f_void__double memberPtr = null;
   static void Main() {
     // Get the pointers
 
-    SWIGTYPE_m_Shape__f_void__double area_pt = member_pointer.areapt();
-    SWIGTYPE_m_Shape__f_void__double perim_pt = member_pointer.perimeterpt();
+    alaqilTYPE_m_Shape__f_void__double area_pt = member_pointer.areapt();
+    alaqilTYPE_m_Shape__f_void__double perim_pt = member_pointer.perimeterpt();
 
     // Create some objects
 

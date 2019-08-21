@@ -9,7 +9,7 @@
 
 /* Caller::setCallback(Callback *cb) gives ownership of the cb to the
  * Caller object.  The wrapper code should understand this. */
-%apply SWIGTYPE *DISOWN { Callback *cb }; 
+%apply alaqilTYPE *DISOWN { Callback *cb }; 
 
 %include "example.h"
 

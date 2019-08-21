@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly parses the double ampersand &&
+/* This testcase checks whether alaqil correctly parses the double ampersand &&
    move operator which is currently mapped to the reference & operator. */
 %module cpp11_rvalue_reference
 

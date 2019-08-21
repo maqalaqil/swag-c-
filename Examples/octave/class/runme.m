@@ -4,19 +4,19 @@ if exist("crash_dumps_octave_core", "builtin")
 endif
 
 # This file illustrates the proxy class C++ interface generated
-# by SWIG.
+# by alaqil.
 
-swigexample
+alaqilexample
 
 # ----- Object creation -----
 
 printf("Creating some objects:\n");
-c = swigexample.Circle(10)
-s = swigexample.Square(10)
+c = alaqilexample.Circle(10)
+s = alaqilexample.Square(10)
 
 # ----- Access a static member -----
 
-printf("\nA total of %i shapes were created\n", swigexample.Shape.nshapes);
+printf("\nA total of %i shapes were created\n", alaqilexample.Shape.nshapes);
 
 # ----- Member data access -----
 
@@ -49,5 +49,5 @@ printf("\nGuess I'll clean up now\n");
 clear c
 clear s
 
-printf("%i shapes remain\n", swigexample.Shape.nshapes);
+printf("%i shapes remain\n", alaqilexample.Shape.nshapes);
 printf("Goodbye\n");

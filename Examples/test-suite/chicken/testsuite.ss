@@ -1,6 +1,6 @@
 (define (lookup-ext-tag tag)
   (cond
-    ((equal? tag '(quote swig-contract-assertion-failed))
+    ((equal? tag '(quote alaqil-contract-assertion-failed))
       '( ((exn type) #f)) )
     (#t '())))
 

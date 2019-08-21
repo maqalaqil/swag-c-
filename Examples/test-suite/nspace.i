@@ -2,10 +2,10 @@
 %module nspace
 
 // nspace feature only supported by these languages
-#if defined(SWIGJAVA) || defined(SWIGCSHARP) || defined(SWIGD) || defined(SWIGLUA) || defined(SWIGJAVASCRIPT)
+#if defined(alaqilJAVA) || defined(alaqilCSHARP) || defined(alaqilD) || defined(alaqilLUA) || defined(alaqilJAVASCRIPT)
 
-#if defined(SWIGJAVA)
-SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
+#if defined(alaqilJAVA)
+alaqil_JAVABODY_PROXY(public, public, alaqilTYPE)
 #endif
 
 %nspace;

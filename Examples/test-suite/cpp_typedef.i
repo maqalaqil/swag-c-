@@ -1,4 +1,4 @@
-// This file tests SWIG's tracking of C++ typedef declarations
+// This file tests alaqil's tracking of C++ typedef declarations
 
 %module cpp_typedef
 

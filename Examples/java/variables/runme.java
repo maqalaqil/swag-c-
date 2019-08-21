@@ -7,7 +7,7 @@ public class runme {
     try {
         System.loadLibrary("example");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -49,10 +49,10 @@ public class runme {
     System.out.println( "cvar      =" + (char)example.getCvar() );
     System.out.println( "strvar    =" + example.getStrvar() );
     System.out.println( "cstrvar   =" + example.getCstrvar() );
-    System.out.println( "iptrvar   =" + Long.toHexString(SWIGTYPE_p_int.getCPtr(example.getIptrvar())) );
+    System.out.println( "iptrvar   =" + Long.toHexString(alaqilTYPE_p_int.getCPtr(example.getIptrvar())) );
     System.out.println( "name      =" + example.getName() );
-    System.out.println( "ptptr     =" + Long.toHexString(SWIGTYPE_p_Point.getCPtr(example.getPtptr())) + example.Point_print(example.getPtptr()) );
-    System.out.println( "pt        =" + Long.toHexString(SWIGTYPE_p_Point.getCPtr(example.getPt())) + example.Point_print(example.getPt()) );
+    System.out.println( "ptptr     =" + Long.toHexString(alaqilTYPE_p_Point.getCPtr(example.getPtptr())) + example.Point_print(example.getPtptr()) );
+    System.out.println( "pt        =" + Long.toHexString(alaqilTYPE_p_Point.getCPtr(example.getPt())) + example.Point_print(example.getPt()) );
 
     System.out.println( "\nVariables (values printed from C)" );
 

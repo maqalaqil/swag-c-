@@ -1,5 +1,5 @@
 
-// This is the ret_by_value runtime testcase. It checks that SWIG handles
+// This is the ret_by_value runtime testcase. It checks that alaqil handles
 // return by value okay.
 
 import ret_by_value.*;
@@ -10,7 +10,7 @@ public class ret_by_value_runme {
     try {
 	System.loadLibrary("ret_by_value");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }

@@ -26,7 +26,7 @@ static char *point_toString(char *format, Point *p) {
   return buf;
 }
 
-/* this function will be wrapped by SWIG */
+/* this function will be wrapped by alaqil */
 char *point_toString1(Point *p) {
   return point_toString("(%d,%d)", p);
 }

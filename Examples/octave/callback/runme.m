@@ -5,13 +5,13 @@ endif
 
 # This file illustrates the cross language polymorphism using directors.
 
-swigexample
+alaqilexample
 
-OctCallback=@() subclass(swigexample.Callback(),"run",@(self) printf("OctCallback.run()\n"));
+OctCallback=@() subclass(alaqilexample.Callback(),"run",@(self) printf("OctCallback.run()\n"));
 
 # Create an Caller instance
 
-caller = swigexample.Caller();
+caller = alaqilexample.Caller();
 
 # Add a simple C++ callback (caller owns the callback, so
 # we disown it first)
@@ -19,7 +19,7 @@ caller = swigexample.Caller();
 printf("Adding and calling a normal C++ callback\n");
 printf("----------------------------------------\n");
 
-callback = swigexample.Callback().__disown();
+callback = alaqilexample.Callback().__disown();
 caller.setCallback(callback);
 caller.call();
 caller.delCallback();
@@ -44,8 +44,8 @@ caller.setCallback(callback);
 caller.call();
 caller.delCallback();
 
-# careful-- using callback here may cause problems; octave_swig_type still
-# exists, but is holding a destroyed object (the C++ swigexample.Callback).
+# careful-- using callback here may cause problems; octave_alaqil_type still
+# exists, but is holding a destroyed object (the C++ alaqilexample.Callback).
 # to manually drop the octave-side reference, you can use
 clear callback;
 

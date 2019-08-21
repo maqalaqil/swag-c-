@@ -1,6 +1,6 @@
 %module template_nested_typemaps
 
-#pragma SWIG nowarn=SWIGWARN_PARSE_NAMED_NESTED_CLASS
+#pragma alaqil nowarn=alaqilWARN_PARSE_NAMED_NESTED_CLASS
 
 // Testing that the typemaps invoked within a class via %template are picked up by appropriate methods
 // Only for languages that support nested classes
@@ -11,14 +11,14 @@ short globalShort1(short s) { return s; }
 
 template <typename T> struct Breeze {
   template <typename TMT> struct Typemap {
-#ifdef SWIG
+#ifdef alaqil
     %typemap(in) TMT {
       $1 = -99;
     }
 #endif
   };
   template <typename TMT> struct TypemapShort {
-#ifdef SWIG
+#ifdef alaqil
     %typemap(in) short {
       $1 = -77;
     }
@@ -26,14 +26,14 @@ template <typename T> struct Breeze {
   };
 
   int methodInt1(int s) { return s; }
-#if defined(SWIG)
+#if defined(alaqil)
   %template() Typemap<int>;
 #endif
   int methodInt2(int s) { return s; } // should pick up the typemap within Typemap<int>
   void takeIt(T t) {}
 
   short methodShort1(short s) { return s; }
-#if defined(SWIG)
+#if defined(alaqil)
   %template() TypemapShort<short>;
 #endif
   short methodShort2(short s) { return s; } // should pick up the typemap within Typemap<short>

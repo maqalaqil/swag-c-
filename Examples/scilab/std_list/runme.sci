@@ -8,7 +8,7 @@ end
 example_Init();
 
 // This example shows how to use C++ functions with STL lists arguments
-// Here, STL lists are converted from/to Scilab matrices (SWIG_SCILAB_EXTRA_NATIVE_CONTAINERS is not defined)
+// Here, STL lists are converted from/to Scilab matrices (alaqil_SCILAB_EXTRA_NATIVE_CONTAINERS is not defined)
 
 // integer lists
 

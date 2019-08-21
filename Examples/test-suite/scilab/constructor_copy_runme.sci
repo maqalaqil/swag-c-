@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 
 f1 = new_Foo1(3);
@@ -12,7 +12,7 @@ delete_Foo1(f11);
 f8 = new_Foo8();
 try
   f81 = new_Foo8(f8);
-  swigtesterror("Foo(f8) called.");
+  alaqiltesterror("Foo(f8) called.");
 catch
 end
 
@@ -27,10 +27,10 @@ delete_Bari(bc);
 bd = new_Bard(5);
 try
   bc = Bard(bd);
-  swigtesterror("Bard(bd) called.");
+  alaqiltesterror("Bard(bd) called.");
 catch
 end
 
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);
 

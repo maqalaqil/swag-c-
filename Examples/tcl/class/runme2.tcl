@@ -1,7 +1,7 @@
 # file: runme2.tcl
 
 # This file illustrates the low-level C++ interface
-# created by SWIG.  In this case, all of our C++ classes
+# created by alaqil.  In this case, all of our C++ classes
 # get converted into function calls.
 
 catch { load ./example[info sharedlibextension] example}
@@ -51,10 +51,10 @@ puts "\nI'm going to try and break the type system"
 if { [catch {
     # Bad script!
     Square_area $c         # Try to invoke Square method on a Circle
-    puts "    Bad bad SWIG!"
+    puts "    Bad bad alaqil!"
 
 }]} {
-    puts "    Well, it didn't work. Good SWIG."
+    puts "    Well, it didn't work. Good alaqil."
 }
 
 # ----- Delete everything -----

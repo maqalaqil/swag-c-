@@ -3,7 +3,7 @@
 %include <std_string.i>
 
 %begin %{
-#define SWIG_PYTHON_2_UNICODE
+#define alaqil_PYTHON_2_UNICODE
 %}
 
 %inline %{

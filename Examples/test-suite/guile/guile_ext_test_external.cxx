@@ -6,11 +6,11 @@ SCM test_create()
 #define FUNC_NAME "test-create"
   SCM result;
   A *newobj;
-  swig_type_info *type;
+  alaqil_type_info *type;
   
   newobj = new A();
-  type = SWIG_TypeQuery("A *");
-  result = SWIG_NewPointerObj(newobj, type, 1);
+  type = alaqil_TypeQuery("A *");
+  result = alaqil_NewPointerObj(newobj, type, 1);
   
   return result;
 #undef FUNC_NAME
@@ -19,6 +19,6 @@ SCM test_create()
 SCM test_is_pointer(SCM val)
 {
 #define FUNC_NAME "test-is-pointer"
-  return SCM_BOOL(SWIG_IsPointer(val));
+  return SCM_BOOL(alaqil_IsPointer(val));
 #undef FUNC_NAME
 }

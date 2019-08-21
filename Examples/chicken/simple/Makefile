@@ -1,12 +1,12 @@
 TOP        = ../..
-SWIGEXE    = $(TOP)/../swig
-SWIG_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
+alaqilEXE    = $(TOP)/../alaqil
+alaqil_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
 INTERFACE  = example.i
 SRCS       = example.c
 CXXSRCS    =
 TARGET     = simple
 INCLUDE    =
-SWIGOPT    =
+alaqilOPT    =
 VARIANT    =
 
 # uncomment the following two lines to build a static exe
@@ -21,8 +21,8 @@ build: $(TARGET)
 $(TARGET): $(INTERFACE) $(SRCS)
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' \
 	SRCS='$(SRCS)' CXXSRCS='$(CXXSRCS)' CHICKEN_MAIN='$(CHICKEN_MAIN)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	INCLUDE='$(INCLUDE)' SWIGOPT='$(SWIGOPT)' TARGET='$(TARGET)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	INCLUDE='$(INCLUDE)' alaqilOPT='$(alaqilOPT)' TARGET='$(TARGET)' \
 	INTERFACE='$(INTERFACE)' CHICKENOPTS='$(CHICKENOPTS)' chicken$(VARIANT)
 
 clean:

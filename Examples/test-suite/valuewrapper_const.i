@@ -1,7 +1,7 @@
 %module valuewrapper_const
 
 %inline %{
-// B requires swig to use the SwigValueWrapper 
+// B requires alaqil to use the alaqilValueWrapper 
 class B 
 { 
 private: 
@@ -16,7 +16,7 @@ class A
   B b;
 public: 
   A(const B& b) : b(b) { }
-  // this one works    SwigValueWrapper< B > result; 
+  // this one works    alaqilValueWrapper< B > result; 
   B GetB() {
         return b;
   } 

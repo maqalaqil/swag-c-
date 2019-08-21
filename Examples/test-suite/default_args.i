@@ -2,8 +2,8 @@
 
 %module default_args
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %{
@@ -12,7 +12,7 @@
 #endif
 %}
 
-// throw is invalid in C++17 and later, only SWIG to use it
+// throw is invalid in C++17 and later, only alaqil to use it
 #define TESTCASE_THROW1(T1) throw(T1)
 #define TESTCASE_THROW2(T1, T2) throw(T1, T2)
 %{
@@ -160,9 +160,9 @@
 
       void meth(int x, int y = 0, int z = 0){}
     
-      // Use a renamed member as a default argument.  SWIG has to resolve
-      // bar to Foo::bar and not Foo::spam.  SWIG-1.3.11 got this wrong.
-      // (Different default parameter wrapping in SWIG-1.3.23 ensures SWIG doesn't have to resolve these symbols).
+      // Use a renamed member as a default argument.  alaqil has to resolve
+      // bar to Foo::bar and not Foo::spam.  alaqil-1.3.11 got this wrong.
+      // (Different default parameter wrapping in alaqil-1.3.23 ensures alaqil doesn't have to resolve these symbols).
       void method1(int x = bar) {}
 
       // Use unrenamed member as default
@@ -228,7 +228,7 @@ struct Except {
 %}
 
 // Default parameters in static class methods
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 %rename(staticMethod) staticmethod;
 #endif
 
@@ -241,7 +241,7 @@ namespace SpaceName {
 %}
 
 
-// Tests which could never be wrapped prior to changes in default argument wrapping implemented in SWIG-1.3.23:
+// Tests which could never be wrapped prior to changes in default argument wrapping implemented in alaqil-1.3.23:
 %inline %{
 class Tricky {
   static int getDefault() { return 500; }

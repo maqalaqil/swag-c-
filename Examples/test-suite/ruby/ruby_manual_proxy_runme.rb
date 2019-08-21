@@ -6,7 +6,7 @@
 # This testcase tests this and the C close function and subsequent error
 # handling.
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'ruby_manual_proxy'
 
 module Svn
@@ -17,7 +17,7 @@ module Svn
       return f
     end
 
-    FileSystem = SWIG::TYPE_p_svn_fs_t
+    FileSystem = alaqil::TYPE_p_svn_fs_t
     class FileSystem
       class << self
         def create(*args)
@@ -35,7 +35,7 @@ f = Svn::Fs::FileSystem.create("/tmp/myfile")
 path = f.path
 f.close
 begin
-  # regression in swig-3.0.8 meant ObjectPreviouslyDeleted error was thrown instead
+  # regression in alaqil-3.0.8 meant ObjectPreviouslyDeleted error was thrown instead
   path = f.path
   raise RuntimeError.new("IOError (1) not thrown")
 rescue IOError

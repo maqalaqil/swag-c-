@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_array.i
  *
- * SWIG typemaps for std::array<T, N>
+ * alaqil typemaps for std::array<T, N>
  * C# implementation
  * The C# wrapper is made to look and feel like a C# System.Collections.Generic.IReadOnlyList<> collection.
  * ----------------------------------------------------------------------------- */
@@ -15,7 +15,7 @@
 %include <std_common.i>
 
 
-%define SWIG_STD_ARRAY_INTERNAL(T, N)
+%define alaqil_STD_ARRAY_INTERNAL(T, N)
 %typemap(csinterfaces) std::array< T, N > "global::System.IDisposable, global::System.Collections.IEnumerable\n    , global::System.Collections.Generic.IEnumerable<$typemap(cstype, T)>\n";
 %proxycode %{
   public $csclassname(global::System.Collections.ICollection c) : this() {
@@ -222,6 +222,6 @@
 
 namespace std {
   template<class T, size_t N> class array {
-    SWIG_STD_ARRAY_INTERNAL(T, N)
+    alaqil_STD_ARRAY_INTERNAL(T, N)
   };
 }

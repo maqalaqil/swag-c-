@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG correctly uses the new result_of class
+/* This testcase checks whether alaqil correctly uses the new result_of class
    and its templating capabilities introduced in C++11. */
 %module cpp11_result_of
 
@@ -35,7 +35,7 @@ std::result_of< fn_ptr(double) >::type test_result_alternative1(double(*fun)(dou
 %}
 
 %{
-// Another alternative approach using decltype (not very SWIG friendly)
+// Another alternative approach using decltype (not very alaqil friendly)
 std::result_of< decltype(square)&(double) >::type test_result_alternative2(double(*fun)(double), double arg) {
   return fun(arg);
 }

@@ -23,7 +23,7 @@ We will be using the luaL_dostring()/lua_dostring() function to call into lua
 #define lua_open luaL_newstate
 #endif
 
-/* the SWIG wrappered library */
+/* the alaqil wrappered library */
 extern int luaopen_example(lua_State*L);
 
 /* a really simple way of calling lua from C
@@ -59,7 +59,7 @@ int main(int argc,char* argv[]) {
   luaopen_base(L);
   luaopen_string(L);
   luaopen_math(L);
-  printf("[C] now loading the SWIG wrapped library\n");
+  printf("[C] now loading the alaqil wrapped library\n");
   luaopen_example(L);
   printf("[C] all looks ok\n");
   printf("\n");

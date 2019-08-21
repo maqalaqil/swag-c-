@@ -1,4 +1,4 @@
-// This tests SWIG's handling of typemaps and namespaces
+// This tests alaqil's handling of typemaps and namespaces
 %module namespace_typemap
 
 %{
@@ -41,23 +41,23 @@ namespace test {
 }
  %}
 
-/* SWIG interface tests */
+/* alaqil interface tests */
 
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 %typemap(in) test::test_complex * {
     if (PyComplex_Check($input)) {
 	$1 = new test_complex(PyComplex_RealAsDouble($input),
 			 PyComplex_ImagAsDouble($input));
     } else {
 	PyErr_SetString(PyExc_TypeError,"Expected test_complex.\n");
-	SWIG_fail;
+	alaqil_fail;
     }
 }
 %typemap(freearg) test::test_complex * {
     delete $1;
 }
 #endif
-#ifdef SWIGOCTAVE
+#ifdef alaqilOCTAVE
 %typemap(in) test::test_complex * {
     if ($input.is_complex_scalar()) {
 	$1 = new test_complex($input.complex_value().real(),
@@ -70,7 +70,7 @@ namespace test {
     delete $1;
 }
 #endif
-#ifdef SWIGGO
+#ifdef alaqilGO
 %typemap(gotype) test::test_complex * "complex128"
 %typemap(in) test::test_complex * {
     $1 = new test_complex(__real__ $input, __imag__ $input);
@@ -82,15 +82,15 @@ namespace test {
 
 namespace test {
     class string_class;
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 	%typemap(in) string_class * {
-	    $1 = new string_class(SWIG_Python_str_AsChar($input));
+	    $1 = new string_class(alaqil_Python_str_AsChar($input));
 	}
 	%typemap(freearg) string_class * {
 	    delete $1;
 	}
 #endif
-#ifdef SWIGOCTAVE
+#ifdef alaqilOCTAVE
 	%typemap(in) string_class * {
 	    $1 = new string_class($input.string_value().c_str());
 	}
@@ -98,7 +98,7 @@ namespace test {
 	    delete $1;
 	}
 #endif
-#ifdef SWIGRUBY
+#ifdef alaqilRUBY
 	%typemap(in) string_class * {
 	    $1 = new string_class(StringValuePtr($input));
 	}
@@ -106,7 +106,7 @@ namespace test {
 	    delete $1;
 	}
 #endif
-#ifdef SWIGGO
+#ifdef alaqilGO
 	%typemap(gotype) string_class * "string"
 	%typemap(in) string_class * {
 	    char* buf = new char[$input.n + 1];
@@ -237,16 +237,16 @@ namespace test {
 %}
 
 namespace Split {
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
     %typemap(in) PosInteger {
 	$1 = PyInt_AsLong($input);
 	if ($1 < 0) {
 	    PyErr_SetString(PyExc_ValueError,"domain error\n");
-	    SWIG_fail;
+	    alaqil_fail;
 	}
     }	
 #endif
-#ifdef SWIGOCTAVE
+#ifdef alaqilOCTAVE
     %typemap(in) PosInteger {
 	$1 = $input.long_value();
 	if ($1 < 0) {
@@ -254,7 +254,7 @@ namespace Split {
 	}
     }	
 #endif
-#ifdef SWIGRUBY
+#ifdef alaqilRUBY
     %typemap(in) PosInteger {
 	$1 = NUM2INT($input);
 	if ($1 < 0) {
@@ -262,11 +262,11 @@ namespace Split {
 	}
     }	
 #endif
-#ifdef SWIGGO
+#ifdef alaqilGO
     %typemap(in) PosInteger {
 	$1 = $input;
 	if ($1 < 0) {
-	    _swig_gopanic("domain error");
+	    _alaqil_gopanic("domain error");
 	}
     }
 #endif

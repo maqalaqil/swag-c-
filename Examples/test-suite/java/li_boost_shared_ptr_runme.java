@@ -5,7 +5,7 @@ public class li_boost_shared_ptr_runme {
     try {
         System.loadLibrary("li_boost_shared_ptr");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -371,7 +371,7 @@ public class li_boost_shared_ptr_runme {
       Klass k = new Klass3rdDerived("me oh my");
       String val = k.getValue();
       verifyValue("me oh my-3rdDerived", val);
-      verifyCount(3, k); // 3 classes in inheritance chain == 3 swigCPtr values
+      verifyCount(3, k); // 3 classes in inheritance chain == 3 alaqilCPtr values
       val = li_boost_shared_ptr.test3rdupcast(k);
       verifyValue("me oh my-3rdDerived", val);
       verifyCount(3, k);

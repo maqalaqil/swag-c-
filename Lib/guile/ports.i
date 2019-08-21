@@ -22,7 +22,7 @@
 
 %typemap(in, doc="$NAME is a file port or a FILE * pointer") FILE *
 {
-  if (SWIG_ConvertPtr($input, (void**) &($1), $1_descriptor, 0) != 0) {
+  if (alaqil_ConvertPtr($input, (void**) &($1), $1_descriptor, 0) != 0) {
     if (!(SCM_FPORTP($input))) {
       scm_wrong_type_arg("$symname", $argnum, $input);
     } else {

@@ -1,7 +1,7 @@
 %module derived_byvalue
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %inline %{
@@ -44,15 +44,15 @@ struct DerFoo : Foo {
 /*
   The problem is caused by accidentally remembering a object value type
   instead of an object pointer type.
-  During the course of SWIGing a file, several calls to SwigType_remember()
-  or SwigType_remember_clientdata() will be made.
-  When the SwigType_emit_type_table() function is called it emits all the
+  During the course of alaqiling a file, several calls to alaqilType_remember()
+  or alaqilType_remember_clientdata() will be made.
+  When the alaqilType_emit_type_table() function is called it emits all the
   type conversion functions.
   
-  If a object type exists in the SwigType table, you get this error.
+  If a object type exists in the alaqilType table, you get this error.
 
-  You can view the SwigType table, with a #define DEBUG at the top of
-  Source/Swig/typesys.c
+  You can view the alaqilType table, with a #define DEBUG at the top of
+  Source/alaqil/typesys.c
 
   When run you get an output like this:
 
@@ -79,12 +79,12 @@ Hash {
 ....
 
   The last field ('_Foo') is an object type and caused the error.
-  It can be fixed either by checking all the calls to SwigType_remember()
+  It can be fixed either by checking all the calls to alaqilType_remember()
   and by checking the typemaps.
-  The typemap code also calls SwigType_remember(), if your typemaps
-  defined an object type, it will be added into the SwigType table.
+  The typemap code also calls alaqilType_remember(), if your typemaps
+  defined an object type, it will be added into the alaqilType table.
   its normally a 
-    SWIG_ConvertPtr(....$descriptor...)
+    alaqil_ConvertPtr(....$descriptor...)
   when it should have been a $&descriptor or $*descriptor
     
   Commenting out all your object typemaps (and typecheck fns) may help

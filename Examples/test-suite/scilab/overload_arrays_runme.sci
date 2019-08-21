@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 // Functions
 
@@ -43,4 +43,4 @@ a = new_ClassA();
 b = ClassA_method1(a, [1 2 3]);
 
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

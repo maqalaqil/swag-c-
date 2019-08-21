@@ -1,4 +1,4 @@
-/* This interface file checks how well SWIG handles passing data back
+/* This interface file checks how well alaqil handles passing data back
    through arguments WITHOUT returning it separately; for the cases where
    maybe multiple values are passed by reference and all want changing */
 

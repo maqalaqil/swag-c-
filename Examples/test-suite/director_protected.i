@@ -11,7 +11,7 @@
 
 %newobject *::create();
 
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 // TODO: Currently we do not track the dynamic type of returned objects
 // in PHP, so we need the factory helper.
 %include factory.i

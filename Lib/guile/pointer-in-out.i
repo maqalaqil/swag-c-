@@ -48,7 +48,7 @@
 
 %typemap(in, doc="$NAME is of type <" #SCM_TYPE ">") PTRTYPE *INPUT(PTRTYPE temp)
 {
-    if (SWIG_ConvertPtr($input, (void **) &temp, $*descriptor, 0)) {
+    if (alaqil_ConvertPtr($input, (void **) &temp, $*descriptor, 0)) {
 	scm_wrong_type_arg(FUNC_NAME, $argnum, $input);
     }
     $1 = &temp;
@@ -56,19 +56,19 @@
 
 %typemap(in, doc="$NAME is of type <" #SCM_TYPE "> and is consumed by the function") PTRTYPE *INPUT_CONSUMED(PTRTYPE temp)
 {
-    if (SWIG_ConvertPtr($input, (void **) &temp, $*descriptor, 0)) {
+    if (alaqil_ConvertPtr($input, (void **) &temp, $*descriptor, 0)) {
 	scm_wrong_type_arg(FUNC_NAME, $argnum, $input);
     }
-    SWIG_Guile_MarkPointerNoncollectable($input);
+    alaqil_Guile_MarkPointerNoncollectable($input);
     $1 = &temp;
 }
 
 %typemap(in, doc="$NAME is of type <" #SCM_TYPE "> and is consumed by the function") PTRTYPE *INPUT_DESTROYED(PTRTYPE temp)
 {
-    if (SWIG_ConvertPtr($input, (void **) &temp, $*descriptor, 0)) {
+    if (alaqil_ConvertPtr($input, (void **) &temp, $*descriptor, 0)) {
 	scm_wrong_type_arg(FUNC_NAME, $argnum, $input);
     }
-    SWIG_Guile_MarkPointerDestroyed($input);
+    alaqil_Guile_MarkPointerDestroyed($input);
     $1 = &temp;
 }
 
@@ -77,10 +77,10 @@
      "$1 = &temp;";
 
 %typemap(argout, doc="<" #SCM_TYPE ">") PTRTYPE *OUTPUT
-     "SWIG_APPEND_VALUE(SWIG_NewPointerObj(*$1, $*descriptor, 1));"; 
+     "alaqil_APPEND_VALUE(alaqil_NewPointerObj(*$1, $*descriptor, 1));"; 
 
 %typemap(argout, doc="<" #SCM_TYPE ">") PTRTYPE *OUTPUT_NONCOLLECTABLE
-     "SWIG_APPEND_VALUE(SWIG_NewPointerObj(*$1, $*descriptor, 0));"; 
+     "alaqil_APPEND_VALUE(alaqil_NewPointerObj(*$1, $*descriptor, 0));"; 
 
 %typemap(in) PTRTYPE *BOTH = PTRTYPE *INPUT;
 %typemap(argout) PTRTYPE *BOTH = PTRTYPE *OUTPUT;
@@ -91,12 +91,12 @@
    SCM_TYPE to the standard pointer typemaps */
 
 %typemap(in, doc="$NAME is of type <" #SCM_TYPE ">") PTRTYPE {
-  if (SWIG_ConvertPtr($input, (void **) &$1, $descriptor, 0))
+  if (alaqil_ConvertPtr($input, (void **) &$1, $descriptor, 0))
     scm_wrong_type_arg(FUNC_NAME, $argnum, $input);
 }
 
 %typemap(out, doc="<" #SCM_TYPE ">") PTRTYPE {
-    $result = SWIG_NewPointerObj ($1, $descriptor, $owner);
+    $result = alaqil_NewPointerObj ($1, $descriptor, $owner);
 }
 
 %enddef

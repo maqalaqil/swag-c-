@@ -13,7 +13,7 @@
 #include <limits.h>
 %}
 
-%insert(runtime) "swigrun.swg";         /* SWIG API */
-%insert(runtime) "swigerrors.swg";      /* SWIG errors */
+%insert(runtime) "alaqilrun.swg";         /* alaqil API */
+%insert(runtime) "alaqilerrors.swg";      /* alaqil errors */
 
-%insert(runtime) "javascriptrun.swg";      /* SWIG errors */
+%insert(runtime) "javascriptrun.swg";      /* alaqil errors */

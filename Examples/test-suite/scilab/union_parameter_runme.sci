@@ -1,6 +1,6 @@
 // Some lines are commented out because of too long identifiers...
 
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 event = new_SDL_Event();
 
@@ -12,7 +12,7 @@ for i=1:2
     specEvent = SDL_Event_active_get(event);
     _type = SDL_ActiveEvent_type_get(specEvent);
     
-    if _type <> evType then swigtesterror(); end
+    if _type <> evType then alaqiltesterror(); end
     
     gain = SDL_ActiveEvent_gain_get(specEvent);
     //state = SDL_ActiveEvent_state_get(specEvent);
@@ -22,7 +22,7 @@ for i=1:2
     specEvent = SDL_Event_key_get(event);
     //_type = SDL_KeyboardEvent_type_get(specEvent);
     
-    //if _type <> evType then swigtesterror(); end
+    //if _type <> evType then alaqiltesterror(); end
     
     //_which = SDL_KeyboardEvent_which_get(specEvent);
     //state = SDL_KeyboardEvent_state_get(specEvent);
@@ -32,4 +32,4 @@ end
 
 delete_SDL_Event(event);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

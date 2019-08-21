@@ -1,7 +1,7 @@
 %module typemap_delete
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %typemap(in) Rect* (Rect temp) {

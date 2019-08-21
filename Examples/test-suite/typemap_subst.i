@@ -3,7 +3,7 @@
 
 %module typemap_subst
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) xyzzy; /* Ruby, wrong class name */
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) xyzzy; /* Ruby, wrong class name */
 
 %inline %{
   struct xyzzy {
@@ -45,9 +45,9 @@
     (void)ampdesc;
   }
   { /* Test mangled names */
-    void *desc = SWIGTYPE$mangle;
-    void *stardesc = SWIGTYPE$*mangle;
-    void *ampdesc = SWIGTYPE$&mangle;
+    void *desc = alaqilTYPE$mangle;
+    void *stardesc = alaqilTYPE$*mangle;
+    void *ampdesc = alaqilTYPE$&mangle;
     (void)desc;
     (void)stardesc;
     (void)ampdesc;
@@ -63,8 +63,8 @@
   $1 = ($ltype) temp;  
 }
 
-/* Java, C#, Go and D modules don't use SWIG's runtime type system */
-#if !defined(SWIGJAVA) && !defined(SWIGCSHARP) && !defined(SWIGGO) && !defined(SWIGD)
+/* Java, C#, Go and D modules don't use alaqil's runtime type system */
+#if !defined(alaqilJAVA) && !defined(alaqilCSHARP) && !defined(alaqilGO) && !defined(alaqilD)
 %inline %{
   void foo(const struct xyzzy **TEST) {}
 %}

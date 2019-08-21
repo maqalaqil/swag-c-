@@ -94,7 +94,7 @@ endfor
 mapc ={};
 c1 = std_containers.C();
 c2 = std_containers.C();
-mapc(1) = swig_this(c1);
+mapc(1) = alaqil_this(c1);
 mapc(2) = c2;
 
 std_containers.mapidentc(mapc);

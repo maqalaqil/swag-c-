@@ -6,22 +6,22 @@
 %include <std_set.i>
 %include <std_map.i>
 
-%template(Vector  ) std::vector  <swig::LANGUAGE_OBJ>;
-%template(Deque   ) std::deque   <swig::LANGUAGE_OBJ>;
-%template(List    ) std::list    <swig::LANGUAGE_OBJ>;
+%template(Vector  ) std::vector  <alaqil::LANGUAGE_OBJ>;
+%template(Deque   ) std::deque   <alaqil::LANGUAGE_OBJ>;
+%template(List    ) std::list    <alaqil::LANGUAGE_OBJ>;
 
-%template(Set     ) std::set     <swig::LANGUAGE_OBJ,
-				  swig::BinaryPredicate<> >;
-%template(Map     ) std::map     <swig::LANGUAGE_OBJ,swig::LANGUAGE_OBJ,
-                                   swig::BinaryPredicate<> >;
+%template(Set     ) std::set     <alaqil::LANGUAGE_OBJ,
+				  alaqil::BinaryPredicate<> >;
+%template(Map     ) std::map     <alaqil::LANGUAGE_OBJ,alaqil::LANGUAGE_OBJ,
+                                   alaqil::BinaryPredicate<> >;
 
 
 // %inline %{
-//     namespace swig {
-//         void nth_element(swig::Iterator_T< _Iter>& first,
-//                          swig::Iterator_T< _Iter>& nth,
-//                          swig::Iterator_T< _Iter>& last,
-//                          const swig::BinaryPredicate<>& comp = swig::BinaryPredicate<>())
+//     namespace alaqil {
+//         void nth_element(alaqil::Iterator_T< _Iter>& first,
+//                          alaqil::Iterator_T< _Iter>& nth,
+//                          alaqil::Iterator_T< _Iter>& last,
+//                          const alaqil::BinaryPredicate<>& comp = alaqil::BinaryPredicate<>())
 //         {
 // 	  std::nth_element( first, nth, last, comp);
 //         }

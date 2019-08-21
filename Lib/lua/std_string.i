@@ -52,28 +52,28 @@ Not using: lua_tolstring() as this is only found in Lua 5.1 & not 5.0.2
 %{$1.assign(lua_tostring(L,$input),lua_rawlen(L,$input));%}
 
 %typemap(out) string
-%{ lua_pushlstring(L,$1.data(),$1.size()); SWIG_arg++;%}
+%{ lua_pushlstring(L,$1.data(),$1.size()); alaqil_arg++;%}
 
 %typemap(in,checkfn="lua_isstring") const string& ($*1_ltype temp)
 %{temp.assign(lua_tostring(L,$input),lua_rawlen(L,$input)); $1=&temp;%}
 
 %typemap(out) const string&
-%{ lua_pushlstring(L,$1->data(),$1->size()); SWIG_arg++;%}
+%{ lua_pushlstring(L,$1->data(),$1->size()); alaqil_arg++;%}
 
 // for throwing of any kind of string, string ref's and string pointers
 // we convert all to lua strings
 %typemap(throws) string, string&, const string&
-%{ lua_pushlstring(L,$1.data(),$1.size()); SWIG_fail;%}
+%{ lua_pushlstring(L,$1.data(),$1.size()); alaqil_fail;%}
 
 %typemap(throws) string*, const string*
-%{ lua_pushlstring(L,$1->data(),$1->size()); SWIG_fail;%}
+%{ lua_pushlstring(L,$1->data(),$1->size()); alaqil_fail;%}
 
-%typecheck(SWIG_TYPECHECK_STRING) string, const string& {
+%typecheck(alaqil_TYPECHECK_STRING) string, const string& {
   $1 = lua_isstring(L,$input);
 }
 
 /*
-std::string& can be wrapped, but you must inform SWIG if it is in or out
+std::string& can be wrapped, but you must inform alaqil if it is in or out
 
 eg:
 void fn(std::string& str);
@@ -83,14 +83,14 @@ Therefore you need the usual
 %apply (std::string& INOUT) {std::string& str};
 or
 %apply std::string& INOUT {std::string& str};
-typemaps to tell SWIG what to do.
+typemaps to tell alaqil what to do.
 */
 
 %typemap(in) string &INPUT=const string &;
 %typemap(in, numinputs=0) string &OUTPUT ($*1_ltype temp)
 %{ $1 = &temp; %}
 %typemap(argout) string &OUTPUT
-%{ lua_pushlstring(L,$1->data(),$1->size()); SWIG_arg++;%}
+%{ lua_pushlstring(L,$1->data(),$1->size()); alaqil_arg++;%}
 %typemap(in) string &INOUT =const string &;
 %typemap(argout) string &INOUT = string &OUTPUT;
 

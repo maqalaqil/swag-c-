@@ -8,7 +8,7 @@ public class java_pgcpp_runme {
     try {
 	System.loadLibrary("java_pgcpp");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -17,8 +17,8 @@ public class java_pgcpp_runme {
     Classic object = new Classic();
     long ptr = object.getCPtrValue();
 
-    java_pgcppJNI.new_Classic__SWIG_1(ptr, object, ptr, object, ptr, object, ptr, object, ptr, object);
-    java_pgcppJNI.new_Classic__SWIG_2(ptr, object, ptr, object, ptr, object, ptr, object, ptr, object, false);
+    java_pgcppJNI.new_Classic__alaqil_1(ptr, object, ptr, object, ptr, object, ptr, object, ptr, object);
+    java_pgcppJNI.new_Classic__alaqil_2(ptr, object, ptr, object, ptr, object, ptr, object, ptr, object, false);
 
     java_pgcppJNI.Classic_method(ptr, object, ptr, object, ptr, object, ptr, object, ptr, object, ptr, object);
     java_pgcppJNI.Classic_methodconst(ptr, object, ptr, object, ptr, object, ptr, object, ptr, object, ptr, object);

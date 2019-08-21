@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * cmalloc.i
  *
- * SWIG library file containing macros that can be used to create objects using
+ * alaqil library file containing macros that can be used to create objects using
  * the C malloc function.
  * ----------------------------------------------------------------------------- */
 

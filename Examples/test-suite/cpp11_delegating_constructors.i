@@ -1,4 +1,4 @@
-/* This test checks whether SWIG correctly parses the new delegating
+/* This test checks whether alaqil correctly parses the new delegating
    constructors.
 */
 %module cpp11_delegating_constructors

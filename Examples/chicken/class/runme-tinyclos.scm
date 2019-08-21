@@ -1,5 +1,5 @@
 ;; This file illustrates the proxy C++ interface generated
-;; by SWIG.
+;; by alaqil.
 
 (load-library 'example "class_proxy.so")
 (declare (uses example))

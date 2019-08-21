@@ -254,7 +254,7 @@ primitive_types::delete_pchar($pc);
 }
 #t2 = p.vtest(t)
 #if t.var_namet !=  t2.var_namet:
-#  raise RuntimeError, "bad SWIGTYPE* typemap"
+#  raise RuntimeError, "bad alaqilTYPE* typemap"
 
 is($primitive_types::fixsize, "ho\0la\0\0\0", "FIXSIZE typemap");
 

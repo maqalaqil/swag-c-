@@ -10,7 +10,7 @@ setmetatable(env, {__index=function (t,i) error("undefined global variable `"..i
 
 -- helper to check type
 function is_std_string(s) 
-	return type(s)=='userdata' and swig_type(s)=='std::string *'
+	return type(s)=='userdata' and alaqil_type(s)=='std::string *'
 end
 
 -- std::string by value is just a Lua string
@@ -33,7 +33,7 @@ assert(is_std_string(cobj) and cobj:c_str()=="x")	-- check type & value
 test_const_pointer(cobj)
 
 -- this shouldn't work, but it does
--- swig doesn't appear to diff between const object ptrs & object ptrs very well
+-- alaqil doesn't appear to diff between const object ptrs & object ptrs very well
 test_pointer(cobj)	-- this wants an non const object (give it a const one!)
 
 -- refs are also wrappered as ptrs (unless the correct typemaps are applied)

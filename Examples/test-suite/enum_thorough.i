@@ -3,47 +3,47 @@
 // Suppress warning messages from the Ruby module for all of the
 // following...
 
-#pragma SWIG nowarn=SWIGWARN_PARSE_KEYWORD
+#pragma alaqil nowarn=alaqilWARN_PARSE_KEYWORD
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME);
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) red;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) blue;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) green;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) SpeedClass::slow;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) SpeedClass::medium;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) SpeedClass::fast;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) SpeedClass::lightning;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) TemplateClass::einstein;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) TemplateClass::galileo;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Name::TClass::faraday;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Name::TClass::bell;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) argh;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) eek;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) OldNameStruct::whizz;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) OldNameStruct::kerboom;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) OldNameStruct::pop;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) OldNameStruct::simple1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) OldNameStruct::singlename1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) OldNameStruct::doublename1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) TreesClass::oak;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) TreesClass::fir;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) TreesClass::pine;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) curly::greasy::HairStruct::blonde;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) curly::greasy::HairStruct::ginger;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Obscure::one;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Obscure::onetrail;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Obscure::two;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Obscure::twoagain;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Obscure::twotrail;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Obscure::twotrailagain;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) globalinstance1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) globalinstance2;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) globalinstance3;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Instances::memberinstance1;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Instances::memberinstance2;
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Instances::memberinstance3;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME);
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) red;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) blue;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) green;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) SpeedClass::slow;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) SpeedClass::medium;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) SpeedClass::fast;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) SpeedClass::lightning;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) TemplateClass::einstein;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) TemplateClass::galileo;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Name::TClass::faraday;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Name::TClass::bell;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) argh;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) eek;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) OldNameStruct::whizz;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) OldNameStruct::kerboom;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) OldNameStruct::pop;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) OldNameStruct::simple1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) OldNameStruct::singlename1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) OldNameStruct::doublename1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) TreesClass::oak;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) TreesClass::fir;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) TreesClass::pine;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) curly::greasy::HairStruct::blonde;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) curly::greasy::HairStruct::ginger;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Obscure::one;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Obscure::onetrail;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Obscure::two;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Obscure::twoagain;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Obscure::twotrail;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Obscure::twotrailagain;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) globalinstance1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) globalinstance2;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) globalinstance3;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Instances::memberinstance1;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Instances::memberinstance2;
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Instances::memberinstance3;
 
-%warnfilter(SWIGWARN_GO_NAME_CONFLICT);                       /* Ignoring 'one' due to Go name ('ObscureOne') conflict with 'Obscure::One' */
+%warnfilter(alaqilWARN_GO_NAME_CONFLICT);                       /* Ignoring 'one' due to Go name ('ObscureOne') conflict with 'Obscure::One' */
 
 %inline %{
 
@@ -485,7 +485,7 @@ struct Obscure {
   enum Zero {};
   enum One {one};
   enum Two {two, twoagain};
-#if defined(SWIG)
+#if defined(alaqil)
   // g++-4.3 warns about this
   typedef enum Empty {};
 #endif
@@ -505,14 +505,14 @@ struct Instances {
 %}
 
 // Repeated values
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javaconst(1);
 // needed for typesafe and proper enums only
 %javaconst(0) ignoreA_three;
 %javaconst(0) ignoreA_thirteen;
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 // needed for typesafe enums only
-#ifdef SWIG_TEST_NOCSCONST
+#ifdef alaqil_TEST_NOCSCONST
   %csconst(0) ignoreA_three;
   %csconst(0) ignoreA_thirteen;
 #endif
@@ -608,7 +608,7 @@ int globalDifferentTypesTest(int n) { return n; }
 }
 %}
 
-#if defined(SWIGCSHARP)
+#if defined(alaqilCSHARP)
 %csconstvalue("1") globalenumchar1;
 %csconstvalue("'B'") globalenumcharB;
 %csconstvalue("1") enumchar1;
@@ -630,7 +630,7 @@ enum {
   globalenumcharC = '\x43', // C
   globalenumcharD = 0x44, // D
   globalenumcharE = 69,  // E
-  globalenumcharAE1 = 'Æ', // AE (latin1 encoded)
+  globalenumcharAE1 = 'ï¿½', // AE (latin1 encoded)
   globalenumcharAE2 = '\306', // AE (latin1 encoded)
   globalenumcharAE3 = '\xC6' // AE (latin1 encoded)
 };
@@ -643,7 +643,7 @@ enum EnumChar {
   enumcharC = '\x43', // C
   enumcharD = 0x44, // D
   enumcharE = 69, // E
-  enumcharAE1 = 'Æ', // AE (latin1 encoded)
+  enumcharAE1 = 'ï¿½', // AE (latin1 encoded)
   enumcharAE2 = '\306', // AE (latin1 encoded)
   enumcharAE3 = '\xC6' // AE (latin1 encoded)
 };
@@ -657,16 +657,16 @@ struct EnumCharStruct {
     enumcharC = '\x43', // C
     enumcharD = 0x44, // D
     enumcharE = 69, // E
-    enumcharAE1 = 'Æ', // AE (latin1 encoded)
+    enumcharAE1 = 'ï¿½', // AE (latin1 encoded)
     enumcharAE2 = '\306', // AE (latin1 encoded)
     enumcharAE3 = '\xC6' // AE (latin1 encoded)
   };
 };
 %}
 
-#if defined(SWIGJAVA)
+#if defined(alaqilJAVA)
 %javaconst(0);
-#elif defined(SWIGCSHARP)
+#elif defined(alaqilCSHARP)
 %csconst(0);
 #endif
 
@@ -680,7 +680,7 @@ enum {
   x_globalenumcharC = '\x43', // C
   x_globalenumcharD = 0x44, // D
   x_globalenumcharE = 69,  // E
-  x_globalenumcharAE1 = 'Æ', // AE (latin1 encoded)
+  x_globalenumcharAE1 = 'ï¿½', // AE (latin1 encoded)
   x_globalenumcharAE2 = '\306', // AE (latin1 encoded)
   x_globalenumcharAE3 = '\xC6' // AE (latin1 encoded)
 };
@@ -693,7 +693,7 @@ enum X_EnumChar {
   x_enumcharC = '\x43', // C
   x_enumcharD = 0x44, // D
   x_enumcharE = 69, // E
-  x_enumcharAE1 = 'Æ', // AE (latin1 encoded)
+  x_enumcharAE1 = 'ï¿½', // AE (latin1 encoded)
   x_enumcharAE2 = '\306', // AE (latin1 encoded)
   x_enumcharAE3 = '\xC6' // AE (latin1 encoded)
 };
@@ -707,7 +707,7 @@ struct X_EnumCharStruct {
     enumcharC = '\x43', // C
     enumcharD = 0x44, // D
     enumcharE = 69, // E
-    enumcharAE1 = 'Æ', // AE (latin1 encoded)
+    enumcharAE1 = 'ï¿½', // AE (latin1 encoded)
     enumcharAE2 = '\306', // AE (latin1 encoded)
     enumcharAE3 = '\xC6' // AE (latin1 encoded)
   };

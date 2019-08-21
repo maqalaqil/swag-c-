@@ -22,7 +22,7 @@ if d2.bar2() != 4:
     raise RuntimeError
 if bar2_getter(b) != 3:
     raise RuntimeError
-# SWIG fix reverted in Subversion rev 12953
+# alaqil fix reverted in Subversion rev 12953
 # Testcase has now been modified to mask the problem by providing the default parameter 'int' in:
 #   %shared_ptr(Space::BaseDefault<short, int>)
 # If this is not done then d fails to convert to BaseDefault<short>&

@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 f = new_Foo();
 Foo_data_set(f, [0:7]);
@@ -13,4 +13,4 @@ MyBuff_x_set(m, [0:11]);
 checkequal(MyBuff_x_get(m), [0:11], "MyBuff_x_get()");
 delete_MyBuff(m);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

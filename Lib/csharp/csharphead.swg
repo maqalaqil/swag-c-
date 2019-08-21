@@ -1,8 +1,8 @@
 /* -----------------------------------------------------------------------------
  * csharphead.swg
  *
- * Support code for exceptions if the SWIG_CSHARP_NO_EXCEPTION_HELPER is not defined
- * Support code for strings if the SWIG_CSHARP_NO_STRING_HELPER is not defined
+ * Support code for exceptions if the alaqil_CSHARP_NO_EXCEPTION_HELPER is not defined
+ * Support code for strings if the alaqil_CSHARP_NO_STRING_HELPER is not defined
  * ----------------------------------------------------------------------------- */
 
 %insert(runtime) %{
@@ -11,75 +11,75 @@
 #include <stdio.h>
 %}
 
-#if !defined(SWIG_CSHARP_NO_EXCEPTION_HELPER)
+#if !defined(alaqil_CSHARP_NO_EXCEPTION_HELPER)
 %insert(runtime) %{
 /* Support for throwing C# exceptions from C/C++. There are two types: 
  * Exceptions that take a message and ArgumentExceptions that take a message and a parameter name. */
 typedef enum {
-  SWIG_CSharpApplicationException,
-  SWIG_CSharpArithmeticException,
-  SWIG_CSharpDivideByZeroException,
-  SWIG_CSharpIndexOutOfRangeException,
-  SWIG_CSharpInvalidCastException,
-  SWIG_CSharpInvalidOperationException,
-  SWIG_CSharpIOException,
-  SWIG_CSharpNullReferenceException,
-  SWIG_CSharpOutOfMemoryException,
-  SWIG_CSharpOverflowException,
-  SWIG_CSharpSystemException
-} SWIG_CSharpExceptionCodes;
+  alaqil_CSharpApplicationException,
+  alaqil_CSharpArithmeticException,
+  alaqil_CSharpDivideByZeroException,
+  alaqil_CSharpIndexOutOfRangeException,
+  alaqil_CSharpInvalidCastException,
+  alaqil_CSharpInvalidOperationException,
+  alaqil_CSharpIOException,
+  alaqil_CSharpNullReferenceException,
+  alaqil_CSharpOutOfMemoryException,
+  alaqil_CSharpOverflowException,
+  alaqil_CSharpSystemException
+} alaqil_CSharpExceptionCodes;
 
 typedef enum {
-  SWIG_CSharpArgumentException,
-  SWIG_CSharpArgumentNullException,
-  SWIG_CSharpArgumentOutOfRangeException
-} SWIG_CSharpExceptionArgumentCodes;
+  alaqil_CSharpArgumentException,
+  alaqil_CSharpArgumentNullException,
+  alaqil_CSharpArgumentOutOfRangeException
+} alaqil_CSharpExceptionArgumentCodes;
 
-typedef void (SWIGSTDCALL* SWIG_CSharpExceptionCallback_t)(const char *);
-typedef void (SWIGSTDCALL* SWIG_CSharpExceptionArgumentCallback_t)(const char *, const char *);
-
-typedef struct {
-  SWIG_CSharpExceptionCodes code;
-  SWIG_CSharpExceptionCallback_t callback;
-} SWIG_CSharpException_t;
+typedef void (alaqilSTDCALL* alaqil_CSharpExceptionCallback_t)(const char *);
+typedef void (alaqilSTDCALL* alaqil_CSharpExceptionArgumentCallback_t)(const char *, const char *);
 
 typedef struct {
-  SWIG_CSharpExceptionArgumentCodes code;
-  SWIG_CSharpExceptionArgumentCallback_t callback;
-} SWIG_CSharpExceptionArgument_t;
+  alaqil_CSharpExceptionCodes code;
+  alaqil_CSharpExceptionCallback_t callback;
+} alaqil_CSharpException_t;
 
-static SWIG_CSharpException_t SWIG_csharp_exceptions[] = {
-  { SWIG_CSharpApplicationException, NULL },
-  { SWIG_CSharpArithmeticException, NULL },
-  { SWIG_CSharpDivideByZeroException, NULL },
-  { SWIG_CSharpIndexOutOfRangeException, NULL },
-  { SWIG_CSharpInvalidCastException, NULL },
-  { SWIG_CSharpInvalidOperationException, NULL },
-  { SWIG_CSharpIOException, NULL },
-  { SWIG_CSharpNullReferenceException, NULL },
-  { SWIG_CSharpOutOfMemoryException, NULL },
-  { SWIG_CSharpOverflowException, NULL },
-  { SWIG_CSharpSystemException, NULL }
+typedef struct {
+  alaqil_CSharpExceptionArgumentCodes code;
+  alaqil_CSharpExceptionArgumentCallback_t callback;
+} alaqil_CSharpExceptionArgument_t;
+
+static alaqil_CSharpException_t alaqil_csharp_exceptions[] = {
+  { alaqil_CSharpApplicationException, NULL },
+  { alaqil_CSharpArithmeticException, NULL },
+  { alaqil_CSharpDivideByZeroException, NULL },
+  { alaqil_CSharpIndexOutOfRangeException, NULL },
+  { alaqil_CSharpInvalidCastException, NULL },
+  { alaqil_CSharpInvalidOperationException, NULL },
+  { alaqil_CSharpIOException, NULL },
+  { alaqil_CSharpNullReferenceException, NULL },
+  { alaqil_CSharpOutOfMemoryException, NULL },
+  { alaqil_CSharpOverflowException, NULL },
+  { alaqil_CSharpSystemException, NULL }
 };
 
-static SWIG_CSharpExceptionArgument_t SWIG_csharp_exceptions_argument[] = {
-  { SWIG_CSharpArgumentException, NULL },
-  { SWIG_CSharpArgumentNullException, NULL },
-  { SWIG_CSharpArgumentOutOfRangeException, NULL }
+static alaqil_CSharpExceptionArgument_t alaqil_csharp_exceptions_argument[] = {
+  { alaqil_CSharpArgumentException, NULL },
+  { alaqil_CSharpArgumentNullException, NULL },
+  { alaqil_CSharpArgumentOutOfRangeException, NULL }
 };
 
-static void SWIGUNUSED SWIG_CSharpSetPendingException(SWIG_CSharpExceptionCodes code, const char *msg) {
-  SWIG_CSharpExceptionCallback_t callback = SWIG_csharp_exceptions[SWIG_CSharpApplicationException].callback;
-  if ((size_t)code < sizeof(SWIG_csharp_exceptions)/sizeof(SWIG_CSharpException_t)) {
-    callback = SWIG_csharp_exceptions[code].callback;
+static void alaqilUNUSED alaqil_CSharpSetPendingException(alaqil_CSharpExceptionCodes code, const char *msg) {
+  alaqil_CSharpExceptionCallback_t callback = alaqil_csharp_exceptions[alaqil_CSharpApplicationException].callback;
+  if ((size_t)code < sizeof(alaqil_csharp_exceptions)/sizeof(alaqil_CSharpException_t)) {
+    callback = alaqil_csharp_exceptions[code].callback;
   }
   callback(msg);
 }
 
-static void SWIGUNUSED SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpExceptionArgumentCodes code, const char *msg, const char *param_name) {
-  SWIG_CSharpExceptionArgumentCallback_t callback = SWIG_csharp_exceptions_argument[SWIG_CSharpArgumentException].callback;
-  if ((size_t)code < sizeof(SWIG_csharp_exceptions_argument)/sizeof(SWIG_CSharpExceptionArgument_t)) {
-    callback = SWIG_csharp_exceptions_argument[code].callback;
+static void alaqilUNUSED alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpExceptionArgumentCodes code, const char *msg, const char *param_name) {
+  alaqil_CSharpExceptionArgumentCallback_t callback = alaqil_csharp_exceptions_argument[alaqil_CSharpArgumentException].callback;
+  if ((size_t)code < sizeof(alaqil_csharp_exceptions_argument)/sizeof(alaqil_CSharpExceptionArgument_t)) {
+    callback = alaqil_csharp_exceptions_argument[code].callback;
   }
   callback(msg, param_name);
 }
@@ -89,46 +89,46 @@ static void SWIGUNUSED SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpExcepti
 #ifdef __cplusplus
 extern "C" 
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionCallbacks_$module(
-                                                SWIG_CSharpExceptionCallback_t applicationCallback,
-                                                SWIG_CSharpExceptionCallback_t arithmeticCallback,
-                                                SWIG_CSharpExceptionCallback_t divideByZeroCallback, 
-                                                SWIG_CSharpExceptionCallback_t indexOutOfRangeCallback, 
-                                                SWIG_CSharpExceptionCallback_t invalidCastCallback,
-                                                SWIG_CSharpExceptionCallback_t invalidOperationCallback,
-                                                SWIG_CSharpExceptionCallback_t ioCallback,
-                                                SWIG_CSharpExceptionCallback_t nullReferenceCallback,
-                                                SWIG_CSharpExceptionCallback_t outOfMemoryCallback, 
-                                                SWIG_CSharpExceptionCallback_t overflowCallback, 
-                                                SWIG_CSharpExceptionCallback_t systemCallback) {
-  SWIG_csharp_exceptions[SWIG_CSharpApplicationException].callback = applicationCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpArithmeticException].callback = arithmeticCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpDivideByZeroException].callback = divideByZeroCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpIndexOutOfRangeException].callback = indexOutOfRangeCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpInvalidCastException].callback = invalidCastCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpInvalidOperationException].callback = invalidOperationCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpIOException].callback = ioCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpNullReferenceException].callback = nullReferenceCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpOutOfMemoryException].callback = outOfMemoryCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpOverflowException].callback = overflowCallback;
-  SWIG_csharp_exceptions[SWIG_CSharpSystemException].callback = systemCallback;
+alaqilEXPORT void alaqilSTDCALL alaqilRegisterExceptionCallbacks_$module(
+                                                alaqil_CSharpExceptionCallback_t applicationCallback,
+                                                alaqil_CSharpExceptionCallback_t arithmeticCallback,
+                                                alaqil_CSharpExceptionCallback_t divideByZeroCallback, 
+                                                alaqil_CSharpExceptionCallback_t indexOutOfRangeCallback, 
+                                                alaqil_CSharpExceptionCallback_t invalidCastCallback,
+                                                alaqil_CSharpExceptionCallback_t invalidOperationCallback,
+                                                alaqil_CSharpExceptionCallback_t ioCallback,
+                                                alaqil_CSharpExceptionCallback_t nullReferenceCallback,
+                                                alaqil_CSharpExceptionCallback_t outOfMemoryCallback, 
+                                                alaqil_CSharpExceptionCallback_t overflowCallback, 
+                                                alaqil_CSharpExceptionCallback_t systemCallback) {
+  alaqil_csharp_exceptions[alaqil_CSharpApplicationException].callback = applicationCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpArithmeticException].callback = arithmeticCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpDivideByZeroException].callback = divideByZeroCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpIndexOutOfRangeException].callback = indexOutOfRangeCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpInvalidCastException].callback = invalidCastCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpInvalidOperationException].callback = invalidOperationCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpIOException].callback = ioCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpNullReferenceException].callback = nullReferenceCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpOutOfMemoryException].callback = outOfMemoryCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpOverflowException].callback = overflowCallback;
+  alaqil_csharp_exceptions[alaqil_CSharpSystemException].callback = systemCallback;
 }
 
 #ifdef __cplusplus
 extern "C" 
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_$module(
-                                                SWIG_CSharpExceptionArgumentCallback_t argumentCallback,
-                                                SWIG_CSharpExceptionArgumentCallback_t argumentNullCallback,
-                                                SWIG_CSharpExceptionArgumentCallback_t argumentOutOfRangeCallback) {
-  SWIG_csharp_exceptions_argument[SWIG_CSharpArgumentException].callback = argumentCallback;
-  SWIG_csharp_exceptions_argument[SWIG_CSharpArgumentNullException].callback = argumentNullCallback;
-  SWIG_csharp_exceptions_argument[SWIG_CSharpArgumentOutOfRangeException].callback = argumentOutOfRangeCallback;
+alaqilEXPORT void alaqilSTDCALL alaqilRegisterExceptionArgumentCallbacks_$module(
+                                                alaqil_CSharpExceptionArgumentCallback_t argumentCallback,
+                                                alaqil_CSharpExceptionArgumentCallback_t argumentNullCallback,
+                                                alaqil_CSharpExceptionArgumentCallback_t argumentOutOfRangeCallback) {
+  alaqil_csharp_exceptions_argument[alaqil_CSharpArgumentException].callback = argumentCallback;
+  alaqil_csharp_exceptions_argument[alaqil_CSharpArgumentNullException].callback = argumentNullCallback;
+  alaqil_csharp_exceptions_argument[alaqil_CSharpArgumentOutOfRangeException].callback = argumentOutOfRangeCallback;
 }
 %}
 
 %pragma(csharp) imclasscode=%{
-  protected class SWIGExceptionHelper {
+  protected class alaqilExceptionHelper {
 
     public delegate void ExceptionDelegate(string message);
     public delegate void ExceptionArgumentDelegate(string message, string paramName);
@@ -149,8 +149,8 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_$module(
     static ExceptionArgumentDelegate argumentNullDelegate = new ExceptionArgumentDelegate(SetPendingArgumentNullException);
     static ExceptionArgumentDelegate argumentOutOfRangeDelegate = new ExceptionArgumentDelegate(SetPendingArgumentOutOfRangeException);
 
-    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="SWIGRegisterExceptionCallbacks_$module")]
-    public static extern void SWIGRegisterExceptionCallbacks_$module(
+    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="alaqilRegisterExceptionCallbacks_$module")]
+    public static extern void alaqilRegisterExceptionCallbacks_$module(
                                 ExceptionDelegate applicationDelegate,
                                 ExceptionDelegate arithmeticDelegate,
                                 ExceptionDelegate divideByZeroDelegate, 
@@ -163,62 +163,62 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_$module(
                                 ExceptionDelegate overflowDelegate, 
                                 ExceptionDelegate systemExceptionDelegate);
 
-    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_$module")]
-    public static extern void SWIGRegisterExceptionCallbacksArgument_$module(
+    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="alaqilRegisterExceptionArgumentCallbacks_$module")]
+    public static extern void alaqilRegisterExceptionCallbacksArgument_$module(
                                 ExceptionArgumentDelegate argumentDelegate,
                                 ExceptionArgumentDelegate argumentNullDelegate,
                                 ExceptionArgumentDelegate argumentOutOfRangeDelegate);
 
     static void SetPendingApplicationException(string message) {
-      SWIGPendingException.Set(new global::System.ApplicationException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.ApplicationException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingArithmeticException(string message) {
-      SWIGPendingException.Set(new global::System.ArithmeticException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.ArithmeticException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingDivideByZeroException(string message) {
-      SWIGPendingException.Set(new global::System.DivideByZeroException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.DivideByZeroException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingIndexOutOfRangeException(string message) {
-      SWIGPendingException.Set(new global::System.IndexOutOfRangeException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.IndexOutOfRangeException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingInvalidCastException(string message) {
-      SWIGPendingException.Set(new global::System.InvalidCastException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.InvalidCastException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingInvalidOperationException(string message) {
-      SWIGPendingException.Set(new global::System.InvalidOperationException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.InvalidOperationException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingIOException(string message) {
-      SWIGPendingException.Set(new global::System.IO.IOException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.IO.IOException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingNullReferenceException(string message) {
-      SWIGPendingException.Set(new global::System.NullReferenceException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.NullReferenceException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingOutOfMemoryException(string message) {
-      SWIGPendingException.Set(new global::System.OutOfMemoryException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.OutOfMemoryException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingOverflowException(string message) {
-      SWIGPendingException.Set(new global::System.OverflowException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.OverflowException(message, alaqilPendingException.Retrieve()));
     }
     static void SetPendingSystemException(string message) {
-      SWIGPendingException.Set(new global::System.SystemException(message, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.SystemException(message, alaqilPendingException.Retrieve()));
     }
 
     static void SetPendingArgumentException(string message, string paramName) {
-      SWIGPendingException.Set(new global::System.ArgumentException(message, paramName, SWIGPendingException.Retrieve()));
+      alaqilPendingException.Set(new global::System.ArgumentException(message, paramName, alaqilPendingException.Retrieve()));
     }
     static void SetPendingArgumentNullException(string message, string paramName) {
-      global::System.Exception e = SWIGPendingException.Retrieve();
+      global::System.Exception e = alaqilPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
-      SWIGPendingException.Set(new global::System.ArgumentNullException(paramName, message));
+      alaqilPendingException.Set(new global::System.ArgumentNullException(paramName, message));
     }
     static void SetPendingArgumentOutOfRangeException(string message, string paramName) {
-      global::System.Exception e = SWIGPendingException.Retrieve();
+      global::System.Exception e = alaqilPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
-      SWIGPendingException.Set(new global::System.ArgumentOutOfRangeException(paramName, message));
+      alaqilPendingException.Set(new global::System.ArgumentOutOfRangeException(paramName, message));
     }
 
-    static SWIGExceptionHelper() {
-      SWIGRegisterExceptionCallbacks_$module(
+    static alaqilExceptionHelper() {
+      alaqilRegisterExceptionCallbacks_$module(
                                 applicationDelegate,
                                 arithmeticDelegate,
                                 divideByZeroDelegate,
@@ -231,16 +231,16 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_$module(
                                 overflowDelegate,
                                 systemDelegate);
 
-      SWIGRegisterExceptionCallbacksArgument_$module(
+      alaqilRegisterExceptionCallbacksArgument_$module(
                                 argumentDelegate,
                                 argumentNullDelegate,
                                 argumentOutOfRangeDelegate);
     }
   }
 
-  protected static SWIGExceptionHelper swigExceptionHelper = new SWIGExceptionHelper();
+  protected static alaqilExceptionHelper alaqilExceptionHelper = new alaqilExceptionHelper();
 
-  public class SWIGPendingException {
+  public class alaqilPendingException {
     [global::System.ThreadStatic]
     private static global::System.Exception pendingException = null;
     private static int numExceptionsPending = 0;
@@ -279,47 +279,47 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_$module(
     }
   }
 %}
-#endif // SWIG_CSHARP_NO_EXCEPTION_HELPER
+#endif // alaqil_CSHARP_NO_EXCEPTION_HELPER
 
-#if !defined(SWIG_CSHARP_NO_STRING_HELPER)
+#if !defined(alaqil_CSHARP_NO_STRING_HELPER)
 %insert(runtime) %{
 /* Callback for returning strings to C# without leaking memory */
-typedef char * (SWIGSTDCALL* SWIG_CSharpStringHelperCallback)(const char *);
-static SWIG_CSharpStringHelperCallback SWIG_csharp_string_callback = NULL;
+typedef char * (alaqilSTDCALL* alaqil_CSharpStringHelperCallback)(const char *);
+static alaqil_CSharpStringHelperCallback alaqil_csharp_string_callback = NULL;
 %}
 
 %pragma(csharp) imclasscode=%{
-  protected class SWIGStringHelper {
+  protected class alaqilStringHelper {
 
-    public delegate string SWIGStringDelegate(string message);
-    static SWIGStringDelegate stringDelegate = new SWIGStringDelegate(CreateString);
+    public delegate string alaqilStringDelegate(string message);
+    static alaqilStringDelegate stringDelegate = new alaqilStringDelegate(CreateString);
 
-    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="SWIGRegisterStringCallback_$module")]
-    public static extern void SWIGRegisterStringCallback_$module(SWIGStringDelegate stringDelegate);
+    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="alaqilRegisterStringCallback_$module")]
+    public static extern void alaqilRegisterStringCallback_$module(alaqilStringDelegate stringDelegate);
 
     static string CreateString(string cString) {
       return cString;
     }
 
-    static SWIGStringHelper() {
-      SWIGRegisterStringCallback_$module(stringDelegate);
+    static alaqilStringHelper() {
+      alaqilRegisterStringCallback_$module(stringDelegate);
     }
   }
 
-  static protected SWIGStringHelper swigStringHelper = new SWIGStringHelper();
+  static protected alaqilStringHelper alaqilStringHelper = new alaqilStringHelper();
 %}
 
 %insert(runtime) %{
 #ifdef __cplusplus
 extern "C" 
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_$module(SWIG_CSharpStringHelperCallback callback) {
-  SWIG_csharp_string_callback = callback;
+alaqilEXPORT void alaqilSTDCALL alaqilRegisterStringCallback_$module(alaqil_CSharpStringHelperCallback callback) {
+  alaqil_csharp_string_callback = callback;
 }
 %}
-#endif // SWIG_CSHARP_NO_STRING_HELPER
+#endif // alaqil_CSHARP_NO_STRING_HELPER
 
-#if !defined(SWIG_CSHARP_NO_IMCLASS_STATIC_CONSTRUCTOR)
+#if !defined(alaqil_CSHARP_NO_IMCLASS_STATIC_CONSTRUCTOR)
 // Ensure the class is not marked beforefieldinit
 %pragma(csharp) imclasscode=%{
   static $imclassname() {
@@ -330,5 +330,5 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_$module(SWIG_CSharpString
 %insert(runtime) %{
 /* Contract support */
 
-#define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, msg, ""); return nullreturn; } else
+#define alaqil_contract_assert(nullreturn, expr, msg) if (!(expr)) {alaqil_CSharpSetPendingExceptionArgument(alaqil_CSharpArgumentOutOfRangeException, msg, ""); return nullreturn; } else
 %}

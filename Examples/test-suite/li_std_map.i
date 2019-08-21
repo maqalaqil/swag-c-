@@ -1,8 +1,8 @@
 %module("templatereduce") li_std_map
 %feature("trackobjects");
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %inline %{
@@ -59,7 +59,7 @@ struct Struct {
 
 %}
 
-//#if !defined(SWIGR)
+//#if !defined(alaqilR)
 
 // Test out some maps with pointer types
 %template(IntIntPtrMap) std::map<int, int *>;
@@ -99,14 +99,14 @@ namespace std {
   %template(pairiiAc) pair<int,const pair<int, A*> >;
 
 
-#ifdef SWIGRUBY
-  %template() pair< swig::LANGUAGE_OBJ, swig::LANGUAGE_OBJ >;
-  %template(LanguageMap) map< swig::LANGUAGE_OBJ, swig::LANGUAGE_OBJ >;
+#ifdef alaqilRUBY
+  %template() pair< alaqil::LANGUAGE_OBJ, alaqil::LANGUAGE_OBJ >;
+  %template(LanguageMap) map< alaqil::LANGUAGE_OBJ, alaqil::LANGUAGE_OBJ >;
 #endif
 
-#ifdef SWIGPYTHON
-  %template() pair<swig::SwigPtr_PyObject, swig::SwigPtr_PyObject>;
-  %template(pymap) map<swig::SwigPtr_PyObject, swig::SwigPtr_PyObject>;
+#ifdef alaqilPYTHON
+  %template() pair<alaqil::alaqilPtr_PyObject, alaqil::alaqilPtr_PyObject>;
+  %template(pymap) map<alaqil::alaqilPtr_PyObject, alaqil::alaqilPtr_PyObject>;
 #endif
   
 }

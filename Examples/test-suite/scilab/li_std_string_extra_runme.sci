@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 x = "hello";
 
@@ -55,4 +55,4 @@ checkequal(c_empty(), "", "c_empty()");
 //checkequal(test_value_basic2(x), x, "");
 //checkequal(test_value_basic3(x), x, "");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

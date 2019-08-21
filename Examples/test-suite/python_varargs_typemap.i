@@ -1,7 +1,7 @@
 %module python_varargs_typemap
 
  /* The typemap and action are taken from the "Variable length arguments"
-  * chapter of the SWIG manual.
+  * chapter of the alaqil manual.
   */
 
 %typemap(in) (...)(char *vargs[10]) {
@@ -11,7 +11,7 @@
   argc = PyTuple_Size(varargs);
   if (argc > 10) {
     PyErr_SetString(PyExc_ValueError, "Too many arguments");
-    SWIG_fail;
+    alaqil_fail;
   }
   for (i = 0; i < argc; i++) {
     PyObject *pyobj = PyTuple_GetItem(varargs, i);
@@ -20,18 +20,18 @@
     PyObject *pystr;
     if (!PyUnicode_Check(pyobj)) {
        PyErr_SetString(PyExc_ValueError, "Expected a string");
-       SWIG_fail;
+       alaqil_fail;
     }
     pystr = PyUnicode_AsUTF8String(pyobj);
     if (!pystr) {
-      SWIG_fail;
+      alaqil_fail;
     }
     str = strdup(PyBytes_AsString(pystr));
     Py_DECREF(pystr);
 %#else  
     if (!PyString_Check(pyobj)) {
        PyErr_SetString(PyExc_ValueError, "Expected a string");
-       SWIG_fail;
+       alaqil_fail;
     }
     str = PyString_AsString(pyobj);
 %#endif

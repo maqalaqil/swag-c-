@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Li_cpointer_cpp
 
 let _ =

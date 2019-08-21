@@ -3,9 +3,9 @@
 // Check typemap name matching rules for variables
 // Some of these are using qualified names, which is not right... the test will be adjusted as these get fixed
 
-#if defined(SWIGUTL)
+#if defined(alaqilUTL)
 %{
-#define TYPEMAP_VARIABLES_FAIL SWIG_fail;
+#define TYPEMAP_VARIABLES_FAIL alaqil_fail;
 %}
 #else
 %{
@@ -14,9 +14,9 @@
 #endif
 
 // For Javascript V8 we can not use '0' for out typemaps
-#if defined(SWIG_JAVASCRIPT_V8)
+#if defined(alaqil_JAVASCRIPT_V8)
 %header %{
-#define OUT_NULL_VALUE SWIGV8_NULL()
+#define OUT_NULL_VALUE alaqilV8_NULL()
 %}
 #else
 %header %{
@@ -44,7 +44,7 @@
 %typemap(in)  int Space::nspace             "/*int nspace in */ $1=0;"
 %typemap(out) int Space::nspace             "/*int nspace out*/ $result=OUT_NULL_VALUE;"
 %typemap(in)  int member                    "/*int member in */ $1=0;"
-#ifdef SWIGTCL
+#ifdef alaqilTCL
 %typemap(out) int member                    "/*int member out*/"
 #else
 %typemap(out) int member                    "/*int member out*/ $result=OUT_NULL_VALUE;"
@@ -63,17 +63,17 @@
 %typemap(javain)  int Space::Struct::smember    "/*int smember in */ $javainput"
 %typemap(javaout) int Space::Struct::smember    "/*int smember out*/ { return $jnicall; }"
 
-#if defined(SWIGSCILAB)
+#if defined(alaqilSCILAB)
 %clear int globul;
 %clear int Space::nspace;
 %clear int Space::Struct::smember;
 %ignore Space::Struct::member;
 %typemap(varin) int globul "TYPEMAP_VARIABLES_FAIL";
-%typemap(varout, noblock=1, fragment=SWIG_From_frag(int)) int globul "if (!SWIG_IsOK(SWIG_Scilab_SetOutput(pvApiCtx, SWIG_From_int($result)))) return SWIG_ERROR;";
+%typemap(varout, noblock=1, fragment=alaqil_From_frag(int)) int globul "if (!alaqil_IsOK(alaqil_Scilab_SetOutput(pvApiCtx, alaqil_From_int($result)))) return alaqil_ERROR;";
 %typemap(varin) int Space::nspace "TYPEMAP_VARIABLES_FAIL";
-%typemap(varout, noblock=1, fragment=SWIG_From_frag(int)) int Space::nspace "if (!SWIG_IsOK(SWIG_Scilab_SetOutput(pvApiCtx, SWIG_From_int($result)))) return SWIG_ERROR;";
+%typemap(varout, noblock=1, fragment=alaqil_From_frag(int)) int Space::nspace "if (!alaqil_IsOK(alaqil_Scilab_SetOutput(pvApiCtx, alaqil_From_int($result)))) return alaqil_ERROR;";
 %typemap(varin) int Space::Struct::smember "TYPEMAP_VARIABLES_FAIL";
-%typemap(varout, noblock=1, fragment=SWIG_From_frag(int)) int Space::Struct::smember "if (!SWIG_IsOK(SWIG_Scilab_SetOutput(pvApiCtx, SWIG_From_int($result)))) return SWIG_ERROR;";
+%typemap(varout, noblock=1, fragment=alaqil_From_frag(int)) int Space::Struct::smember "if (!alaqil_IsOK(alaqil_Scilab_SetOutput(pvApiCtx, alaqil_From_int($result)))) return alaqil_ERROR;";
 #endif
 
 %inline %{

@@ -1,5 +1,5 @@
 /* File : example.i */
-%module swigexample
+%module alaqilexample
 
 %feature("autodoc", 1);
 

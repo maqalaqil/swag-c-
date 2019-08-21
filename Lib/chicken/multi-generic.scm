@@ -3,12 +3,12 @@
 ;; This file overrides two functions inside TinyCLOS to provide support
 ;; for multi-argument generics.  There are many ways of linking this file
 ;; into your code... all that needs to happen is this file must be
-;; executed after loading TinyCLOS but before any SWIG modules are loaded
+;; executed after loading TinyCLOS but before any alaqil modules are loaded
 ;;
 ;; something like the following
 ;; (require 'tinyclos)
 ;; (load "multi-generic")
-;; (declare (uses swigmod))
+;; (declare (uses alaqilmod))
 ;;
 ;; An alternative to loading this scheme code directly is to add a
 ;; (declare (unit multi-generic)) to the top of this file, and then

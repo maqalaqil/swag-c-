@@ -1,6 +1,6 @@
 %module xxx
 
-// Test the SWIG preprocessor locator effects on reporting line numbers in warnings when processing SWIG (multiline) macros
+// Test the alaqil preprocessor locator effects on reporting line numbers in warnings when processing alaqil (multiline) macros
 
 // The ignored overloaded methods warnings should have the correct line number reporting
 // {} blocks are tested, where the preprocessor expands the macros

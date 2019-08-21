@@ -38,7 +38,7 @@ To use these, suppose you had a C function like this :
                return *a+*b;
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
         
         %include <typemaps.i>
         double fadd(double *INPUT, double *INPUT);
@@ -115,7 +115,7 @@ returns the integer part in one of its parameters):
 
         double modf(double x, double *ip);
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double modf(double x, double *OUTPUT);
@@ -142,7 +142,7 @@ value returned in the second output parameter. In C# you would use it like this:
 %typemap(in) TYPE *OUTPUT, TYPE &OUTPUT
 %{ $1 = ($1_ltype)$input; %}
 
-%typecheck(SWIG_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *OUTPUT, TYPE &OUTPUT ""
+%typecheck(alaqil_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *OUTPUT, TYPE &OUTPUT ""
 %enddef
 
 OUTPUT_TYPEMAP(bool,               unsigned int,         bool,     BOOL_PTR)
@@ -198,7 +198,7 @@ For example, suppose you were trying to wrap the following function :
              *x = -(*x);
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         void neg(double *INOUT);
@@ -231,7 +231,7 @@ of the function return value.
 %typemap(in) TYPE *INOUT, TYPE &INOUT
 %{ $1 = ($1_ltype)$input; %}
 
-%typecheck(SWIG_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *INOUT, TYPE &INOUT ""
+%typecheck(alaqil_TYPECHECK_##TYPECHECKPRECEDENCE) TYPE *INOUT, TYPE &INOUT ""
 %enddef
 
 INOUT_TYPEMAP(bool,               unsigned int,         bool,     BOOL_PTR)

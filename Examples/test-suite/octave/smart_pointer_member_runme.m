@@ -14,7 +14,7 @@ if (f.y != 2)
   error("f.y = %i, b.y = %i",f.y,b.y)
 endif
 
-if (swig_this(b.x) != swig_this(f.x))
+if (alaqil_this(b.x) != alaqil_this(f.x))
   error
 endif
 

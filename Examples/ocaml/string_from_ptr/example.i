@@ -10,7 +10,7 @@ static int foo( char **buf ) {
     $1 = &temp;
 }
 %typemap(argout) char **buf {
-    swig_result = caml_list_append(swig_result,caml_val_string((char *)*$1));
+    alaqil_result = caml_list_append(alaqil_result,caml_val_string((char *)*$1));
 }
 
 int foo( char **buf );

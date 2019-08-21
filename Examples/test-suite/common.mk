@@ -1,11 +1,11 @@
 #######################################################################
-# SWIG test suite makefile.
+# alaqil test suite makefile.
 # The test suite comprises many different test cases, which have
 # typically produced bugs in the past. The aim is to have the test 
 # cases compiling for every language modules. Some testcase have
 # a runtime test which is written in each of the module's language.
 #
-# This makefile runs SWIG on the testcases, compiles the c/c++ code
+# This makefile runs alaqil on the testcases, compiles the c/c++ code
 # then builds the object code for use by the language.
 # To complete a test in a language follow these guidelines: 
 # 1) Add testcases to CPP_TEST_CASES (c++) or C_TEST_CASES (c) or
@@ -19,21 +19,21 @@
 # 3) One off special commandline options for a testcase can be added.
 #    See custom tests below.
 #
-# The 'check' target runs the testcases including SWIG invocation,
+# The 'check' target runs the testcases including alaqil invocation,
 # C/C++ compilation, target language compilation (if any) and runtime
 # test (if there is an associated 'runme' test).
-# The 'partialcheck' target only invokes SWIG.
+# The 'partialcheck' target only invokes alaqil.
 # The 'all' target is the same as the 'check' target but also includes
 # known broken testcases.
 # The 'clean' target cleans up.
 #
-# Note that the RUNTOOL, COMPILETOOL and SWIGTOOL variables can be used
+# Note that the RUNTOOL, COMPILETOOL and alaqilTOOL variables can be used
 # for invoking tools for the runtime tests and target language 
-# compiler (eg javac), and on SWIG respectively. For example, valgrind
+# compiler (eg javac), and on alaqil respectively. For example, valgrind
 # can be used for memory checking of the runtime tests using:
 #   make RUNTOOL="valgrind --leak-check=full"
-# and valgrind can be used when invoking SWIG using:
-#   make SWIGTOOL="valgrind --tool=memcheck"
+# and valgrind can be used when invoking alaqil using:
+#   make alaqilTOOL="valgrind --tool=memcheck"
 #
 # An individual test run can be debugged easily:
 #   make director_string.cpptest RUNTOOL="gdb --args"
@@ -52,17 +52,17 @@ else
 RUNTOOL    =
 endif
 COMPILETOOL=
-SWIGTOOL   =
+alaqilTOOL   =
 
-SWIGEXE   = $(top_builddir)/swig
-SWIG_LIB_DIR = $(top_srcdir)/Lib
+alaqilEXE   = $(top_builddir)/alaqil
+alaqil_LIB_DIR = $(top_srcdir)/Lib
 TEST_SUITE = test-suite
 EXAMPLES   = Examples
 CXXSRCS    = 
 CSRCS      = 
 TARGETPREFIX = 
 TARGETSUFFIX = 
-SWIGOPT    = -outcurrentdir -I$(top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)
+alaqilOPT    = -outcurrentdir -I$(top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)
 INCLUDES   = -I$(top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)
 LIBS       = -L.
 LIBPREFIX  = lib
@@ -282,7 +282,7 @@ CPP_TEST_CASES += \
 	li_cpointer_cpp \
 	li_std_auto_ptr \
 	li_stdint \
-	li_swigtype_inout \
+	li_alaqiltype_inout \
 	li_typemaps \
 	li_typemaps_apply \
 	li_windows \
@@ -411,7 +411,7 @@ CPP_TEST_CASES += \
 	string_constants \
 	struct_initialization_cpp \
 	struct_value \
-	swig_exception \
+	alaqil_exception \
 	symbol_clash \
 	template_arg_replace \
 	template_arg_scope \
@@ -629,7 +629,7 @@ DOXYGEN_TEST_CASES += \
 	doxygen_translate_all_tags \
 	doxygen_translate_links \
 
-$(DOXYGEN_TEST_CASES:=.cpptest): SWIGOPT += -doxygen
+$(DOXYGEN_TEST_CASES:=.cpptest): alaqilOPT += -doxygen
 
 CPP_TEST_CASES += $(DOXYGEN_TEST_CASES)
 endif
@@ -738,8 +738,8 @@ MULTI_CPP_TEST_CASES += \
 	template_typedef_import \
 
 # Custom tests - tests with additional commandline options
-wallkw.cpptest: SWIGOPT += -Wallkw
-preproc_include.ctest: SWIGOPT += -includeall
+wallkw.cpptest: alaqilOPT += -Wallkw
+preproc_include.ctest: alaqilOPT += -includeall
 
 # Allow modules to define temporarily failing tests.
 C_TEST_CASES := $(filter-out $(FAILING_C_TESTS),$(C_TEST_CASES))
@@ -797,45 +797,45 @@ check-failing:
 	+-$(foreach t,$(FAILING_MULTI_CPP_TESTS),$(call check-failing-test,$t,multicpptest);)
 endif
 
-# partialcheck target runs SWIG only, ie no compilation or running of tests (for a subset of languages)
+# partialcheck target runs alaqil only, ie no compilation or running of tests (for a subset of languages)
 partialcheck:
 	$(MAKE) check CC=true CXX=true LDSHARED=true CXXSHARED=true RUNTOOL=true COMPILETOOL=true
 
-swig_and_compile_cpp =  \
+alaqil_and_compile_cpp =  \
 	$(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	TARGET='$(TARGETPREFIX)$*$(TARGETSUFFIX)' INTERFACEDIR='$(INTERFACEDIR)' INTERFACE='$*.i' \
 	$(LANGUAGE)$(VARIANT)_cpp
 
-swig_and_compile_c =  \
+alaqil_and_compile_c =  \
 	$(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CSRCS='$(CSRCS)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	TARGET='$(TARGETPREFIX)$*$(TARGETSUFFIX)' INTERFACEDIR='$(INTERFACEDIR)' INTERFACE='$*.i' \
 	$(LANGUAGE)$(VARIANT)
 
-swig_and_compile_multi_cpp = \
+alaqil_and_compile_multi_cpp = \
 	for f in `cat $(top_srcdir)/$(EXAMPLES)/$(TEST_SUITE)/$*.list` ; do \
 	  $(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS)' \
-	  SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	  LIBS='$(LIBS)' INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	  alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	  LIBS='$(LIBS)' INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	  TARGET="$(TARGETPREFIX)$${f}$(TARGETSUFFIX)" INTERFACEDIR='$(INTERFACEDIR)' INTERFACE="$$f.i" \
 	  $(LANGUAGE)$(VARIANT)_cpp; \
 	done
 
-swig_and_compile_external =  \
+alaqil_and_compile_external =  \
 	$(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
 	TARGET='$*_wrap_hdr.h' \
 	$(LANGUAGE)$(VARIANT)_externalhdr && \
 	$(MAKE) -f $(top_builddir)/$(EXAMPLES)/Makefile SRCDIR='$(SRCDIR)' CXXSRCS='$(CXXSRCS) $*_external.cxx' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	INCLUDES='$(INCLUDES)' SWIGOPT='$(SWIGOPT)' NOLINK=true \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	INCLUDES='$(INCLUDES)' alaqilOPT='$(alaqilOPT)' NOLINK=true \
 	TARGET='$(TARGETPREFIX)$*$(TARGETSUFFIX)' INTERFACEDIR='$(INTERFACEDIR)' INTERFACE='$*.i' \
 	$(LANGUAGE)$(VARIANT)_cpp
 
-swig_and_compile_runtime = \
+alaqil_and_compile_runtime = \
 
 setup = \
 	if [ -f $(SCRIPTDIR)/$(SCRIPTPREFIX)$*$(SCRIPTSUFFIX) ]; then	  \

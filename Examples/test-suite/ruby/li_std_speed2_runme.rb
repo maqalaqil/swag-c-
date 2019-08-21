@@ -45,7 +45,7 @@ def insert(cont)
    it = cont.end
    size = cont.size
    if cont.kind_of? RbSet
-       # swig stl missing hint version of insert for set
+       # alaqil stl missing hint version of insert for set
        # expected would be O(n) with iterator hint version
        # expected: O(n*log(n))
        # got: O(n**3*log(n))

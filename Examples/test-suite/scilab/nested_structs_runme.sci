@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 try
     outer = new_Outer();
@@ -9,7 +9,7 @@ try
     inner3 = Outer_inner3_get(outer);
     inner4 = Outer_inner4_get(outer);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 checkequal(Outer_inner1_val_get(inner1), 10, "Outer_inner1_val_get(inner1)");
@@ -23,7 +23,7 @@ try
     inside3 = Outer_inside3_get(outer);
     inside4 = Outer_inside4_get(outer);
 catch
-    swigtesterror();
+    alaqiltesterror();
 end
 
 checkequal(Named_val_get(inside1), 100, "Named_val_get(inside1)");
@@ -31,4 +31,4 @@ checkequal(Named_val_get(inside2), 200, "Named_val_get(inside2)");
 checkequal(Named_val_get(inside3), 200, "Named_val_get(inside3)");
 checkequal(Named_val_get(inside4), 400, "Named_val_get(inside4)");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

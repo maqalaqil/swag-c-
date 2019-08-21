@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 p1 = new_pairii(2, 3);
 p2 = new_pairii(p1);
@@ -12,4 +12,4 @@ p4 = new_pairdd(p3);
 checkequal(pairdd_first_get(p4), 0.5, "pairdd_first(p4) test fails.");
 checkequal(pairdd_second_get(p4), 2.5, "pairdd_second(p4) test fails.");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

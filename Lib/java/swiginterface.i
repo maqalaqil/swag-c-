@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
- * swiginterface.i
+ * alaqilinterface.i
  *
- * SWIG interface feature and typemaps implementation providing:
+ * alaqil interface feature and typemaps implementation providing:
  *   %interface
  *   %interface_impl
  *   %interface_custom
@@ -50,19 +50,19 @@
 
 %typemap(javainterfacecode, declaration="  long $interfacename_GetInterfaceCPtr();\n", cptrmethod="$interfacename_GetInterfaceCPtr") CTYPE %{
   public long $interfacename_GetInterfaceCPtr() {
-    return $imclassname.$javaclazzname$interfacename_GetInterfaceCPtr(swigCPtr);
+    return $imclassname.$javaclazzname$interfacename_GetInterfaceCPtr(alaqilCPtr);
   }
 %}
 %enddef
 
 %define %interface(CTYPE...)
-%feature("interface", name="%sSwigInterface") CTYPE;
+%feature("interface", name="%salaqilInterface") CTYPE;
 INTERFACE_TYPEMAPS(CTYPE)
 %enddef
 
 %define %interface_impl(CTYPE...)
-%rename("%sSwigImpl") CTYPE;
-%feature("interface", name="%(rstrip:[SwigImpl])s") CTYPE;
+%rename("%salaqilImpl") CTYPE;
+%feature("interface", name="%(rstrip:[alaqilImpl])s") CTYPE;
 INTERFACE_TYPEMAPS(CTYPE)
 %enddef
 

@@ -1,8 +1,8 @@
 
 %module arrays_dimensionless
 
-%warnfilter(SWIGWARN_TYPEMAP_VARIN_UNDEF) globalints;    /* Unable to set variable of type int [] */
-%warnfilter(SWIGWARN_TYPEMAP_VARIN_UNDEF) ints;          /* Unable to set variable of type int [] */
+%warnfilter(alaqilWARN_TYPEMAP_VARIN_UNDEF) globalints;    /* Unable to set variable of type int [] */
+%warnfilter(alaqilWARN_TYPEMAP_VARIN_UNDEF) ints;          /* Unable to set variable of type int [] */
 
 %inline %{
 
@@ -31,7 +31,7 @@ double arr_double(double array[], int length)            { double sum=0.0; int i
 
 %}
 
-%apply SWIGTYPE[] {
+%apply alaqilTYPE[] {
  bool *, 
  char *, 
  signed char *, 

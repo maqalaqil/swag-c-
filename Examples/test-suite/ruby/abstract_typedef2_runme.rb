@@ -7,11 +7,11 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 require 'abstract_typedef2'
 
 include Abstract_typedef2
 
-swig_assert( 'a = A_UF.new' )
+alaqil_assert( 'a = A_UF.new' )
 
 

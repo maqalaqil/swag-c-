@@ -1,4 +1,4 @@
-// This example illustrates how C++ classes can be used from Go using SWIG.
+// This example illustrates how C++ classes can be used from Go using alaqil.
 
 package main
 

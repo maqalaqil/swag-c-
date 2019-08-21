@@ -1,7 +1,7 @@
 %module rename_pcre_enum
 
 // This file is needed for proper enum support in C#/Java backends
-#if defined(SWIGCSHARP) || defined(SWIGJAVA)
+#if defined(alaqilCSHARP) || defined(alaqilJAVA)
 %include "enums.swg"
 #endif
 

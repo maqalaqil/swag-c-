@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Char_constant
 
 let _ =

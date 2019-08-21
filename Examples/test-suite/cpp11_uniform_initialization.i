@@ -1,4 +1,4 @@
-/* This testcase checks whether SWIG syntactically correctly parses the initialization syntax using
+/* This testcase checks whether alaqil syntactically correctly parses the initialization syntax using
    {} braces for uniform member initialization. */
 %module cpp11_uniform_initialization
 

@@ -132,7 +132,7 @@ std::vector<std::string>  vecStr(std::vector<std::string> v) {
   short extractConstShort2(std::vector<const short *>::value_type p) { return *p; }
 %}
 
-%template(pyvector) std::vector<swig::SwigPtr_PyObject>; 
+%template(pyvector) std::vector<alaqil::alaqilPtr_PyObject>; 
 
 namespace std {
    %template(ConstShortPtrVector) vector<const short *>;

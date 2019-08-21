@@ -1,7 +1,7 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 p = getnull();
-checkequal(SWIG_this(p), 0, "SWIG_this(p)");
+checkequal(alaqil_this(p), 0, "alaqil_this(p)");
 checkequal(funk(p), %T, "funk(p)");
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

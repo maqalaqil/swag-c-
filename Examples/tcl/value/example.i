@@ -1,4 +1,4 @@
-// Tests SWIG's handling of pass-by-value for complex datatypes
+// Tests alaqil's handling of pass-by-value for complex datatypes
 %module example
 
 %{

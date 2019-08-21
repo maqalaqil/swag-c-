@@ -1,12 +1,12 @@
 TOP        = ../..
-SWIGEXE    = $(TOP)/../swig
-SWIG_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
+alaqilEXE    = $(TOP)/../alaqil
+alaqil_LIB_DIR = $(TOP)/../$(TOP_BUILDDIR_TO_TOP_SRCDIR)Lib
 INTERFACE  = example.i
 SRCS       =
 CXXSRCS    = example.cxx
 TARGET     = class
 INCLUDE    =
-SWIGOPT    =
+alaqilOPT    =
 VARIANT    =
 
 # uncomment the following lines to build a static exe (only pick one of the CHICKEN_MAIN lines)
@@ -23,15 +23,15 @@ build: $(TARGET) $(TARGET)_proxy
 $(TARGET): $(INTERFACE) $(SRCS)
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' \
 	SRCS='$(SRCS)' CXXSRCS='$(CXXSRCS)' CHICKEN_MAIN='$(CHICKEN_MAIN)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	INCLUDE='$(INCLUDE)' SWIGOPT='$(SWIGOPT)' TARGET='$(TARGET)' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	INCLUDE='$(INCLUDE)' alaqilOPT='$(alaqilOPT)' TARGET='$(TARGET)' \
 	INTERFACE='$(INTERFACE)' CHICKENOPTS='$(CHICKENOPTS)' chicken$(VARIANT)_cpp
 
 $(TARGET)_proxy: $(INTERFACE) $(SRCS)
 	$(MAKE) -f $(TOP)/Makefile SRCDIR='$(SRCDIR)' \
 	SRCS='$(SRCS)' CXXSRCS='$(CXXSRCS)' CHICKEN_MAIN='$(CHICKEN_MAIN)' \
-	SWIG_LIB_DIR='$(SWIG_LIB_DIR)' SWIGEXE='$(SWIGEXE)' \
-	INCLUDE='$(INCLUDE)' SWIGOPT='$(SWIGOPT) -proxy' TARGET='$(TARGET)_proxy' \
+	alaqil_LIB_DIR='$(alaqil_LIB_DIR)' alaqilEXE='$(alaqilEXE)' \
+	INCLUDE='$(INCLUDE)' alaqilOPT='$(alaqilOPT) -proxy' TARGET='$(TARGET)_proxy' \
 	INTERFACE='$(INTERFACE)' CHICKENOPTS='$(CHICKENOPTS)' chicken$(VARIANT)_cpp
 
 clean:

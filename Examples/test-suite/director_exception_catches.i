@@ -7,14 +7,14 @@
 // define dummy director exception classes to prevent spurious errors 
 // in target languages that do not support directors.
 
-#ifndef SWIG_DIRECTORS
-namespace Swig {
+#ifndef alaqil_DIRECTORS
+namespace alaqil {
   class DirectorException {};
 }
-#endif /* !SWIG_DIRECTORS */
+#endif /* !alaqil_DIRECTORS */
 %}
 
-%catches(Swig::DirectorException) BaseClass::call_description;
+%catches(alaqil::DirectorException) BaseClass::call_description;
 
 %inline %{
 struct BaseClass {

@@ -82,7 +82,7 @@ public class csharp_prepost_runme {
 
       Type type = typeof(CsinAttributes);
       {
-        MethodInfo member = (MethodInfo)type.GetMember("SwigConstructCsinAttributes", BindingFlags.NonPublic | BindingFlags.Static)[0];
+        MethodInfo member = (MethodInfo)type.GetMember("alaqilConstructCsinAttributes", BindingFlags.NonPublic | BindingFlags.Static)[0];
         if (Attribute.GetCustomAttribute(member, typeof(CustomIntPtrAttribute)) == null)
           throw new Exception("No CustomIntPtr attribute for " + member.Name);
         ParameterInfo parameter = member.GetParameters()[0]; // expecting one parameter

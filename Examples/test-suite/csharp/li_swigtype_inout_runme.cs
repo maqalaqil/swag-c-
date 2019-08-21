@@ -1,8 +1,8 @@
 
 using System;
-using li_swigtype_inoutNamespace;
+using li_alaqiltype_inoutNamespace;
 
-public class li_swigtype_inout_runme {
+public class li_alaqiltype_inout_runme {
 
   public static void Main() {
     XXX xxx = new XXX(999);
@@ -11,7 +11,7 @@ public class li_swigtype_inout_runme {
     XXX x2 = null;
     XXX x3 = null;
     XXX x4 = null;
-    li_swigtype_inout.ptr_ref_out(out x1, out x2, out x3, out x4);
+    li_alaqiltype_inout.ptr_ref_out(out x1, out x2, out x3, out x4);
     check_value(111, x1.value);
     check_value(222, x2.value);
     check_value(333, x3.value);

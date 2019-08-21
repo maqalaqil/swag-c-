@@ -7,7 +7,7 @@ public class special_variables_runme {
     try {
         System.loadLibrary("special_variables");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -18,10 +18,10 @@ public class special_variables_runme {
            "result = Space::exceptionvars(arg1,arg2);  Space::exceptionvars  ExceptionVars   Java_special_1variables_special_1variablesJNI_ExceptionVars  ");
 
     verify(special_variables.overloadedmethod(),
-           "result = Space::overloadedmethod();  Space::overloadedmethod  overloadedmethod  __SWIG_1 Java_special_1variables_special_1variablesJNI_overloadedmethod_1_1SWIG_11  ");
+           "result = Space::overloadedmethod();  Space::overloadedmethod  overloadedmethod  __alaqil_1 Java_special_1variables_special_1variablesJNI_overloadedmethod_1_1alaqil_11  ");
 
     verify(special_variables.overloadedmethod(10.0),
-          "result = Space::overloadedmethod(arg1);  Space::overloadedmethod  overloadedmethod  __SWIG_0 Java_special_1variables_special_1variablesJNI_overloadedmethod_1_1SWIG_10  ");
+          "result = Space::overloadedmethod(arg1);  Space::overloadedmethod  overloadedmethod  __alaqil_0 Java_special_1variables_special_1variablesJNI_overloadedmethod_1_1alaqil_10  ");
 
     ABC a = new ABC(0, 0.0);
     verify(special_variables.getDeclaration(), "SpaceNamespace::ABC::ABC(int,double) SpaceNamespace::ABC::ABC(int,double)");

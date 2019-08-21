@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([ccache-swig], [0.0]) # Get version from SWIG in ccache_swig_config.h.in
+AC_INIT([ccache-alaqil], [0.0]) # Get version from alaqil in ccache_alaqil_config.h.in
 AC_PREREQ(2.52)
 AC_CONFIG_SRCDIR([ccache.h])
 

@@ -112,9 +112,9 @@ CSHARP_ARRAYS(bool, bool)
 %typemap(imtype)  CTYPE FIXED[] "global::System.IntPtr"
 %typemap(cstype)  CTYPE FIXED[] "CSTYPE[]"
 %typemap(csin,
-           pre=       "    fixed ( CSTYPE* swig_ptrTo_$csinput = $csinput ) {",
+           pre=       "    fixed ( CSTYPE* alaqil_ptrTo_$csinput = $csinput ) {",
            terminator="    }") 
-                  CTYPE FIXED[] "(global::System.IntPtr)swig_ptrTo_$csinput"
+                  CTYPE FIXED[] "(global::System.IntPtr)alaqil_ptrTo_$csinput"
 
 %typemap(in)      CTYPE FIXED[] "$1 = $input;"
 %typemap(freearg) CTYPE FIXED[] ""

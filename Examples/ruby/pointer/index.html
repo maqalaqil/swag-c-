@@ -1,18 +1,18 @@
 <html>
 <head>
-<title>SWIG:Examples:ruby:pointer</title>
+<title>alaqil:Examples:ruby:pointer</title>
 </head>
 
 <body bgcolor="#ffffff">
 
-<tt>SWIG/Examples/ruby/pointer/</tt>
+<tt>alaqil/Examples/ruby/pointer/</tt>
 <hr>
 
 <H2>Simple Pointer Handling</H2>
 
 <p>
 This example illustrates a couple of techniques for handling
-simple pointers in SWIG.  The prototypical example is a C function
+simple pointers in alaqil.  The prototypical example is a C function
 that operates on pointers such as this:
 
 <blockquote>
@@ -23,7 +23,7 @@ void add(int *x, int *y, int *r) {
 </pre>
 </blockquote>
 
-By default, SWIG wraps this function exactly as specified and creates
+By default, alaqil wraps this function exactly as specified and creates
 an interface that expects pointer objects for arguments.  The only
 problem is how does one go about creating these objects from a script?
 
@@ -67,7 +67,7 @@ delete_int(c)
 </blockquote>
 
 <p>
-<li>Use the SWIG pointer library.  For example, in the interface file 
+<li>Use the alaqil pointer library.  For example, in the interface file 
 you would do this:
 
 <blockquote>
@@ -97,8 +97,8 @@ functions behind a common set of names.  For example, the same set of functions 
 with int, double, float, and other fundamental types.
 
 <p>
-<li>Use the SWIG typemap library.  This library allows you to completely
-change the way arguments are processed by SWIG.  For example:
+<li>Use the alaqil typemap library.  This library allows you to completely
+change the way arguments are processed by alaqil.  For example:
 
 <blockquote>
 <pre>
@@ -144,7 +144,7 @@ extraction.
 
 <ul>
 <li> <a href="example.c">example.c</a>  (C Source)
-<li> <a href="example.i">example.i</a>  (SWIG interface)
+<li> <a href="example.i">example.i</a>  (alaqil interface)
 <li> <a href="runme.rb">runme.rb</a> (Ruby Script)
 </ul>
 
@@ -157,7 +157,7 @@ make it.
 
 <p>
 <li>More documentation on the typemaps.i and pointer.i library files can be
-found in the SWIG user manual.  The files also contain documentation.
+found in the alaqil user manual.  The files also contain documentation.
 
 <p>
 <li>The pointer.i library is designed primarily for convenience.  If you

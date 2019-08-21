@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-# Test import of a SWIG generated module renamed as the package's __init__.py
+# Test import of a alaqil generated module renamed as the package's __init__.py
 testname = os.path.basename(os.path.dirname(os.path.abspath(__file__)))
 print "Testing " + testname + " - module renamed as __init__.py"
 

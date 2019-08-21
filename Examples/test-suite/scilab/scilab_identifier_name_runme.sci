@@ -1,4 +1,4 @@
-exec("swigtest.start", -1);
+exec("alaqiltest.start", -1);
 
 
 // Test truncating variables, constants, functions identifier names
@@ -26,4 +26,4 @@ st_too_long_member_i_set(st, 25);
 checkequal(st_too_long_member_i_get(st), 25, "st_too_long_member_i_get(st)");
 delete_st(st);
 
-exec("swigtest.quit", -1);
+exec("alaqiltest.quit", -1);

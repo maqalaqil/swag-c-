@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * li_std_map_runme.cs
  *
- * SWIG C# tester for std_map.i
+ * alaqil C# tester for std_map.i
  * This class tests all the functionality of the std_map.i wrapper.
  * Upon successful testing, the main function doesn't print out anything.
  * If any error is found - it will be printed on the screen.

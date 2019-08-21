@@ -16,7 +16,7 @@
 (check-throw (Foo-test-cls-ref-td f) (test-is-Error exvar))
 (check-throw (Foo-test-enum f) (= exvar (enum2)))
 
-; don't know how to test this... it is returning a SWIG wrapped int *
+; don't know how to test this... it is returning a alaqil wrapped int *
 ;(check-throw (Foo-test-array f) (equal? exvar '(0 1 2 3 4 5 6 7 8 9)))
 
 (check-throw (Foo-test-multi f 1) (= exvar 37))

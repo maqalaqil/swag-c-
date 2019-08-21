@@ -7,7 +7,7 @@
 # 
 #
 
-require 'swig_assert'
+require 'alaqil_assert'
 
 require 'li_std_vector'
 
@@ -15,21 +15,21 @@ include Li_std_vector
 
 iv = IntVector.new(4)
 
-swig_assert( "iv.respond_to? :each", binding )
+alaqil_assert( "iv.respond_to? :each", binding )
 
 begin
   iv.each
-  swig_assert( false, nil, "iv.each worked with no block!")
+  alaqil_assert( false, nil, "iv.each worked with no block!")
 rescue ArgumentError
 end
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 iv.respond_to?(:each) == true
 iv.respond_to?(:each_with_index) == true
 EOF
 
 iv.each_with_index { |e,i| 
-  swig_assert("#{e} == 0", binding, "for iv[#{i}] == 0") 
+  alaqil_assert("#{e} == 0", binding, "for iv[#{i}] == 0") 
 }
 
 0.upto(3) { |i| iv[i] = i }
@@ -46,10 +46,10 @@ iv.each_with_index { |e,i|
   "iv[1..-2].to_s" => '12',
   "iv[2..-3].to_s" => '',
 }.each do |k,v|
-  swig_assert( "#{k} == #{v.inspect}", binding )
+  alaqil_assert( "#{k} == #{v.inspect}", binding )
 end
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 iv << 5
 iv.push 5
 iv.pop == 5
@@ -66,30 +66,30 @@ EOF
 
 iv = IntVector.new([0,1,2,3,4,5,6])
 iv.delete_if { |x| x == 0 || x == 3 || x == 6 }
-swig_assert_equal(iv.to_s, '1245', binding)
+alaqil_assert_equal(iv.to_s, '1245', binding)
 
 iv[1,2] = [-2, -4]
-swig_assert_equal(iv.to_s, '1-2-45', binding)
+alaqil_assert_equal(iv.to_s, '1-2-45', binding)
 
 iv = IntVector.new([0,1,2,3])
 iv[0,1] = [-1, -2]
-swig_assert_equal(iv.to_s, '-1-2123', binding)
+alaqil_assert_equal(iv.to_s, '-1-2123', binding)
 
 iv = IntVector.new([1,2,3,4])
 iv[1,3] = [6,7,8,9]
 #__setitem__ needs fixing
-#swig_assert_equal(iv.to_s, '16789', binding)
+#alaqil_assert_equal(iv.to_s, '16789', binding)
 
 iv = IntVector.new([1,2,3,4])
 
-swig_assert_equal(iv[0], 1, binding)
-swig_assert_equal(iv[3], 4, binding)
-swig_assert_equal(iv[4], nil, binding)
-swig_assert_equal(iv[-5], nil, binding)
+alaqil_assert_equal(iv[0], 1, binding)
+alaqil_assert_equal(iv[3], 4, binding)
+alaqil_assert_equal(iv[4], nil, binding)
+alaqil_assert_equal(iv[-5], nil, binding)
 
 iv[-1] = 9
 iv[-4] = 6
-swig_assert_equal(iv.to_s, '6239', binding)
+alaqil_assert_equal(iv.to_s, '6239', binding)
 
 begin
   iv[-5] = 99
@@ -98,7 +98,7 @@ rescue IndexError
 end
 
 iv[6] = 5
-swig_assert_equal(iv.to_s, '6239555', binding)
+alaqil_assert_equal(iv.to_s, '6239555', binding)
 
 def failed(a, b, msg)
     a = 'nil' if a == nil
@@ -206,9 +206,9 @@ end
 
 dv = DoubleVector.new(10)
 
-swig_assert( "dv.respond_to? :each_with_index", binding )
+alaqil_assert( "dv.respond_to? :each_with_index", binding )
 
-dv.each_with_index { |e,i| swig_assert_equal("dv[#{i}]", 0.0, binding) }
+dv.each_with_index { |e,i| alaqil_assert_equal("dv[#{i}]", 0.0, binding) }
 
 0.upto(9) { |i| dv[i] = i/2.0 }
 
@@ -218,10 +218,10 @@ dv.each_with_index { |e,i| swig_assert_equal("dv[#{i}]", 0.0, binding) }
   "dv[0,3].to_s" => "0.00.51.0",
   "dv[3,3].to_s" => "1.52.02.5",
 }.each do |k,v|
-  swig_assert_equal( k, v.inspect, binding )
+  alaqil_assert_equal( k, v.inspect, binding )
 end
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 dv.delete_at(2)
 dv.delete_if { |x| x == 2.0 }
 dv.include? 3.0
@@ -243,10 +243,10 @@ bv = BoolVector.new(2)
 0.upto(bv.size-1) { |i| bv[i] = !bv[i] }
 bv_check = [true, true, false, true, false, false]
 for i in 0..bv.size-1 do
-  swig_assert(bv_check[i] == bv[i], binding, "bv[#{i}]")
+  alaqil_assert(bv_check[i] == bv[i], binding, "bv[#{i}]")
 end
 
-swig_assert_each_line(<<'EOF', binding)
+alaqil_assert_each_line(<<'EOF', binding)
 lv = LanguageVector.new
 lv << 1
 lv << [1,2]

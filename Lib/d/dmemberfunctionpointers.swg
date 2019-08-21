@@ -5,12 +5,12 @@
  * ----------------------------------------------------------------------------- */
 
 
-%typemap(ctype) SWIGTYPE (CLASS::*) "char *"
-%typemap(imtype) SWIGTYPE (CLASS::*) "char*"
-%typemap(dtype) SWIGTYPE (CLASS::*) "$dclassname"
+%typemap(ctype) alaqilTYPE (CLASS::*) "char *"
+%typemap(imtype) alaqilTYPE (CLASS::*) "char*"
+%typemap(dtype) alaqilTYPE (CLASS::*) "$dclassname"
 
-%typecheck(SWIG_TYPECHECK_POINTER)
-  SWIGTYPE (CLASS::*)
+%typecheck(alaqil_TYPECHECK_POINTER)
+  alaqilTYPE (CLASS::*)
   ""
 
 
@@ -18,42 +18,42 @@
  * Conversion generation typemaps.
  */
 
-%typemap(in, fragment="SWIG_UnPackData") SWIGTYPE (CLASS::*) %{
-  SWIG_UnpackData($input, (void *)&$1, sizeof($1));
+%typemap(in, fragment="alaqil_UnPackData") alaqilTYPE (CLASS::*) %{
+  alaqil_UnpackData($input, (void *)&$1, sizeof($1));
 %}
-%typemap(out, fragment="SWIG_PackData") SWIGTYPE (CLASS::*) %{
+%typemap(out, fragment="alaqil_PackData") alaqilTYPE (CLASS::*) %{
   char buf[128];
-  char *data = SWIG_PackData(buf, (void *)&$1, sizeof($1));
+  char *data = alaqil_PackData(buf, (void *)&$1, sizeof($1));
   *data = '\0';
-  $result = SWIG_d_string_callback(buf);
+  $result = alaqil_d_string_callback(buf);
 %}
 
-%typemap(directorin) SWIGTYPE (CLASS::*) "$input = (void *) $1;"
-%typemap(directorout, warning=SWIGWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) SWIGTYPE (CLASS::*)
+%typemap(directorin) alaqilTYPE (CLASS::*) "$input = (void *) $1;"
+%typemap(directorout, warning=alaqilWARN_TYPEMAP_DIRECTOROUT_PTR_MSG) alaqilTYPE (CLASS::*)
   "$result = ($1_ltype)$input;"
 
-%typemap(ddirectorin) SWIGTYPE (CLASS::*)
+%typemap(ddirectorin) alaqilTYPE (CLASS::*)
   "($winput is null) ? null : new $dclassname($winput, false)"
-%typemap(ddirectorout) SWIGTYPE (CLASS::*) "$dclassname.swigGetCPtr($dcall)"
+%typemap(ddirectorout) alaqilTYPE (CLASS::*) "$dclassname.alaqilGetCPtr($dcall)"
 
-%typemap(din) SWIGTYPE (CLASS::*) "$dclassname.swigGetCMemberPtr($dinput)"
-%typemap(dout, excode=SWIGEXCODE) SWIGTYPE (CLASS::*) {
+%typemap(din) alaqilTYPE (CLASS::*) "$dclassname.alaqilGetCMemberPtr($dinput)"
+%typemap(dout, excode=alaqilEXCODE) alaqilTYPE (CLASS::*) {
   char* cMemberPtr = $imcall;
   $dclassname ret = (cMemberPtr is null) ? null : new $dclassname(cMemberPtr, $owner);$excode
   return ret;
 }
 
-%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
-%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
+%apply alaqilTYPE (CLASS::*) { alaqilTYPE (CLASS::*const) }
+%apply alaqilTYPE & { alaqilTYPE (CLASS::*const&) }
 
 /*
  * Helper functions to pack/unpack arbitrary binary data (member function
  * pointers in this case) into a string.
  */
 
-%fragment("SWIG_PackData", "header") {
+%fragment("alaqil_PackData", "header") {
 /* Pack binary data into a string */
-SWIGINTERN char * SWIG_PackData(char *c, void *ptr, size_t sz) {
+alaqilINTERN char * alaqil_PackData(char *c, void *ptr, size_t sz) {
   static const char hex[17] = "0123456789abcdef";
   const unsigned char *u = (unsigned char *) ptr;
   const unsigned char *eu =  u + sz;
@@ -66,9 +66,9 @@ SWIGINTERN char * SWIG_PackData(char *c, void *ptr, size_t sz) {
 }
 }
 
-%fragment("SWIG_UnPackData", "header") {
+%fragment("alaqil_UnPackData", "header") {
 /* Unpack binary data from a string */
-SWIGINTERN const char * SWIG_UnpackData(const char *c, void *ptr, size_t sz) {
+alaqilINTERN const char * alaqil_UnpackData(const char *c, void *ptr, size_t sz) {
   unsigned char *u = (unsigned char *) ptr;
   const unsigned char *eu = u + sz;
   for (; u != eu; ++u) {

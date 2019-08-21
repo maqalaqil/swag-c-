@@ -7,7 +7,7 @@ public class special_variable_macros_runme {
     try {
 	System.loadLibrary("special_variable_macros");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n" + e);
+      System.err.println("Native code library failed to load. See the chapter on Dynamic Linking Problems in the alaqil Java documentation for help.\n" + e);
       System.exit(1);
     }
   }
@@ -20,9 +20,9 @@ public class special_variable_macros_runme {
       throw new RuntimeException("test failed");
     if (!special_variable_macros.testJill(name).equals("jilly"))
       throw new RuntimeException("test failed");
-    if (!special_variable_macros.testMary(name).equals("SWIGTYPE_p_NameWrap"))
+    if (!special_variable_macros.testMary(name).equals("alaqilTYPE_p_NameWrap"))
       throw new RuntimeException("test failed");
-    if (!special_variable_macros.testJames(name).equals("SWIGTYPE_Name"))
+    if (!special_variable_macros.testJames(name).equals("alaqilTYPE_Name"))
       throw new RuntimeException("test failed");
     if (!special_variable_macros.testJim(name).equals("multiname num"))
       throw new RuntimeException("test failed");

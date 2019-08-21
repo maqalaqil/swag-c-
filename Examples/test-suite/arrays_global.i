@@ -2,7 +2,7 @@
 This test case tests that various types of arrays are working.
 */
 
-%warnfilter(SWIGWARN_TYPEMAP_CHARLEAK,SWIGWARN_TYPEMAP_VARIN_UNDEF);
+%warnfilter(alaqilWARN_TYPEMAP_CHARLEAK,alaqilWARN_TYPEMAP_VARIN_UNDEF);
 
 %module arrays_global
 

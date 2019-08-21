@@ -2,9 +2,9 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:_Znam
-   fun:_Z21SWIG_AsCharPtrAndSizeP7_objectPPcPmPi
+   fun:_Z21alaqil_AsCharPtrAndSizeP7_objectPPcPmPi
    fun:var_pcharc_set
-   fun:swig_varlink_setattr
+   fun:alaqil_varlink_setattr
    fun:PyObject_SetAttr
    fun:PyEval_EvalFrame
    fun:PyEval_EvalCodeEx
@@ -19,7 +19,7 @@
    Memcheck:Leak
    fun:_Znam
    fun:var_pchar_set
-   fun:swig_varlink_setattr
+   fun:alaqil_varlink_setattr
    fun:PyObject_SetAttr
    fun:PyEval_EvalFrame
    fun:PyEval_EvalCodeEx
@@ -65,9 +65,9 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:_Znam
-   fun:_Z21SWIG_AsCharPtrAndSizeP7_objectPPcPmPi
+   fun:_Z21alaqil_AsCharPtrAndSizeP7_objectPPcPmPi
    fun:var_pcharc_set
-   fun:swig_varlink_setattr
+   fun:alaqil_varlink_setattr
    fun:PyObject_SetAttr
    fun:PyEval_EvalFrame
    fun:PyEval_EvalCodeEx
@@ -113,8 +113,8 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:malloc
-   fun:SWIG_Python_newvarlink
-   fun:SWIG_globals
+   fun:alaqil_Python_newvarlink
+   fun:alaqil_globals
    fun:init_primitive_types
    fun:_PyImport_LoadDynamicModule
    fun:load_module
@@ -129,7 +129,7 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:malloc
-   fun:SWIG_Python_addvarlink
+   fun:alaqil_Python_addvarlink
    fun:init_primitive_types
    fun:_PyImport_LoadDynamicModule
    fun:load_module
@@ -161,7 +161,7 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:malloc
-   fun:SWIG_Python_addvarlink
+   fun:alaqil_Python_addvarlink
    fun:init_primitive_types
    fun:_PyImport_LoadDynamicModule
    fun:load_module
@@ -417,8 +417,8 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:malloc
-   fun:SWIG_Python_newvarlink
-   fun:SWIG_globals
+   fun:alaqil_Python_newvarlink
+   fun:alaqil_globals
    fun:init_reference_global_vars
    fun:_PyImport_LoadDynamicModule
    fun:load_module
@@ -433,7 +433,7 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:malloc
-   fun:SWIG_Python_addvarlink
+   fun:alaqil_Python_addvarlink
    fun:init_reference_global_vars
    fun:_PyImport_LoadDynamicModule
    fun:load_module
@@ -449,7 +449,7 @@
    <insert a suppression name here>
    Memcheck:Leak
    fun:malloc
-   fun:SWIG_Python_addvarlink
+   fun:alaqil_Python_addvarlink
    fun:init_reference_global_vars
    fun:_PyImport_LoadDynamicModule
    fun:load_module

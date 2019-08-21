@@ -34,7 +34,7 @@ To use these, suppose you had a C function like this :
                return *a+*b;
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double fadd(double *INPUT, double *INPUT);
@@ -76,7 +76,7 @@ returns the integer part in one of its parameters).K:
 
         double modf(double x, double *ip);
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         double modf(double x, double *OUTPUT);
@@ -121,7 +121,7 @@ For example, suppose you were trying to wrap the following function :
              *x = -(*x);
         }
 
-You could wrap it with SWIG as follows :
+You could wrap it with alaqil as follows :
 
         %include <typemaps.i>
         void neg(double *INOUT);
@@ -139,7 +139,7 @@ to a Python variable you might do this :
 
        x = neg(x)
 
-Note : previous versions of SWIG used the symbol 'BOTH' to mark
+Note : previous versions of alaqil used the symbol 'BOTH' to mark
 input/output arguments.   This is still supported, but will be slowly
 phased out in future releases.
 

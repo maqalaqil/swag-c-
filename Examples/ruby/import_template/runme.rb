@@ -62,31 +62,31 @@ x = d.toBase
 puts " Spam -> Base -> Foo : "
 y = Foo::IntFoo.fromBase(x)
 if y != nil
-      puts "bad swig"
+      puts "bad alaqil"
 else
-      puts "good swig"
+      puts "good alaqil"
 end
 
 puts " Spam -> Base -> Bar : "
 y = Bar::IntBar.fromBase(x)
 if y != nil
-      puts "good swig"
+      puts "good alaqil"
 else
-      puts "bad swig"
+      puts "bad alaqil"
 end
       
 puts " Spam -> Base -> Spam : "
 y = Spam::IntSpam.fromBase(x)
 if y != nil
-      puts "good swig"
+      puts "good alaqil"
 else
-      puts "bad swig"
+      puts "bad alaqil"
 end
 
 puts " Foo -> Spam : "
 y = Spam::IntSpam.fromBase(b)
 if y != nil
-      puts "bad swig"
+      puts "bad alaqil"
 else
-      puts "good swig"
+      puts "good alaqil"
 end

@@ -2,23 +2,23 @@
 %module typemap_out_optimal
 
 // Just the following languages tested
-#if defined (SWIGCSHARP) || defined (SWIGD)
-%typemap(out, optimal="1") SWIGTYPE %{
+#if defined (alaqilCSHARP) || defined (alaqilD)
+%typemap(out, optimal="1") alaqilTYPE %{
   $result = new $1_ltype((const $1_ltype &)$1);
 %}
-#elif defined (SWIGJAVA)
-%typemap(out, optimal="1") SWIGTYPE %{ 
+#elif defined (alaqilJAVA)
+%typemap(out, optimal="1") alaqilTYPE %{ 
   *($&1_ltype*)&$result = new $1_ltype((const $1_ltype &)$1);
 %}
-#elif defined (SWIGUTL)
-%typemap(out,noblock="1", optimal="1") SWIGTYPE {
-  %set_output(SWIG_NewPointerObj(%new_copy($1, $ltype), $&descriptor, SWIG_POINTER_OWN | %newpointer_flags));
+#elif defined (alaqilUTL)
+%typemap(out,noblock="1", optimal="1") alaqilTYPE {
+  %set_output(alaqil_NewPointerObj(%new_copy($1, $ltype), $&descriptor, alaqil_POINTER_OWN | %newpointer_flags));
 }
 #endif
 
 %ignore XX::operator=;
 
-#ifdef SWIGD
+#ifdef alaqilD
 %rename(trace) XX::debug;
 #endif
 

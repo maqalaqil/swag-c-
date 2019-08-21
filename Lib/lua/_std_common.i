@@ -7,7 +7,7 @@
 %include <std_except.i> // the general exceptions
 
 /*
-The basic idea here, is instead of trying to feed SWIG all the
+The basic idea here, is instead of trying to feed alaqil all the
 horribly templated STL code, to give it a neatened version.
 
 These %defines cover some of the more common methods
@@ -75,7 +75,7 @@ public:
 Random access methods
 */
 %define %STD_RANDOM_ACCESS_METHODS(CLASS,T)
-	%extend // this is a extra bit of SWIG code
+	%extend // this is a extra bit of alaqil code
 	{
 		// [] is replaced by __getitem__ & __setitem__
 		// simply throws a string, which causes a lua error

@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
- * swigtype_inout.i
+ * alaqiltype_inout.i
  *
  * Pointer pointer and pointer reference handling typemap library for non-primitive types
  *
@@ -8,7 +8,7 @@
  *
  * These are named typemaps (OUTPUT) and can be used like any named typemap.
  * Alternatively they can be made the default by using %apply:
- *   %apply SWIGTYPE *& OUTPUT { SWIGTYPE *& }
+ *   %apply alaqilTYPE *& OUTPUT { alaqilTYPE *& }
  * ----------------------------------------------------------------------------- */
 
 /*
@@ -23,12 +23,12 @@
  *   // use x
  *   x.Dispose(); // manually clear memory or otherwise leave out and leave it to the garbage collector
  */
-%typemap(ctype) SWIGTYPE *& OUTPUT "void **"
-%typemap(imtype, out="global::System.IntPtr") SWIGTYPE *& OUTPUT "out global::System.IntPtr"
-%typemap(cstype) SWIGTYPE *& OUTPUT "out $*csclassname"
+%typemap(ctype) alaqilTYPE *& OUTPUT "void **"
+%typemap(imtype, out="global::System.IntPtr") alaqilTYPE *& OUTPUT "out global::System.IntPtr"
+%typemap(cstype) alaqilTYPE *& OUTPUT "out $*csclassname"
 %typemap(csin,
          pre="    global::System.IntPtr cPtr_$csinput = global::System.IntPtr.Zero;",
          post="      $csinput = (cPtr_$csinput == global::System.IntPtr.Zero) ? null : new $*csclassname(cPtr_$csinput, true);",
-         cshin="out $csinput") SWIGTYPE *& OUTPUT "out cPtr_$csinput"
-%typemap(in) SWIGTYPE *& OUTPUT %{ $1 = ($1_ltype)$input; %}
-%typemap(freearg) SWIGTYPE *& OUTPUT ""
+         cshin="out $csinput") alaqilTYPE *& OUTPUT "out cPtr_$csinput"
+%typemap(in) alaqilTYPE *& OUTPUT %{ $1 = ($1_ltype)$input; %}
+%typemap(freearg) alaqilTYPE *& OUTPUT ""

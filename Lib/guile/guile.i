@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * guile.i
  *
- * SWIG Configuration File for Guile.
+ * alaqil Configuration File for Guile.
  * ----------------------------------------------------------------------------- */
 
 /* Macro for inserting Scheme code into the stub */
@@ -28,6 +28,6 @@
   %pragma(guile) return_multi_doc = "Returns $num_values values: $values."
 %enddef
 
-#define GUILE_APPEND_RESULT SWIG_APPEND_VALUE
+#define GUILE_APPEND_RESULT alaqil_APPEND_VALUE
 
 %include <typemaps.i>

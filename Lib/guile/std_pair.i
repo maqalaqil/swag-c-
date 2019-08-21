@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * std_pair.i
  *
- * SWIG typemaps for std::pair
+ * alaqil typemaps for std::pair
  * ----------------------------------------------------------------------------- */
 
 %include <std_common.i>
@@ -29,12 +29,12 @@ namespace std {
                 SCM first, second;
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
-                x = (T*) SWIG_MustGetPtr(first,$descriptor(T *),$argnum, 0);
-                y = (U*) SWIG_MustGetPtr(second,$descriptor(U *),$argnum, 0);
+                x = (T*) alaqil_MustGetPtr(first,$descriptor(T *),$argnum, 0);
+                y = (U*) alaqil_MustGetPtr(second,$descriptor(U *),$argnum, 0);
                 $1 = std::make_pair(*x,*y);
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         %}
         %typemap(in) const pair<T,U>& (std::pair<T,U> *temp = 0),
@@ -45,33 +45,33 @@ namespace std {
                 SCM first, second;
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
-                x = (T*) SWIG_MustGetPtr(first,$descriptor(T *),$argnum, 0);
-                y = (U*) SWIG_MustGetPtr(second,$descriptor(U *),$argnum, 0);
+                x = (T*) alaqil_MustGetPtr(first,$descriptor(T *),$argnum, 0);
+                y = (U*) alaqil_MustGetPtr(second,$descriptor(U *),$argnum, 0);
                 temp = new std::pair< T, U >(*x,*y);
                 $1 = temp;
             } else {
                 $1 = ($1_ltype)
-                    SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                    alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         %}
         %typemap(freearg) const pair<T,U>&, const pair<T,U>* %{ delete temp$argnum; %}
         %typemap(out) pair<T,U> {
             T* x = new T($1.first);
             U* y = new U($1.second);
-            SCM first = SWIG_NewPointerObj(x,$descriptor(T *), 1);
-            SCM second = SWIG_NewPointerObj(y,$descriptor(U *), 1);
+            SCM first = alaqil_NewPointerObj(x,$descriptor(T *), 1);
+            SCM second = alaqil_NewPointerObj(y,$descriptor(U *), 1);
             $result = scm_cons(first,second);
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) pair<T,U> {
+        %typecheck(alaqil_TYPECHECK_PAIR) pair<T,U> {
             /* native pair? */
             if (scm_is_pair($input)) {
                 T* x;
                 U* y;
                 SCM first = SCM_CAR($input);
                 SCM second = SCM_CDR($input);
-                if (SWIG_ConvertPtr(first,(void**) &x,
+                if (alaqil_ConvertPtr(first,(void**) &x,
                                     $descriptor(T *), 0) == 0 &&
-                    SWIG_ConvertPtr(second,(void**) &y,
+                    alaqil_ConvertPtr(second,(void**) &y,
                                     $descriptor(U *), 0) == 0) {
                     $1 = 1;
                 } else {
@@ -80,14 +80,14 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) const pair<T,U>&,
+        %typecheck(alaqil_TYPECHECK_PAIR) const pair<T,U>&,
                                         const pair<T,U>* {
             /* native pair? */
             if (scm_is_pair($input)) {
@@ -95,9 +95,9 @@ namespace std {
                 U* y;
                 SCM first = SCM_CAR($input);
                 SCM second = SCM_CDR($input);
-                if (SWIG_ConvertPtr(first,(void**) &x,
+                if (alaqil_ConvertPtr(first,(void**) &x,
                                     $descriptor(T *), 0) == 0 &&
-                    SWIG_ConvertPtr(second,(void**) &y,
+                    alaqil_ConvertPtr(second,(void**) &y,
                                     $descriptor(U *), 0) == 0) {
                     $1 = 1;
                 } else {
@@ -106,7 +106,7 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -139,13 +139,13 @@ namespace std {
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
                 if (!CHECK(first))
-                    SWIG_exception(SWIG_TypeError,
+                    alaqil_exception(alaqil_TypeError,
                                    "pair<" #T "," #U "> expected");
-                y = (U*) SWIG_MustGetPtr(second,$descriptor(U *),$argnum, 0);
+                y = (U*) alaqil_MustGetPtr(second,$descriptor(U *),$argnum, 0);
                 $1 = std::make_pair(CONVERT_FROM(first),*y);
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         %}
         %typemap(in) const pair<T,U>& (std::pair<T,U> *temp = 0),
@@ -156,30 +156,30 @@ namespace std {
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
                 if (!CHECK(first))
-                    SWIG_exception(SWIG_TypeError,
+                    alaqil_exception(alaqil_TypeError,
                                    "pair<" #T "," #U "> expected");
-                y = (U*) SWIG_MustGetPtr(second,$descriptor(U *),$argnum, 0);
+                y = (U*) alaqil_MustGetPtr(second,$descriptor(U *),$argnum, 0);
                 temp = new std::pair< T, U >(CONVERT_FROM(first),*y);
                 $1 = temp;
             } else {
                 $1 = ($1_ltype)
-                    SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                    alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         %}
         %typemap(freearg) const pair<T,U>&, const pair<T,U>* %{ delete temp$argnum; %}
         %typemap(out) pair<T,U> {
             U* y = new U($1.second);
-            SCM second = SWIG_NewPointerObj(y,$descriptor(U *), 1);
+            SCM second = alaqil_NewPointerObj(y,$descriptor(U *), 1);
             $result = scm_cons(CONVERT_TO($1.first),second);
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) pair<T,U> {
+        %typecheck(alaqil_TYPECHECK_PAIR) pair<T,U> {
             /* native pair? */
             if (scm_is_pair($input)) {
                 U* y;
                 SCM first = SCM_CAR($input);
                 SCM second = SCM_CDR($input);
                 if (CHECK(first) &&
-                    SWIG_ConvertPtr(second,(void**) &y,
+                    alaqil_ConvertPtr(second,(void**) &y,
                                     $descriptor(U *), 0) == 0) {
                     $1 = 1;
                 } else {
@@ -188,14 +188,14 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) const pair<T,U>&,
+        %typecheck(alaqil_TYPECHECK_PAIR) const pair<T,U>&,
                                         const pair<T,U>* {
             /* native pair? */
             if (scm_is_pair($input)) {
@@ -203,7 +203,7 @@ namespace std {
                 SCM first = SCM_CAR($input);
                 SCM second = SCM_CDR($input);
                 if (CHECK(first) &&
-                    SWIG_ConvertPtr(second,(void**) &y,
+                    alaqil_ConvertPtr(second,(void**) &y,
                                     $descriptor(U *), 0) == 0) {
                     $1 = 1;
                 } else {
@@ -212,7 +212,7 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -238,14 +238,14 @@ namespace std {
                 SCM first, second;
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
-                x = (T*) SWIG_MustGetPtr(first,$descriptor(T *),$argnum, 0);
+                x = (T*) alaqil_MustGetPtr(first,$descriptor(T *),$argnum, 0);
                 if (!CHECK(second))
-                    SWIG_exception(SWIG_TypeError,
+                    alaqil_exception(alaqil_TypeError,
                                    "pair<" #T "," #U "> expected");
                 $1 = std::make_pair(*x,CONVERT_FROM(second));
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         %}
         %typemap(in) const pair<T,U>& (std::pair<T,U> *temp = 0),
@@ -255,30 +255,30 @@ namespace std {
                 SCM first, second;
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
-                x = (T*) SWIG_MustGetPtr(first,$descriptor(T *),$argnum, 0);
+                x = (T*) alaqil_MustGetPtr(first,$descriptor(T *),$argnum, 0);
                 if (!CHECK(second))
-                    SWIG_exception(SWIG_TypeError,
+                    alaqil_exception(alaqil_TypeError,
                                    "pair<" #T "," #U "> expected");
                 temp = new std::pair< T, U >(*x,CONVERT_FROM(second));
                 $1 = temp;
             } else {
                 $1 = ($1_ltype)
-                    SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                    alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         %}
         %typemap(freearg) const pair<T,U>&, const pair<T,U>* %{ delete temp$argnum; %}
         %typemap(out) pair<T,U> {
             T* x = new T($1.first);
-            SCM first = SWIG_NewPointerObj(x,$descriptor(T *), 1);
+            SCM first = alaqil_NewPointerObj(x,$descriptor(T *), 1);
             $result = scm_cons(first,CONVERT_TO($1.second));
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) pair<T,U> {
+        %typecheck(alaqil_TYPECHECK_PAIR) pair<T,U> {
             /* native pair? */
             if (scm_is_pair($input)) {
                 T* x;
                 SCM first = SCM_CAR($input);
                 SCM second = SCM_CDR($input);
-                if (SWIG_ConvertPtr(first,(void**) &x,
+                if (alaqil_ConvertPtr(first,(void**) &x,
                                     $descriptor(T *), 0) == 0 &&
                     CHECK(second)) {
                     $1 = 1;
@@ -288,21 +288,21 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) const pair<T,U>&,
+        %typecheck(alaqil_TYPECHECK_PAIR) const pair<T,U>&,
                                         const pair<T,U>* {
             /* native pair? */
             if (scm_is_pair($input)) {
                 T* x;
                 SCM first = SCM_CAR($input);
                 SCM second = SCM_CDR($input);
-                if (SWIG_ConvertPtr(first,(void**) &x,
+                if (alaqil_ConvertPtr(first,(void**) &x,
                                     $descriptor(T *), 0) == 0 &&
                     CHECK(second)) {
                     $1 = 1;
@@ -312,7 +312,7 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -339,13 +339,13 @@ namespace std {
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
                 if (!CHECK_T(first) || !CHECK_U(second))
-                    SWIG_exception(SWIG_TypeError,
+                    alaqil_exception(alaqil_TypeError,
                                    "pair<" #T "," #U "> expected");
                 $1 = std::make_pair(CONVERT_T_FROM(first),
                                     CONVERT_U_FROM(second));
             } else {
                 $1 = *(($&1_type)
-                       SWIG_MustGetPtr($input,$&1_descriptor,$argnum, 0));
+                       alaqil_MustGetPtr($input,$&1_descriptor,$argnum, 0));
             }
         %}
         %typemap(in) const pair<T,U>& (std::pair<T,U> *temp = 0),
@@ -355,13 +355,13 @@ namespace std {
                 first = SCM_CAR($input);
                 second = SCM_CDR($input);
                 if (!CHECK_T(first) || !CHECK_U(second))
-                    SWIG_exception(SWIG_TypeError,
+                    alaqil_exception(alaqil_TypeError,
                                    "pair<" #T "," #U "> expected");
                 temp = new std::pair< T, U >(CONVERT_T_FROM(first), CONVERT_U_FROM(second));
                 $1 = temp;
             } else {
                 $1 = ($1_ltype)
-                    SWIG_MustGetPtr($input,$1_descriptor,$argnum, 0);
+                    alaqil_MustGetPtr($input,$1_descriptor,$argnum, 0);
             }
         %}
         %typemap(freearg) const pair<T,U>&, const pair<T,U>* %{ delete temp$argnum; %}
@@ -369,7 +369,7 @@ namespace std {
             $result = scm_cons(CONVERT_T_TO($1.first),
                               CONVERT_U_TO($1.second));
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) pair<T,U> {
+        %typecheck(alaqil_TYPECHECK_PAIR) pair<T,U> {
             /* native pair? */
             if (scm_is_pair($input)) {
                 SCM first = SCM_CAR($input);
@@ -382,14 +382,14 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $&1_descriptor, 0) == 0)
                     $1 = 1;
                 else
                     $1 = 0;
             }
         }
-        %typecheck(SWIG_TYPECHECK_PAIR) const pair<T,U>&,
+        %typecheck(alaqil_TYPECHECK_PAIR) const pair<T,U>&,
                                         const pair<T,U>* {
             /* native pair? */
             if (scm_is_pair($input)) {
@@ -403,7 +403,7 @@ namespace std {
             } else {
                 /* wrapped pair? */
                 std::pair< T, U >* m;
-                if (SWIG_ConvertPtr($input,(void **) &m,
+                if (alaqil_ConvertPtr($input,(void **) &m,
                                     $1_descriptor, 0) == 0)
                     $1 = 1;
                 else
@@ -423,7 +423,7 @@ namespace std {
 
 
     specialize_std_pair_on_first(bool,scm_is_bool,
-                              scm_is_true,SWIG_bool2scm);
+                              scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_first(int,scm_is_number,
                               scm_to_long,scm_from_long);
     specialize_std_pair_on_first(short,scm_is_number,
@@ -441,10 +441,10 @@ namespace std {
     specialize_std_pair_on_first(float,scm_is_number,
                               scm_to_double,scm_from_double);
     specialize_std_pair_on_first(std::string,scm_is_string,
-                              SWIG_scm2string,SWIG_string2scm);
+                              alaqil_scm2string,alaqil_string2scm);
 
     specialize_std_pair_on_second(bool,scm_is_bool,
-                                scm_is_true,SWIG_bool2scm);
+                                scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_second(int,scm_is_number,
                                 scm_to_long,scm_from_long);
     specialize_std_pair_on_second(short,scm_is_number,
@@ -462,52 +462,52 @@ namespace std {
     specialize_std_pair_on_second(float,scm_is_number,
                                 scm_to_double,scm_from_double);
     specialize_std_pair_on_second(std::string,scm_is_string,
-                                SWIG_scm2string,SWIG_string2scm);
+                                alaqil_scm2string,alaqil_string2scm);
 
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                int,scm_is_number,
-                               scm_to_long,scm_from_long);
-    specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
-                               short,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
+                               short,scm_is_number,
+                               scm_to_long,scm_from_long);
+    specialize_std_pair_on_both(bool,scm_is_bool,
+                               scm_is_true,alaqil_bool2scm,
                                long,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                double,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                float,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_pair_on_both(bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm,
+                               scm_is_true,alaqil_bool2scm,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(int,scm_is_number,
                                scm_to_long,scm_from_long,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(int,scm_is_number,
                                scm_to_long,scm_from_long,
                                int,scm_is_number,
@@ -543,11 +543,11 @@ namespace std {
     specialize_std_pair_on_both(int,scm_is_number,
                                scm_to_long,scm_from_long,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(short,scm_is_number,
                                scm_to_long,scm_from_long,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(short,scm_is_number,
                                scm_to_long,scm_from_long,
                                int,scm_is_number,
@@ -583,11 +583,11 @@ namespace std {
     specialize_std_pair_on_both(short,scm_is_number,
                                scm_to_long,scm_from_long,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(long,scm_is_number,
                                scm_to_long,scm_from_long,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(long,scm_is_number,
                                scm_to_long,scm_from_long,
                                int,scm_is_number,
@@ -623,11 +623,11 @@ namespace std {
     specialize_std_pair_on_both(long,scm_is_number,
                                scm_to_long,scm_from_long,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                int,scm_is_number,
@@ -663,11 +663,11 @@ namespace std {
     specialize_std_pair_on_both(unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                int,scm_is_number,
@@ -703,11 +703,11 @@ namespace std {
     specialize_std_pair_on_both(unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                int,scm_is_number,
@@ -743,11 +743,11 @@ namespace std {
     specialize_std_pair_on_both(unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(double,scm_is_number,
                                scm_to_double,scm_from_double,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(double,scm_is_number,
                                scm_to_double,scm_from_double,
                                int,scm_is_number,
@@ -783,11 +783,11 @@ namespace std {
     specialize_std_pair_on_both(double,scm_is_number,
                                scm_to_double,scm_from_double,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(float,scm_is_number,
                                scm_to_double,scm_from_double,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(float,scm_is_number,
                                scm_to_double,scm_from_double,
                                int,scm_is_number,
@@ -823,45 +823,45 @@ namespace std {
     specialize_std_pair_on_both(float,scm_is_number,
                                scm_to_double,scm_from_double,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                bool,scm_is_bool,
-                               scm_is_true,SWIG_bool2scm);
+                               scm_is_true,alaqil_bool2scm);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                int,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                short,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                long,scm_is_number,
                                scm_to_long,scm_from_long);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                unsigned int,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                unsigned short,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                unsigned long,scm_is_number,
                                scm_to_ulong,scm_from_ulong);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                double,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                float,scm_is_number,
                                scm_to_double,scm_from_double);
     specialize_std_pair_on_both(std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm,
+                               alaqil_scm2string,alaqil_string2scm,
                                std::string,scm_is_string,
-                               SWIG_scm2string,SWIG_string2scm);
+                               alaqil_scm2string,alaqil_string2scm);
 }

@@ -1,7 +1,7 @@
 %module nested_template_base
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) val;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) val;
 #endif
 
 %inline %{
@@ -14,7 +14,7 @@
 // The %template goes after OuterT and before OuterC as OuterC::InnerC's base is handled inside OuterC
 %template(OuterTInnerS) OuterT<OuterC::InnerS>;
 
-#if !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+#if !defined(alaqilCSHARP) && !defined(alaqilJAVA)
 %feature("flatnested") OuterC::InnerS;
 %feature("flatnested") OuterC::InnerC;
 #endif

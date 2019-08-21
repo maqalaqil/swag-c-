@@ -3,10 +3,10 @@ This was reported in bug #909389 */
 
 %module derived_nested
 
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) BB::CC;
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) BB::DD;
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) BB::EE;
-%warnfilter(SWIGWARN_PARSE_NAMED_NESTED_CLASS) BB::FF;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) BB::CC;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) BB::DD;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) BB::EE;
+%warnfilter(alaqilWARN_PARSE_NAMED_NESTED_CLASS) BB::FF;
 
 %inline %{
 

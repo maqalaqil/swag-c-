@@ -27,7 +27,7 @@ class string;
 %typemap(godirectorout) string
 %{
   {
-    p := Swig_malloc(len($input))
+    p := alaqil_malloc(len($input))
     s := (*[1<<30]byte)(unsafe.Pointer(p))[:len($input)]
     copy(s, $input)
     $result = *(*string)(unsafe.Pointer(&s))
@@ -41,16 +41,16 @@ class string;
 %}
 
 %typemap(out,fragment="AllocateString") string
-%{ $result = Swig_AllocateString($1.data(), $1.length()); %}
+%{ $result = alaqil_AllocateString($1.data(), $1.length()); %}
 
 %typemap(goout,fragment="CopyString") string
-%{ $result = swigCopyString($1) %}
+%{ $result = alaqilCopyString($1) %}
 
 %typemap(directorin,fragment="AllocateString") string
-%{ $input = Swig_AllocateString($1.data(), $1.length()); %}
+%{ $input = alaqil_AllocateString($1.data(), $1.length()); %}
 
 %typemap(godirectorin,fragment="CopyString") string
-%{ $result = swigCopyString($input) %}
+%{ $result = alaqilCopyString($input) %}
 
 %typemap(in) const string &
 %{
@@ -61,14 +61,14 @@ class string;
 %typemap(godirectorout) const string &
 %{
   {
-    p := Swig_malloc(len($input))
+    p := alaqil_malloc(len($input))
     s := (*[1<<30]byte)(unsafe.Pointer(p))[:len($input)]
     copy(s, $input)
     $result = *(*string)(unsafe.Pointer(&s))
   }
 %}
 
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
+%typemap(directorout,warning=alaqilWARN_TYPEMAP_THREAD_UNSAFE_MSG) const string &
 %{
   static $*1_ltype $1_str;
   $1_str.assign($input.p, $input.n);
@@ -77,15 +77,15 @@ class string;
 %}
 
 %typemap(out,fragment="AllocateString") const string &
-%{ $result = Swig_AllocateString((*$1).data(), (*$1).length()); %}
+%{ $result = alaqil_AllocateString((*$1).data(), (*$1).length()); %}
 
 %typemap(goout,fragment="CopyString") const string &
-%{ $result = swigCopyString($1) %}
+%{ $result = alaqilCopyString($1) %}
 
 %typemap(directorin,fragment="AllocateString") const string &
-%{ $input = Swig_AllocateString($1.data(), $1.length()); %}
+%{ $input = alaqil_AllocateString($1.data(), $1.length()); %}
 
 %typemap(godirectorin,fragment="CopyString") const string &
-%{ $result = swigCopyString($input) %}
+%{ $result = alaqilCopyString($input) %}
 
 }

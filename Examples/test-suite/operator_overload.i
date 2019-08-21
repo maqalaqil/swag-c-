@@ -6,16 +6,16 @@ see bottom for a set of possible tests
 */
 %module operator_overload
 
-#if defined(SWIGPYTHON)
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_EQ,
-	    SWIGWARN_IGNORE_OPERATOR_INDEX,
-	    SWIGWARN_IGNORE_OPERATOR_PLUSPLUS,
-	    SWIGWARN_IGNORE_OPERATOR_MINUSMINUS,
-	    SWIGWARN_IGNORE_OPERATOR_LAND,
-	    SWIGWARN_IGNORE_OPERATOR_LOR);
+#if defined(alaqilPYTHON)
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_EQ,
+	    alaqilWARN_IGNORE_OPERATOR_INDEX,
+	    alaqilWARN_IGNORE_OPERATOR_PLUSPLUS,
+	    alaqilWARN_IGNORE_OPERATOR_MINUSMINUS,
+	    alaqilWARN_IGNORE_OPERATOR_LAND,
+	    alaqilWARN_IGNORE_OPERATOR_LOR);
 #endif
 
-#if !defined(SWIGLUA) && !defined(SWIGR)
+#if !defined(alaqilLUA) && !defined(alaqilR)
 %rename(Equal) operator =;
 %rename(PlusEqual) operator +=;
 %rename(MinusEqual) operator -=;
@@ -47,7 +47,7 @@ see bottom for a set of possible tests
 
 %rename(IndexInto) *::operator[](unsigned idx); // some languages have a %rename *::operator[] already in place, which seems to takes precedence over the above %rename operator[].
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %csmethodmodifiers operator++() "protected";
 %csmethodmodifiers operator++(int) "private";
 %csmethodmodifiers operator--() "private";
@@ -68,19 +68,19 @@ see bottom for a set of possible tests
 %}
 #endif
 
-#ifdef SWIGPHP
+#ifdef alaqilPHP
 %rename(AndOperator) operator &&;
 %rename(OrOperator) operator ||;
 #endif
 
-#if defined(SWIGPYTHON)
+#if defined(alaqilPYTHON)
 %feature("python:slot", "tp_str", functype="reprfunc") Op::__str__;
 #endif
 
-#ifdef SWIGD
+#ifdef alaqilD
 // Due to the way operator overloading is implemented in D1 and D2, the prefix
 // increment/decrement operators (D1) resp. the postfix ones (D2) are ignored. 
-%warnfilter(SWIGWARN_IGNORE_OPERATOR_PLUSPLUS, SWIGWARN_IGNORE_OPERATOR_MINUSMINUS);
+%warnfilter(alaqilWARN_IGNORE_OPERATOR_PLUSPLUS, alaqilWARN_IGNORE_OPERATOR_MINUSMINUS);
 #endif
 
 %rename(IntCast) operator int();

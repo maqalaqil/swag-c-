@@ -1,12 +1,12 @@
 // This module tests multiple inheritance, typedef handling, and some
-// truly horrible parts of the SWIG type system.   This is only tested
+// truly horrible parts of the alaqil type system.   This is only tested
 // for Python since not all language modules support multiple-inheritance.
 // However, if it works for Python, things should be working for other
 // modules.
 
 %module(ruby_minherit="1") minherit
 
-#if defined(SWIGPYTHON) || defined(SWIGRUBY) || defined(SWIGOCAML) || defined(SWIGOCTAVE) || defined(SWIGPERL) || defined(SWIGGO)
+#if defined(alaqilPYTHON) || defined(alaqilRUBY) || defined(alaqilOCAML) || defined(alaqilOCTAVE) || defined(alaqilPERL) || defined(alaqilGO)
 
 %inline %{
 

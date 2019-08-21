@@ -2,12 +2,12 @@
 
 %director Derived;
 
-// Check SWIG will not wrap these classes as directors where the destructors are final
+// Check alaqil will not wrap these classes as directors where the destructors are final
 %director BaseFinalDestructor;
 %director BaseFinalDestructor2;
 
-%warnfilter(SWIGWARN_LANG_DIRECTOR_FINAL) BaseFinalDestructor::~BaseFinalDestructor;
-%warnfilter(SWIGWARN_LANG_DIRECTOR_FINAL) BaseFinalDestructor2::~BaseFinalDestructor2;
+%warnfilter(alaqilWARN_LANG_DIRECTOR_FINAL) BaseFinalDestructor::~BaseFinalDestructor;
+%warnfilter(alaqilWARN_LANG_DIRECTOR_FINAL) BaseFinalDestructor2::~BaseFinalDestructor2;
 
 %inline %{
 struct Base {

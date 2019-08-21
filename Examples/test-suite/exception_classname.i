@@ -1,7 +1,7 @@
 %module exception_classname
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME);
-#if defined(SWIGPHP) || defined(SWIGD)
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME);
+#if defined(alaqilPHP) || defined(alaqilD)
 %rename(ExceptionClass) Exception;
 #endif
 

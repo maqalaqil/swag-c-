@@ -1,4 +1,4 @@
-;; This file demonstrates the overloading capabilities of SWIG
+;; This file demonstrates the overloading capabilities of alaqil
 
 (load-library 'example "overload.so")
 
@@ -17,8 +17,8 @@ Trying low level code ...
 
 (primitive:foo 1)
 (primitive:foo "some string")
-(define A-FOO (slot-ref (primitive:new-Foo) 'swig-this))
-(define ANOTHER-FOO (slot-ref (primitive:new-Foo A-FOO) 'swig-this)) ;; copy constructor
+(define A-FOO (slot-ref (primitive:new-Foo) 'alaqil-this))
+(define ANOTHER-FOO (slot-ref (primitive:new-Foo A-FOO) 'alaqil-this)) ;; copy constructor
 (primitive:Foo-bar A-FOO 2)
 (primitive:Foo-bar ANOTHER-FOO "another string" 3)
 

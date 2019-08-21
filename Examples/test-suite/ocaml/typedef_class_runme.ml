@@ -1,4 +1,4 @@
-open Swig
+open alaqil
 open Typedef_class
 
 let a = new_RealA '()

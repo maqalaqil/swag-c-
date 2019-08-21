@@ -1,23 +1,23 @@
 %module(directors="1") director_overload
 
-#ifdef SWIGOCAML
-%warnfilter(SWIGWARN_PARSE_KEYWORD) method;
+#ifdef alaqilOCAML
+%warnfilter(alaqilWARN_PARSE_KEYWORD) method;
 #endif
 
 %feature("director");
 
-#ifdef SWIGPYTHON
+#ifdef alaqilPYTHON
 %feature("director:except") {
   if ($error != NULL) {
-    throw Swig::DirectorMethodException();
+    throw alaqil::DirectorMethodException();
   }
 }
 #endif
 
-#ifdef SWIGRUBY
+#ifdef alaqilRUBY
 // Catch ruby exceptions in directors
 %feature("director:except") {
- throw Swig::DirectorMethodException($error);
+ throw alaqil::DirectorMethodException($error);
 }
 #endif
 

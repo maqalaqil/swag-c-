@@ -8,7 +8,7 @@
 // Attributes in both 'in' and 'out' typemaps are needed, that is,
 // typemaps targeting both parameters and return values respectively).
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Check special variable expansion in typemap attributes.
 // This changes return by reference into return by value.
 // Takes advantage of the fact that 'int' is a valid type in both C and C#.
@@ -17,7 +17,7 @@
 %typemap(imtype, out="$*1_ltype") int& getNumber1 "_not_used_"
 %typemap(cstype, out="$*1_ltype") int& getNumber1 "_not_used_"
 %typemap(out) int& getNumber1 "$result = *$1;"
-%typemap(csout, excode=SWIGEXCODE) int & getNumber1 {
+%typemap(csout, excode=alaqilEXCODE) int & getNumber1 {
     int ret = $imcall;$excode
     return ret;
   }
@@ -30,14 +30,14 @@ int& getNumber1() {
 }
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Check special variable macro expansion in typemap attributes.
 // This changes return by reference into return by value.
 %typemap(ctype, out="$typemap(ctype, int)") int& getNumber2 "_not_used_"
 %typemap(imtype, out="$typemap(imtype, int)") int& getNumber2 "_not_used_"
 %typemap(cstype, out="$typemap(cstype, int)") int& getNumber2 "_not_used_"
 %typemap(out) int& getNumber2 "$result = *$1;"
-%typemap(csout, excode=SWIGEXCODE) int & getNumber2 {
+%typemap(csout, excode=alaqilEXCODE) int & getNumber2 {
     int ret = $imcall;$excode
     return ret;
   }
@@ -51,14 +51,14 @@ int& getNumber2() {
 %}
 
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Check special variable macro expansion and special variable expansion in typemap attributes.
 // This changes return by reference into return by value.
 %typemap(ctype, out="$typemap(ctype, $*1_ltype)") int& getNumber3 "_not_used_"
 %typemap(imtype, out="$typemap(imtype, $*1_ltype)") int& getNumber3 "_not_used_"
 %typemap(cstype, out="$typemap(cstype, $*1_ltype)") int& getNumber3 "_not_used_"
 %typemap(out) int& getNumber3 "$result = *$1;"
-%typemap(csout, excode=SWIGEXCODE) int & getNumber3 {
+%typemap(csout, excode=alaqilEXCODE) int & getNumber3 {
     int ret = $imcall;$excode
     return ret;
   }
@@ -71,7 +71,7 @@ int& getNumber3() {
 }
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Check special variable macro expansion in typemap attributes.
 %typemap(csin,
          pre="    $typemap(cstype, int) $csinput_scaled = 11;"
@@ -85,7 +85,7 @@ int bounceNumber1(int num1) {
 }
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Check special variable expansion in typemap attributes.
 %typemap(csin,
          pre="    $1_type $csinput_scaled = 22;"
@@ -99,7 +99,7 @@ int bounceNumber2(int num2) {
 }
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 // Check special variable and special variable macro expansion in typemap attributes.
 %typemap(csin,
          pre="    $typemap(cstype, $1_type) $csinput_scaled = 33;"
@@ -118,7 +118,7 @@ int bounceNumber3(int num3) {
 /////////////////////////////////
 
 // Test expansion of special variables
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %typemap(ctype) (int intvar, char charvar) "double"
 %typemap(imtype) (int intvar, char charvar) "double"
 %typemap(cstype) (int intvar, char charvar) "double"
@@ -141,7 +141,7 @@ int multi1(int intvar, char charvar) {
 }
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %typemap(csin,
          pre="    $typemap(cstype, int) $csinput_$typemap(cstype, int) = 50;\n" // also should expand to int
              "    $typemap(cstype, char) $csinput_$typemap(cstype, char) = 'A';"  // also should expand to char
@@ -155,7 +155,7 @@ int multi2(int intvar, char charvar) {
 }
 %}
 
-#ifdef SWIGCSHARP
+#ifdef alaqilCSHARP
 %typemap(csin,
          pre="    $typemap(cstype, $1_type) $csinput_$typemap(cstype, $1_type) = 50;\n" // also should expand to int
              "    $typemap(cstype, $2_type) $csinput_$typemap(cstype, $2_type) = 'A';"  // also should expand to char

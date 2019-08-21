@@ -1,11 +1,11 @@
 %module template_default_arg
 
-%warnfilter(SWIGWARN_RUBY_WRONG_NAME) Hello;	/* Ruby, wrong class name */
-#ifdef SWIGLUA
+%warnfilter(alaqilWARN_RUBY_WRONG_NAME) Hello;	/* Ruby, wrong class name */
+#ifdef alaqilLUA
 // lua only has one numeric type, so most of the overloads shadow each other creating warnings
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) X;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) Z;
-%warnfilter(SWIGWARN_LANG_OVERLOAD_SHADOW) meth;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) X;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) Z;
+%warnfilter(alaqilWARN_LANG_OVERLOAD_SHADOW) meth;
 #endif
 
 %inline %{
@@ -87,7 +87,7 @@
 %inline %{
   // Templated methods which are overloaded and have default args, and %template which
   // uses the same name as the C++ functions and overload on the template parameters and
-  // specialization thrown in too. Wow, SWIG can handle this insane stuff!
+  // specialization thrown in too. Wow, alaqil can handle this insane stuff!
   template<typename T, typename U> int ott(T t = 0, const U& u = U()) { return 10; }
   template<typename T, typename U> int ott(const char *msg, T t = 0, const U& u = U()) { return 20; }
   int ott(Foo<int>) { return 30; }
@@ -108,7 +108,7 @@ namespace OuterSpace {
   namespace InnerSpace {
     // Templated methods which are overloaded and have default args, and %template which
     // uses the same name as the C++ functions and overload on the template parameters and
-    // specialization thrown in too. Wow, SWIG can handle this insane stuff!
+    // specialization thrown in too. Wow, alaqil can handle this insane stuff!
     template<typename T, typename U> int nsott(T t = 0, const U& u = U()) { return 110; }
     template<typename T, typename U> int nsott(const char *msg, T t = 0, const U& u = U()) { return 120; }
     int nsott(Foo<int>) { return 130; }

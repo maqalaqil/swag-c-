@@ -23,7 +23,7 @@
     using namespace Space2A;
     void sss3a(Space1A::Struct1A, Space1A::Space1B::Struct1B, Space1A::Space1B::Space1C::Struct1C) {}
     void sss3b(Struct1A, Space1B::Struct1B, Space1B::Space1C::Struct1C) {}
-    // To fix: the last two parameters below fail and result in SWIGTYPE_ types instead of proxy classes
+    // To fix: the last two parameters below fail and result in alaqilTYPE_ types instead of proxy classes
     void sss3c(Space2A::Struct1A, Space2A::Space1B::Struct1B, Space2A::Space1B::Space1C::Struct1C) {}
   }
   namespace Space4 {
