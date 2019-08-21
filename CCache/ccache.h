@@ -1,6 +1,6 @@
-#include "ccache_swig_config.h"
+#include "ccache_alaqil_config.h"
 
-#define CCACHE_VERSION SWIG_VERSION
+#define CCACHE_VERSION alaqil_VERSION
 
 #ifndef _WIN32
 #include "config.h"
