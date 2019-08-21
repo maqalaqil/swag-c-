@@ -71,8 +71,8 @@ static int enable_unify;
 /* should we strip -c when running the preprocessor only? */
 static int strip_c_option;
 
-/* customisation for using the SWIG compiler */
-static int swig;
+/* customisation for using the alaqil compiler */
+static int alaqil;
 
 /* a list of supported file extensions, and the equivalent
    extension for code that has been through the pre-processor
@@ -137,7 +137,7 @@ static void failed(void)
 		display_execute_args(orig_args->argv);
 	}
 
-	if (swig) {
+	if (alaqil) {
 		putenv("CCACHE_OUTFILES");
 	}
 
@@ -235,7 +235,7 @@ static void to_cache(ARGS *args)
 	x_asprintf(&tmp_stderr, "%s/tmp.stderr.%s", temp_dir, tmp_string());
 	x_asprintf(&tmp_outfiles, "%s/tmp.outfiles.%s", temp_dir, tmp_string());
 
-	if (strip_c_option && !swig) {
+	if (strip_c_option && !alaqil) {
 		args_add(stripped_args, "-c");
 	}
 
@@ -252,8 +252,8 @@ static void to_cache(ARGS *args)
 	 * unsetenv() is on BSD and Linux but not portable. */
 	putenv("DEPENDENCIES_OUTPUT");
 
-	/* Give SWIG a filename for it to create and populate with a list of files that it generates */
-	if (swig) {
+	/* Give alaqil a filename for it to create and populate with a list of files that it generates */
+	if (alaqil) {
 		char *ccache_outfiles;
 		x_asprintf(&ccache_outfiles, "CCACHE_OUTFILES=%s", tmp_outfiles);
 		unlink(tmp_outfiles);
@@ -267,7 +267,7 @@ static void to_cache(ARGS *args)
 	if (getenv("CCACHE_CPP2")) {
 		args_add(args, input_file);
 	} else {
-		if (swig) {
+		if (alaqil) {
 			args_add(args, "-nopreprocess");
 		}
 		args_add(args, i_tmpfile);
@@ -281,7 +281,7 @@ static void to_cache(ARGS *args)
 		unlink(tmp_stdout);
 		unlink(tmp_stderr);
 		unlink(tmp_outfiles);
-		if (!swig) unlink(output_file);
+		if (!alaqil) unlink(output_file);
 		failed();
 	}
 	unlink(tmp_stdout);
@@ -317,11 +317,11 @@ static void to_cache(ARGS *args)
 		
 		unlink(tmp_stderr);
 		unlink(tmp_outfiles);
-		if (!swig) unlink(output_file);
+		if (!alaqil) unlink(output_file);
 		failed();
 	} else {
 		int hardlink = (getenv("CCACHE_NOCOMPRESS") != 0) && (getenv("CCACHE_HARDLINK") != 0);
-		if (swig) {
+		if (alaqil) {
 			/* read the list of generated files and copy each of them into the cache */
 			FILE *file;
 			file = fopen(tmp_outfiles, "r");
@@ -429,11 +429,11 @@ static void find_hash(ARGS *args)
 
 	/* when we are doing the unifying tricks we need to include
            the input file name in the hash to get the warnings right */
-	if (enable_unify || swig) {
+	if (enable_unify || alaqil) {
 		hash_string(input_file);
 	}
 
-	if (swig) {
+	if (alaqil) {
 		if (output_file) {
 			hash_string(output_file);
 		}
@@ -664,7 +664,7 @@ static void from_cache(int first)
 
 		hardlink = (getenv("CCACHE_HARDLINK") != 0);
 
-		if (swig) {
+		if (alaqil) {
 			/* read the list of generated files and copy each of them out of the cache */
 			FILE *file;
 			char *outfiles;
@@ -814,7 +814,7 @@ static const char *check_extension(const char *fname, int *direct_i)
 		*direct_i = 0;
 	}
 
-	if (swig) return "ii"; /* any file extension is acceptable as input for SWIG */
+	if (alaqil) return "ii"; /* any file extension is acceptable as input for alaqil */
 
 	p = strrchr(fname, '.');
 	if (!p) return NULL;
@@ -856,8 +856,8 @@ static void process_args(int argc, char **argv)
 
 	args_add(stripped_args, argv[0]);
 
-	/* -c not required for SWIG */
-	if (swig) {
+	/* -c not required for alaqil */
+	if (alaqil) {
 		found_c_opt = 1;
 	}
 
@@ -910,7 +910,7 @@ static void process_args(int argc, char **argv)
 		}
 		
 		/* alternate form of -o, with no space */
-		if (!swig) { /* some of SWIG's arguments begin with -o */
+		if (!alaqil) { /* some of alaqil's arguments begin with -o */
 			if (strncmp(argv[i], "-o", 2) == 0) {
 				output_file = &argv[i][2];
 				continue;
@@ -951,7 +951,7 @@ static void process_args(int argc, char **argv)
 		}
 
 		/* the input file is already preprocessed */
-		if (swig && strcmp(argv[i], "-nopreprocess") == 0) {
+		if (alaqil && strcmp(argv[i], "-nopreprocess") == 0) {
 			direct_i_file = 1;
 			continue;
 		}
@@ -1026,7 +1026,7 @@ static void process_args(int argc, char **argv)
 		failed();
 	}
 
-	if (swig) {
+	if (alaqil) {
 		i_extension = check_extension(input_file, NULL);
 	} else {
 		i_extension = check_extension(input_file, &direct_i_file);
@@ -1056,7 +1056,7 @@ static void process_args(int argc, char **argv)
 		failed();
 	}
 
-	if (!swig && !output_file) {
+	if (!alaqil && !output_file) {
 		char *p;
 		output_file = x_strdup(input_file);
 		if ((p = strrchr(output_file, '/'))) {
@@ -1130,11 +1130,11 @@ static void process_args(int argc, char **argv)
 	}
 }
 
-static void detect_swig()
+static void detect_alaqil()
 {
 	char *basename = str_basename(orig_args->argv[0]);
-	if (strstr(basename, "swig") || getenv("CCACHE_SWIG")) {
-		swig = 1;
+	if (strstr(basename, "alaqil") || getenv("CCACHE_alaqil")) {
+		alaqil = 1;
 	}
 	free(basename);
 }
@@ -1166,7 +1166,7 @@ static void ccache(int argc, char *argv[])
 		enable_unify = 1;
 	}
 
-	detect_swig();
+	detect_alaqil();
 
 	/* process argument list, returning a new set of arguments for pre-processing */
 	process_args(orig_args->argc, orig_args->argv);
@@ -1197,7 +1197,7 @@ static void ccache(int argc, char *argv[])
 
 static void usage(void)
 {
-	printf("%s, a compiler cache including support for SWIG. Version %s\n", MYNAME, CCACHE_VERSION);
+	printf("%s, a compiler cache including support for alaqil. Version %s\n", MYNAME, CCACHE_VERSION);
 	printf("Copyright Andrew Tridgell, 2002\n\n");
 	
 	printf("Usage:\n");
