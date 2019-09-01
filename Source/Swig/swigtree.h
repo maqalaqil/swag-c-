@@ -1,14 +1,14 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
- * swigtree.h
+ * alaqiltree.h
  *
- * These functions are used to access and manipulate the SWIG parse tree.
+ * These functions are used to access and manipulate the alaqil parse tree.
  * The structure of this tree is modeled directly after XML-DOM.  The attribute 
  * and function names are meant to be similar.
  * ----------------------------------------------------------------------------- */
@@ -42,12 +42,12 @@ extern void   appendSibling(Node *node, Node *child);
 
 /* Node restoration/restore functions */
 
-extern void  Swig_require(const char *ns, Node *node, ...);
-extern void  Swig_save(const char *ns, Node *node, ...);
-extern void  Swig_restore(Node *node);
+extern void  alaqil_require(const char *ns, Node *node, ...);
+extern void  alaqil_save(const char *ns, Node *node, ...);
+extern void  alaqil_restore(Node *node);
 
 /* Debugging of parse trees */
 
-extern void Swig_print_tags(File *obj, Node *root);
-extern void Swig_print_tree(Node *obj);
-extern void Swig_print_node(Node *obj);
+extern void alaqil_print_tags(File *obj, Node *root);
+extern void alaqil_print_tree(Node *obj);
+extern void alaqil_print_node(Node *obj);

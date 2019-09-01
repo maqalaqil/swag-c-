@@ -1,7 +1,7 @@
 06/25/2002
 
-This directory contains all of the SWIG language modules.  Many of these
-modules contain code that dates back to SWIG1.0.  The module API has changed
+This directory contains all of the alaqil language modules.  Many of these
+modules contain code that dates back to alaqil1.0.  The module API has changed
 a lot in the development releases so this is fairly messy.  We're working on
 cleaning it up, but you'll have to bear with us until it's done.
 

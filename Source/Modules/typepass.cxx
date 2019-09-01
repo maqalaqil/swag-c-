@@ -1,10 +1,10 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * typepass.cxx
  *
@@ -16,7 +16,7 @@
  * and other information needed for compilation.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include "cparse.h"
 
 struct normal_node {
@@ -49,15 +49,15 @@ class TypePass:private Dispatcher {
   }
 
   /* Normalize a type. Replaces type with fully qualified version */
-  void normalize_type(SwigType *ty) {
-    SwigType *qty;
+  void normalize_type(alaqilType *ty) {
+    alaqilType *qty;
     if (CPlusPlus) {
       Replaceall(ty, "struct ", "");
       Replaceall(ty, "union ", "");
       Replaceall(ty, "class ", "");
     }
 
-    qty = SwigType_typedef_qualified(ty);
+    qty = alaqilType_typedef_qualified(ty);
     /*    Printf(stdout,"%s --> %s\n", ty, qty); */
     Clear(ty);
     Append(ty, qty);
@@ -68,32 +68,32 @@ class TypePass:private Dispatcher {
 
   void normalize_parms(ParmList *p) {
     while (p) {
-      SwigType *ty = Getattr(p, "type");
+      alaqilType *ty = Getattr(p, "type");
       normalize_type(ty);
       /* This is a check for a function type */
       {
-	SwigType *qty = SwigType_typedef_resolve_all(ty);
-	if (SwigType_isfunction(qty)) {
-	  SwigType_add_pointer(ty);
+	alaqilType *qty = alaqilType_typedef_resolve_all(ty);
+	if (alaqilType_isfunction(qty)) {
+	  alaqilType_add_pointer(ty);
 	}
 	Delete(qty);
       }
 
       String *value = Getattr(p, "value");
       if (value) {
-	Node *n = Swig_symbol_clookup(value, 0);
+	Node *n = alaqil_symbol_clookup(value, 0);
 	if (n) {
-	  String *q = Swig_symbol_qualified(n);
+	  String *q = alaqil_symbol_qualified(n);
 	  if (q && Len(q)) {
-	    String *vb = Swig_scopename_last(value);
+	    String *vb = alaqil_scopename_last(value);
 	    Clear(value);
-	    Printf(value, "%s::%s", SwigType_namestr(q), vb);
+	    Printf(value, "%s::%s", alaqilType_namestr(q), vb);
 	    Delete(q);
 	  }
 	}
       }
-      if (value && SwigType_istemplate(value)) {
-	String *nv = SwigType_namestr(value);
+      if (value && alaqilType_istemplate(value)) {
+	String *nv = alaqilType_namestr(value);
 	Setattr(p, "value", nv);
       }
       p = nextSibling(p);
@@ -102,7 +102,7 @@ class TypePass:private Dispatcher {
 
   void normalize_later(ParmList *p) {
     while (p) {
-      SwigType *ty = Getattr(p, "type");
+      alaqilType *ty = Getattr(p, "type");
       Append(normalize, ty);
       p = nextSibling(p);
     }
@@ -110,13 +110,13 @@ class TypePass:private Dispatcher {
 
   /* Walk through entries in normalize list and patch them up */
   void normalize_list() {
-    Hash *currentsym = Swig_symbol_current();
+    Hash *currentsym = alaqil_symbol_current();
 
     normal_node *nn = patch_list;
     normal_node *np;
     while (nn) {
-      Swig_symbol_setscope(nn->symtab);
-      SwigType_set_scope(nn->typescope);
+      alaqil_symbol_setscope(nn->symtab);
+      alaqilType_set_scope(nn->typescope);
       Iterator t;
       for (t = First(nn->normallist); t.item; t = Next(t)) {
 	normalize_type(t.item);
@@ -126,7 +126,7 @@ class TypePass:private Dispatcher {
       delete(nn);
       nn = np;
     }
-    Swig_symbol_setscope(currentsym);
+    alaqil_symbol_setscope(currentsym);
   }
 
   /* generate C++ inheritance type-relationships */
@@ -154,26 +154,26 @@ class TypePass:private Dispatcher {
 	     typedef declarations to get to the base class if necessary */
 	  Symtab *st = Getattr(cls, "sym:symtab");
 
-	  if (SwigType_istemplate(bname)) {
-	    tname = SwigType_typedef_resolve_all(bname);
+	  if (alaqilType_istemplate(bname)) {
+	    tname = alaqilType_typedef_resolve_all(bname);
 	    sname = tname;
 	  }
 	  while (1) {
-	    String *qsname = SwigType_typedef_qualified(sname);
-	    bcls = Swig_symbol_clookup(qsname, st);
+	    String *qsname = alaqilType_typedef_qualified(sname);
+	    bcls = alaqil_symbol_clookup(qsname, st);
 	    Delete(qsname);
 	    if (bcls) {
 	      if (Strcmp(nodeType(bcls), "class") != 0) {
 		/* Not a class.   The symbol could be a typedef. */
 		if (checkAttribute(bcls, "storage", "typedef")) {
-		  SwigType *decl = Getattr(bcls, "decl");
+		  alaqilType *decl = Getattr(bcls, "decl");
 		  if (!decl || !(Len(decl))) {
 		    sname = Getattr(bcls, "type");
 		    st = Getattr(bcls, "sym:symtab");
-		    if (SwigType_istemplate(sname)) {
+		    if (alaqilType_istemplate(sname)) {
 		      if (tname)
 			Delete(tname);
-		      tname = SwigType_typedef_resolve_all(sname);
+		      tname = alaqilType_typedef_resolve_all(sname);
 		      sname = tname;
 		    }
 		    continue;
@@ -188,19 +188,19 @@ class TypePass:private Dispatcher {
 		      Append(ilist, bcls);
 		    } else {
 		      if (!GetFlag(bcls, "feature:ignore")) {
-			Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Base class '%s' has no name as it is an empty template instantiated with '%%template()'. Ignored.\n", SwigType_namestr(bname));
-			Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bcls), Getline(bcls), "The %%template directive must be written before '%s' is used as a base class and be declared with a name.\n", SwigType_namestr(bname));
+			alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Base class '%s' has no name as it is an empty template instantiated with '%%template()'. Ignored.\n", alaqilType_namestr(bname));
+			alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bcls), Getline(bcls), "The %%template directive must be written before '%s' is used as a base class and be declared with a name.\n", alaqilType_namestr(bname));
 		      }
 		    }
 		  }
 		  break;
 		}
 		if (Strcmp(nodeType(bcls), "classforward") != 0) {
-		  Swig_error(Getfile(bname), Getline(bname), "'%s' is not a valid base class.\n", SwigType_namestr(bname));
-		  Swig_error(Getfile(bcls), Getline(bcls), "See definition of '%s'.\n", SwigType_namestr(bname));
+		  alaqil_error(Getfile(bname), Getline(bname), "'%s' is not a valid base class.\n", alaqilType_namestr(bname));
+		  alaqil_error(Getfile(bcls), Getline(bcls), "See definition of '%s'.\n", alaqilType_namestr(bname));
 		} else {
-		  Swig_warning(WARN_TYPE_INCOMPLETE, Getfile(bname), Getline(bname), "Base class '%s' is incomplete.\n", SwigType_namestr(bname));
-		  Swig_warning(WARN_TYPE_INCOMPLETE, Getfile(bcls), Getline(bcls), "Only forward declaration '%s' was found.\n", SwigType_namestr(bname));
+		  alaqil_warning(WARN_TYPE_INCOMPLETE, Getfile(bname), Getline(bname), "Base class '%s' is incomplete.\n", alaqilType_namestr(bname));
+		  alaqil_warning(WARN_TYPE_INCOMPLETE, Getfile(bcls), Getline(bcls), "Only forward declaration '%s' was found.\n", alaqilType_namestr(bname));
 		  clsforward = 1;
 		}
 		bcls = 0;
@@ -212,13 +212,13 @@ class TypePass:private Dispatcher {
 		    Append(ilist, bcls);
 		  } else {
 		    if (!GetFlag(bcls, "feature:ignore")) {
-		      Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Base class '%s' has no name as it is an empty template instantiated with '%%template()'. Ignored.\n", SwigType_namestr(bname));
-		      Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bcls), Getline(bcls), "The %%template directive must be written before '%s' is used as a base class and be declared with a name.\n", SwigType_namestr(bname));
+		      alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Base class '%s' has no name as it is an empty template instantiated with '%%template()'. Ignored.\n", alaqilType_namestr(bname));
+		      alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bcls), Getline(bcls), "The %%template directive must be written before '%s' is used as a base class and be declared with a name.\n", alaqilType_namestr(bname));
 		    }
 		  }
 		} else {
-		  Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Base class '%s' undefined.\n", SwigType_namestr(bname));
-		  Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bcls), Getline(bcls), "'%s' must be defined before it is used as a base class.\n", SwigType_namestr(bname));
+		  alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Base class '%s' undefined.\n", alaqilType_namestr(bname));
+		  alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bcls), Getline(bcls), "'%s' must be defined before it is used as a base class.\n", alaqilType_namestr(bname));
 		}
 	      }
 	    }
@@ -230,14 +230,14 @@ class TypePass:private Dispatcher {
 	  if (!bcls) {
 	    if (!clsforward && !GetFlag(cls, "feature:ignore")) {
 	      if (ispublic && !Getmeta(bname, "already_warned")) {
-		Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Nothing known about base class '%s'. Ignored.\n", SwigType_namestr(bname));
+		alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Nothing known about base class '%s'. Ignored.\n", alaqilType_namestr(bname));
 		if (Strchr(bname, '<')) {
-		  Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Maybe you forgot to instantiate '%s' using %%template.\n", SwigType_namestr(bname));
+		  alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(bname), Getline(bname), "Maybe you forgot to instantiate '%s' using %%template.\n", alaqilType_namestr(bname));
 		}
 		Setmeta(bname, "already_warned", "1");
 	      }
 	    }
-	    SwigType_inherit(clsname, bname, cast, 0);
+	    alaqilType_inherit(clsname, bname, cast, 0);
 	  }
 	}
       }
@@ -257,18 +257,18 @@ class TypePass:private Dispatcher {
       String *bname = Getattr(n, "name");
       Node *bclass = n;		/* Getattr(n,"class"); */
       Hash *scopes = Getattr(bclass, "typescope");
-      SwigType_inherit(clsname, bname, cast, 0);
+      alaqilType_inherit(clsname, bname, cast, 0);
       if (ispublic && !GetFlag(bclass, "feature:ignore")) {
 	String *smartptr = Getattr(first, "feature:smartptr");
 	if (smartptr) {
-	  SwigType *smart = Swig_cparse_smartptr(first);
+	  alaqilType *smart = alaqil_cparse_smartptr(first);
 	  if (smart) {
 	    /* Record a (fake) inheritance relationship between smart pointer
 	       and smart pointer to base class, so that smart pointer upcasts
 	       are automatically generated. */
-	    SwigType *bsmart = Copy(smart);
-	    SwigType *rclsname = SwigType_typedef_resolve_all(clsname);
-	    SwigType *rbname = SwigType_typedef_resolve_all(bname);
+	    alaqilType *bsmart = Copy(smart);
+	    alaqilType *rclsname = alaqilType_typedef_resolve_all(clsname);
+	    alaqilType *rbname = alaqilType_typedef_resolve_all(bname);
 	    int replace_count = Replaceall(bsmart, rclsname, rbname);
 	    if (replace_count == 0) {
 	      // If no replacement made, it will be because rclsname is fully resolved, but the
@@ -278,48 +278,48 @@ class TypePass:private Dispatcher {
 	    }
 	    Delete(rclsname);
 	    Delete(rbname);
-	    String *smartnamestr = SwigType_namestr(smart);
-	    String *bsmartnamestr = SwigType_namestr(bsmart);
+	    String *smartnamestr = alaqilType_namestr(smart);
+	    String *bsmartnamestr = alaqilType_namestr(bsmart);
 	    /* construct casting code */
-	    String *convcode = NewStringf("\n    *newmemory = SWIG_CAST_NEW_MEMORY;\n    return (void *) new %s(*(%s *)$from);\n", bsmartnamestr, smartnamestr);
+	    String *convcode = NewStringf("\n    *newmemory = alaqil_CAST_NEW_MEMORY;\n    return (void *) new %s(*(%s *)$from);\n", bsmartnamestr, smartnamestr);
 	    Delete(bsmartnamestr);
 	    Delete(smartnamestr);
 	    /* setup inheritance relationship between smart pointer templates */
-	    SwigType_inherit(smart, bsmart, 0, convcode);
+	    alaqilType_inherit(smart, bsmart, 0, convcode);
 	    if (!GetFlag(bclass, "feature:smartptr"))
-	      Swig_warning(WARN_LANG_SMARTPTR_MISSING, Getfile(first), Getline(first), "Base class '%s' of '%s' is not similarly marked as a smart pointer.\n", SwigType_namestr(Getattr(bclass, "name")), SwigType_namestr(Getattr(first, "name")));
+	      alaqil_warning(WARN_LANG_SMARTPTR_MISSING, Getfile(first), Getline(first), "Base class '%s' of '%s' is not similarly marked as a smart pointer.\n", alaqilType_namestr(Getattr(bclass, "name")), alaqilType_namestr(Getattr(first, "name")));
 	    Delete(convcode);
 	    Delete(bsmart);
 	  }
 	  Delete(smart);
 	} else {
 	  if (GetFlag(bclass, "feature:smartptr"))
-	    Swig_warning(WARN_LANG_SMARTPTR_MISSING, Getfile(first), Getline(first), "Derived class '%s' of '%s' is not similarly marked as a smart pointer.\n", SwigType_namestr(Getattr(first, "name")), SwigType_namestr(Getattr(bclass, "name")));
+	    alaqil_warning(WARN_LANG_SMARTPTR_MISSING, Getfile(first), Getline(first), "Derived class '%s' of '%s' is not similarly marked as a smart pointer.\n", alaqilType_namestr(Getattr(first, "name")), alaqilType_namestr(Getattr(bclass, "name")));
 	}
       }
       if (!importmode) {
 	String *btype = Copy(bname);
-	SwigType_add_pointer(btype);
-	SwigType_remember(btype);
+	alaqilType_add_pointer(btype);
+	alaqilType_remember(btype);
 	Delete(btype);
       }
       if (scopes) {
-	SwigType_inherit_scope(scopes);
+	alaqilType_inherit_scope(scopes);
       }
       /* Set up inheritance in the symbol table */
       Symtab *st = Getattr(cls, "symtab");
       Symtab *bst = Getattr(bclass, "symtab");
       if (st == bst) {
-	Swig_warning(WARN_PARSE_REC_INHERITANCE, Getfile(cls), Getline(cls), "Recursive scope inheritance of '%s'.\n", SwigType_namestr(Getattr(cls, "name")));
+	alaqil_warning(WARN_PARSE_REC_INHERITANCE, Getfile(cls), Getline(cls), "Recursive scope inheritance of '%s'.\n", alaqilType_namestr(Getattr(cls, "name")));
 	continue;
       }
-      Symtab *s = Swig_symbol_current();
-      Swig_symbol_setscope(st);
-      Swig_symbol_inherit(bst);
-      Swig_symbol_setscope(s);
+      Symtab *s = alaqil_symbol_current();
+      alaqil_symbol_setscope(st);
+      alaqil_symbol_inherit(bst);
+      alaqil_symbol_setscope(s);
 
       /* Recursively hit base classes */
-      String *namestr = SwigType_namestr(Getattr(bclass, "name"));
+      String *namestr = alaqilType_namestr(Getattr(bclass, "name"));
       String *newcast = NewStringf("(%s *)%s", namestr, cast);
       Delete(namestr);
       cplus_inherit_types_impl(first, bclass, clsname, bases, baselist, ispublic, newcast);
@@ -367,8 +367,8 @@ class TypePass:private Dispatcher {
     classhash = Getattr(n, "classes");
     emit_children(n);
     normalize_list();
-    SwigType_set_scope(0);
-    return SWIG_OK;
+    alaqilType_set_scope(0);
+    return alaqil_OK;
   }
 
 
@@ -380,7 +380,7 @@ class TypePass:private Dispatcher {
     if (!module) {
       module = n;
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -395,7 +395,7 @@ class TypePass:private Dispatcher {
     emit_children(n);
     importmode = oldimport;
     module = oldmodule;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -435,41 +435,41 @@ class TypePass:private Dispatcher {
     normalize = NewList();
 
     if (name) {
-      if (SwigType_istemplate(name)) {
+      if (alaqilType_istemplate(name)) {
 	// We need to fully resolve the name and expand default template parameters to make templates work correctly */
 	Node *cn;
-	SwigType *resolved_name = SwigType_typedef_resolve_all(name);
-	SwigType *deftype_name = Swig_symbol_template_deftype(resolved_name, 0);
+	alaqilType *resolved_name = alaqilType_typedef_resolve_all(name);
+	alaqilType *deftype_name = alaqil_symbol_template_deftype(resolved_name, 0);
 	fname = Copy(resolved_name);
 	if (!Equal(resolved_name, deftype_name))
 	  template_default_expanded = Copy(deftype_name);
-	if (!Equal(fname, name) && (cn = Swig_symbol_clookup_local(fname, 0))) {
+	if (!Equal(fname, name) && (cn = alaqil_symbol_clookup_local(fname, 0))) {
 	  if ((n == cn)
 	      || (Strcmp(nodeType(cn), "template") == 0)
 	      || (Getattr(cn, "feature:onlychildren") != 0)
 	      || (Getattr(n, "feature:onlychildren") != 0)) {
-	    Swig_symbol_cadd(fname, n);
+	    alaqil_symbol_cadd(fname, n);
 	    if (template_default_expanded)
-	      Swig_symbol_cadd(template_default_expanded, n);
-	    SwigType_typedef_class(fname);
+	      alaqil_symbol_cadd(template_default_expanded, n);
+	    alaqilType_typedef_class(fname);
 	    scopename = Copy(fname);
 	  } else {
-	    Swig_warning(WARN_TYPE_REDEFINED, Getfile(n), Getline(n), "Template '%s' was already wrapped,\n", SwigType_namestr(name));
-	    Swig_warning(WARN_TYPE_REDEFINED, Getfile(cn), Getline(cn), "previous wrap of '%s'.\n", SwigType_namestr(Getattr(cn, "name")));
+	    alaqil_warning(WARN_TYPE_REDEFINED, Getfile(n), Getline(n), "Template '%s' was already wrapped,\n", alaqilType_namestr(name));
+	    alaqil_warning(WARN_TYPE_REDEFINED, Getfile(cn), Getline(cn), "previous wrap of '%s'.\n", alaqilType_namestr(Getattr(cn, "name")));
 	    scopename = 0;
 	  }
 	} else {
-	  Swig_symbol_cadd(fname, n);
-	  SwigType_typedef_class(fname);
+	  alaqil_symbol_cadd(fname, n);
+	  alaqilType_typedef_class(fname);
 	  scopename = Copy(fname);
 	}
 	Delete(deftype_name);
 	Delete(resolved_name);
       } else {
 	if ((CPlusPlus) || (unnamed)) {
-	  SwigType_typedef_class(name);
+	  alaqilType_typedef_class(name);
 	} else {
-	  SwigType_typedef_class(NewStringf("%s %s", kind, name));
+	  alaqilType_typedef_class(NewStringf("%s %s", kind, name));
 	}
 	scopename = Copy(name);
       }
@@ -481,7 +481,7 @@ class TypePass:private Dispatcher {
 
     /* Need to set up a typedef if unnamed */
     if (unnamed && tdname && (Cmp(storage, "typedef") == 0)) {
-      SwigType_typedef(unnamed, tdname);
+      alaqilType_typedef(unnamed, tdname);
     }
     // name of the outer class should already be patched to contain its outer classes names, but not to contain namespaces
     // namespace name (if present) is added after processing child nodes
@@ -507,8 +507,8 @@ class TypePass:private Dispatcher {
       if (GetFlag(n, "feature:nspace"))
 	Setattr(n, "sym:nspace", nssymname);
     }
-    SwigType_new_scope(scopename);
-    SwigType_attach_symtab(Getattr(n, "symtab"));
+    alaqilType_new_scope(scopename);
+    alaqilType_attach_symtab(Getattr(n, "symtab"));
 
     /* Inherit type definitions into the class */
     if (name && !(GetFlag(n, "nested") && !checkAttribute(n, "access", "public") && 
@@ -517,11 +517,11 @@ class TypePass:private Dispatcher {
     }
 
     inclass = n;
-    symtab = Swig_symbol_setscope(Getattr(n, "symtab"));
+    symtab = alaqil_symbol_setscope(Getattr(n, "symtab"));
     emit_children(n);
-    Swig_symbol_setscope(symtab);
+    alaqil_symbol_setscope(symtab);
 
-    Hash *ts = SwigType_pop_scope();
+    Hash *ts = alaqilType_pop_scope();
     Setattr(n, "typescope", ts);
     Delete(ts);
     Setattr(n, "module", module);
@@ -529,8 +529,8 @@ class TypePass:private Dispatcher {
     // When a fully qualified templated type with default parameters is used in the parsed code, 
     // the following additional symbols and scopes are needed for successful lookups
     if (template_default_expanded) {
-      Swig_symbol_alias(template_default_expanded, Getattr(n, "symtab"));
-      SwigType_scope_alias(template_default_expanded, Getattr(n, "typescope"));
+      alaqil_symbol_alias(template_default_expanded, Getattr(n, "symtab"));
+      alaqilType_scope_alias(template_default_expanded, Getattr(n, "typescope"));
     }
 
     /* Normalize deferred types */
@@ -551,7 +551,7 @@ class TypePass:private Dispatcher {
       Delete(nname);
     }
     Delete(fname);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -562,20 +562,20 @@ class TypePass:private Dispatcher {
     String *name = Getattr(n, "name");
     String *ttype = Getattr(n, "templatetype");
     if (Strcmp(ttype, "class") == 0) {
-      String *rname = SwigType_typedef_resolve_all(name);
-      SwigType_typedef_class(rname);
+      String *rname = alaqilType_typedef_resolve_all(name);
+      alaqilType_typedef_class(rname);
       Delete(rname);
     } else if (Strcmp(ttype, "classforward") == 0) {
-      String *rname = SwigType_typedef_resolve_all(name);
-      SwigType_typedef_class(rname);
+      String *rname = alaqilType_typedef_resolve_all(name);
+      alaqilType_typedef_class(rname);
       Delete(rname);
-      /*      SwigType_typedef_class(name); */
+      /*      alaqilType_typedef_class(name); */
     } else if (Strcmp(ttype, "cdecl") == 0) {
-      String *rname = SwigType_typedef_resolve_all(name);
-      SwigType_typedef_class(rname);
+      String *rname = alaqilType_typedef_resolve_all(name);
+      alaqilType_typedef_class(rname);
       Delete(rname);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -583,7 +583,7 @@ class TypePass:private Dispatcher {
    * ------------------------------------------------------------ */
 
   virtual int lambdaDeclaration(Node *) {
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -595,9 +595,9 @@ class TypePass:private Dispatcher {
     /* Can't do inside a C struct because it breaks C nested structure wrapping */
     if ((!inclass) || (CPlusPlus)) {
       String *name = Getattr(n, "name");
-      SwigType_typedef_class(name);
+      alaqilType_typedef_class(name);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -615,35 +615,35 @@ class TypePass:private Dispatcher {
       if (!ts) {
 	/* Create an empty scope for the alias */
 	Node *ns = Getattr(n, "namespace");
-	SwigType_scope_alias(name, Getattr(ns, "typescope"));
+	alaqilType_scope_alias(name, Getattr(ns, "typescope"));
 	ts = Getattr(ns, "typescope");
 	Setattr(n, "typescope", ts);
       }
       /* Namespace alias */
-      return SWIG_OK;
+      return alaqil_OK;
     } else {
       if (name) {
-	Node *nn = Swig_symbol_clookup(name, n);
+	Node *nn = alaqil_symbol_clookup(name, n);
 	Hash *ts = 0;
 	if (nn)
 	  ts = Getattr(nn, "typescope");
 	if (!ts) {
-	  SwigType_new_scope(name);
-	  SwigType_attach_symtab(Getattr(n, "symtab"));
+	  alaqilType_new_scope(name);
+	  alaqilType_attach_symtab(Getattr(n, "symtab"));
 	} else {
-	  SwigType_set_scope(ts);
+	  alaqilType_set_scope(ts);
 	}
       }
       String *oldnsname = nsname;
       String *oldnssymname = nssymname;
-      nsname = Swig_symbol_qualified(Getattr(n, "symtab"));
-      nssymname = Swig_symbol_qualified_language_scopename(Getattr(n, "symtab"));
-      symtab = Swig_symbol_setscope(Getattr(n, "symtab"));
+      nsname = alaqil_symbol_qualified(Getattr(n, "symtab"));
+      nssymname = alaqil_symbol_qualified_language_scopename(Getattr(n, "symtab"));
+      symtab = alaqil_symbol_setscope(Getattr(n, "symtab"));
       emit_children(n);
-      Swig_symbol_setscope(symtab);
+      alaqil_symbol_setscope(symtab);
 
       if (name) {
-	Hash *ts = SwigType_pop_scope();
+	Hash *ts = alaqilType_pop_scope();
 	Setattr(n, "typescope", ts);
 	Delete(ts);
       }
@@ -663,7 +663,7 @@ class TypePass:private Dispatcher {
       nssymname = oldnssymname;
       Delete(nsname);
       nsname = oldnsname;
-      return SWIG_OK;
+      return alaqil_OK;
     }
   }
 
@@ -677,12 +677,12 @@ class TypePass:private Dispatcher {
     }
 
     /* Normalize types. */
-    SwigType *ty = Getattr(n, "type");
+    alaqilType *ty = Getattr(n, "type");
     if (!ty) {
-      return SWIG_OK;
+      return alaqil_OK;
     }
     normalize_type(ty);
-    SwigType *decl = Getattr(n, "decl");
+    alaqilType *decl = Getattr(n, "decl");
     if (decl) {
       normalize_type(decl);
     }
@@ -690,8 +690,8 @@ class TypePass:private Dispatcher {
     normalize_parms(Getattr(n, "throws"));
     if (GetFlag(n, "conversion_operator")) {
       /* The call to the operator in the generated wrapper must be fully qualified in order to compile */
-      SwigType *name = Getattr(n, "name");
-      SwigType *qualifiedname = Swig_symbol_string_qualify(name, 0);
+      alaqilType *name = Getattr(n, "name");
+      alaqilType *qualifiedname = alaqil_symbol_string_qualify(name, 0);
       Clear(name);
       Append(name, qualifiedname);
       Delete(qualifiedname);
@@ -701,14 +701,14 @@ class TypePass:private Dispatcher {
       String *name = Getattr(n, "name");
       ty = Getattr(n, "type");
       decl = Getattr(n, "decl");
-      SwigType *t = Copy(ty);
+      alaqilType *t = Copy(ty);
       {
 	/* If the typename is qualified, make sure the scopename is fully qualified when making a typedef */
-	if (Swig_scopename_check(t) && strncmp(Char(t), "::", 2)) {
+	if (alaqil_scopename_check(t) && strncmp(Char(t), "::", 2)) {
 	  String *base, *prefix, *qprefix;
-	  base = Swig_scopename_last(t);
-	  prefix = Swig_scopename_prefix(t);
-	  qprefix = SwigType_typedef_qualified(prefix);
+	  base = alaqil_scopename_last(t);
+	  prefix = alaqil_scopename_prefix(t);
+	  qprefix = alaqilType_typedef_qualified(prefix);
 	  Delete(t);
 	  t = NewStringf("%s::%s", qprefix, base);
 	  Delete(base);
@@ -716,13 +716,13 @@ class TypePass:private Dispatcher {
 	  Delete(qprefix);
 	}
       }
-      SwigType_push(t, decl);
+      alaqilType_push(t, decl);
       if (CPlusPlus) {
 	Replaceall(t, "struct ", "");
 	Replaceall(t, "union ", "");
 	Replaceall(t, "class ", "");
       }
-      SwigType_typedef(t, name);
+      alaqilType_typedef(t, name);
     }
     /* If namespaces are active.  We need to patch the name with a namespace prefix */
     if (nsname && !inclass) {
@@ -734,7 +734,7 @@ class TypePass:private Dispatcher {
       }
     }
     clean_overloaded(n);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -751,7 +751,7 @@ class TypePass:private Dispatcher {
     normalize_parms(Getattr(n, "throws"));
 
     clean_overloaded(n);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -759,7 +759,7 @@ class TypePass:private Dispatcher {
    * ------------------------------------------------------------ */
 
   virtual int destructorDeclaration(Node *) {
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -767,11 +767,11 @@ class TypePass:private Dispatcher {
    * ------------------------------------------------------------ */
 
   virtual int constantDirective(Node *n) {
-    SwigType *ty = Getattr(n, "type");
+    alaqilType *ty = Getattr(n, "type");
     if (ty) {
-      Setattr(n, "type", SwigType_typedef_qualified(ty));
+      Setattr(n, "type", alaqilType_typedef_qualified(ty));
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -806,11 +806,11 @@ class TypePass:private Dispatcher {
 	  Setattr(n, "tdname", tdname);
 	}
 
-	SwigType *t = NewStringf("enum %s", nname);
-	SwigType_typedef(t, name);
+	alaqilType *t = NewStringf("enum %s", nname);
+	alaqilType_typedef(t, name);
       } else {
-	SwigType *t = NewStringf("enum %s", name);
-	SwigType_typedef(t, name);
+	alaqilType *t = NewStringf("enum %s", name);
+	alaqilType_typedef(t, name);
       }
       Delete(scope);
     }
@@ -819,7 +819,7 @@ class TypePass:private Dispatcher {
     String *unnamed = Getattr(n, "unnamed");
     String *storage = Getattr(n, "storage");
 
-    // Construct enumtype - for declaring an enum of this type with SwigType_ltype() etc
+    // Construct enumtype - for declaring an enum of this type with alaqilType_ltype() etc
     String *enumtype = 0;
     if (unnamed && tdname && (Cmp(storage, "typedef") == 0)) {
       enumtype = Copy(Getattr(n, "tdname"));
@@ -880,7 +880,7 @@ class TypePass:private Dispatcher {
     }
 
     emit_children(n);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -896,12 +896,12 @@ class TypePass:private Dispatcher {
     if (Strcmp(value, name) == 0) {
       String *new_value;
       if ((nsname || inclass || scopedenum) && cparse_cplusplus) {
-	new_value = NewStringf("%s::%s", SwigType_namestr(Swig_symbol_qualified(n)), value);
+	new_value = NewStringf("%s::%s", alaqilType_namestr(alaqil_symbol_qualified(n)), value);
       } else {
 	new_value = NewString(value);
       }
       if ((nsname || inclass || scopedenum) && !cparse_cplusplus) {
-	String *cppvalue = NewStringf("%s::%s", SwigType_namestr(Swig_symbol_qualified(n)), value);
+	String *cppvalue = NewStringf("%s::%s", alaqilType_namestr(alaqil_symbol_qualified(n)), value);
 	Setattr(n, "cppvalue", cppvalue); /* for target languages that always generate C++ code even when wrapping C code */
       }
       Setattr(n, "value", new_value);
@@ -919,7 +919,7 @@ class TypePass:private Dispatcher {
       }
     }
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -931,11 +931,11 @@ class TypePass:private Dispatcher {
     // Use enumDeclaration() to do all the hard work.
     // Note that no children can be emitted in a forward declaration as there aren't any.
     int result = enumDeclaration(n);
-    if (result == SWIG_OK) {
+    if (result == alaqil_OK) {
       // Detect when the real enum matching the forward enum declaration has not been parsed/declared
-      SwigType *ty = SwigType_typedef_resolve_all(Getattr(n, "type"));
+      alaqilType *ty = alaqilType_typedef_resolve_all(Getattr(n, "type"));
       Replaceall(ty, "enum ", "");
-      Node *nn = Swig_symbol_clookup(ty, 0);
+      Node *nn = alaqil_symbol_clookup(ty, 0);
 
       String *nodetype = nn ? nodeType(nn) : 0;
       if (nodetype) {
@@ -960,7 +960,7 @@ class TypePass:private Dispatcher {
       }
       if (Getattr(c, "sym:overloaded") != checkoverloaded) {
         Printf(stdout, "sym:overloaded error c:%p checkoverloaded:%p\n", c, checkoverloaded);
-        Swig_print_node(c);
+        alaqil_print_node(c);
         exit (1);
       }
 
@@ -968,7 +968,7 @@ class TypePass:private Dispatcher {
       Printf(stdout, "  show_overloaded %s::%s(%s)          [%s] nodeType:%s\n", parentNode(c) ? Getattr(parentNode(c), "name") : "NOPARENT", Getattr(c, "name"), decl, Getattr(c, "sym:overname"), nodeType(c));
       if (!Getattr(c, "sym:overloaded")) {
         Printf(stdout, "sym:overloaded error.....%p\n", c);
-        Swig_print_node(c);
+        alaqil_print_node(c);
         exit (1);
       }
       c = Getattr(c, "sym:nextSibling");
@@ -990,21 +990,21 @@ class TypePass:private Dispatcher {
       if (ns) {
 	Typetab *ts = Getattr(ns, "typescope");
 	if (ts) {
-	  SwigType_using_scope(ts);
+	  alaqilType_using_scope(ts);
 	}
       }
-      return SWIG_OK;
+      return alaqil_OK;
     } else {
       Node *ns;
       /* using id */
       Symtab *stab = Getattr(n, "sym:symtab");
       if (stab) {
 	String *uname = Getattr(n, "uname");
-	ns = Swig_symbol_clookup(uname, stab);
-	if (!ns && SwigType_istemplate(uname)) {
-	  String *tmp = Swig_symbol_template_deftype(uname, 0);
+	ns = alaqil_symbol_clookup(uname, stab);
+	if (!ns && alaqilType_istemplate(uname)) {
+	  String *tmp = alaqil_symbol_template_deftype(uname, 0);
 	  if (!Equal(tmp, uname)) {
-	    ns = Swig_symbol_clookup(tmp, stab);
+	    ns = alaqil_symbol_clookup(tmp, stab);
 	  }
 	  Delete(tmp);
 	}
@@ -1013,7 +1013,7 @@ class TypePass:private Dispatcher {
       }
       if (!ns) {
 	if (is_public(n)) {
-	  Swig_warning(WARN_PARSE_USING_UNDEF, Getfile(n), Getline(n), "Nothing known about '%s'.\n", SwigType_namestr(Getattr(n, "uname")));
+	  alaqil_warning(WARN_PARSE_USING_UNDEF, Getfile(n), Getline(n), "Nothing known about '%s'.\n", alaqilType_namestr(Getattr(n, "uname")));
 	}
       } else {
 	/* Only a single symbol is being used.  There are only a few symbols that
@@ -1023,7 +1023,7 @@ class TypePass:private Dispatcher {
 	  if (checkAttribute(ns, "storage", "typedef")) {
 	    /* A typedef declaration */
 	    String *uname = Getattr(n, "uname");
-	    SwigType_typedef_using(uname);
+	    alaqilType_typedef_using(uname);
 	  } else {
 	    /* A normal C declaration. */
 	    if ((inclass) && (!GetFlag(n, "feature:ignore")) && (Getattr(n, "sym:name"))) {
@@ -1033,7 +1033,7 @@ class TypePass:private Dispatcher {
 	      String *symname = Getattr(n, "sym:name");
 	      while (c) {
 		if (Strcmp(nodeType(c), "cdecl") == 0) {
-		  if (!(Swig_storage_isstatic(c)
+		  if (!(alaqil_storage_isstatic(c)
 			|| checkAttribute(c, "storage", "typedef")
 			|| checkAttribute(c, "storage", "friend")
 			|| (Getattr(c, "feature:extend") && !Getattr(c, "code"))
@@ -1073,7 +1073,7 @@ class TypePass:private Dispatcher {
 
 		      if (!GetFlag(nn, "feature:ignore")) {
 			ParmList *parms = CopyParmList(Getattr(c, "parms"));
-			int is_pointer = SwigType_ispointer_return(Getattr(nn, "decl"));
+			int is_pointer = alaqilType_ispointer_return(Getattr(nn, "decl"));
 			int is_void = checkAttribute(nn, "type", "void") && !is_pointer;
 			Setattr(nn, "parms", parms);
 			Delete(parms);
@@ -1119,7 +1119,7 @@ class TypePass:private Dispatcher {
 		if (ccount > 1) {
 		  if (!Getattr(n, "sym:overloaded")) {
 		    Setattr(n, "sym:overloaded", n);
-		    Setattr(n, "sym:overname", "_SWIG_0");
+		    Setattr(n, "sym:overname", "_alaqil_0");
 		  }
 		}
 	      }
@@ -1199,15 +1199,15 @@ class TypePass:private Dispatcher {
 	  /* We install the using class name as kind of a typedef back to the original class */
 	  String *uname = Getattr(n, "uname");
 	  /* Import into current type scope */
-	  SwigType_typedef_using(uname);
+	  alaqilType_typedef_using(uname);
 	} else if (Strcmp(ntype, "enum") == 0) {
-	  SwigType_typedef_using(Getattr(n, "uname"));
+	  alaqilType_typedef_using(Getattr(n, "uname"));
 	} else if (Strcmp(ntype, "template") == 0) {
-	  SwigType_typedef_using(Getattr(n, "uname"));
+	  alaqilType_typedef_using(Getattr(n, "uname"));
 	}
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1225,7 +1225,7 @@ class TypePass:private Dispatcher {
 	items = nextSibling(items);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -1244,7 +1244,7 @@ class TypePass:private Dispatcher {
 	items = nextSibling(items);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1262,7 +1262,7 @@ class TypePass:private Dispatcher {
 	items = nextSibling(items);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1277,7 +1277,7 @@ class TypePass:private Dispatcher {
 	normalize_later(pattern);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 public:
@@ -1287,7 +1287,7 @@ public:
   }
 };
 
-void Swig_process_types(Node *n) {
+void alaqil_process_types(Node *n) {
   if (!n)
     return;
   TypePass::pass(n);

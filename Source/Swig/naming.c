@@ -1,16 +1,16 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * naming.c
  *
  * Functions for generating various kinds of names during code generation.
  *
- * Swig_name_register is used to register a format string for generating names.
+ * alaqil_name_register is used to register a format string for generating names.
  * The format string makes use of the following format specifiers:
  *
  * %c - class name is substituted
@@ -20,7 +20,7 @@
  * %v - variable name is substituted
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 #include "cparse.h"
 #include <ctype.h>
 
@@ -29,22 +29,22 @@
 static Hash *naming_hash = 0;
 
 #if 0
-#define SWIG_DEBUG
+#define alaqil_DEBUG
 #endif
 
 /* -----------------------------------------------------------------------------
- * Swig_name_register()
+ * alaqil_name_register()
  *
  * Register a new naming format.
  * ----------------------------------------------------------------------------- */
 
-void Swig_name_register(const_String_or_char_ptr method, const_String_or_char_ptr format) {
+void alaqil_name_register(const_String_or_char_ptr method, const_String_or_char_ptr format) {
   if (!naming_hash)
     naming_hash = NewHash();
   Setattr(naming_hash, method, format);
 }
 
-void Swig_name_unregister(const_String_or_char_ptr method) {
+void alaqil_name_unregister(const_String_or_char_ptr method) {
   if (naming_hash) {
     Delattr(naming_hash, method);
   }
@@ -157,28 +157,28 @@ static void replace_nspace(String *name, const_String_or_char_ptr nspace) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_mangle()
+ * alaqil_name_mangle()
  *
  * Converts all of the non-identifier characters of a string to underscores.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_mangle(const_String_or_char_ptr s) {
+String *alaqil_name_mangle(const_String_or_char_ptr s) {
 #if 0
   String *r = NewString(s);
   name_mangle(r);
   return r;
 #else
-  return Swig_string_mangle(s);
+  return alaqil_string_mangle(s);
 #endif
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_wrapper()
+ * alaqil_name_wrapper()
  *
  * Returns the name of a wrapper function.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_wrapper(const_String_or_char_ptr fname) {
+String *alaqil_name_wrapper(const_String_or_char_ptr fname) {
   String *r = get_naming_format_for("wrapper", "_wrap_%f");
 
   Replace(r, "%f", fname, DOH_REPLACE_ANY);
@@ -188,17 +188,17 @@ String *Swig_name_wrapper(const_String_or_char_ptr fname) {
 
 
 /* -----------------------------------------------------------------------------
- * Swig_name_member()
+ * alaqil_name_member()
  *
  * Returns the name of a class method.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_member(const_String_or_char_ptr nspace, const_String_or_char_ptr classname, const_String_or_char_ptr membername) {
+String *alaqil_name_member(const_String_or_char_ptr nspace, const_String_or_char_ptr classname, const_String_or_char_ptr membername) {
   String *r;
   String *rclassname;
   char *cname;
 
-  rclassname = SwigType_namestr(classname);
+  rclassname = alaqilType_namestr(classname);
   r = get_naming_format_for("member", "%n%c_%m");
   cname = Char(rclassname);
   if ((strncmp(cname, "struct ", 7) == 0) || ((strncmp(cname, "class ", 6) == 0)) || ((strncmp(cname, "union ", 6) == 0))) {
@@ -213,16 +213,16 @@ String *Swig_name_member(const_String_or_char_ptr nspace, const_String_or_char_p
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_get()
+ * alaqil_name_get()
  *
  * Returns the name of the accessor function used to get a variable.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_get(const_String_or_char_ptr nspace, const_String_or_char_ptr vname) {
+String *alaqil_name_get(const_String_or_char_ptr nspace, const_String_or_char_ptr vname) {
   String *r = get_naming_format_for("get", "%n%v_get");
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_name_get:  '%s'\n", vname);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_name_get:  '%s'\n", vname);
 #endif
 
   replace_nspace(r, nspace);
@@ -232,12 +232,12 @@ String *Swig_name_get(const_String_or_char_ptr nspace, const_String_or_char_ptr 
 }
 
 /* ----------------------------------------------------------------------------- 
- * Swig_name_set()
+ * alaqil_name_set()
  *
  * Returns the name of the accessor function used to set a variable.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_set(const_String_or_char_ptr nspace, const_String_or_char_ptr vname) {
+String *alaqil_name_set(const_String_or_char_ptr nspace, const_String_or_char_ptr vname) {
   String *r = get_naming_format_for("set", "%n%v_set");
 
   replace_nspace(r, nspace);
@@ -246,13 +246,13 @@ String *Swig_name_set(const_String_or_char_ptr nspace, const_String_or_char_ptr 
   return r;
 }
 
-/* Common implementation of all Swig_name_<special-method>() functions below. */
+/* Common implementation of all alaqil_name_<special-method>() functions below. */
 static String *make_full_name_for(const char *method, const char *def_format, const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
   String *r;
   String *rclassname;
   char *cname;
 
-  rclassname = SwigType_namestr(classname);
+  rclassname = alaqilType_namestr(classname);
   r = get_naming_format_for(method, def_format);
 
   cname = Char(rclassname);
@@ -267,59 +267,59 @@ static String *make_full_name_for(const char *method, const char *def_format, co
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_construct()
+ * alaqil_name_construct()
  *
  * Returns the name of the accessor function used to create an object.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_construct(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
+String *alaqil_name_construct(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
   return make_full_name_for("construct", "new_%n%c", nspace, classname);
 }
 
 
 /* -----------------------------------------------------------------------------
- * Swig_name_copyconstructor()
+ * alaqil_name_copyconstructor()
  *
  * Returns the name of the accessor function used to copy an object.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_copyconstructor(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
+String *alaqil_name_copyconstructor(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
   return make_full_name_for("copy", "copy_%n%c", nspace, classname);
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_destroy()
+ * alaqil_name_destroy()
  *
  * Returns the name of the accessor function used to destroy an object.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_destroy(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
+String *alaqil_name_destroy(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
   return make_full_name_for("destroy", "delete_%n%c", nspace, classname);
 }
 
 
 /* -----------------------------------------------------------------------------
- * Swig_name_disown()
+ * alaqil_name_disown()
  *
  * Returns the name of the accessor function used to disown an object.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_disown(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
+String *alaqil_name_disown(const_String_or_char_ptr nspace, const_String_or_char_ptr classname) {
   return make_full_name_for("disown", "disown_%n%c", nspace, classname);
 }
 
 
 /* -----------------------------------------------------------------------------
- * Swig_name_object_set()
+ * alaqil_name_object_set()
  *
  * Sets an object associated with a name and optional declarators. 
  * ----------------------------------------------------------------------------- */
 
-void Swig_name_object_set(Hash *namehash, String *name, SwigType *decl, DOH *object) {
+void alaqil_name_object_set(Hash *namehash, String *name, alaqilType *decl, DOH *object) {
   DOH *n;
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_name_object_set:  '%s', '%s'\n", name, decl);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_name_object_set:  '%s', '%s'\n", name, decl);
 #endif
   n = Getattr(namehash, name);
   if (!n) {
@@ -331,7 +331,7 @@ void Swig_name_object_set(Hash *namehash, String *name, SwigType *decl, DOH *obj
   if (!decl) {
     Setattr(n, "start", object);
   } else {
-    SwigType *cd = Copy(decl);
+    alaqilType *cd = Copy(decl);
     Setattr(n, cd, object);
     Delete(cd);
   }
@@ -339,11 +339,11 @@ void Swig_name_object_set(Hash *namehash, String *name, SwigType *decl, DOH *obj
 
 
 /* -----------------------------------------------------------------------------
- * Swig_name_object_get()
+ * alaqil_name_object_get()
  *
  * Return an object associated with an optional class prefix, name, and 
  * declarator.   This function operates according to name matching rules
- * described for the %rename directive in the SWIG manual.
+ * described for the %rename directive in the alaqil manual.
  * ----------------------------------------------------------------------------- */
 
 static DOH *get_object(Hash *n, String *decl) {
@@ -358,7 +358,7 @@ static DOH *get_object(Hash *n, String *decl) {
   return rn;
 }
 
-static DOH *name_object_get(Hash *namehash, String *tname, SwigType *decl, SwigType *ncdecl) {
+static DOH *name_object_get(Hash *namehash, String *tname, alaqilType *decl, alaqilType *ncdecl) {
   DOH *rn = 0;
   Hash *n = Getattr(namehash, tname);
   if (n) {
@@ -371,7 +371,7 @@ static DOH *name_object_get(Hash *namehash, String *tname, SwigType *decl, SwigT
   return rn;
 }
 
-DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType *decl) {
+DOH *alaqil_name_object_get(Hash *namehash, String *prefix, String *name, alaqilType *decl) {
   String *tname = NewStringEmpty();
   DOH *rn = 0;
   char *ncdecl = 0;
@@ -380,13 +380,13 @@ DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType
     return 0;
 
   /* DB: This removed to more tightly control feature/name matching */
-  /*  if ((decl) && (SwigType_isqualifier(decl))) {
+  /*  if ((decl) && (alaqilType_isqualifier(decl))) {
      ncdecl = strchr(Char(decl),'.');
      ncdecl++;
      }
    */
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_name_object_get:  '%s' '%s', '%s'\n", prefix, name, decl);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_name_object_get:  '%s' '%s', '%s'\n", prefix, name, decl);
 #endif
 
 
@@ -396,7 +396,7 @@ DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType
       Printf(tname, "%s::%s", prefix, name);
       rn = name_object_get(namehash, tname, decl, ncdecl);
       if (!rn) {
-	String *cls = Swig_scopename_last(prefix);
+	String *cls = alaqil_scopename_last(prefix);
 	if (!Equal(cls, prefix)) {
 	  Clear(tname);
 	  Printf(tname, "*::%s::%s", cls, name);
@@ -406,7 +406,7 @@ DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType
       }
       /* Lookup a name within a templated-based class */
       if (!rn) {
-	String *t_name = SwigType_istemplate_templateprefix(prefix);
+	String *t_name = alaqilType_istemplate_templateprefix(prefix);
 	if (t_name) {
 	  Clear(tname);
 	  Printf(tname, "%s::%s", t_name, name);
@@ -416,9 +416,9 @@ DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType
       }
       /* Lookup a template-based name within a class */
       if (!rn) {
-	String *t_name = SwigType_istemplate_templateprefix(name);
+	String *t_name = alaqilType_istemplate_templateprefix(name);
 	if (t_name)
-	  rn = Swig_name_object_get(namehash, prefix, t_name, decl);
+	  rn = alaqil_name_object_get(namehash, prefix, t_name, decl);
 	Delete(t_name);
       }
     }
@@ -438,10 +438,10 @@ DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType
   if (!rn) {
     rn = name_object_get(namehash, name, decl, ncdecl);
   }
-  if (!rn && Swig_scopename_check(name)) {
+  if (!rn && alaqil_scopename_check(name)) {
     String *nprefix = 0;
     String *nlast = 0;
-    Swig_scopename_split(name, &nprefix, &nlast);
+    alaqil_scopename_split(name, &nprefix, &nlast);
     rn = name_object_get(namehash, nlast, decl, ncdecl);
     Delete(nlast);
     Delete(nprefix);
@@ -449,20 +449,20 @@ DOH *Swig_name_object_get(Hash *namehash, String *prefix, String *name, SwigType
 
   Delete(tname);
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_name_object_get:  found %d\n", rn ? 1 : 0);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_name_object_get:  found %d\n", rn ? 1 : 0);
 #endif
 
   return rn;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_object_inherit()
+ * alaqil_name_object_inherit()
  *
  * Implements name-based inheritance scheme. 
  * ----------------------------------------------------------------------------- */
 
-void Swig_name_object_inherit(Hash *namehash, String *base, String *derived) {
+void alaqil_name_object_inherit(Hash *namehash, String *base, String *derived) {
   Iterator ki;
   Hash *derh;
   String *bprefix;
@@ -541,15 +541,15 @@ static void merge_features(Hash *features, Node *n) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_features_get()
+ * alaqil_features_get()
  *
  * Attaches any features in the features hash to the node that matches
  * the declaration, decl.
  * ----------------------------------------------------------------------------- */
 
-static void features_get(Hash *features, const String *tname, SwigType *decl, SwigType *ncdecl, Node *node) {
+static void features_get(Hash *features, const String *tname, alaqilType *decl, alaqilType *ncdecl, Node *node) {
   Node *n = Getattr(features, tname);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
   Printf(stdout, "  features_get: %s\n", tname);
 #endif
   if (n) {
@@ -560,7 +560,7 @@ static void features_get(Hash *features, const String *tname, SwigType *decl, Sw
   }
 }
 
-void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *decl, Node *node) {
+void alaqil_features_get(Hash *features, String *prefix, String *name, alaqilType *decl, Node *node) {
   char *ncdecl = 0;
   String *rdecl = 0;
   String *rname = 0;
@@ -569,21 +569,21 @@ void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *d
 
   /* MM: This removed to more tightly control feature/name matching */
   /*
-     if ((decl) && (SwigType_isqualifier(decl))) {
+     if ((decl) && (alaqilType_isqualifier(decl))) {
      ncdecl = strchr(Char(decl),'.');
      ncdecl++;
      }
    */
 
   /* very specific hack for template constructors/destructors */
-  if (name && SwigType_istemplate(name)) {
+  if (name && alaqilType_istemplate(name)) {
     String *nodetype = nodeType(node);
     if (nodetype && (Equal(nodetype, "constructor") || Equal(nodetype, "destructor"))) {
       String *nprefix = 0;
       String *nlast = 0;
       String *tprefix;
-      Swig_scopename_split(name, &nprefix, &nlast);
-      tprefix = SwigType_templateprefix(nlast);
+      alaqil_scopename_split(name, &nprefix, &nlast);
+      tprefix = alaqilType_templateprefix(nlast);
       Delete(nlast);
       if (Len(nprefix)) {
 	Append(nprefix, "::");
@@ -601,8 +601,8 @@ void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *d
     }
   }
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_features_get: '%s' '%s' '%s'\n", prefix, name, decl);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_features_get: '%s' '%s' '%s'\n", prefix, name, decl);
 #endif
 
   /* Global features */
@@ -610,7 +610,7 @@ void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *d
   if (name) {
     String *tname = NewStringEmpty();
     /* add features for 'root' template */
-    String *dname = SwigType_istemplate_templateprefix(name);
+    String *dname = alaqilType_istemplate_templateprefix(name);
     if (dname) {
       features_get(features, dname, decl, ncdecl, node);
     }
@@ -630,7 +630,7 @@ void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *d
       /* A specific class lookup */
       if (Len(prefix)) {
 	/* A template-based class lookup */
-	String *tprefix = SwigType_istemplate_templateprefix(prefix);
+	String *tprefix = alaqilType_istemplate_templateprefix(prefix);
 	if (tprefix) {
 	  Clear(tname);
 	  Printf(tname, "%s::%s", tprefix, name);
@@ -650,11 +650,11 @@ void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *d
     Delete(tname);
     Delete(dname);
   }
-  if (name && SwigType_istemplate(name)) {
+  if (name && alaqilType_istemplate(name)) {
     /* add features for complete template type */
-    String *dname = Swig_symbol_template_deftype(name, 0);
+    String *dname = alaqil_symbol_template_deftype(name, 0);
     if (!Equal(dname, name)) {
-      Swig_features_get(features, prefix, dname, decl, node);
+      alaqil_features_get(features, prefix, dname, decl, node);
     }
     Delete(dname);
   }
@@ -667,19 +667,19 @@ void Swig_features_get(Hash *features, String *prefix, String *name, SwigType *d
 
 
 /* -----------------------------------------------------------------------------
- * Swig_feature_set()
+ * alaqil_feature_set()
  *
  * Sets a feature name and value. Also sets optional feature attributes as
  * passed in by featureattribs. Optional feature attributes are given a full name
  * concatenating the feature name plus ':' plus the attribute name.
  * ----------------------------------------------------------------------------- */
 
-void Swig_feature_set(Hash *features, const_String_or_char_ptr name, SwigType *decl, const_String_or_char_ptr featurename, const_String_or_char_ptr value, Hash *featureattribs) {
+void alaqil_feature_set(Hash *features, const_String_or_char_ptr name, alaqilType *decl, const_String_or_char_ptr featurename, const_String_or_char_ptr value, Hash *featureattribs) {
   Hash *n;
   Hash *fhash;
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_feature_set: '%s' '%s' '%s' '%s'\n", name, decl, featurename, value);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_feature_set: '%s' '%s' '%s' '%s'\n", name, decl, featurename, value);
 #endif
 
   n = Getattr(features, name);
@@ -728,10 +728,10 @@ void Swig_feature_set(Hash *features, const_String_or_char_ptr name, SwigType *d
     }
   }
 
-  if (name && SwigType_istemplate(name)) {
-    String *dname = Swig_symbol_template_deftype(name, 0);
+  if (name && alaqilType_istemplate(name)) {
+    String *dname = alaqil_symbol_template_deftype(name, 0);
     if (Strcmp(dname, name)) {
-      Swig_feature_set(features, dname, decl, featurename, value, featureattribs);
+      alaqil_feature_set(features, dname, decl, featurename, value, featureattribs);
     }
     Delete(dname);
   }
@@ -806,7 +806,7 @@ static int need_name_warning(Node *n) {
 }
 
 /* -----------------------------------------------------------------------------
- * int Swig_need_redefined_warn()
+ * int alaqil_need_redefined_warn()
  *
  * Detects when a redefined object needs a warning
  * 
@@ -840,7 +840,7 @@ static int nodes_are_equivalent(Node *a, Node *b, int a_inclass) {
     }
 
     /* static functions */
-    if (Swig_storage_isstatic(a) || Swig_storage_isstatic(b)) {
+    if (alaqil_storage_isstatic(a) || alaqil_storage_isstatic(b)) {
       if (Cmp(a_storage, b_storage) != 0)
 	return 0;
     }
@@ -861,8 +861,8 @@ static int nodes_are_equivalent(Node *a, Node *b, int a_inclass) {
 	  Parm *ap = (Getattr(a, "parms"));
 	  Parm *bp = (Getattr(b, "parms"));
 	  while (ap && bp) {
-	    SwigType *at = Getattr(ap, "type");
-	    SwigType *bt = Getattr(bp, "type");
+	    alaqilType *at = Getattr(ap, "type");
+	    alaqilType *bt = Getattr(bp, "type");
 	    if (Cmp(at, bt) != 0)
 	      return 0;
 	    ap = nextSibling(ap);
@@ -913,7 +913,7 @@ static int nodes_are_equivalent(Node *a, Node *b, int a_inclass) {
   return 0;
 }
 
-int Swig_need_redefined_warn(Node *a, Node *b, int InClass) {
+int alaqil_need_redefined_warn(Node *a, Node *b, int InClass) {
   String *a_name = Getattr(a, "name");
   String *b_name = Getattr(b, "name");
   String *a_symname = Getattr(a, "sym:name");
@@ -932,7 +932,7 @@ int Swig_need_redefined_warn(Node *a, Node *b, int InClass) {
 
 
 /* -----------------------------------------------------------------------------
- * int Swig_need_protected(Node* n)
+ * int alaqil_need_protected(Node* n)
  *
  * Detects when we need to fully register the protected member.
  * This is basically any protected members when the allprotected mode is set.
@@ -941,14 +941,14 @@ int Swig_need_redefined_warn(Node *a, Node *b, int InClass) {
  * Also any "using" statements in a class may potentially be virtual.
  * ----------------------------------------------------------------------------- */
 
-int Swig_need_protected(Node *n) {
+int alaqil_need_protected(Node *n) {
   String *nodetype = nodeType(n);
   if (checkAttribute(n, "access", "protected")) {
     if ((Equal(nodetype, "cdecl"))) {
-      if (Swig_director_mode() && Swig_director_protected_mode() && Swig_all_protected_mode()) {
+      if (alaqil_director_mode() && alaqil_director_protected_mode() && alaqil_all_protected_mode()) {
         return 1;
       }
-      if (SwigType_isfunction(Getattr(n, "decl"))) {
+      if (alaqilType_isfunction(Getattr(n, "decl"))) {
         String *storage = Getattr(n, "storage");
         /* The function is declared virtual, or it has no storage. This eliminates typedef, static etc. */
         return !storage || Equal(storage, "virtual");
@@ -1037,7 +1037,7 @@ static void name_object_attach_keys(const char *keys[], Hash *nameobj) {
   }
 }
 
-static void name_nameobj_add(Hash *name_hash, List *name_list, String *prefix, String *name, SwigType *decl, Hash *nameobj) {
+static void name_nameobj_add(Hash *name_hash, List *name_list, String *prefix, String *name, alaqilType *decl, Hash *nameobj) {
   String *nname = 0;
   if (name && Len(name)) {
     String *target_fmt = Getattr(nameobj, "targetfmt");
@@ -1060,7 +1060,7 @@ static void name_nameobj_add(Hash *name_hash, List *name_list, String *prefix, S
     Insert(name_list, 0, nameobj);
   } else {
     /* here we add an old 'hash' nameobj, simple and fast */
-    Swig_name_object_set(name_hash, nname, decl, nameobj);
+    alaqil_name_object_set(name_hash, nname, decl, nameobj);
   }
   Delete(nname);
 }
@@ -1079,7 +1079,7 @@ static DOH *get_lattr(Node *n, List *lattr) {
   for (i = 0; n && (i < ilen); ++i) {
     String *nattr = Getitem(lattr, i);
     res = Getattr(n, nattr);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     if (!res) {
       Printf(stdout, "missing %s %s %s\n", nattr, Getattr(n, "name"), Getattr(n, "member"));
     } else {
@@ -1102,7 +1102,7 @@ static int name_regexmatch_value(Node *n, String *pattern, String *s) {
 
   compiled_pat = pcre_compile(Char(pattern), 0, &err, &errpos, NULL);
   if (!compiled_pat) {
-    Swig_error("SWIG", Getline(n),
+    alaqil_error("alaqil", Getline(n),
                "Invalid regex \"%s\": compilation failed at %d: %s\n",
                Char(pattern), errpos, err);
     exit(1);
@@ -1115,7 +1115,7 @@ static int name_regexmatch_value(Node *n, String *pattern, String *s) {
     return 0;
 
   if (rc < 0 ) {
-    Swig_error("SWIG", Getline(n),
+    alaqil_error("alaqil", Getline(n),
                "Matching \"%s\" against regex \"%s\" failed: %d\n",
                Char(s), Char(pattern), rc);
     exit(1);
@@ -1129,22 +1129,22 @@ static int name_regexmatch_value(Node *n, String *pattern, String *s) {
 static int name_regexmatch_value(Node *n, String *pattern, String *s) {
   (void)pattern;
   (void)s;
-  Swig_error("SWIG", Getline(n),
-             "PCRE regex matching is not available in this SWIG build.\n");
+  alaqil_error("alaqil", Getline(n),
+             "PCRE regex matching is not available in this alaqil build.\n");
   exit(1);
 }
 
 #endif /* HAVE_PCRE/!HAVE_PCRE */
 
 static int name_match_value(String *mvalue, String *value) {
-#if defined(SWIG_USE_SIMPLE_MATCHOR)
+#if defined(alaqil_USE_SIMPLE_MATCHOR)
   int match = 0;
   char *cvalue = Char(value);
   char *cmvalue = Char(mvalue);
   char *sep = strchr(cmvalue, '|');
   while (sep && !match) {
     match = strncmp(cvalue, cmvalue, sep - cmvalue) == 0;
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     Printf(stdout, "match_value: %s %s %d\n", cvalue, cmvalue, match);
 #endif
     cmvalue = sep + 1;
@@ -1152,7 +1152,7 @@ static int name_match_value(String *mvalue, String *value) {
   }
   if (!match) {
     match = strcmp(cvalue, cmvalue) == 0;
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     Printf(stdout, "match_value: %s %s %d\n", cvalue, cmvalue, match);
 #endif
   }
@@ -1165,7 +1165,7 @@ static int name_match_value(String *mvalue, String *value) {
 static int name_match_nameobj(Hash *rn, Node *n) {
   int match = 1;
   List *matchlist = Getattr(rn, "matchlist");
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
   Printf(stdout, "name_match_nameobj: %s\n", Getattr(n, "name"));
 #endif
   if (matchlist) {
@@ -1182,7 +1182,7 @@ static int name_match_nameobj(Hash *rn, Node *n) {
 	String *kwval = Getattr(mi, "value");
 	match = regexmatch ? name_regexmatch_value(n, kwval, nval)
 	    : name_match_value(kwval, nval);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
 	Printf(stdout, "val %s %s %d %d \n", nval, kwval, match, ilen);
 #endif
       }
@@ -1190,7 +1190,7 @@ static int name_match_nameobj(Hash *rn, Node *n) {
 	match = !match;
     }
   }
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
   Printf(stdout, "name_match_nameobj: %d\n", match);
 #endif
   return match;
@@ -1260,13 +1260,13 @@ static Hash *name_nameobj_lget(List *namelist, Node *n, String *prefix, String *
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_namewarn_add
+ * alaqil_name_namewarn_add
  *
  * Add a namewarn objects
  * 
  * ----------------------------------------------------------------------------- */
 
-void Swig_name_namewarn_add(String *prefix, String *name, SwigType *decl, Hash *namewrn) {
+void alaqil_name_namewarn_add(String *prefix, String *name, alaqilType *decl, Hash *namewrn) {
   const char *namewrn_keys[] = { "rename", "error", "fullname", "sourcefmt", "targetfmt", 0 };
   name_object_attach_keys(namewrn_keys, namewrn);
   name_nameobj_add(name_namewarn_hash(), name_namewarn_list(), prefix, name, decl, namewrn);
@@ -1279,7 +1279,7 @@ void Swig_name_namewarn_add(String *prefix, String *name, SwigType *decl, Hash *
  * 
  * ----------------------------------------------------------------------------- */
 
-static Hash *name_namewarn_get(Node *n, String *prefix, String *name, SwigType *decl) {
+static Hash *name_namewarn_get(Node *n, String *prefix, String *name, alaqilType *decl) {
   if (!namewarn_hash && !namewarn_list)
     return 0;
   if (n) {
@@ -1289,14 +1289,14 @@ static Hash *name_namewarn_get(Node *n, String *prefix, String *name, SwigType *
     } else {
       String *access = Getattr(n, "access");
       int is_public = !access || Equal(access, "public");
-      if (!is_public && !Swig_need_protected(n)) {
+      if (!is_public && !alaqil_need_protected(n)) {
 	return 0;
       }
     }
   }
   if (name) {
     /* Check to see if the name is in the hash */
-    Hash *wrn = Swig_name_object_get(name_namewarn_hash(), prefix, name, decl);
+    Hash *wrn = alaqil_name_object_get(name_namewarn_hash(), prefix, name, decl);
     if (wrn && !name_match_nameobj(wrn, n))
       wrn = 0;
     if (!wrn) {
@@ -1304,9 +1304,9 @@ static Hash *name_namewarn_get(Node *n, String *prefix, String *name, SwigType *
     }
     if (wrn && Getattr(wrn, "error")) {
       if (n) {
-	Swig_error(Getfile(n), Getline(n), "%s\n", Getattr(wrn, "name"));
+	alaqil_error(Getfile(n), Getline(n), "%s\n", Getattr(wrn, "name"));
       } else {
-	Swig_error(cparse_file, cparse_line, "%s\n", Getattr(wrn, "name"));
+	alaqil_error(cparse_file, cparse_line, "%s\n", Getattr(wrn, "name"));
       }
     }
     return wrn;
@@ -1316,30 +1316,30 @@ static Hash *name_namewarn_get(Node *n, String *prefix, String *name, SwigType *
 }
 
 /* -----------------------------------------------------------------------------
- * String *Swig_name_warning()
+ * String *alaqil_name_warning()
  *
  * Return the name warning, if there is one.
  * 
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_warning(Node *n, String *prefix, String *name, SwigType *decl) {
+String *alaqil_name_warning(Node *n, String *prefix, String *name, alaqilType *decl) {
   Hash *wrn = name_namewarn_get(n, prefix, name, decl);
   return (name && wrn) ? Getattr(wrn, "name") : 0;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_name_rename_add()
+ * alaqil_name_rename_add()
  *
  * Manage the rename objects
  * 
  * ----------------------------------------------------------------------------- */
 
-static void single_rename_add(String *prefix, String *name, SwigType *decl, Hash *newname) {
+static void single_rename_add(String *prefix, String *name, alaqilType *decl, Hash *newname) {
   name_nameobj_add(name_rename_hash(), name_rename_list(), prefix, name, decl, newname);
 }
 
 /* Add a new rename. Works much like new_feature including default argument handling. */
-void Swig_name_rename_add(String *prefix, String *name, SwigType *decl, Hash *newname, ParmList *declaratorparms) {
+void alaqil_name_rename_add(String *prefix, String *name, alaqilType *decl, Hash *newname, ParmList *declaratorparms) {
 
   ParmList *declparms = declaratorparms;
 
@@ -1351,7 +1351,7 @@ void Swig_name_rename_add(String *prefix, String *name, SwigType *decl, Hash *ne
 
   /* Add extra names if there are default parameters in the parameter list */
   if (decl) {
-    int constqualifier = SwigType_isconst(decl);
+    int constqualifier = alaqilType_isconst(decl);
     while (declparms) {
       if (ParmList_has_defaultargs(declparms)) {
 
@@ -1360,11 +1360,11 @@ void Swig_name_rename_add(String *prefix, String *name, SwigType *decl, Hash *ne
 	ParmList *newparms = CopyParmListMax(declparms,ParmList_len(declparms)-1);
 
 	/* Create new declaration - with the last parameter removed */
-	SwigType *newdecl = Copy(decl);
-	Delete(SwigType_pop_function(newdecl));	/* remove the old parameter list from newdecl */
-	SwigType_add_function(newdecl, newparms);
+	alaqilType *newdecl = Copy(decl);
+	Delete(alaqilType_pop_function(newdecl));	/* remove the old parameter list from newdecl */
+	alaqilType_add_function(newdecl, newparms);
 	if (constqualifier)
-	  SwigType_add_qualifier(newdecl, "const");
+	  alaqilType_add_qualifier(newdecl, "const");
 
 	single_rename_add(prefix, name, newdecl, newname);
 	declparms = newparms;
@@ -1412,13 +1412,13 @@ static String *apply_rename(Node* n, String *newname, int fullname, String *pref
 }
 
 /* -----------------------------------------------------------------------------
- * String *Swig_name_make()
+ * String *alaqil_name_make()
  *
  * Make a name after applying all the rename/namewarn objects
  * 
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, SwigType *decl, String *oldname) {
+String *alaqil_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, alaqilType *decl, String *oldname) {
   String *nname = 0;
   String *result = 0;
   String *name = NewString(cname);
@@ -1427,18 +1427,18 @@ String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, 
   String *rname = 0;
 
   /* very specific hack for template constructors/destructors */
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_name_make: looking for %s %s %s %s\n", prefix, name, decl, oldname);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_name_make: looking for %s %s %s %s\n", prefix, name, decl, oldname);
 #endif
 
-  if (name && n && SwigType_istemplate(name)) {
+  if (name && n && alaqilType_istemplate(name)) {
     String *nodetype = nodeType(n);
     if (nodetype && (Equal(nodetype, "constructor") || Equal(nodetype, "destructor"))) {
       String *nprefix = 0;
       String *nlast = 0;
       String *tprefix;
-      Swig_scopename_split(name, &nprefix, &nlast);
-      tprefix = SwigType_templateprefix(nlast);
+      alaqil_scopename_split(name, &nprefix, &nlast);
+      tprefix = alaqilType_templateprefix(nlast);
       Delete(nlast);
       if (Len(nprefix)) {
 	Append(nprefix, "::");
@@ -1451,8 +1451,8 @@ String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, 
       }
       rdecl = Copy(decl);
       Replaceall(rdecl, name, rname);
-#ifdef SWIG_DEBUG
-      Printf(stdout, "SWIG_name_make: use new name %s %s : %s %s\n", name, decl, rname, rdecl);
+#ifdef alaqil_DEBUG
+      Printf(stdout, "alaqil_name_make: use new name %s %s : %s %s\n", name, decl, rname, rdecl);
 #endif
       decl = rdecl;
       Delete(name);
@@ -1461,7 +1461,7 @@ String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, 
   }
 
   if (rename_hash || rename_list || namewarn_hash || namewarn_list) {
-    Hash *rn = Swig_name_object_get(name_rename_hash(), prefix, name, decl);
+    Hash *rn = alaqil_name_object_get(name_rename_hash(), prefix, name, decl);
     if (!rn || !name_match_nameobj(rn, n)) {
       rn = name_nameobj_lget(name_rename_list(), n, prefix, name, decl);
       if (rn) {
@@ -1489,7 +1489,7 @@ String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, 
       /* operators in C++ allow aliases, we look for them */
       char *cresult = Char(result);
       if (cresult && (strncmp(cresult, "operator ", 9) == 0)) {
-	String *nresult = Swig_name_make(n, prefix, result, decl, oldname);
+	String *nresult = alaqil_name_make(n, prefix, result, decl, oldname);
 	if (!Equal(nresult, result)) {
 	  Delete(result);
 	  result = nresult;
@@ -1516,12 +1516,12 @@ String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, 
 	       * is not possible to implemented targetted warning suppression on one parameter in one function. */
 	      int suppress_parameter_rename_warning = Equal(nodeType(n), "parm");
 	      if (!suppress_parameter_rename_warning) {
-		SWIG_WARN_NODE_BEGIN(n);
-		Swig_warning(0, Getfile(n), Getline(n), "%s\n", msg);
-		SWIG_WARN_NODE_END(n);
+		alaqil_WARN_NODE_BEGIN(n);
+		alaqil_warning(0, Getfile(n), Getline(n), "%s\n", msg);
+		alaqil_WARN_NODE_END(n);
 	      }
 	    } else {
-	      Swig_warning(0, Getfile(name), Getline(name), "%s\n", msg);
+	      alaqil_warning(0, Getfile(name), Getline(name), "%s\n", msg);
 	    }
 	    Setmeta(nname, "already_warned", "1");
 	  }
@@ -1540,32 +1540,32 @@ String *Swig_name_make(Node *n, String *prefix, const_String_or_char_ptr cname, 
   }
   Delete(name);
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_name_make: result  '%s' '%s'\n", cname, result);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_name_make: result  '%s' '%s'\n", cname, result);
 #endif
 
   return result;
 }
 
 /* -----------------------------------------------------------------------------
- * void Swig_name_inherit()
+ * void alaqil_name_inherit()
  *
  * Inherit namewarn, rename, and feature objects
  * 
  * ----------------------------------------------------------------------------- */
 
-void Swig_name_inherit(String *base, String *derived) {
+void alaqil_name_inherit(String *base, String *derived) {
   /*  Printf(stdout,"base = '%s', derived = '%s'\n", base, derived); */
-  Swig_name_object_inherit(name_rename_hash(), base, derived);
-  Swig_name_object_inherit(name_namewarn_hash(), base, derived);
-  Swig_name_object_inherit(Swig_cparse_features(), base, derived);
+  alaqil_name_object_inherit(name_rename_hash(), base, derived);
+  alaqil_name_object_inherit(name_namewarn_hash(), base, derived);
+  alaqil_name_object_inherit(alaqil_cparse_features(), base, derived);
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_inherit_base_symbols()
+ * alaqil_inherit_base_symbols()
  * ----------------------------------------------------------------------------- */
 
-void Swig_inherit_base_symbols(List *bases) {
+void alaqil_inherit_base_symbols(List *bases) {
   if (bases) {
     Iterator s;
     for (s = First(bases); s.item; s = Next(s)) {
@@ -1573,7 +1573,7 @@ void Swig_inherit_base_symbols(List *bases) {
       if (st) {
 	Setfile(st, Getfile(s.item));
 	Setline(st, Getline(s.item));
-	Swig_symbol_inherit(st);
+	alaqil_symbol_inherit(st);
       }
     }
     Delete(bases);
@@ -1581,10 +1581,10 @@ void Swig_inherit_base_symbols(List *bases) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_make_inherit_list()
+ * alaqil_make_inherit_list()
  * ----------------------------------------------------------------------------- */
 
-List *Swig_make_inherit_list(String *clsname, List *names, String *Namespaceprefix) {
+List *alaqil_make_inherit_list(String *clsname, List *names, String *Namespaceprefix) {
   int i, ilen;
   String *derived;
   List *bases = NewList();
@@ -1599,20 +1599,20 @@ List *Swig_make_inherit_list(String *clsname, List *names, String *Namespacepref
     String *base;
     String *n = Getitem(names, i);
     /* Try to figure out where this symbol is */
-    Node *s = Swig_symbol_clookup(n, 0);
+    Node *s = alaqil_symbol_clookup(n, 0);
     if (s) {
       while (s && (Strcmp(nodeType(s), "class") != 0)) {
 	/* Not a class.  Could be a typedef though. */
 	String *storage = Getattr(s, "storage");
 	if (storage && (Strcmp(storage, "typedef") == 0)) {
 	  String *nn = Getattr(s, "type");
-	  s = Swig_symbol_clookup(nn, Getattr(s, "sym:symtab"));
+	  s = alaqil_symbol_clookup(nn, Getattr(s, "sym:symtab"));
 	} else {
 	  break;
 	}
       }
       if (s && ((Strcmp(nodeType(s), "class") == 0) || (Strcmp(nodeType(s), "template") == 0))) {
-	String *q = Swig_symbol_qualified(s);
+	String *q = alaqil_symbol_qualified(s);
 	Append(bases, s);
 	if (q) {
 	  base = NewStringf("%s::%s", q, Getattr(s, "name"));
@@ -1627,7 +1627,7 @@ List *Swig_make_inherit_list(String *clsname, List *names, String *Namespacepref
       base = NewString(n);
     }
     if (base) {
-      Swig_name_inherit(base, derived);
+      alaqil_name_inherit(base, derived);
       Delete(base);
     }
   }
@@ -1636,7 +1636,7 @@ List *Swig_make_inherit_list(String *clsname, List *names, String *Namespacepref
 
 
 /* -----------------------------------------------------------------------------
- * void Swig_name_str()
+ * void alaqil_name_str()
  *
  * Return a stringified version of a C/C++ symbol from a node.
  * The node passed in is expected to be a function, constructor, destructor or
@@ -1648,22 +1648,22 @@ List *Swig_make_inherit_list(String *clsname, List *names, String *Namespacepref
  * 
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_str(Node *n) {
+String *alaqil_name_str(Node *n) {
   String *qname;
-  String *qualifier = Swig_symbol_qualified(n);
-  String *name = Swig_scopename_last(Getattr(n, "name"));
+  String *qualifier = alaqil_symbol_qualified(n);
+  String *name = alaqil_scopename_last(Getattr(n, "name"));
   if (qualifier)
-    qualifier = SwigType_namestr(qualifier);
+    qualifier = alaqilType_namestr(qualifier);
 
   /* Very specific hack for template constructors/destructors */
-  if (SwigType_istemplate(name)) {
+  if (alaqilType_istemplate(name)) {
     String *nodetype = nodeType(n);
     if (nodetype && (Equal(nodetype, "constructor") || Equal(nodetype, "destructor"))) {
       String *nprefix = 0;
       String *nlast = 0;
       String *tprefix;
-      Swig_scopename_split(name, &nprefix, &nlast);
-      tprefix = SwigType_templateprefix(nlast);
+      alaqil_scopename_split(name, &nprefix, &nlast);
+      tprefix = alaqilType_templateprefix(nlast);
       Delete(nlast);
       Delete(nprefix);
       Delete(name);
@@ -1674,7 +1674,7 @@ String *Swig_name_str(Node *n) {
   qname = NewString("");
   if (qualifier && Len(qualifier) > 0)
     Printf(qname, "%s::", qualifier);
-  Printf(qname, "%s", SwigType_str(name, 0));
+  Printf(qname, "%s", alaqilType_str(name, 0));
 
   Delete(name);
   Delete(qualifier);
@@ -1683,7 +1683,7 @@ String *Swig_name_str(Node *n) {
 }
 
 /* -----------------------------------------------------------------------------
- * void Swig_name_decl()
+ * void alaqil_name_decl()
  *
  * Return a stringified version of a C/C++ declaration without the return type.
  * The node passed in is expected to be a function, constructor, destructor or
@@ -1696,21 +1696,21 @@ String *Swig_name_str(Node *n) {
  * 
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_decl(Node *n) {
+String *alaqil_name_decl(Node *n) {
   String *qname;
   String *decl;
 
-  qname = Swig_name_str(n);
+  qname = alaqil_name_str(n);
   decl = NewStringf("%s", qname);
 
   if (!checkAttribute(n, "kind", "variable")) {
     String *d = Getattr(n, "decl");
     Printv(decl, "(", ParmList_errorstr(Getattr(n, "parms")), ")", NIL);
-    if (SwigType_isfunction(d)) {
-      SwigType *decl_temp = Copy(d);
-      SwigType *qualifiers = SwigType_pop_function_qualifiers(decl_temp);
+    if (alaqilType_isfunction(d)) {
+      alaqilType *decl_temp = Copy(d);
+      alaqilType *qualifiers = alaqilType_pop_function_qualifiers(decl_temp);
       if (qualifiers) {
-	String *qualifiers_string = SwigType_str(qualifiers, 0);
+	String *qualifiers_string = alaqilType_str(qualifiers, 0);
 	Printv(decl, " ", qualifiers_string, NIL);
 	Delete(qualifiers_string);
       }
@@ -1724,7 +1724,7 @@ String *Swig_name_decl(Node *n) {
 }
 
 /* -----------------------------------------------------------------------------
- * void Swig_name_fulldecl()
+ * void alaqil_name_fulldecl()
  *
  * Return a stringified version of a C/C++ declaration including the return type.
  * The node passed in is expected to be a function, constructor or destructor.
@@ -1735,8 +1735,8 @@ String *Swig_name_decl(Node *n) {
  * 
  * ----------------------------------------------------------------------------- */
 
-String *Swig_name_fulldecl(Node *n) {
-  String *decl = Swig_name_decl(n);
+String *alaqil_name_fulldecl(Node *n) {
+  String *decl = alaqil_name_decl(n);
   String *type = Getattr(n, "type");
   String *nodetype = nodeType(n);
   String *fulldecl;
@@ -1744,7 +1744,7 @@ String *Swig_name_fulldecl(Node *n) {
   if (nodetype && (Equal(nodetype, "constructor") || Equal(nodetype, "destructor"))) {
     fulldecl = decl;
   } else {
-    String *t = SwigType_str(type, 0);
+    String *t = alaqilType_str(type, 0);
     fulldecl = NewStringf("%s %s", t, decl);
     Delete(decl);
     Delete(t);

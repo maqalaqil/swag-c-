@@ -1,10 +1,10 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * wrapfunc.c
  *
@@ -13,7 +13,7 @@
  * to be created in a piecemeal manner.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 #include <ctype.h>
 
 static int Compact_mode = 0;	/* set to 0 on default */

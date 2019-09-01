@@ -1,10 +1,10 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * overload.cxx
  *
@@ -13,7 +13,7 @@
  * building a dispatch function.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 
 #define MAX_OVERLOAD 4096
 
@@ -68,23 +68,23 @@ static void mark_implicitconv_function(Overloaded& onode) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_overload_rank()
+ * alaqil_overload_rank()
  *
  * This function takes an overloaded declaration and creates a list that ranks
  * all overloaded methods in an order that can be used to generate a dispatch 
  * function.
  * Slight difference in the way this function is used by scripting languages and
  * statically typed languages. The script languages call this method via 
- * Swig_overload_dispatch() - where wrappers for all overloaded methods are generated,
+ * alaqil_overload_dispatch() - where wrappers for all overloaded methods are generated,
  * however sometimes the code can never be executed. The non-scripting languages
- * call this method via Swig_overload_check() for each overloaded method in order
+ * call this method via alaqil_overload_check() for each overloaded method in order
  * to determine whether or not the method should be wrapped. Note the slight
  * difference when overloading methods that differ by const only. The
  * scripting languages will ignore the const method, whereas the non-scripting
  * languages ignore the first method parsed.
  * ----------------------------------------------------------------------------- */
 
-List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
+List *alaqil_overload_rank(Node *n, bool script_lang_wrapping) {
   Overloaded nodes[MAX_OVERLOAD];
   int nnodes = 0;
   Node *o = Getattr(n, "sym:overloaded");
@@ -157,14 +157,14 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	    String *t1 = Getattr(p1, "tmap:typecheck:precedence");
 	    String *t2 = Getattr(p2, "tmap:typecheck:precedence");
 	    if ((!t1) && (!nodes[i].error)) {
-	      Swig_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[i].n), Getline(nodes[i].n),
+	      alaqil_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[i].n), Getline(nodes[i].n),
 			   "Overloaded method %s not supported (incomplete type checking rule - no precedence level in typecheck typemap for '%s').\n",
-			   Swig_name_decl(nodes[i].n), SwigType_str(Getattr(p1, "type"), 0));
+			   alaqil_name_decl(nodes[i].n), alaqilType_str(Getattr(p1, "type"), 0));
 	      nodes[i].error = 1;
 	    } else if ((!t2) && (!nodes[j].error)) {
-	      Swig_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[j].n), Getline(nodes[j].n),
+	      alaqil_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[j].n), Getline(nodes[j].n),
 			   "Overloaded method %s not supported (incomplete type checking rule - no precedence level in typecheck typemap for '%s').\n",
-			   Swig_name_decl(nodes[j].n), SwigType_str(Getattr(p2, "type"), 0));
+			   alaqil_name_decl(nodes[j].n), alaqilType_str(Getattr(p2, "type"), 0));
 	      nodes[j].error = 1;
 	    }
 	    if (t1 && t2) {
@@ -188,18 +188,18 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	      t1 = Getattr(p1, "equivtype");
 	      t1 = t1 ? t1 : Getattr(p1, "ltype");
 	      if (!t1) {
-		t1 = SwigType_ltype(Getattr(p1, "type"));
-		if (Getattr(p1, "tmap:typecheck:SWIGTYPE")) {
-		  SwigType_add_pointer(t1);
+		t1 = alaqilType_ltype(Getattr(p1, "type"));
+		if (Getattr(p1, "tmap:typecheck:alaqilTYPE")) {
+		  alaqilType_add_pointer(t1);
 		}
 		Setattr(p1, "ltype", t1);
 	      }
 	      t2 = Getattr(p2, "equivtype");
 	      t2 = t2 ? t2 : Getattr(p2, "ltype");
 	      if (!t2) {
-		t2 = SwigType_ltype(Getattr(p2, "type"));
-		if (Getattr(p2, "tmap:typecheck:SWIGTYPE")) {
-		  SwigType_add_pointer(t2);
+		t2 = alaqilType_ltype(Getattr(p2, "type"));
+		if (Getattr(p2, "tmap:typecheck:alaqilTYPE")) {
+		  alaqilType_add_pointer(t2);
 		}
 		Setattr(p2, "ltype", t2);
 	      }
@@ -207,7 +207,7 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	      /* Need subtype check here.  If t2 is a subtype of t1, then we need to change the
 	         order */
 
-	      if (SwigType_issubtype(t2, t1)) {
+	      if (alaqilType_issubtype(t2, t1)) {
 		Overloaded t = nodes[i];
 		nodes[i] = nodes[j];
 		nodes[j] = t;
@@ -242,23 +242,23 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	       * the cv-qualifier (const) overloading. */
 	      String *d1 = Copy(decl1);
 	      String *d2 = Copy(decl2);
-	      if (SwigType_isreference(d1) || SwigType_isrvalue_reference(d1)) {
-		Delete(SwigType_pop(d1));
+	      if (alaqilType_isreference(d1) || alaqilType_isrvalue_reference(d1)) {
+		Delete(alaqilType_pop(d1));
 	      }
-	      if (SwigType_isreference(d2) || SwigType_isrvalue_reference(d2)) {
-		Delete(SwigType_pop(d2));
+	      if (alaqilType_isreference(d2) || alaqilType_isrvalue_reference(d2)) {
+		Delete(alaqilType_pop(d2));
 	      }
 	      String *dq1 = Copy(d1);
 	      String *dq2 = Copy(d2);
-	      if (SwigType_isconst(d1)) {
-		Delete(SwigType_pop(dq1));
+	      if (alaqilType_isconst(d1)) {
+		Delete(alaqilType_pop(dq1));
 	      }
-	      if (SwigType_isconst(d2)) {
-		Delete(SwigType_pop(dq2));
+	      if (alaqilType_isconst(d2)) {
+		Delete(alaqilType_pop(dq2));
 	      }
 	      if (Strcmp(dq1, dq2) == 0) {
 
-		if (SwigType_isconst(d1) && !SwigType_isconst(d2)) {
+		if (alaqilType_isconst(d1) && !alaqilType_isconst(d2)) {
 		  if (script_lang_wrapping) {
 		    // Swap nodes so that the const method gets ignored (shadowed by the non-const method)
 		    Overloaded t = nodes[i];
@@ -268,34 +268,34 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 		  differ = 1;
 		  if (!nodes[j].error) {
 		    if (script_lang_wrapping) {
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
-				   "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
-				   "using non-const method %s instead.\n", Swig_name_decl(nodes[i].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
+				   "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
+				   "using non-const method %s instead.\n", alaqil_name_decl(nodes[i].n));
 		    } else {
 		      if (!Getattr(nodes[j].n, "overload:ignore")) {
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
-				     "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
-				     "using %s instead.\n", Swig_name_decl(nodes[i].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
+				     "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
+				     "using %s instead.\n", alaqil_name_decl(nodes[i].n));
 		      }
 		    }
 		  }
 		  nodes[j].error = 1;
-		} else if (!SwigType_isconst(d1) && SwigType_isconst(d2)) {
+		} else if (!alaqilType_isconst(d1) && alaqilType_isconst(d2)) {
 		  differ = 1;
 		  if (!nodes[j].error) {
 		    if (script_lang_wrapping) {
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
-				   "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
-				   "using non-const method %s instead.\n", Swig_name_decl(nodes[i].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
+				   "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
+				   "using non-const method %s instead.\n", alaqil_name_decl(nodes[i].n));
 		    } else {
 		      if (!Getattr(nodes[j].n, "overload:ignore")) {
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
-				     "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
-				     "using %s instead.\n", Swig_name_decl(nodes[i].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
+				     "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
+				     "using %s instead.\n", alaqil_name_decl(nodes[i].n));
 		      }
 		    }
 		  }
@@ -309,16 +309,16 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	  if (!differ) {
 	    if (!nodes[j].error) {
 	      if (script_lang_wrapping) {
-		Swig_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[j].n), Getline(nodes[j].n),
-			     "Overloaded method %s effectively ignored,\n", Swig_name_decl(nodes[j].n));
-		Swig_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[i].n), Getline(nodes[i].n),
-			     "as it is shadowed by %s.\n", Swig_name_decl(nodes[i].n));
+		alaqil_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[j].n), Getline(nodes[j].n),
+			     "Overloaded method %s effectively ignored,\n", alaqil_name_decl(nodes[j].n));
+		alaqil_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[i].n), Getline(nodes[i].n),
+			     "as it is shadowed by %s.\n", alaqil_name_decl(nodes[i].n));
 	      } else {
 		if (!Getattr(nodes[j].n, "overload:ignore")) {
-		  Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
-			       "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-		  Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
-			       "using %s instead.\n", Swig_name_decl(nodes[i].n));
+		  alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
+			       "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+		  alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
+			       "using %s instead.\n", alaqil_name_decl(nodes[i].n));
 		}
 	      }
 	      nodes[j].error = 1;
@@ -337,7 +337,7 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	Setattr(nodes[i].n, "overload:ignore", "1");
       Append(result, nodes[i].n);
       // Printf(stdout,"[ %d ] %d    %s\n", i, nodes[i].implicitconv_function, ParmList_errorstr(nodes[i].parms));
-      // Swig_print_node(nodes[i].n);
+      // alaqil_print_node(nodes[i].n);
       if (i == nnodes-1 || nodes[i].argc != nodes[i+1].argc) {
 	if (argc_changed_index+2 < nnodes && (nodes[argc_changed_index+1].argc == nodes[argc_changed_index+2].argc)) {
 	  // Add additional implicitconv functions in same order as already ranked.
@@ -349,7 +349,7 @@ List *Swig_overload_rank(Node *n, bool script_lang_wrapping) {
 	      SetFlag(nodes[j].n, "implicitconvtypecheckoff");
 	      Append(result, nodes[j].n);
 	      // Printf(stdout,"[ %d ] %d +  %s\n", j, nodes[j].implicitconv_function, ParmList_errorstr(nodes[j].parms));
-	      // Swig_print_node(nodes[j].n);
+	      // alaqil_print_node(nodes[j].n);
 	    }
 	  }
 	}
@@ -405,12 +405,12 @@ static String *ReplaceFormat(const_String_or_char_ptr fmt, int j) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_overload_dispatch()
+ * alaqil_overload_dispatch()
  *
  * Generate a dispatch function.  argc is assumed to hold the argument count.
  * argv is the argument vector.
  *
- * Note that for C++ class member functions, Swig_overload_dispatch() assumes
+ * Note that for C++ class member functions, alaqil_overload_dispatch() assumes
  * that argc includes the "self" argument and that the first element of argv[]
  * is the "self" argument. So for a member function:
  *
@@ -425,7 +425,7 @@ static String *ReplaceFormat(const_String_or_char_ptr fmt, int j) {
 /*
   Cast dispatch mechanism.
 */
-String *Swig_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *maxargs) {
+String *alaqil_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *maxargs) {
   int i, j;
 
   *maxargs = 1;
@@ -434,10 +434,10 @@ String *Swig_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *
   String *sw = NewString("");
   Printf(f, "{\n");
   Printf(f, "unsigned long _index = 0;\n");
-  Printf(f, "SWIG_TypeRank _rank = 0; \n");
+  Printf(f, "alaqil_TypeRank _rank = 0; \n");
 
   /* Get a list of methods ranked by precedence values and argument count */
-  List *dispatch = Swig_overload_rank(n, true);
+  List *dispatch = alaqil_overload_rank(n, true);
   int nfunc = Len(dispatch);
 
   /* Loop over the functions */
@@ -458,10 +458,10 @@ String *Swig_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *
     } else {
       Printf(f, "if ((%s >= %d) && (%s <= %d)) {\n", argc_template_string, num_required, argc_template_string, num_arguments);
     }
-    Printf(f, "SWIG_TypeRank _ranki = 0;\n");
-    Printf(f, "SWIG_TypeRank _rankm = 0;\n");
+    Printf(f, "alaqil_TypeRank _ranki = 0;\n");
+    Printf(f, "alaqil_TypeRank _rankm = 0;\n");
     if (num_arguments)
-      Printf(f, "SWIG_TypeRank _pi = 1;\n");
+      Printf(f, "alaqil_TypeRank _pi = 1;\n");
 
     /* create a list with the wrappers that collide with the
        current one based on argument number */
@@ -556,14 +556,14 @@ String *Swig_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *
 	    Printf(f, "if (!_v) goto check_%d;\n", fn);
 	    Printf(f, "_ranki += _v*_pi;\n");
 	    Printf(f, "_rankm += _pi;\n");
-	    Printf(f, "_pi *= SWIG_MAXCASTRANK;\n");
+	    Printf(f, "_pi *= alaqil_MAXCASTRANK;\n");
 	  }
 	}
-	if (!Getattr(pj, "tmap:in:SWIGTYPE") && Getattr(pj, "tmap:typecheck:SWIGTYPE")) {
+	if (!Getattr(pj, "tmap:in:alaqilTYPE") && Getattr(pj, "tmap:typecheck:alaqilTYPE")) {
 	  /* we emit  a warning if the argument defines the 'in' typemap, but not the 'typecheck' one */
-	  Swig_warning(WARN_TYPEMAP_TYPECHECK_UNDEF, Getfile(ni), Getline(ni),
+	  alaqil_warning(WARN_TYPEMAP_TYPECHECK_UNDEF, Getfile(ni), Getline(ni),
 		       "Overloaded method %s with no explicit typecheck typemap for arg %d of type '%s'\n",
-		       Swig_name_decl(n), j, SwigType_str(Getattr(pj, "type"), 0));
+		       alaqil_name_decl(n), j, alaqilType_str(Getattr(pj, "type"), 0));
 	}
 	Parm *pj1 = Getattr(pj, "tmap:in:next");
 	if (pj1)
@@ -618,7 +618,7 @@ static String *overload_dispatch_fast(Node *n, const_String_or_char_ptr fmt, int
   String *f = NewString("");
 
   /* Get a list of methods ranked by precedence values and argument count */
-  List *dispatch = Swig_overload_rank(n, true);
+  List *dispatch = alaqil_overload_rank(n, true);
   int nfunc = Len(dispatch);
 
   /* Loop over the functions */
@@ -734,11 +734,11 @@ static String *overload_dispatch_fast(Node *n, const_String_or_char_ptr fmt, int
 	    Printf(f, "if (!_v) goto check_%d;\n", fn);
 	  }
 	}
-	if (!Getattr(pj, "tmap:in:SWIGTYPE") && Getattr(pj, "tmap:typecheck:SWIGTYPE")) {
+	if (!Getattr(pj, "tmap:in:alaqilTYPE") && Getattr(pj, "tmap:typecheck:alaqilTYPE")) {
 	  /* we emit  a warning if the argument defines the 'in' typemap, but not the 'typecheck' one */
-	  Swig_warning(WARN_TYPEMAP_TYPECHECK_UNDEF, Getfile(ni), Getline(ni),
+	  alaqil_warning(WARN_TYPEMAP_TYPECHECK_UNDEF, Getfile(ni), Getline(ni),
 		       "Overloaded method %s with no explicit typecheck typemap for arg %d of type '%s'\n",
-		       Swig_name_decl(n), j, SwigType_str(Getattr(pj, "type"), 0));
+		       alaqil_name_decl(n), j, alaqilType_str(Getattr(pj, "type"), 0));
 	}
 	Parm *pj1 = Getattr(pj, "tmap:in:next");
 	if (pj1)
@@ -771,7 +771,7 @@ static String *overload_dispatch_fast(Node *n, const_String_or_char_ptr fmt, int
   return f;
 }
 
-String *Swig_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *maxargs, const_String_or_char_ptr fmt_fastdispatch) {
+String *alaqil_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *maxargs, const_String_or_char_ptr fmt_fastdispatch) {
 
   if (fast_dispatch_mode || GetFlag(n, "feature:fastdispatch")) {
     return overload_dispatch_fast(n, fmt, maxargs, fmt_fastdispatch);
@@ -784,7 +784,7 @@ String *Swig_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *maxar
   String *f = NewString("");
 
   /* Get a list of methods ranked by precedence values and argument count */
-  List *dispatch = Swig_overload_rank(n, true);
+  List *dispatch = alaqil_overload_rank(n, true);
   int nfunc = Len(dispatch);
 
   /* Loop over the functions */
@@ -831,11 +831,11 @@ String *Swig_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *maxar
 	Printf(f, "if (_v) {\n");
 	num_braces++;
       }
-      if (!Getattr(pj, "tmap:in:SWIGTYPE") && Getattr(pj, "tmap:typecheck:SWIGTYPE")) {
+      if (!Getattr(pj, "tmap:in:alaqilTYPE") && Getattr(pj, "tmap:typecheck:alaqilTYPE")) {
 	/* we emit  a warning if the argument defines the 'in' typemap, but not the 'typecheck' one */
-	Swig_warning(WARN_TYPEMAP_TYPECHECK_UNDEF, Getfile(ni), Getline(ni),
+	alaqil_warning(WARN_TYPEMAP_TYPECHECK_UNDEF, Getfile(ni), Getline(ni),
 		     "Overloaded method %s with no explicit typecheck typemap for arg %d of type '%s'\n",
-		     Swig_name_decl(n), j, SwigType_str(Getattr(pj, "type"), 0));
+		     alaqil_name_decl(n), j, alaqilType_str(Getattr(pj, "type"), 0));
       }
       Parm *pk = Getattr(pj, "tmap:in:next");
       if (pk)
@@ -859,8 +859,8 @@ String *Swig_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *maxar
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_overload_check()
+ * alaqil_overload_check()
  * ----------------------------------------------------------------------------- */
-void Swig_overload_check(Node *n) {
-  Swig_overload_rank(n, false);
+void alaqil_overload_check(Node *n) {
+  alaqil_overload_rank(n, false);
 }

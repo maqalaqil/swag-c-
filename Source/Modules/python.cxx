@@ -1,17 +1,17 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * python.cxx
  *
- * Python language module for SWIG.
+ * Python language module for alaqil.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include <limits.h>
 #include "cparse.h"
 #include <ctype.h>
@@ -152,43 +152,43 @@ static void printSlot(File *f, String *slotval, const char *slotname, const char
 
 static String *getClosure(String *functype, String *wrapper, int funpack = 0) {
   static const char *functypes[] = {
-    "unaryfunc", "SWIGPY_UNARYFUNC_CLOSURE",
-    "destructor", "SWIGPY_DESTRUCTOR_CLOSURE",
-    "inquiry", "SWIGPY_INQUIRY_CLOSURE",
-    "getiterfunc", "SWIGPY_GETITERFUNC_CLOSURE",
-    "binaryfunc", "SWIGPY_BINARYFUNC_CLOSURE",
-    "ternaryfunc", "SWIGPY_TERNARYFUNC_CLOSURE",
-    "ternarycallfunc", "SWIGPY_TERNARYCALLFUNC_CLOSURE",
-    "lenfunc", "SWIGPY_LENFUNC_CLOSURE",
-    "ssizeargfunc", "SWIGPY_SSIZEARGFUNC_CLOSURE",
-    "ssizessizeargfunc", "SWIGPY_SSIZESSIZEARGFUNC_CLOSURE",
-    "ssizeobjargproc", "SWIGPY_SSIZEOBJARGPROC_CLOSURE",
-    "ssizessizeobjargproc", "SWIGPY_SSIZESSIZEOBJARGPROC_CLOSURE",
-    "objobjproc", "SWIGPY_OBJOBJPROC_CLOSURE",
-    "objobjargproc", "SWIGPY_OBJOBJARGPROC_CLOSURE",
-    "reprfunc", "SWIGPY_REPRFUNC_CLOSURE",
-    "hashfunc", "SWIGPY_HASHFUNC_CLOSURE",
-    "iternextfunc", "SWIGPY_ITERNEXTFUNC_CLOSURE",
+    "unaryfunc", "alaqilPY_UNARYFUNC_CLOSURE",
+    "destructor", "alaqilPY_DESTRUCTOR_CLOSURE",
+    "inquiry", "alaqilPY_INQUIRY_CLOSURE",
+    "getiterfunc", "alaqilPY_GETITERFUNC_CLOSURE",
+    "binaryfunc", "alaqilPY_BINARYFUNC_CLOSURE",
+    "ternaryfunc", "alaqilPY_TERNARYFUNC_CLOSURE",
+    "ternarycallfunc", "alaqilPY_TERNARYCALLFUNC_CLOSURE",
+    "lenfunc", "alaqilPY_LENFUNC_CLOSURE",
+    "ssizeargfunc", "alaqilPY_SSIZEARGFUNC_CLOSURE",
+    "ssizessizeargfunc", "alaqilPY_SSIZESSIZEARGFUNC_CLOSURE",
+    "ssizeobjargproc", "alaqilPY_SSIZEOBJARGPROC_CLOSURE",
+    "ssizessizeobjargproc", "alaqilPY_SSIZESSIZEOBJARGPROC_CLOSURE",
+    "objobjproc", "alaqilPY_OBJOBJPROC_CLOSURE",
+    "objobjargproc", "alaqilPY_OBJOBJARGPROC_CLOSURE",
+    "reprfunc", "alaqilPY_REPRFUNC_CLOSURE",
+    "hashfunc", "alaqilPY_HASHFUNC_CLOSURE",
+    "iternextfunc", "alaqilPY_ITERNEXTFUNC_CLOSURE",
     NULL
   };
 
   static const char *funpack_functypes[] = {
-    "unaryfunc", "SWIGPY_UNARYFUNC_CLOSURE",
-    "destructor", "SWIGPY_DESTRUCTOR_CLOSURE",
-    "inquiry", "SWIGPY_INQUIRY_CLOSURE",
-    "getiterfunc", "SWIGPY_GETITERFUNC_CLOSURE",
-    "ternaryfunc", "SWIGPY_TERNARYFUNC_CLOSURE",
-    "ternarycallfunc", "SWIGPY_TERNARYCALLFUNC_CLOSURE",
-    "lenfunc", "SWIGPY_LENFUNC_CLOSURE",
-    "ssizeargfunc", "SWIGPY_FUNPACK_SSIZEARGFUNC_CLOSURE",
-    "ssizessizeargfunc", "SWIGPY_SSIZESSIZEARGFUNC_CLOSURE",
-    "ssizeobjargproc", "SWIGPY_SSIZEOBJARGPROC_CLOSURE",
-    "ssizessizeobjargproc", "SWIGPY_SSIZESSIZEOBJARGPROC_CLOSURE",
-    "objobjproc", "SWIGPY_FUNPACK_OBJOBJPROC_CLOSURE",
-    "objobjargproc", "SWIGPY_OBJOBJARGPROC_CLOSURE",
-    "reprfunc", "SWIGPY_REPRFUNC_CLOSURE",
-    "hashfunc", "SWIGPY_HASHFUNC_CLOSURE",
-    "iternextfunc", "SWIGPY_ITERNEXTFUNC_CLOSURE",
+    "unaryfunc", "alaqilPY_UNARYFUNC_CLOSURE",
+    "destructor", "alaqilPY_DESTRUCTOR_CLOSURE",
+    "inquiry", "alaqilPY_INQUIRY_CLOSURE",
+    "getiterfunc", "alaqilPY_GETITERFUNC_CLOSURE",
+    "ternaryfunc", "alaqilPY_TERNARYFUNC_CLOSURE",
+    "ternarycallfunc", "alaqilPY_TERNARYCALLFUNC_CLOSURE",
+    "lenfunc", "alaqilPY_LENFUNC_CLOSURE",
+    "ssizeargfunc", "alaqilPY_FUNPACK_SSIZEARGFUNC_CLOSURE",
+    "ssizessizeargfunc", "alaqilPY_SSIZESSIZEARGFUNC_CLOSURE",
+    "ssizeobjargproc", "alaqilPY_SSIZEOBJARGPROC_CLOSURE",
+    "ssizessizeobjargproc", "alaqilPY_SSIZESSIZEOBJARGPROC_CLOSURE",
+    "objobjproc", "alaqilPY_FUNPACK_OBJOBJPROC_CLOSURE",
+    "objobjargproc", "alaqilPY_OBJOBJARGPROC_CLOSURE",
+    "reprfunc", "alaqilPY_REPRFUNC_CLOSURE",
+    "hashfunc", "alaqilPY_HASHFUNC_CLOSURE",
+    "iternextfunc", "alaqilPY_ITERNEXTFUNC_CLOSURE",
     NULL
   };
 
@@ -218,7 +218,7 @@ public:
     Printv(director_prot_ctor_code,
 	   "if ( $comparison ) { /* subclassed */\n",
 	   "  $director_new \n",
-	   "} else {\n", "  SWIG_SetErrorMsg(PyExc_RuntimeError,\"accessing abstract class or protected constructor\"); \n", "  SWIG_fail;\n", "}\n", NIL);
+	   "} else {\n", "  alaqil_SetErrorMsg(PyExc_RuntimeError,\"accessing abstract class or protected constructor\"); \n", "  alaqil_fail;\n", "}\n", NIL);
     director_multiple_inheritance = 1;
     director_language = 1;
   }
@@ -236,13 +236,13 @@ public:
 
   int initialize_threads(String *f_init) {
     if (!threads) {
-      return SWIG_OK;
+      return alaqil_OK;
     }
     Printf(f_init, "\n");
     Printf(f_init, "/* Initialize threading */\n");
-    Printf(f_init, "SWIG_PYTHON_INITIALIZE_THREADS;\n");
+    Printf(f_init, "alaqil_PYTHON_INITIALIZE_THREADS;\n");
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   virtual void thread_begin_block(Node *n, String *f) {
@@ -251,7 +251,7 @@ public:
       if (bb) {
 	Append(f, bb);
       } else {
-	Append(f, "SWIG_PYTHON_THREAD_BEGIN_BLOCK;\n");
+	Append(f, "alaqil_PYTHON_THREAD_BEGIN_BLOCK;\n");
       }
     }
   }
@@ -262,7 +262,7 @@ public:
       if (eb) {
 	Append(f, eb);
       } else {
-	Append(f, "SWIG_PYTHON_THREAD_END_BLOCK;\n");
+	Append(f, "alaqil_PYTHON_THREAD_END_BLOCK;\n");
       }
     }
   }
@@ -274,7 +274,7 @@ public:
       if (bb) {
 	Append(f, bb);
       } else {
-	Append(f, "SWIG_PYTHON_THREAD_BEGIN_ALLOW;\n");
+	Append(f, "alaqil_PYTHON_THREAD_BEGIN_ALLOW;\n");
       }
     }
   }
@@ -286,7 +286,7 @@ public:
       if (eb) {
 	Append(f, eb);
       } else {
-	Append(f, "SWIG_PYTHON_THREAD_END_ALLOW;");
+	Append(f, "alaqil_PYTHON_THREAD_END_ALLOW;");
       }
       Append(f, "\n}");
     }
@@ -299,7 +299,7 @@ public:
 
   virtual void main(int argc, char *argv[]) {
 
-    SWIG_library_directory("python");
+    alaqil_library_directory("python");
 
     int doxygen_translator_flags = 0;
 
@@ -308,99 +308,99 @@ public:
 	if (strcmp(argv[i], "-interface") == 0) {
 	  if (argv[i + 1]) {
 	    interface = NewString(argv[i + 1]);
-	    Swig_mark_arg(i);
-	    Swig_mark_arg(i + 1);
+	    alaqil_mark_arg(i);
+	    alaqil_mark_arg(i + 1);
 	    i++;
 	  } else {
-	    Swig_arg_error();
+	    alaqil_arg_error();
 	  }
 	  /* end added */
 	} else if (strcmp(argv[i], "-globals") == 0) {
 	  if (argv[i + 1]) {
 	    global_name = NewString(argv[i + 1]);
-	    Swig_mark_arg(i);
-	    Swig_mark_arg(i + 1);
+	    alaqil_mark_arg(i);
+	    alaqil_mark_arg(i + 1);
 	    i++;
 	  } else {
-	    Swig_arg_error();
+	    alaqil_arg_error();
 	  }
 	} else if ((strcmp(argv[i], "-shadow") == 0) || ((strcmp(argv[i], "-proxy") == 0))) {
 	  shadow = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if ((strcmp(argv[i], "-noproxy") == 0)) {
 	  shadow = 0;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-keyword") == 0) {
 	  use_kw = 1;
-	  SWIG_cparse_set_compact_default_args(1);
-	  Swig_mark_arg(i);
+	  alaqil_cparse_set_compact_default_args(1);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nortti") == 0) {
 	  nortti = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-threads") == 0) {
 	  threads = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nothreads") == 0) {
 	  /* Turn off thread support mode */
 	  nothreads = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-dirvtable") == 0) {
 	  dirvtable = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-doxygen") == 0) {
 	  doxygen = 1;
 	  scan_doxygen_comments = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-debug-doxygen-translator") == 0) {
 	  doxygen_translator_flags |= DoxygenTranslator::debug_translator;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-debug-doxygen-parser") == 0) {
 	  doxygen_translator_flags |= DoxygenTranslator::debug_parser;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nofastunpack") == 0) {
 	  fastunpack = 0;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-fastproxy") == 0) {
 	  fastproxy = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-olddefs") == 0) {
 	  olddefs = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-castmode") == 0) {
 	  castmode = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-extranative") == 0) {
 	  extranative = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-noh") == 0) {
 	  no_header_file = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-newvwm") == 0) {
 	  /* Turn on new value wrapper mode */
 	  /* Undocumented option, did have -help text: New value wrapper mode, use only when everything else fails */
-	  Swig_value_wrapper_mode(1);
+	  alaqil_value_wrapper_mode(1);
 	  no_header_file = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-O") == 0) {
 	  fastproxy = 1;
 	  Wrapper_fast_dispatch_mode_set(1);
 	  Wrapper_virtual_elimination_mode_set(1);
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-help") == 0) {
 	  fputs(usage1, stdout);
 	  fputs(usage2, stdout);
 	  fputs(usage3, stdout);
 	} else if (strcmp(argv[i], "-py3") == 0) {
 	  py3 = 1;
-	  Preprocessor_define("SWIGPYTHON_PY3", 0);
-	  Swig_mark_arg(i);
+	  Preprocessor_define("alaqilPYTHON_PY3", 0);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-builtin") == 0) {
 	  builtin = 1;
-	  Preprocessor_define("SWIGPYTHON_BUILTIN", 0);
-	  Swig_mark_arg(i);
+	  Preprocessor_define("alaqilPYTHON_BUILTIN", 0);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-relativeimport") == 0) {
 	  relativeimport = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-cppcast") == 0 ||
 		   strcmp(argv[i], "-fastinit") == 0 ||
 		   strcmp(argv[i], "-fastquery") == 0 ||
@@ -410,7 +410,7 @@ public:
 		   strcmp(argv[i], "-noproxydel") == 0 ||
 		   strcmp(argv[i], "-safecstrings") == 0) {
 	  Printf(stderr, "Deprecated command line option: %s. This option is now always on.\n", argv[i]);
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-aliasobj0") == 0 ||
 		   strcmp(argv[i], "-buildnone") == 0 ||
 		   strcmp(argv[i], "-classic") == 0 ||
@@ -438,8 +438,8 @@ public:
 		   strcmp(argv[i], "-outputtuple") == 0 ||
 		   strcmp(argv[i], "-proxydel") == 0) {
 	  Printf(stderr, "Deprecated command line option: %s. This option is no longer supported.\n", argv[i]);
-	  Swig_mark_arg(i);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_mark_arg(i);
+	  alaqil_exit(EXIT_FAILURE);
 	}
 
       }
@@ -450,9 +450,9 @@ public:
 
     if (!global_name)
       global_name = NewString("cvar");
-    Preprocessor_define("SWIGPYTHON 1", 0);
-    SWIG_typemap_lang("python");
-    SWIG_config_file("python.swg");
+    Preprocessor_define("alaqilPYTHON 1", 0);
+    alaqil_typemap_lang("python");
+    alaqil_config_file("python.swg");
     allow_overloading();
   }
 
@@ -497,22 +497,22 @@ public:
 	  }
 	  if (Getattr(options, "nocastmode")) {
 	    Printf(stderr, "Deprecated module option: %s. This option is no longer supported.\n", "nocastmode");
-	    SWIG_exit(EXIT_FAILURE);
+	    alaqil_exit(EXIT_FAILURE);
 	  }
 	  if (Getattr(options, "extranative")) {
 	    extranative = 1;
 	  }
 	  if (Getattr(options, "noextranative")) {
 	    Printf(stderr, "Deprecated module option: %s. This option is no longer supported.\n", "noextranative");
-	    SWIG_exit(EXIT_FAILURE);
+	    alaqil_exit(EXIT_FAILURE);
 	  }
 	  if (Getattr(options, "outputtuple")) {
 	    Printf(stderr, "Deprecated module option: %s. This option is no longer supported.\n", "outputtuple");
-	    SWIG_exit(EXIT_FAILURE);
+	    alaqil_exit(EXIT_FAILURE);
 	  }
 	  if (Getattr(options, "nooutputtuple")) {
 	    Printf(stderr, "Deprecated module option: %s. This option is no longer supported.\n", "nooutputtuple");
-	    SWIG_exit(EXIT_FAILURE);
+	    alaqil_exit(EXIT_FAILURE);
 	  }
 	  mod_docstring = Getattr(options, "docstring");
 	  package = Getattr(options, "package");
@@ -528,10 +528,10 @@ public:
     String *outfile = Getattr(n, "outfile");
     String *outfile_h = !no_header_file ? Getattr(n, "outfile_h") : 0;
 
-    f_begin = NewFile(outfile, "w", SWIG_output_files());
+    f_begin = NewFile(outfile, "w", alaqil_output_files());
     if (!f_begin) {
       FileErrorDisplay(outfile);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     f_runtime = NewString("");
     f_init = NewString("");
@@ -552,72 +552,72 @@ public:
 
     if (directorsEnabled()) {
       if (!no_header_file) {
-	f_runtime_h = NewFile(outfile_h, "w", SWIG_output_files());
+	f_runtime_h = NewFile(outfile_h, "w", alaqil_output_files());
 	if (!f_runtime_h) {
 	  FileErrorDisplay(outfile_h);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_exit(EXIT_FAILURE);
 	}
       } else {
 	f_runtime_h = f_runtime;
       }
     }
 
-    /* Register file targets with the SWIG file handler */
-    Swig_register_filebyname("header", f_header);
-    Swig_register_filebyname("wrapper", f_wrappers);
-    Swig_register_filebyname("begin", f_begin);
-    Swig_register_filebyname("runtime", f_runtime);
-    Swig_register_filebyname("init", f_init);
-    Swig_register_filebyname("director", f_directors);
-    Swig_register_filebyname("director_h", f_directors_h);
+    /* Register file targets with the alaqil file handler */
+    alaqil_register_filebyname("header", f_header);
+    alaqil_register_filebyname("wrapper", f_wrappers);
+    alaqil_register_filebyname("begin", f_begin);
+    alaqil_register_filebyname("runtime", f_runtime);
+    alaqil_register_filebyname("init", f_init);
+    alaqil_register_filebyname("director", f_directors);
+    alaqil_register_filebyname("director_h", f_directors_h);
 
     const_code = NewString("");
     methods = NewString("");
     methods_proxydocs = NewString("");
 
-    Swig_banner(f_begin);
+    alaqil_banner(f_begin);
 
-    Printf(f_runtime, "\n\n#ifndef SWIGPYTHON\n#define SWIGPYTHON\n#endif\n\n");
+    Printf(f_runtime, "\n\n#ifndef alaqilPYTHON\n#define alaqilPYTHON\n#endif\n\n");
 
     if (directorsEnabled()) {
-      Printf(f_runtime, "#define SWIG_DIRECTORS\n");
+      Printf(f_runtime, "#define alaqil_DIRECTORS\n");
     }
 
     if (nothreads) {
-      Printf(f_runtime, "#define SWIG_PYTHON_NO_THREADS\n");
+      Printf(f_runtime, "#define alaqil_PYTHON_NO_THREADS\n");
     } else if (threads) {
-      Printf(f_runtime, "#define SWIG_PYTHON_THREADS\n");
+      Printf(f_runtime, "#define alaqil_PYTHON_THREADS\n");
     }
 
     if (!dirvtable) {
-      Printf(f_runtime, "#define SWIG_PYTHON_DIRECTOR_NO_VTABLE\n");
+      Printf(f_runtime, "#define alaqil_PYTHON_DIRECTOR_NO_VTABLE\n");
     }
 
     if (nortti) {
-      Printf(f_runtime, "#ifndef SWIG_DIRECTOR_NORTTI\n");
-      Printf(f_runtime, "#define SWIG_DIRECTOR_NORTTI\n");
+      Printf(f_runtime, "#ifndef alaqil_DIRECTOR_NORTTI\n");
+      Printf(f_runtime, "#define alaqil_DIRECTOR_NORTTI\n");
       Printf(f_runtime, "#endif\n");
     }
 
     if (castmode) {
-      Printf(f_runtime, "#define SWIG_CASTRANK_MODE\n");
-      Printf(f_runtime, "#define SWIG_PYTHON_CAST_MODE\n");
+      Printf(f_runtime, "#define alaqil_CASTRANK_MODE\n");
+      Printf(f_runtime, "#define alaqil_PYTHON_CAST_MODE\n");
     }
 
     if (extranative) {
-      Printf(f_runtime, "#define SWIG_PYTHON_EXTRA_NATIVE_CONTAINERS\n");
+      Printf(f_runtime, "#define alaqil_PYTHON_EXTRA_NATIVE_CONTAINERS\n");
     }
 
     if (builtin) {
-      Printf(f_runtime, "#define SWIGPYTHON_BUILTIN\n");
+      Printf(f_runtime, "#define alaqilPYTHON_BUILTIN\n");
     }
 
     Printf(f_runtime, "\n");
 
-    Printf(f_header, "#ifdef SWIG_TypeQuery\n");
-    Printf(f_header, "# undef SWIG_TypeQuery\n");
+    Printf(f_header, "#ifdef alaqil_TypeQuery\n");
+    Printf(f_header, "# undef alaqil_TypeQuery\n");
     Printf(f_header, "#endif\n");
-    Printf(f_header, "#define SWIG_TypeQuery SWIG_Python_TypeQuery\n");
+    Printf(f_header, "#define alaqil_TypeQuery alaqil_Python_TypeQuery\n");
 
 
     /* Set module name */
@@ -625,10 +625,10 @@ public:
     mainmodule = Getattr(n, "name");
 
     if (directorsEnabled()) {
-      Swig_banner(f_directors_h);
+      alaqil_banner(f_directors_h);
       Printf(f_directors_h, "\n");
-      Printf(f_directors_h, "#ifndef SWIG_%s_WRAP_H_\n", module);
-      Printf(f_directors_h, "#define SWIG_%s_WRAP_H_\n\n", module);
+      Printf(f_directors_h, "#ifndef alaqil_%s_WRAP_H_\n", module);
+      Printf(f_directors_h, "#define alaqil_%s_WRAP_H_\n\n", module);
       if (dirprot_mode()) {
 	Printf(f_directors_h, "#include <map>\n");
 	Printf(f_directors_h, "#include <string>\n\n");
@@ -639,7 +639,7 @@ public:
       Printf(f_directors, " * C++ director class methods\n");
       Printf(f_directors, " * --------------------------------------------------- */\n\n");
       if (outfile_h) {
-	String *filename = Swig_file_filename(outfile_h);
+	String *filename = alaqil_file_filename(outfile_h);
 	Printf(f_directors, "#include \"%s\"\n\n", filename);
 	Delete(filename);
       }
@@ -648,15 +648,15 @@ public:
     /* If shadow classing is enabled, we're going to change the module name to "_module" */
     String *default_import_code = NewString("");
     if (shadow) {
-      String *filen = NewStringf("%s%s.py", SWIG_output_directory(), Char(module));
+      String *filen = NewStringf("%s%s.py", alaqil_output_directory(), Char(module));
       // If we don't have an interface then change the module name X to _X
       if (interface)
 	module = interface;
       else
 	Insert(module, 0, "_");
-      if ((f_shadow_py = NewFile(filen, "w", SWIG_output_files())) == 0) {
+      if ((f_shadow_py = NewFile(filen, "w", alaqil_output_files())) == 0) {
 	FileErrorDisplay(filen);
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
       Delete(filen);
       filen = NULL;
@@ -667,8 +667,8 @@ public:
       f_shadow_after_begin = NewString("");
       f_shadow_stubs = NewString("");
 
-      Swig_register_filebyname("shadow", f_shadow);
-      Swig_register_filebyname("python", f_shadow);
+      alaqil_register_filebyname("shadow", f_shadow);
+      alaqil_register_filebyname("python", f_shadow);
 
       if (!builtin) {
 	/* Import the low-level C/C++ module.  This should be a relative import,
@@ -703,20 +703,20 @@ public:
 
       if (!builtin && fastproxy) {
 	Printf(f_shadow, "\n");
-	Printf(f_shadow, "_swig_new_instance_method = %s.SWIG_PyInstanceMethod_New\n", module);
-	Printf(f_shadow, "_swig_new_static_method = %s.SWIG_PyStaticMethod_New\n", module);
+	Printf(f_shadow, "_alaqil_new_instance_method = %s.alaqil_PyInstanceMethod_New\n", module);
+	Printf(f_shadow, "_alaqil_new_static_method = %s.alaqil_PyStaticMethod_New\n", module);
       }
 
       {
 	// Python-2.2 object hack
 	Printv(f_shadow,
-	       "\n", "def _swig_setattr_nondynamic(self, class_type, name, value, static=1):\n",
+	       "\n", "def _alaqil_setattr_nondynamic(self, class_type, name, value, static=1):\n",
 	       tab4, "if name == \"thisown\":\n", tab8, "return self.this.own(value)\n",
-	       tab4, "if name == \"this\":\n", tab8, "if type(value).__name__ == 'SwigPyObject':\n", tab4, tab8, "self.__dict__[name] = value\n",
+	       tab4, "if name == \"this\":\n", tab8, "if type(value).__name__ == 'alaqilPyObject':\n", tab4, tab8, "self.__dict__[name] = value\n",
 #ifdef USE_THISOWN
 	       tab4, tab8, "if hasattr(value,\"thisown\"):\n", tab8, tab8, "self.__dict__[\"thisown\"] = value.thisown\n", tab4, tab8, "del value.thisown\n",
 #endif
-	       tab4, tab8, "return\n", tab4, "method = class_type.__swig_setmethods__.get(name, None)\n", tab4, "if method:\n", tab4, tab4, "return method(self, value)\n",
+	       tab4, tab8, "return\n", tab4, "method = class_type.__alaqil_setmethods__.get(name, None)\n", tab4, "if method:\n", tab4, tab4, "return method(self, value)\n",
 #ifdef USE_THISOWN
 	       tab4, "if not static or name == \"thisown\":\n",
 #else
@@ -727,23 +727,23 @@ public:
 	Printv(f_shadow,
 	       tab4, "else:\n",
 	       tab4, tab4, "raise AttributeError(\"You cannot add attributes to %s\" % self)\n\n",
-	        "\n", "def _swig_setattr(self, class_type, name, value):\n", tab4, "return _swig_setattr_nondynamic(self, class_type, name, value, 0)\n\n", NIL);
+	        "\n", "def _alaqil_setattr(self, class_type, name, value):\n", tab4, "return _alaqil_setattr_nondynamic(self, class_type, name, value, 0)\n\n", NIL);
 
 	Printv(f_shadow,
-	       "\n", "def _swig_getattr(self, class_type, name):\n",
+	       "\n", "def _alaqil_getattr(self, class_type, name):\n",
 	       tab4, "if name == \"thisown\":\n", tab8, "return self.this.own()\n",
-	       tab4, "method = class_type.__swig_getmethods__.get(name, None)\n",
+	       tab4, "method = class_type.__alaqil_getmethods__.get(name, None)\n",
 	       tab4, "if method:\n", tab8, "return method(self)\n",
 	       tab4, "raise AttributeError(\"'%s' object has no attribute '%s'\" % (class_type.__name__, name))\n\n", NIL);
 
 	Printv(f_shadow,
-	        "\n", "def _swig_repr(self):\n",
+	        "\n", "def _alaqil_repr(self):\n",
 	       tab4, "try:\n", tab8, "strthis = \"proxy of \" + self.this.__repr__()\n",
 	       tab4, "except __builtin__.Exception:\n", tab8, "strthis = \"\"\n", tab4, "return \"<%s.%s; %s >\" % (self.__class__.__module__, self.__class__.__name__, strthis,)\n\n", NIL);
       }
 
       Printv(f_shadow,  "\n",
-	     "def _swig_setattr_nondynamic_instance_variable(set):\n",
+	     "def _alaqil_setattr_nondynamic_instance_variable(set):\n",
 	     tab4, "def set_instance_attr(self, name, value):\n",
 #ifdef USE_THISOWN
 	     tab4, tab4, "if name in (\"this\", \"thisown\"):\n",
@@ -761,7 +761,7 @@ public:
 	     tab4, "return set_instance_attr\n\n", NIL);
 
       Printv(f_shadow,  "\n",
-	     "def _swig_setattr_nondynamic_class_variable(set):\n",
+	     "def _alaqil_setattr_nondynamic_class_variable(set):\n",
 	     tab4, "def set_class_attr(cls, name, value):\n",
 	     tab4, tab4, "if hasattr(cls, name) and not isinstance(getattr(cls, name), property):\n",
 	     tab4, tab4, tab4, "set(cls, name, value)\n",
@@ -770,16 +770,16 @@ public:
 	     tab4, "return set_class_attr\n\n", NIL);
 
       Printv(f_shadow,  "\n",
-	     "def _swig_add_metaclass(metaclass):\n",
-	     tab4, "\"\"\"Class decorator for adding a metaclass to a SWIG wrapped class - a slimmed down version of six.add_metaclass\"\"\"\n",
+	     "def _alaqil_add_metaclass(metaclass):\n",
+	     tab4, "\"\"\"Class decorator for adding a metaclass to a alaqil wrapped class - a slimmed down version of six.add_metaclass\"\"\"\n",
 	     tab4, "def wrapper(cls):\n",
 	     tab4, tab4, "return metaclass(cls.__name__, cls.__bases__, cls.__dict__.copy())\n",
 	     tab4, "return wrapper\n\n", NIL);
 
       Printv(f_shadow,  "\n",
-	     "class _SwigNonDynamicMeta(type):\n",
+	     "class _alaqilNonDynamicMeta(type):\n",
 	     tab4, "\"\"\"Meta class to enforce nondynamic attributes (no new attributes) for a class\"\"\"\n",
-	     tab4, "__setattr__ = _swig_setattr_nondynamic_class_variable(type.__setattr__)\n",
+	     tab4, "__setattr__ = _alaqil_setattr_nondynamic_class_variable(type.__setattr__)\n",
 	     "\n", NIL);
 
       Printv(f_shadow, "\n", NIL);
@@ -793,27 +793,27 @@ public:
   ------------------------------------------------*/\n", module);
 
     Printf(f_header, "#if PY_VERSION_HEX >= 0x03000000\n");
-    Printf(f_header, "#  define SWIG_init    PyInit_%s\n\n", module);
+    Printf(f_header, "#  define alaqil_init    PyInit_%s\n\n", module);
     Printf(f_header, "#else\n");
-    Printf(f_header, "#  define SWIG_init    init%s\n\n", module);
+    Printf(f_header, "#  define alaqil_init    init%s\n\n", module);
     Printf(f_header, "#endif\n");
-    Printf(f_header, "#define SWIG_name    \"%s\"\n", module);
+    Printf(f_header, "#define alaqil_name    \"%s\"\n", module);
 
     Printf(f_wrappers, "#ifdef __cplusplus\n");
     Printf(f_wrappers, "extern \"C\" {\n");
     Printf(f_wrappers, "#endif\n");
-    Append(const_code, "static swig_const_info swig_const_table[] = {\n");
-    Append(methods, "static PyMethodDef SwigMethods[] = {\n");
-    Append(methods_proxydocs, "static PyMethodDef SwigMethods_proxydocs[] = {\n");
+    Append(const_code, "static alaqil_const_info alaqil_const_table[] = {\n");
+    Append(methods, "static PyMethodDef alaqilMethods[] = {\n");
+    Append(methods_proxydocs, "static PyMethodDef alaqilMethods_proxydocs[] = {\n");
 
     /* the method exported for replacement of new.instancemethod in Python 3 */
     add_pyinstancemethod_new();
     add_pystaticmethod_new();
 
     if (builtin) {
-      SwigType *s = NewString("SwigPyObject");
-      SwigType_add_pointer(s);
-      SwigType_remember(s);
+      alaqilType *s = NewString("alaqilPyObject");
+      alaqilType_add_pointer(s);
+      alaqilType_remember(s);
       Delete(s);
     }
 
@@ -822,8 +822,8 @@ public:
 
     if (directorsEnabled()) {
       // Insert director runtime into the f_runtime file (make it occur before %header section)
-      Swig_insert_file("director_common.swg", f_runtime);
-      Swig_insert_file("director.swg", f_runtime);
+      alaqil_insert_file("director_common.swg", f_runtime);
+      alaqil_insert_file("director.swg", f_runtime);
     }
 
     /* Close language module */
@@ -838,7 +838,7 @@ public:
       Dump(f_builtins, f_wrappers);
     }
 
-    SwigType_emit_type_table(f_runtime, f_wrappers);
+    alaqilType_emit_type_table(f_runtime, f_wrappers);
 
     Append(const_code, "{0, 0, 0, 0.0, 0, 0}};\n");
     Printf(f_wrappers, "%s\n", const_code);
@@ -856,7 +856,7 @@ public:
     Printf(f_wrappers, "#endif\n");
 
     if (shadow) {
-      Swig_banner_target_lang(f_shadow_py, "#");
+      alaqil_banner_target_lang(f_shadow_py, "#");
 
       if (mod_docstring) {
 	if (Len(mod_docstring)) {
@@ -873,8 +873,8 @@ public:
       if (Len(f_shadow_begin) > 0)
 	Printv(f_shadow_py, "\n", f_shadow_begin, "\n", NIL);
 
-      Printv(f_shadow_py, "\nfrom sys import version_info as _swig_python_version_info\n", NULL);
-      Printv(f_shadow_py, "if _swig_python_version_info < (2, 7, 0):\n", NULL);
+      Printv(f_shadow_py, "\nfrom sys import version_info as _alaqil_python_version_info\n", NULL);
+      Printv(f_shadow_py, "if _alaqil_python_version_info < (2, 7, 0):\n", NULL);
       Printv(f_shadow_py, tab4, "raise RuntimeError('Python 2.7 or later required')\n\n", NULL);
 
       if (Len(f_shadow_after_begin) > 0)
@@ -924,7 +924,7 @@ public:
     Delete(f_runtime);
     Delete(f_begin);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -933,7 +933,7 @@ public:
    * as a replacement of new.instancemethod in Python 3.
    * ------------------------------------------------------------ */
   int add_pyinstancemethod_new() {
-    String *name = NewString("SWIG_PyInstanceMethod_New");
+    String *name = NewString("alaqil_PyInstanceMethod_New");
     String *line = NewString("");
     Printf(line, "\t { \"%s\", %s, METH_O, NULL},\n", name, name);
     Append(methods, line);
@@ -952,7 +952,7 @@ public:
    * ------------------------------------------------------------ */
   int add_pystaticmethod_new() {
     if (fastproxy) {
-      String *name = NewString("SWIG_PyStaticMethod_New");
+      String *name = NewString("alaqil_PyStaticMethod_New");
       String *line = NewString("");
       Printf(line, "\t { \"%s\", %s, METH_O, NULL},\n", name, name);
       Append(methods, line);
@@ -989,7 +989,7 @@ public:
    *  6  "Foo.Bar"  "Foo.Gez" ->  NULL
    *
    *  NOTE: the example #2 is actually a syntax error (at input). I believe
-   *        swig parser prevents us from this case happening here.
+   *        alaqil parser prevents us from this case happening here.
    * ------------------------------------------------------------ */
 
   static String *subpkg_tail(const String *base, const String *other) {
@@ -1349,7 +1349,7 @@ public:
 
       if (ch == '#') {
 	// Comment - the indentation doesn't matter to python, but try to
-	// adjust the whitespace for the benefit of human readers (though SWIG
+	// adjust the whitespace for the benefit of human readers (though alaqil
 	// currently seems to always remove any whitespace before a '#' before
 	// we get here, in which case we'll just leave the comment at the start
 	// of the line).
@@ -1363,7 +1363,7 @@ public:
 
       if (i < Len(initial)) {
 	// There's non-whitespace in the initial prefix of this line.
-	Swig_error(file, line, "Line indented less than expected (line %d of %s) as no line should be indented less than the indentation in line 1\n", py_line, directive_name);
+	alaqil_error(file, line, "Line indented less than expected (line %d of %s) as no line should be indented less than the indentation in line 1\n", py_line, directive_name);
 	Printv(out, indent, c, "\n", NIL);
       } else {
 	if (memcmp(c, Char(initial), Len(initial)) == 0) {
@@ -1371,10 +1371,10 @@ public:
 	  Printv(out, indent, c + Len(initial), "\n", NIL);
 	  continue;
 	}
-	Swig_warning(WARN_PYTHON_INDENT_MISMATCH,
+	alaqil_warning(WARN_PYTHON_INDENT_MISMATCH,
 		     file, line, "Whitespace indentation is inconsistent compared to earlier lines (line %d of %s)\n", py_line, directive_name);
 	// To avoid gratuitously breaking interface files which worked with
-	// SWIG <= 3.0.5, we remove a prefix of the same number of bytes for
+	// alaqil <= 3.0.5, we remove a prefix of the same number of bytes for
 	// lines which start with different whitespace to the line we got
 	// 'initial' from.
 	Printv(out, indent, c + Len(initial), "\n", NIL);
@@ -1674,9 +1674,9 @@ public:
     if (calling)
       func_annotation = false;
 
-    addMissingParameterNames(n, plist, arg_num); // for $1_name substitutions done in Swig_typemap_attach_parms
-    Swig_typemap_attach_parms("in", plist, 0);
-    Swig_typemap_attach_parms("doc", plist, 0);
+    addMissingParameterNames(n, plist, arg_num); // for $1_name substitutions done in alaqil_typemap_attach_parms
+    alaqil_typemap_attach_parms("in", plist, 0);
+    alaqil_typemap_attach_parms("doc", plist, 0);
 
     if (Strcmp(ParmList_protostr(plist), "void") == 0) {
       //No parameters actually
@@ -1722,7 +1722,7 @@ public:
       type = type ? type : Getattr(p, "type");
       value = value ? value : Getattr(p, "value");
 
-      if (SwigType_isvarargs(type)) {
+      if (alaqilType_isvarargs(type)) {
 	Delete(made_name);
 	break;
       }
@@ -1734,7 +1734,7 @@ public:
 
       // Do the param type too?
       Node *nn = classLookup(Getattr(p, "type"));
-      String *type_str = nn ? Copy(Getattr(nn, "sym:name")) : SwigType_str(type, 0);
+      String *type_str = nn ? Copy(Getattr(nn, "sym:name")) : alaqilType_str(type, 0);
       if (showTypes)
 	Printf(doc, "%s ", type_str);
 
@@ -1755,9 +1755,9 @@ public:
 	if (new_value) {
 	  value = new_value;
 	} else {
-	  // Even if the value is not representable in the target language, still use it in the documentaiton, for compatibility with the previous SWIG versions
+	  // Even if the value is not representable in the target language, still use it in the documentaiton, for compatibility with the previous alaqil versions
 	  // and because it can still be useful to see the C++ expression there.
-	  Node *lookup = Swig_symbol_clookup(value, 0);
+	  Node *lookup = alaqil_symbol_clookup(value, 0);
 	  if (lookup)
 	    value = Getattr(lookup, "sym:name");
 	}
@@ -1831,7 +1831,7 @@ public:
 	  symname = Getattr(n, "sym:name");
 	}
 
-	SwigType *type = Getattr(n, "type");
+	alaqilType *type = Getattr(n, "type");
 	String *type_str = NULL;
 
 	// If the function has default arguments, then that documentation covers this version too
@@ -1848,7 +1848,7 @@ public:
 	    type_str = NULL;
 	  } else {
 	    Node *nn = classLookup(type);
-	    type_str = nn ? Copy(Getattr(nn, "sym:name")) : SwigType_str(type, 0);
+	    type_str = nn ? Copy(Getattr(nn, "sym:name")) : alaqilType_str(type, 0);
 	  }
 	}
 
@@ -1875,14 +1875,14 @@ public:
 	    if (!str || Len(str) == 0) {
 	      if (builtin) {
 		String *name = Getattr(n, "name");
-		String *rname = add_explicit_scope(SwigType_namestr(name));
+		String *rname = add_explicit_scope(alaqilType_namestr(name));
 		Printf(doc, "%s", rname);
 		Delete(rname);
 	      } else {
 		if (CPlusPlus) {
-		  Printf(doc, "Proxy of C++ %s class.", SwigType_namestr(real_classname));
+		  Printf(doc, "Proxy of C++ %s class.", alaqilType_namestr(real_classname));
 		} else {
-		  Printf(doc, "Proxy of C %s struct.", SwigType_namestr(real_classname));
+		  Printf(doc, "Proxy of C %s struct.", alaqilType_namestr(real_classname));
 		}
 	      }
 	    }
@@ -1982,7 +1982,7 @@ public:
    * Python. If so, return an appropriate Python representation,
    * otherwise (or if we are unsure), return NIL.
    * ------------------------------------------------------------ */
-  String *convertIntegerValue(String *v, SwigType *resolved_type) {
+  String *convertIntegerValue(String *v, alaqilType *resolved_type) {
     const char *const s = Char(v);
     char *end;
     String *result = NIL;
@@ -2028,7 +2028,7 @@ public:
       return NewString(value ? "True" : "False");
 
     if (value == 0)
-      return NewString(SwigType_ispointer(resolved_type) ? "None" : "0");
+      return NewString(alaqilType_ispointer(resolved_type) ? "None" : "0");
 
     // v may still be octal or hexadecimal:
     const char *p = s;
@@ -2101,10 +2101,10 @@ public:
    * constant. Return an equivalent Python representation,
    * or NIL if it isn't, or we are unsure.
    * ------------------------------------------------------------ */
-  String *convertValue(String *v, SwigType *type) {
+  String *convertValue(String *v, alaqilType *type) {
     const char *const s = Char(v);
     String *result = NIL;
-    SwigType *resolved_type = SwigType_typedef_resolve_all(type);
+    alaqilType *resolved_type = alaqilType_typedef_resolve_all(type);
 
     result = convertIntegerValue(v, resolved_type);
     if (!result) {
@@ -2115,12 +2115,12 @@ public:
 	else if (Strcmp(v, "false") == 0)
 	  result = NewString("False");
 	else if (Strcmp(v, "NULL") == 0 || Strcmp(v, "nullptr") == 0)
-	  result = SwigType_ispointer(resolved_type) ? NewString("None") : NewString("0");
+	  result = alaqilType_ispointer(resolved_type) ? NewString("None") : NewString("0");
 	// This could also be an enum type, default value of which could be
 	// representable in Python if it doesn't include any scope (which could,
 	// but currently is not, translated).
 	else if (!Strchr(s, ':')) {
-	  Node *lookup = Swig_symbol_clookup(v, 0);
+	  Node *lookup = alaqil_symbol_clookup(v, 0);
 	  if (lookup) {
 	    if (Cmp(Getattr(lookup, "nodeType"), "enumitem") == 0)
 	      result = Copy(Getattr(lookup, "sym:name"));
@@ -2145,7 +2145,7 @@ public:
    * ------------------------------------------------------------ */
   bool is_representable_as_pyargs(Node *n) {
     ParmList *plist = CopyParmList(Getattr(n, "parms"));
-    Swig_typemap_attach_parms("default", plist, NULL);
+    alaqil_typemap_attach_parms("default", plist, NULL);
 
     Parm *p;
     Parm *pnext;
@@ -2346,7 +2346,7 @@ public:
      * however the result may not accurate. */
     while (p) {
       if ((tm = Getattr(p, "tmap:argout:match_type"))) {
-	tm = SwigType_str(tm, 0);
+	tm = alaqilType_str(tm, 0);
 	if (ret)
 	  Printv(ret, ", ", tm, NULL);
 	else
@@ -2361,7 +2361,7 @@ public:
     if (!ret) {
       ret = Getattr(n, "type");
       if (ret)
-	ret = SwigType_str(ret, 0);
+	ret = alaqilType_str(ret, 0);
     }
     return (ret && py3) ? NewStringf(" -> \"%s\"", ret)
 	: NewString("");
@@ -2379,7 +2379,7 @@ public:
     String *parms = make_pyParmList(n, false, false, kw);
     String *callParms = make_pyParmList(n, false, true, kw);
 
-    // Callbacks need the C function in order to extract the pointer from the swig_ptr: string
+    // Callbacks need the C function in order to extract the pointer from the alaqil_ptr: string
     bool fast = (fastproxy && !have_addtofunc(n)) || Getattr(n, "feature:callback");
 
     if (!fast || olddefs) {
@@ -2466,9 +2466,9 @@ public:
       }
       Delete(ds);
     } else if (Getattr(n, "feature:callback")) {
-      Printf(methods, "\"swig_ptr: %s\"", Getattr(n, "feature:callback:name"));
+      Printf(methods, "\"alaqil_ptr: %s\"", Getattr(n, "feature:callback:name"));
       if (fastproxy) {
-	Printf(methods_proxydocs, "\"swig_ptr: %s\"", Getattr(n, "feature:callback:name"));
+	Printf(methods_proxydocs, "\"alaqil_ptr: %s\"", Getattr(n, "feature:callback:name"));
       }
     } else {
       Append(methods, "NULL");
@@ -2500,18 +2500,18 @@ public:
     String *dispatch_code = NewStringf("return %s", dispatch_call);
 
     if (castmode) {
-      dispatch = Swig_overload_dispatch_cast(n, dispatch_code, &maxargs);
+      dispatch = alaqil_overload_dispatch_cast(n, dispatch_code, &maxargs);
     } else {
       String *fastdispatch_code;
       if (builtin_ctor)
-	fastdispatch_code = NewStringf("int retval = %s\nif (retval == 0 || !SWIG_Python_TypeErrorOccurred(NULL)) return retval;\nSWIG_fail;", dispatch_call);
+	fastdispatch_code = NewStringf("int retval = %s\nif (retval == 0 || !alaqil_Python_TypeErrorOccurred(NULL)) return retval;\nalaqil_fail;", dispatch_call);
       else
-	fastdispatch_code = NewStringf("PyObject *retobj = %s\nif (!SWIG_Python_TypeErrorOccurred(retobj)) return retobj;\nSWIG_fail;", dispatch_call);
+	fastdispatch_code = NewStringf("PyObject *retobj = %s\nif (!alaqil_Python_TypeErrorOccurred(retobj)) return retobj;\nalaqil_fail;", dispatch_call);
       if (!CPlusPlus) {
 	Insert(fastdispatch_code, 0, "{\n");
 	Append(fastdispatch_code, "\n}");
       }
-      dispatch = Swig_overload_dispatch(n, dispatch_code, &maxargs, fastdispatch_code);
+      dispatch = alaqil_overload_dispatch(n, dispatch_code, &maxargs, fastdispatch_code);
       Delete(fastdispatch_code);
     }
 
@@ -2519,9 +2519,9 @@ public:
 
     Wrapper *f = NewWrapper();
     String *symname = Getattr(n, "sym:name");
-    String *wname = Swig_name_wrapper(symname);
+    String *wname = alaqil_name_wrapper(symname);
 
-    const char *builtin_kwargs = builtin_ctor ? ", PyObject *SWIGUNUSEDPARM(kwargs)" : "";
+    const char *builtin_kwargs = builtin_ctor ? ", PyObject *alaqilUNUSEDPARM(kwargs)" : "";
     Printv(f->def, linkage, builtin_ctor ? "int " : "PyObject *", wname, "(PyObject *self, PyObject *args", builtin_kwargs, ") {", NIL);
 
     Wrapper_add_local(f, "argc", "Py_ssize_t argc");
@@ -2532,7 +2532,7 @@ public:
       Wrapper_add_local(f, "ii", "Py_ssize_t ii");
 
       if (maxargs - (add_self ? 1 : 0) > 0) {
-        Append(f->code, "if (!PyTuple_Check(args)) SWIG_fail;\n");
+        Append(f->code, "if (!PyTuple_Check(args)) alaqil_fail;\n");
         Append(f->code, "argc = PyObject_Length(args);\n");
       } else {
         Append(f->code, "argc = args ? PyObject_Length(args) : 0;\n");
@@ -2547,7 +2547,7 @@ public:
 	Append(f->code, "argc++;\n");
     } else {
       String *iname = Getattr(n, "sym:name");
-      Printf(f->code, "if (!(argc = SWIG_Python_UnpackTuple(args, \"%s\", 0, %d, argv%s))) SWIG_fail;\n", iname, maxargs, add_self ? "+1" : "");
+      Printf(f->code, "if (!(argc = alaqil_Python_UnpackTuple(args, \"%s\", 0, %d, argv%s))) alaqil_fail;\n", iname, maxargs, add_self ? "+1" : "");
       if (add_self)
 	Append(f->code, "argv[0] = self;\n");
       else
@@ -2568,12 +2568,12 @@ public:
 	sibl = Getattr(sibl, "sym:previousSibling");	// go all the way up
       String *protoTypes = NewString("");
       do {
-	String *fulldecl = Swig_name_decl(sibl);
+	String *fulldecl = alaqil_name_decl(sibl);
 	Printf(protoTypes, "\n\"    %s\\n\"", fulldecl);
 	Delete(fulldecl);
       } while ((sibl = Getattr(sibl, "sym:nextSibling")));
       Append(f->code, "fail:\n");
-      Printf(f->code, "  SWIG_Python_RaiseOrModifyTypeError("
+      Printf(f->code, "  alaqil_Python_RaiseOrModifyTypeError("
 	     "\"Wrong number or type of arguments for overloaded function '%s'.\\n\"" "\n\"  Possible C/C++ prototypes are:\\n\"%s);\n", symname, protoTypes);
       Printf(f->code, "return %s;\n", builtin_ctor ? "-1" : "0");
       Delete(protoTypes);
@@ -2623,7 +2623,7 @@ public:
     if (klass && GetFlag(klass, "feature:implicitconv")) {
       conv = 1;
     }
-    return conv ? "SWIG_POINTER_IMPLICIT_CONV" : "0";
+    return conv ? "alaqil_POINTER_IMPLICIT_CONV" : "0";
   }
 
 
@@ -2631,9 +2631,9 @@ public:
 
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *d = Getattr(n, "type");
+    alaqilType *d = Getattr(n, "type");
     ParmList *l = Getattr(n, "parms");
-    Node *parent = Swig_methodclass(n);
+    Node *parent = alaqil_methodclass(n);
 
     int director_method = 0;
 
@@ -2670,7 +2670,7 @@ public:
 	&& ((shadow & PYSHADOW_MEMBER))) {
       String *nname = Getattr(n, "sym:name");
       String *sname = Getattr(getCurrentClass(), "sym:name");
-      String *cname = Swig_name_construct(NSPACE_TODO, sname);
+      String *cname = alaqil_name_construct(NSPACE_TODO, sname);
       handled_as_init = (Strcmp(nname, sname) == 0) || (Strcmp(nname, cname) == 0);
       Delete(cname);
     }
@@ -2678,27 +2678,27 @@ public:
     bool builtin_ctor = false;
     if (builtin_self && constructor) {
       String *class_mname = Getattr(getCurrentClass(), "sym:name");
-      String *mrename = Swig_name_construct(getNSpace(), class_mname);
+      String *mrename = alaqil_name_construct(getNSpace(), class_mname);
       if (Cmp(iname, mrename))
 	builtin_self = false;
       else
 	builtin_ctor = true;
       Delete(mrename);
     }
-    bool director_class = (getCurrentClass() && Swig_directorclass(getCurrentClass()));
+    bool director_class = (getCurrentClass() && alaqil_directorclass(getCurrentClass()));
     bool add_self = builtin_self && (!builtin_ctor || director_class);
     bool builtin_getter = (builtin && GetFlag(n, "memberget"));
     bool builtin_setter = (builtin && GetFlag(n, "memberset") && !builtin_getter);
-    char const *self_param = builtin ? "self" : "SWIGUNUSEDPARM(self)";
+    char const *self_param = builtin ? "self" : "alaqilUNUSEDPARM(self)";
     char const *wrap_return = builtin_ctor ? "int " : "PyObject *";
-    String *linkage = NewString("SWIGINTERN ");
-    String *wrapper_name = Swig_name_wrapper(iname);
+    String *linkage = NewString("alaqilINTERN ");
+    String *wrapper_name = alaqil_name_wrapper(iname);
 
     if (Getattr(n, "sym:overloaded")) {
       overname = Getattr(n, "sym:overname");
     } else {
       if (!addSymbol(iname, n))
-	return SWIG_ERROR;
+	return alaqil_ERROR;
     }
 
     f = NewWrapper();
@@ -2737,7 +2737,7 @@ public:
       Append(wname, overname);
     }
 
-    const char *builtin_kwargs = builtin_ctor ? ", PyObject *SWIGUNUSEDPARM(kwargs)" : "";
+    const char *builtin_kwargs = builtin_ctor ? ", PyObject *alaqilUNUSEDPARM(kwargs)" : "";
     if (!allow_kwargs || overname) {
       if (!varargs) {
 	Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", PyObject *args", builtin_kwargs, ") {", NIL);
@@ -2745,12 +2745,12 @@ public:
 	Printv(f->def, linkage, wrap_return, wname, "__varargs__", "(PyObject *", self_param, ", PyObject *args, PyObject *varargs) {", NIL);
       }
       if (allow_kwargs) {
-	Swig_warning(WARN_LANG_OVERLOAD_KEYWORD, input_file, line_number, "Can't use keyword arguments with overloaded functions (%s).\n", Swig_name_decl(n));
+	alaqil_warning(WARN_LANG_OVERLOAD_KEYWORD, input_file, line_number, "Can't use keyword arguments with overloaded functions (%s).\n", alaqil_name_decl(n));
 	allow_kwargs = 0;
       }
     } else {
       if (varargs) {
-	Swig_warning(WARN_LANG_VARARGS_KEYWORD, input_file, line_number, "Can't wrap varargs with keyword arguments enabled\n");
+	alaqil_warning(WARN_LANG_VARARGS_KEYWORD, input_file, line_number, "Can't wrap varargs with keyword arguments enabled\n");
 	varargs = 0;
       }
       Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", PyObject *args, PyObject *kwargs) {", NIL);
@@ -2782,8 +2782,8 @@ public:
     /* Generate code for argument marshalling */
     if (funpack) {
       if (num_arguments > 0 && !overname) {
-	sprintf(source, "PyObject *swig_obj[%d]", num_arguments);
-	Wrapper_add_localv(f, "swig_obj", source, NIL);
+	sprintf(source, "PyObject *alaqil_obj[%d]", num_arguments);
+	Wrapper_add_localv(f, "alaqil_obj", source, NIL);
       }
     }
 
@@ -2791,8 +2791,8 @@ public:
     if (constructor && num_arguments == 1 && num_required == 1) {
       if (Cmp(storage, "explicit") == 0) {
 	if (GetFlag(parent, "feature:implicitconv")) {
-	  String *desc = NewStringf("SWIGTYPE%s", SwigType_manglestr(Getattr(n, "type")));
-	  Printf(f->code, "if (SWIG_CheckImplicit(%s)) SWIG_fail;\n", desc);
+	  String *desc = NewStringf("alaqilTYPE%s", alaqilType_manglestr(Getattr(n, "type")));
+	  Printf(f->code, "if (alaqil_CheckImplicit(%s)) alaqil_fail;\n", desc);
 	  Delete(desc);
 	}
       }
@@ -2802,7 +2802,7 @@ public:
       String *tmp_none_comparison = Copy(none_comparison);
       Replaceall(tmp_none_comparison, "$arg", "self");
       Printf(self_parse, "if (!(%s)) {\n", tmp_none_comparison);
-      Printv(self_parse, "  SWIG_SetErrorMsg(PyExc_RuntimeError, \"accessing abstract class or protected constructor\");\n  SWIG_fail;\n}\n", NIL);
+      Printv(self_parse, "  alaqil_SetErrorMsg(PyExc_RuntimeError, \"accessing abstract class or protected constructor\");\n  alaqil_fail;\n}\n", NIL);
       Delete(tmp_none_comparison);
     }
 
@@ -2813,17 +2813,17 @@ public:
 	p = Getattr(p, "tmap:in:next");
       }
 
-      SwigType *pt = Getattr(p, "type");
+      alaqilType *pt = Getattr(p, "type");
       String *ln = Getattr(p, "lname");
       bool parse_from_tuple = (i > 0 || !add_self);
-      if (SwigType_type(pt) == T_VARARGS) {
+      if (alaqilType_type(pt) == T_VARARGS) {
 	parse_from_tuple = false;
 	num_fixed_arguments -= atoi(Char(Getattr(p, "tmap:in:numinputs")));
       }
       if (!parse_from_tuple)
 	sprintf(source, "self");
       else if (funpack)
-	sprintf(source, "swig_obj[%d]", add_self && !overname ? i - 1 : i);
+	sprintf(source, "alaqil_obj[%d]", add_self && !overname ? i - 1 : i);
       else
 	sprintf(source, "obj%d", builtin_ctor ? i + 1 : i);
 
@@ -2847,7 +2847,7 @@ public:
 	  if (builtin_self) {
 	    Replaceall(tm, "$self", "self");
 	  } else if (funpack) {
-	    Replaceall(tm, "$self", "swig_obj[0]");
+	    Replaceall(tm, "$self", "alaqil_obj[0]");
 	  } else {
 	    Replaceall(tm, "$self", "obj0");
 	  }
@@ -2857,7 +2857,7 @@ public:
 	  Setattr(p, "emit:input", source);	/* Save the location of the object */
 
 	  if (Getattr(p, "wrap:disown") || (Getattr(p, "tmap:in:disown"))) {
-	    Replaceall(tm, "$disown", "SWIG_POINTER_DISOWN");
+	    Replaceall(tm, "$disown", "alaqil_POINTER_DISOWN");
 	  } else {
 	    Replaceall(tm, "$disown", "0");
 	  }
@@ -2865,7 +2865,7 @@ public:
 	  if (Getattr(p, "tmap:in:implicitconv")) {
 	    const char *convflag = "0";
 	    if (!Getattr(p, "hidden")) {
-	      SwigType *ptype = Getattr(p, "type");
+	      alaqilType *ptype = Getattr(p, "type");
 	      convflag = get_implicitconv_flag(classLookup(ptype));
 	    }
 	    Replaceall(tm, "$implicitconv", convflag);
@@ -2893,7 +2893,7 @@ public:
 	p = Getattr(p, "tmap:in:next");
 	continue;
       } else {
-	Swig_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", SwigType_str(pt, 0));
+	alaqil_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", alaqilType_str(pt, 0));
 	break;
       }
     }
@@ -2905,10 +2905,10 @@ public:
     }
 
     if (builtin && !funpack && in_class && tuple_arguments == 0) {
-      Printf(parse_args, "    if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) SWIG_exception_fail(SWIG_TypeError, \"%s takes no arguments\");\n", iname);
+      Printf(parse_args, "    if (args && PyTuple_Check(args) && PyTuple_GET_SIZE(args) > 0) alaqil_exception_fail(alaqil_TypeError, \"%s takes no arguments\");\n", iname);
     } else if (use_parse || allow_kwargs) {
       Printf(parse_args, ":%s\"", iname);
-      Printv(parse_args, arglist, ")) SWIG_fail;\n", NIL);
+      Printv(parse_args, arglist, ")) alaqil_fail;\n", NIL);
       funpack = 0;
     } else {
       Clear(parse_args);
@@ -2916,26 +2916,26 @@ public:
 	Clear(f->def);
 	if (overname) {
 	  if (noargs) {
-	    Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {", NIL);
+	    Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", Py_ssize_t nobjs, PyObject **alaqilUNUSEDPARM(alaqil_obj)) {", NIL);
 	  } else {
-	    Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", Py_ssize_t nobjs, PyObject **swig_obj) {", NIL);
+	    Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", Py_ssize_t nobjs, PyObject **alaqil_obj) {", NIL);
 	  }
-	  Printf(parse_args, "if ((nobjs < %d) || (nobjs > %d)) SWIG_fail;\n", num_required, num_arguments);
+	  Printf(parse_args, "if ((nobjs < %d) || (nobjs > %d)) alaqil_fail;\n", num_required, num_arguments);
 	} else {
 	  int is_tp_call = Equal(Getattr(n, "feature:python:slot"), "tp_call");
 	  Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", PyObject *args", builtin_kwargs, ") {", NIL);
 	  if (onearg && !builtin_ctor && !is_tp_call) {
-	    Printf(parse_args, "if (!args) SWIG_fail;\n");
-	    Append(parse_args, "swig_obj[0] = args;\n");
+	    Printf(parse_args, "if (!args) alaqil_fail;\n");
+	    Append(parse_args, "alaqil_obj[0] = args;\n");
 	  } else if (!noargs) {
-	    Printf(parse_args, "if (!SWIG_Python_UnpackTuple(args, \"%s\", %d, %d, swig_obj)) SWIG_fail;\n", iname, num_fixed_arguments, tuple_arguments);
+	    Printf(parse_args, "if (!alaqil_Python_UnpackTuple(args, \"%s\", %d, %d, alaqil_obj)) alaqil_fail;\n", iname, num_fixed_arguments, tuple_arguments);
 	  } else if (noargs) {
-	    Printf(parse_args, "if (!SWIG_Python_UnpackTuple(args, \"%s\", %d, %d, 0)) SWIG_fail;\n", iname, num_fixed_arguments, tuple_arguments);
+	    Printf(parse_args, "if (!alaqil_Python_UnpackTuple(args, \"%s\", %d, %d, 0)) alaqil_fail;\n", iname, num_fixed_arguments, tuple_arguments);
 	  }
 	}
       } else {
 	Printf(parse_args, "if (!PyArg_UnpackTuple(args, \"%s\", %d, %d", iname, num_fixed_arguments, tuple_arguments);
-	Printv(parse_args, arglist, ")) SWIG_fail;\n", NIL);
+	Printv(parse_args, arglist, ")) alaqil_fail;\n", NIL);
       }
     }
 
@@ -2967,7 +2967,7 @@ public:
 	if (Getattr(p, "tmap:freearg:implicitconv")) {
 	  const char *convflag = "0";
 	  if (!Getattr(p, "hidden")) {
-	    SwigType *ptype = Getattr(p, "type");
+	    alaqilType *ptype = Getattr(p, "type");
 	    convflag = get_implicitconv_flag(classLookup(ptype));
 	  }
 	  if (strcmp(convflag, "0") == 0) {
@@ -3013,28 +3013,28 @@ public:
     // later time, so this test must be included whether or not directorbase
     // is true.  we do skip this code if directors have not been enabled
     // at the command line to preserve source-level compatibility with
-    // non-polymorphic swig.  also, if this wrapper is for a smart-pointer
+    // non-polymorphic alaqil.  also, if this wrapper is for a smart-pointer
     // method, there is no need to perform the test since the calling object
     // (the smart-pointer) and the director object (the "pointee") are
     // distinct.
 
     director_method = is_member_director(n) && !is_smart_pointer() && !destructor;
     if (director_method) {
-      Wrapper_add_local(f, "director", "Swig::Director *director = 0");
-      Append(f->code, "director = SWIG_DIRECTOR_CAST(arg1);\n");
+      Wrapper_add_local(f, "director", "alaqil::Director *director = 0");
+      Append(f->code, "director = alaqil_DIRECTOR_CAST(arg1);\n");
       if (dirprot_mode() && !is_public(n)) {
-	Printf(f->code, "if (!director || !(director->swig_get_inner(\"%s\"))) {\n", name);
-	Printf(f->code, "SWIG_SetErrorMsg(PyExc_RuntimeError,\"accessing protected member %s\");\n", name);
-	Append(f->code, "SWIG_fail;\n");
+	Printf(f->code, "if (!director || !(director->alaqil_get_inner(\"%s\"))) {\n", name);
+	Printf(f->code, "alaqil_SetErrorMsg(PyExc_RuntimeError,\"accessing protected member %s\");\n", name);
+	Append(f->code, "alaqil_fail;\n");
 	Append(f->code, "}\n");
       }
       Wrapper_add_local(f, "upcall", "bool upcall = false");
       if (funpack) {
-	const char *self_parm = builtin_self ? "self" : "swig_obj[0]";
-	Printf(f->code, "upcall = (director && (director->swig_get_self()==%s));\n", self_parm);
+	const char *self_parm = builtin_self ? "self" : "alaqil_obj[0]";
+	Printf(f->code, "upcall = (director && (director->alaqil_get_self()==%s));\n", self_parm);
       } else {
 	const char *self_parm = builtin_self ? "self" : "obj0";
-	Printf(f->code, "upcall = (director && (director->swig_get_self()==%s));\n", self_parm);
+	Printf(f->code, "upcall = (director && (director->alaqil_get_self()==%s));\n", self_parm);
       }
     }
 
@@ -3055,38 +3055,38 @@ public:
 
     Setattr(n, "wrap:name", wname);
 
-    Swig_director_emit_dynamic_cast(n, f);
+    alaqil_director_emit_dynamic_cast(n, f);
     String *actioncode = emit_action(n);
 
     if (director_method) {
-      Append(actioncode, "} catch (Swig::DirectorException&) {\n");
-      Append(actioncode, "  SWIG_fail;\n");
+      Append(actioncode, "} catch (alaqil::DirectorException&) {\n");
+      Append(actioncode, "  alaqil_fail;\n");
       Append(actioncode, "}\n");
     }
 
     /* This part below still needs cleanup */
 
     /* Return the function value */
-    tm = Swig_typemap_lookup_out("out", n, Swig_cresult_name(), f, actioncode);
+    tm = alaqil_typemap_lookup_out("out", n, alaqil_cresult_name(), f, actioncode);
 
     if (tm) {
       if (builtin_self) {
 	Replaceall(tm, "$self", "self");
       } else if (funpack) {
-	Replaceall(tm, "$self", "swig_obj[0]");
+	Replaceall(tm, "$self", "alaqil_obj[0]");
       } else {
 	Replaceall(tm, "$self", "obj0");
       }
-      Replaceall(tm, "$source", Swig_cresult_name());
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Replaceall(tm, "$target", "resultobj");
       Replaceall(tm, "$result", "resultobj");
       if (builtin_ctor) {
-	Replaceall(tm, "$owner", "SWIG_BUILTIN_INIT");
+	Replaceall(tm, "$owner", "alaqil_BUILTIN_INIT");
       } else if (handled_as_init) {
-	Replaceall(tm, "$owner", "SWIG_POINTER_NEW");
+	Replaceall(tm, "$owner", "alaqil_POINTER_NEW");
       } else {
 	if (GetFlag(n, "feature:new")) {
-	  Replaceall(tm, "$owner", "SWIG_POINTER_OWN");
+	  Replaceall(tm, "$owner", "alaqil_POINTER_OWN");
 	} else {
 	  Replaceall(tm, "$owner", "0");
 	}
@@ -3100,22 +3100,22 @@ public:
 #if 1
       int unwrap = 0;
       String *decl = Getattr(n, "decl");
-      int is_pointer = SwigType_ispointer_return(decl);
-      int is_reference = SwigType_isreference_return(decl);
+      int is_pointer = alaqilType_ispointer_return(decl);
+      int is_reference = alaqilType_isreference_return(decl);
       if (is_pointer || is_reference) {
 	String *type = Getattr(n, "type");
-	//Node *classNode = Swig_methodclass(n);
+	//Node *classNode = alaqil_methodclass(n);
 	//Node *module = Getattr(classNode, "module");
 	Node *module = Getattr(parent, "module");
-	Node *target = Swig_directormap(module, type);
+	Node *target = alaqil_directormap(module, type);
 	if (target)
 	  unwrap = 1;
       }
       if (unwrap) {
-	Wrapper_add_local(f, "director", "Swig::Director *director = 0");
-	Printf(f->code, "director = SWIG_DIRECTOR_CAST(%s);\n", Swig_cresult_name());
+	Wrapper_add_local(f, "director", "alaqil::Director *director = 0");
+	Printf(f->code, "director = alaqil_DIRECTOR_CAST(%s);\n", alaqil_cresult_name());
 	Append(f->code, "if (director) {\n");
-	Append(f->code, "  resultobj = director->swig_get_self();\n");
+	Append(f->code, "  resultobj = director->alaqil_get_self();\n");
 	Append(f->code, "  Py_INCREF(resultobj);\n");
 	Append(f->code, "} else {\n");
 	Printf(f->code, "%s\n", tm);
@@ -3128,7 +3128,7 @@ public:
 #endif
       Delete(tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", SwigType_str(d, 0), name);
+      alaqil_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", alaqilType_str(d, 0), name);
     }
     emit_return_variable(n, d, f);
 
@@ -3143,23 +3143,23 @@ public:
 
     /* Look to see if there is any newfree cleanup code */
     if (GetFlag(n, "feature:new")) {
-      if ((tm = Swig_typemap_lookup("newfree", n, Swig_cresult_name(), 0))) {
-	Replaceall(tm, "$source", Swig_cresult_name());
+      if ((tm = alaqil_typemap_lookup("newfree", n, alaqil_cresult_name(), 0))) {
+	Replaceall(tm, "$source", alaqil_cresult_name());
 	Printf(f->code, "%s\n", tm);
 	Delete(tm);
       }
     }
 
     /* See if there is any return cleanup code */
-    if ((tm = Swig_typemap_lookup("ret", n, Swig_cresult_name(), 0))) {
-      Replaceall(tm, "$source", Swig_cresult_name());
+    if ((tm = alaqil_typemap_lookup("ret", n, alaqil_cresult_name(), 0))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Printf(f->code, "%s\n", tm);
       Delete(tm);
     }
 
     if (director_method) {
-      if ((tm = Swig_typemap_lookup("directorfree", n, Swig_cresult_name(), 0))) {
-	Replaceall(tm, "$input", Swig_cresult_name());
+      if ((tm = alaqil_typemap_lookup("directorfree", n, alaqil_cresult_name(), 0))) {
+	Replaceall(tm, "$input", alaqil_cresult_name());
 	Replaceall(tm, "$result", "resultobj");
 	Printf(f->code, "%s\n", tm);
 	Delete(tm);
@@ -3201,7 +3201,7 @@ public:
     if (builtin_self) {
       Replaceall(f->code, "$self", "self");
     } else if (funpack) {
-      Replaceall(f->code, "$self", "swig_obj[0]");
+      Replaceall(f->code, "$self", "alaqil_obj[0]");
     } else {
       Replaceall(f->code, "$self", "obj0");
     }
@@ -3215,7 +3215,7 @@ public:
       f = NewWrapper();
       if (funpack) {
 	// Note: funpack is currently always false for varargs
-	Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", Py_ssize_t nobjs, PyObject **swig_obj) {", NIL);
+	Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", Py_ssize_t nobjs, PyObject **alaqil_obj) {", NIL);
       } else {
 	Printv(f->def, linkage, wrap_return, wname, "(PyObject *", self_param, ", PyObject *args", builtin_kwargs, ") {", NIL);
       }
@@ -3226,13 +3226,13 @@ public:
 	Wrapper_add_local(f, "i", "int i");
 	Printf(f->code, "newargs = PyTuple_New(%d);\n", num_fixed_arguments);
 	Printf(f->code, "for (i = 0; i < %d; ++i) {\n", num_fixed_arguments);
-	Printf(f->code, "  PyTuple_SET_ITEM(newargs, i, swig_obj[i]);\n");
-	Printf(f->code, "  Py_XINCREF(swig_obj[i]);\n");
+	Printf(f->code, "  PyTuple_SET_ITEM(newargs, i, alaqil_obj[i]);\n");
+	Printf(f->code, "  Py_XINCREF(alaqil_obj[i]);\n");
 	Printf(f->code, "}\n");
 	Printf(f->code, "varargs = PyTuple_New(nobjs > %d ? nobjs - %d : 0);\n", num_fixed_arguments, num_fixed_arguments);
 	Printf(f->code, "for (i = 0; i < nobjs - %d; ++i) {\n", num_fixed_arguments);
-	Printf(f->code, "  PyTuple_SET_ITEM(newargs, i, swig_obj[i + %d]);\n", num_fixed_arguments);
-	Printf(f->code, "  Py_XINCREF(swig_obj[i + %d]);\n", num_fixed_arguments);
+	Printf(f->code, "  PyTuple_SET_ITEM(newargs, i, alaqil_obj[i + %d]);\n", num_fixed_arguments);
+	Printf(f->code, "  Py_XINCREF(alaqil_obj[i + %d]);\n", num_fixed_arguments);
 	Printf(f->code, "}\n");
       } else {
 	Printf(f->code, "newargs = PyTuple_GetSlice(args,0,%d);\n", num_fixed_arguments);
@@ -3266,7 +3266,7 @@ public:
       if ((director_method || !is_private(n)) && !Getattr(class_members, iname)) {
 	Setattr(class_members, iname, n);
 	if (!builtin_tp_init)
-	  builtin_tp_init = Swig_name_wrapper(iname);
+	  builtin_tp_init = alaqil_name_wrapper(iname);
       }
     }
 
@@ -3279,7 +3279,7 @@ public:
         Setattr(builtin_getset, memname, h);
         Delete(h);
       }
-      Setattr(h, "getter", "SwigPyObject_get___dict__");
+      Setattr(h, "getter", "alaqilPyObject_get___dict__");
       if (!Getattr(h, "doc")) {
 	Setattr(n, "doc:high:name", Getattr(n, "name"));
 	Setattr(h, "doc", cdocstring(n, AUTODOC_VAR));
@@ -3372,7 +3372,7 @@ public:
     Delete(wname);
     DelWrapper(f);
     Delete(wrapper_name);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -3384,14 +3384,14 @@ public:
   virtual int variableWrapper(Node *n) {
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *t = Getattr(n, "type");
+    alaqilType *t = Getattr(n, "type");
 
     static int have_globals = 0;
     String *tm;
     Wrapper *getf, *setf;
 
     if (!addSymbol(iname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     getf = NewWrapper();
     setf = NewWrapper();
@@ -3400,9 +3400,9 @@ public:
        Python dictionary. */
 
     if (!have_globals) {
-      Printf(f_init, "\t globals = SWIG_globals();\n");
+      Printf(f_init, "\t globals = alaqil_globals();\n");
       Printf(f_init, "\t if (!globals) {\n");
-      Printf(f_init, "     PyErr_SetString(PyExc_TypeError, \"Failure to create SWIG globals.\");\n");
+      Printf(f_init, "     PyErr_SetString(PyExc_TypeError, \"Failure to create alaqil globals.\");\n");
       Printf(f_init, "#if PY_VERSION_HEX >= 0x03000000\n");
       Printf(f_init, "\t   return NULL;\n");
       Printf(f_init, "#else\n");
@@ -3412,7 +3412,7 @@ public:
       Printf(f_init, "\t PyDict_SetItemString(md, \"%s\", globals);\n", global_name);
       Printf(f_init, "\t Py_DECREF(globals);\n");
       if (builtin)
-	Printf(f_init, "\t SwigPyBuiltin_AddPublicSymbol(public_interface, \"%s\");\n", global_name);
+	Printf(f_init, "\t alaqilPyBuiltin_AddPublicSymbol(public_interface, \"%s\");\n", global_name);
       have_globals = 1;
       if (!builtin && (shadow) && (!(shadow & PYSHADOW_MEMBER))) {
 	Printf(f_shadow_stubs, "%s = %s.%s\n", global_name, module, global_name);
@@ -3423,21 +3423,21 @@ public:
     if (!builtin && shadow && !assignable && !in_class)
       Printf(f_shadow_stubs, "%s = %s.%s\n", iname, global_name, iname);
 
-    String *getname = Swig_name_get(NSPACE_TODO, iname);
-    String *setname = Swig_name_set(NSPACE_TODO, iname);
-    String *vargetname = NewStringf("Swig_var_%s", getname);
-    String *varsetname = NewStringf("Swig_var_%s", setname);
+    String *getname = alaqil_name_get(NSPACE_TODO, iname);
+    String *setname = alaqil_name_set(NSPACE_TODO, iname);
+    String *vargetname = NewStringf("alaqil_var_%s", getname);
+    String *varsetname = NewStringf("alaqil_var_%s", setname);
 
     /* Create a function for setting the value of the variable */
     if (assignable) {
       Setattr(n, "wrap:name", varsetname);
       if (builtin && in_class) {
-	String *set_wrapper = Swig_name_wrapper(setname);
+	String *set_wrapper = alaqil_name_wrapper(setname);
 	Setattr(n, "pybuiltin:setter", set_wrapper);
 	Delete(set_wrapper);
       }
-      Printf(setf->def, "SWIGINTERN int %s(PyObject *_val) {", varsetname);
-      if ((tm = Swig_typemap_lookup("varin", n, name, 0))) {
+      Printf(setf->def, "alaqilINTERN int %s(PyObject *_val) {", varsetname);
+      if ((tm = alaqil_typemap_lookup("varin", n, name, 0))) {
 	Replaceall(tm, "$source", "_val");
 	Replaceall(tm, "$target", name);
 	Replaceall(tm, "$input", "_val");
@@ -3447,7 +3447,7 @@ public:
 	emit_action_code(n, setf->code, tm);
 	Delete(tm);
       } else {
-	Swig_warning(WARN_TYPEMAP_VARIN_UNDEF, input_file, line_number, "Unable to set variable of type %s.\n", SwigType_str(t, 0));
+	alaqil_warning(WARN_TYPEMAP_VARIN_UNDEF, input_file, line_number, "Unable to set variable of type %s.\n", alaqilType_str(t, 0));
       }
       Printv(setf->code, "  return 0;\n", NULL);
       Append(setf->code, "fail:\n");
@@ -3455,11 +3455,11 @@ public:
     } else {
       /* Is a readonly variable.  Issue an error */
       if (CPlusPlus) {
-	Printf(setf->def, "SWIGINTERN int %s(PyObject *) {", varsetname);
+	Printf(setf->def, "alaqilINTERN int %s(PyObject *) {", varsetname);
       } else {
-	Printf(setf->def, "SWIGINTERN int %s(PyObject *_val SWIGUNUSED) {", varsetname);
+	Printf(setf->def, "alaqilINTERN int %s(PyObject *_val alaqilUNUSED) {", varsetname);
       }
-      Printv(setf->code, "  SWIG_Error(SWIG_AttributeError,\"Variable ", iname, " is read-only.\");\n", "  return 1;\n", NIL);
+      Printv(setf->code, "  alaqil_Error(alaqil_AttributeError,\"Variable ", iname, " is read-only.\");\n", "  return 1;\n", NIL);
     }
 
     Append(setf->code, "}\n");
@@ -3468,25 +3468,25 @@ public:
     /* Create a function for getting the value of a variable */
     Setattr(n, "wrap:name", vargetname);
     if (builtin && in_class) {
-      String *get_wrapper = Swig_name_wrapper(getname);
+      String *get_wrapper = alaqil_name_wrapper(getname);
       Setattr(n, "pybuiltin:getter", get_wrapper);
       Delete(get_wrapper);
     }
     int addfail = 0;
-    Printf(getf->def, "SWIGINTERN PyObject *%s(void) {", vargetname);
+    Printf(getf->def, "alaqilINTERN PyObject *%s(void) {", vargetname);
     Wrapper_add_local(getf, "pyobj", "PyObject *pyobj = 0");
     if (builtin) {
       Wrapper_add_local(getf, "self", "PyObject *self = 0");
       Append(getf->code, "  (void)self;\n");
     }
-    if ((tm = Swig_typemap_lookup("varout", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("varout", n, name, 0))) {
       Replaceall(tm, "$source", name);
       Replaceall(tm, "$target", "pyobj");
       Replaceall(tm, "$result", "pyobj");
       addfail = emit_action_code(n, getf->code, tm);
       Delete(tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_VAROUT_UNDEF, input_file, line_number, "Unable to read variable of type %s\n", SwigType_str(t, 0));
+      alaqil_warning(WARN_TYPEMAP_VAROUT_UNDEF, input_file, line_number, "Unable to read variable of type %s\n", alaqilType_str(t, 0));
     }
     Append(getf->code, "  return pyobj;\n");
     if (addfail) {
@@ -3498,10 +3498,10 @@ public:
     Wrapper_print(getf, f_wrappers);
 
     /* Now add this to the variable linking mechanism */
-    Printf(f_init, "\t SWIG_addvarlink(globals, \"%s\", %s, %s);\n", iname, vargetname, varsetname);
+    Printf(f_init, "\t alaqil_addvarlink(globals, \"%s\", %s, %s);\n", iname, vargetname, varsetname);
     if (builtin && shadow && !assignable && !in_class) {
       Printf(f_init, "\t PyDict_SetItemString(md, \"%s\", PyObject_GetAttrString(globals, \"%s\"));\n", iname, iname);
-      Printf(f_init, "\t SwigPyBuiltin_AddPublicSymbol(public_interface, \"%s\");\n", iname);
+      Printf(f_init, "\t alaqilPyBuiltin_AddPublicSymbol(public_interface, \"%s\");\n", iname);
     }
     Delete(vargetname);
     Delete(varsetname);
@@ -3509,26 +3509,26 @@ public:
     Delete(setname);
     DelWrapper(setf);
     DelWrapper(getf);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
    * constantWrapper()
    * ------------------------------------------------------------ */
 
-  /* Determine if the node requires the _swigconstant code to be generated */
-  bool needs_swigconstant(Node *n) {
-    SwigType *type = Getattr(n, "type");
-    SwigType *qtype = SwigType_typedef_resolve_all(type);
-    SwigType *uqtype = SwigType_strip_qualifiers(qtype);
+  /* Determine if the node requires the _alaqilconstant code to be generated */
+  bool needs_alaqilconstant(Node *n) {
+    alaqilType *type = Getattr(n, "type");
+    alaqilType *qtype = alaqilType_typedef_resolve_all(type);
+    alaqilType *uqtype = alaqilType_strip_qualifiers(qtype);
     bool result = false;
 
     /* Note, that we need special handling for function pointers, as
-     * SwigType_base(fptr) does not return the underlying pointer-to-function
+     * alaqilType_base(fptr) does not return the underlying pointer-to-function
      * type but the return-type of function. */
-    if (!SwigType_isfunction(uqtype) && !SwigType_isfunctionpointer(uqtype)) {
-      SwigType *basetype = SwigType_base(uqtype);
-      result = SwigType_isclass(basetype) != 0;
+    if (!alaqilType_isfunction(uqtype) && !alaqilType_isfunctionpointer(uqtype)) {
+      alaqilType *basetype = alaqilType_base(uqtype);
+      result = alaqilType_isclass(basetype) != 0;
       Delete(basetype);
     }
 
@@ -3541,7 +3541,7 @@ public:
   virtual int constantWrapper(Node *n) {
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *type = Getattr(n, "type");
+    alaqilType *type = Getattr(n, "type");
     String *rawval = Getattr(n, "rawval");
     String *value = rawval ? rawval : Getattr(n, "value");
     String *tm;
@@ -3549,18 +3549,18 @@ public:
     int have_builtin_symname = 0;
 
     if (!addSymbol(iname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     /* Special hook for member pointer */
-    if (SwigType_type(type) == T_MPOINTER) {
-      String *wname = Swig_name_wrapper(iname);
-      String *str = SwigType_str(type, wname);
+    if (alaqilType_type(type) == T_MPOINTER) {
+      String *wname = alaqil_name_wrapper(iname);
+      String *str = alaqilType_str(type, wname);
       Printf(f_header, "static %s = %s;\n", str, value);
       Delete(str);
       value = wname;
     }
 
-    if ((tm = Swig_typemap_lookup("consttab", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("consttab", n, name, 0))) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", name);
       Replaceall(tm, "$value", value);
@@ -3572,35 +3572,35 @@ public:
 
     if (builtin && in_class && Getattr(n, "pybuiltin:symname")) {
       have_builtin_symname = 1;
-      Swig_require("builtin_constantWrapper", n, "*sym:name", "pybuiltin:symname", NIL);
+      alaqil_require("builtin_constantWrapper", n, "*sym:name", "pybuiltin:symname", NIL);
       Setattr(n, "sym:name", Getattr(n, "pybuiltin:symname"));
     }
 
-    if ((tm = Swig_typemap_lookup("constcode", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("constcode", n, name, 0))) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", name);
       Replaceall(tm, "$value", value);
-      if (needs_swigconstant(n) && !builtin && (shadow) && (!(shadow & PYSHADOW_MEMBER)) && (!in_class || !Getattr(n, "feature:python:callback"))) {
-	// Generate `*_swigconstant()` method which registers the new constant.
+      if (needs_alaqilconstant(n) && !builtin && (shadow) && (!(shadow & PYSHADOW_MEMBER)) && (!in_class || !Getattr(n, "feature:python:callback"))) {
+	// Generate `*_alaqilconstant()` method which registers the new constant.
 	//
-	// *_swigconstant methods are required for constants of class type.
-	// Class types are registered in shadow file (see *_swigregister). The
+	// *_alaqilconstant methods are required for constants of class type.
+	// Class types are registered in shadow file (see *_alaqilregister). The
 	// instances of class must be created (registered) after the type is
-	// registered, so we can't let SWIG_init() to register constants of
-	// class type (the SWIG_init() is called before shadow classes are
+	// registered, so we can't let alaqil_init() to register constants of
+	// class type (the alaqil_init() is called before shadow classes are
 	// defined and registered).
-        Printf(f_wrappers, "SWIGINTERN PyObject *%s_swigconstant(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {\n", iname);
+        Printf(f_wrappers, "alaqilINTERN PyObject *%s_alaqilconstant(PyObject *alaqilUNUSEDPARM(self), PyObject *args) {\n", iname);
         Printf(f_wrappers, tab2 "PyObject *module;\n", tm);
         Printf(f_wrappers, tab2 "PyObject *d;\n");
-	Printf(f_wrappers, tab2 "if (!SWIG_Python_UnpackTuple(args, \"swigconstant\", 1, 1, &module)) return NULL;\n");
+	Printf(f_wrappers, tab2 "if (!alaqil_Python_UnpackTuple(args, \"alaqilconstant\", 1, 1, &module)) return NULL;\n");
         Printf(f_wrappers, tab2 "d = PyModule_GetDict(module);\n");
         Printf(f_wrappers, tab2 "if (!d) return NULL;\n");
         Printf(f_wrappers, tab2 "%s\n", tm);
-        Printf(f_wrappers, tab2 "return SWIG_Py_Void();\n");
+        Printf(f_wrappers, tab2 "return alaqil_Py_Void();\n");
         Printf(f_wrappers, "}\n\n\n");
 
-        // Register the method in SwigMethods array
-	String *cname = NewStringf("%s_swigconstant", iname);
+        // Register the method in alaqilMethods array
+	String *cname = NewStringf("%s_alaqilconstant", iname);
 	add_method(cname, cname, 0, 0, 1, 1, 1);
 	Delete(cname);
       } else {
@@ -3611,11 +3611,11 @@ public:
     }
 
     if (have_builtin_symname)
-      Swig_restore(n);
+      alaqil_restore(n);
 
     if (!have_tm) {
-      Swig_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value.\n");
-      return SWIG_NOWRAP;
+      alaqil_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value.\n");
+      return alaqil_NOWRAP;
     }
 
     if (!builtin && (shadow) && (!(shadow & PYSHADOW_MEMBER))) {
@@ -3627,16 +3627,16 @@ public:
       }
 
       if (f_s) {
-	if (needs_swigconstant(n)) {
+	if (needs_alaqilconstant(n)) {
 	  Printv(f_s, "\n",NIL);
-	  Printv(f_s, module, ".", iname, "_swigconstant(",module,")\n", NIL);
+	  Printv(f_s, module, ".", iname, "_alaqilconstant(",module,")\n", NIL);
 	}
 	Printv(f_s, iname, " = ", module, ".", iname, "\n", NIL);
 	if (have_docstring(n))
 	  Printv(f_s, docstring(n, AUTODOC_CONST, tab4), "\n", NIL);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -3649,13 +3649,13 @@ public:
     String *wrapname = Getattr(n, "wrap:name");
 
     if (!addSymbol(wrapname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     add_method(name, wrapname, 0);
     if (!builtin && shadow) {
       Printv(f_shadow_stubs, name, " = ", module, ".", name, "\n", NIL);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -3668,7 +3668,7 @@ public:
    *
    * TODO
    *
-   * Move some boilerplate code generation to Swig_...() functions.
+   * Move some boilerplate code generation to alaqil_...() functions.
    *
    */
 
@@ -3692,16 +3692,16 @@ public:
     Node *parent = Getattr(n, "parentNode");
     String *sub = NewString("");
     String *decl = Getattr(n, "decl");
-    String *supername = Swig_class_name(parent);
+    String *supername = alaqil_class_name(parent);
     String *classname = NewString("");
-    Printf(classname, "SwigDirector_%s", supername);
+    Printf(classname, "alaqilDirector_%s", supername);
 
     /* insert self parameter */
     Parm *p;
     ParmList *superparms = Getattr(n, "parms");
     ParmList *parms = CopyParmList(superparms);
     String *type = NewString("PyObject");
-    SwigType_add_pointer(type);
+    alaqilType_add_pointer(type);
     p = NewParm(type, NewString("self"), n);
     set_nextSibling(p, parms);
     parms = p;
@@ -3712,10 +3712,10 @@ public:
 	Wrapper *w = NewWrapper();
 	String *call;
 	String *basetype = Getattr(parent, "classtype");
-	String *target = Swig_method_decl(0, decl, classname, parms, 0);
-	call = Swig_csuperclass_call(0, basetype, superparms);
-	Printf(w->def, "%s::%s: %s, Swig::Director(self) { \n", classname, target, call);
-	Printf(w->def, "   SWIG_DIRECTOR_RGTR((%s *)this, this); \n", basetype);
+	String *target = alaqil_method_decl(0, decl, classname, parms, 0);
+	call = alaqil_csuperclass_call(0, basetype, superparms);
+	Printf(w->def, "%s::%s: %s, alaqil::Director(self) { \n", classname, target, call);
+	Printf(w->def, "   alaqil_DIRECTOR_RGTR((%s *)this, this); \n", basetype);
 	Append(w->def, "}\n");
 	Delete(target);
 	Wrapper_print(w, f_directors);
@@ -3725,7 +3725,7 @@ public:
 
       /* constructor header */
       {
-	String *target = Swig_method_decl(0, decl, classname, parms, 1);
+	String *target = alaqil_method_decl(0, decl, classname, parms, 1);
 	Printf(f_directors_h, "    %s;\n", target);
 	Delete(target);
       }
@@ -3743,18 +3743,18 @@ public:
    * ------------------------------------------------------------ */
 
   int classDirectorDefaultConstructor(Node *n) {
-    String *classname = Swig_class_name(n);
+    String *classname = alaqil_class_name(n);
     {
-      Node *parent = Swig_methodclass(n);
+      Node *parent = alaqil_methodclass(n);
       String *basetype = Getattr(parent, "classtype");
       Wrapper *w = NewWrapper();
-      Printf(w->def, "SwigDirector_%s::SwigDirector_%s(PyObject *self) : Swig::Director(self) { \n", classname, classname);
-      Printf(w->def, "   SWIG_DIRECTOR_RGTR((%s *)this, this); \n", basetype);
+      Printf(w->def, "alaqilDirector_%s::alaqilDirector_%s(PyObject *self) : alaqil::Director(self) { \n", classname, classname);
+      Printf(w->def, "   alaqil_DIRECTOR_RGTR((%s *)this, this); \n", basetype);
       Append(w->def, "}\n");
       Wrapper_print(w, f_directors);
       DelWrapper(w);
     }
-    Printf(f_directors_h, "    SwigDirector_%s(PyObject *self);\n", classname);
+    Printf(f_directors_h, "    alaqilDirector_%s(PyObject *self);\n", classname);
     Delete(classname);
     return Language::classDirectorDefaultConstructor(n);
   }
@@ -3765,7 +3765,7 @@ public:
    * ------------------------------------------------------------ */
 
   int classDirectorInit(Node *n) {
-    String *declaration = Swig_director_declaration(n);
+    String *declaration = alaqil_director_declaration(n);
     Printf(f_directors_h, "\n");
     Printf(f_directors_h, "%s\n", declaration);
     Printf(f_directors_h, "public:\n");
@@ -3778,7 +3778,7 @@ public:
    * ------------------------------------------------------------ */
 
   int classDirectorEnd(Node *n) {
-    String *classname = Swig_class_name(n);
+    String *classname = alaqil_class_name(n);
 
     if (dirprot_mode()) {
       /*
@@ -3792,38 +3792,38 @@ public:
       Printf(f_directors_h, "\n");
       Printf(f_directors_h, "/* Internal director utilities */\n");
       Printf(f_directors_h, "public:\n");
-      Printf(f_directors_h, "    bool swig_get_inner(const char *swig_protected_method_name) const {\n");
-      Printf(f_directors_h, "      std::map<std::string, bool>::const_iterator iv = swig_inner.find(swig_protected_method_name);\n");
-      Printf(f_directors_h, "      return (iv != swig_inner.end() ? iv->second : false);\n");
+      Printf(f_directors_h, "    bool alaqil_get_inner(const char *alaqil_protected_method_name) const {\n");
+      Printf(f_directors_h, "      std::map<std::string, bool>::const_iterator iv = alaqil_inner.find(alaqil_protected_method_name);\n");
+      Printf(f_directors_h, "      return (iv != alaqil_inner.end() ? iv->second : false);\n");
       Printf(f_directors_h, "    }\n");
 
-      Printf(f_directors_h, "    void swig_set_inner(const char *swig_protected_method_name, bool swig_val) const {\n");
-      Printf(f_directors_h, "      swig_inner[swig_protected_method_name] = swig_val;\n");
+      Printf(f_directors_h, "    void alaqil_set_inner(const char *alaqil_protected_method_name, bool alaqil_val) const {\n");
+      Printf(f_directors_h, "      alaqil_inner[alaqil_protected_method_name] = alaqil_val;\n");
       Printf(f_directors_h, "    }\n");
       Printf(f_directors_h, "private:\n");
-      Printf(f_directors_h, "    mutable std::map<std::string, bool> swig_inner;\n");
+      Printf(f_directors_h, "    mutable std::map<std::string, bool> alaqil_inner;\n");
 
     }
     if (director_method_index) {
       Printf(f_directors_h, "\n");
-      Printf(f_directors_h, "#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)\n");
+      Printf(f_directors_h, "#if defined(alaqil_PYTHON_DIRECTOR_VTABLE)\n");
       Printf(f_directors_h, "/* VTable implementation */\n");
-      Printf(f_directors_h, "    PyObject *swig_get_method(size_t method_index, const char *method_name) const {\n");
+      Printf(f_directors_h, "    PyObject *alaqil_get_method(size_t method_index, const char *method_name) const {\n");
       Printf(f_directors_h, "      PyObject *method = vtable[method_index];\n");
       Printf(f_directors_h, "      if (!method) {\n");
-      Printf(f_directors_h, "        swig::SwigVar_PyObject name = SWIG_Python_str_FromChar(method_name);\n");
-      Printf(f_directors_h, "        method = PyObject_GetAttr(swig_get_self(), name);\n");
+      Printf(f_directors_h, "        alaqil::alaqilVar_PyObject name = alaqil_Python_str_FromChar(method_name);\n");
+      Printf(f_directors_h, "        method = PyObject_GetAttr(alaqil_get_self(), name);\n");
       Printf(f_directors_h, "        if (!method) {\n");
       Printf(f_directors_h, "          std::string msg = \"Method in class %s doesn't exist, undefined \";\n", classname);
       Printf(f_directors_h, "          msg += method_name;\n");
-      Printf(f_directors_h, "          Swig::DirectorMethodException::raise(msg.c_str());\n");
+      Printf(f_directors_h, "          alaqil::DirectorMethodException::raise(msg.c_str());\n");
       Printf(f_directors_h, "        }\n");
       Printf(f_directors_h, "        vtable[method_index] = method;\n");
       Printf(f_directors_h, "      }\n");
       Printf(f_directors_h, "      return method;\n");
       Printf(f_directors_h, "    }\n");
       Printf(f_directors_h, "private:\n");
-      Printf(f_directors_h, "    mutable swig::SwigVar_PyObject vtable[%d];\n", director_method_index);
+      Printf(f_directors_h, "    mutable alaqil::alaqilVar_PyObject vtable[%d];\n", director_method_index);
       Printf(f_directors_h, "#endif\n\n");
     }
 
@@ -3846,12 +3846,12 @@ public:
     shadow = oldshadow;
     if (shadow) {
       if (builtin) {
-	String *rname = SwigType_namestr(real_classname);
-	Printf(builtin_methods, "  { \"__disown__\", Swig::Director::swig_pyobj_disown< %s >, METH_NOARGS, \"\" },\n", rname);
+	String *rname = alaqilType_namestr(real_classname);
+	Printf(builtin_methods, "  { \"__disown__\", alaqil::Director::alaqil_pyobj_disown< %s >, METH_NOARGS, \"\" },\n", rname);
 	Delete(rname);
       } else {
 	String *symname = Getattr(n, "sym:name");
-	String *mrename = Swig_name_disown(NSPACE_TODO, symname);	//Getattr(n, "name"));
+	String *mrename = alaqil_name_disown(NSPACE_TODO, symname);	//Getattr(n, "name"));
 	Printv(f_shadow, tab4, "def __disown__(self):\n", NIL);
 #ifdef USE_THISOWN
 	Printv(f_shadow, tab8, "self.thisown = 0\n", NIL);
@@ -3907,11 +3907,11 @@ public:
 
   void builtin_pre_decl(Node *n) {
     String *name = Getattr(n, "name");
-    String *rname = add_explicit_scope(SwigType_namestr(name));
-    String *mname = SwigType_manglestr(rname);
+    String *rname = add_explicit_scope(alaqilType_namestr(name));
+    String *mname = alaqilType_manglestr(rname);
 
     Printf(f_init, "\n/* type '%s' */\n", rname);
-    Printf(f_init, "    builtin_pytype = (PyTypeObject *)&SwigPyBuiltin_%s_type;\n", mname);
+    Printf(f_init, "    builtin_pytype = (PyTypeObject *)&alaqilPyBuiltin_%s_type;\n", mname);
     Printf(f_init, "    builtin_pytype->tp_dict = d = PyDict_New();\n");
 
     Delete(rname);
@@ -3921,16 +3921,16 @@ public:
   void builtin_post_decl(File *f, Node *n) {
     String *name = Getattr(n, "name");
     String *pname = Copy(name);
-    SwigType_add_pointer(pname);
+    alaqilType_add_pointer(pname);
     String *symname = Getattr(n, "sym:name");
-    String *rname = add_explicit_scope(SwigType_namestr(name));
-    String *mname = SwigType_manglestr(rname);
-    String *pmname = SwigType_manglestr(pname);
-    String *templ = NewStringf("SwigPyBuiltin_%s", mname);
+    String *rname = add_explicit_scope(alaqilType_namestr(name));
+    String *mname = alaqilType_manglestr(rname);
+    String *pmname = alaqilType_manglestr(pname);
+    String *templ = NewStringf("alaqilPyBuiltin_%s", mname);
     int funpack = fastunpack;
     static String *tp_new = NewString("PyType_GenericNew");
 
-    Printv(f_init, "  SwigPyBuiltin_SetMetaType(builtin_pytype, metatype);\n", NIL);
+    Printv(f_init, "  alaqilPyBuiltin_SetMetaType(builtin_pytype, metatype);\n", NIL);
 
     // We can’t statically initialize a structure member with a function defined in another C module
     // So this is done in the initialization function instead, see https://docs.python.org/2/extending/newtypes.html
@@ -3946,11 +3946,11 @@ public:
 	  continue;
 	base_count++;
 	String *base_name = Copy(bname);
-	SwigType_add_pointer(base_name);
-	String *base_mname = SwigType_manglestr(base_name);
-	Printf(f_init, "  builtin_basetype = SWIG_MangledTypeQuery(\"%s\");\n", base_mname);
-	Printv(f_init, "  if (builtin_basetype && builtin_basetype->clientdata && ((SwigPyClientData *) builtin_basetype->clientdata)->pytype) {\n", NIL);
-	Printv(f_init, "    builtin_bases[builtin_base_count++] = ((SwigPyClientData *) builtin_basetype->clientdata)->pytype;\n", NIL);
+	alaqilType_add_pointer(base_name);
+	String *base_mname = alaqilType_manglestr(base_name);
+	Printf(f_init, "  builtin_basetype = alaqil_MangledTypeQuery(\"%s\");\n", base_mname);
+	Printv(f_init, "  if (builtin_basetype && builtin_basetype->clientdata && ((alaqilPyClientData *) builtin_basetype->clientdata)->pytype) {\n", NIL);
+	Printv(f_init, "    builtin_bases[builtin_base_count++] = ((alaqilPyClientData *) builtin_basetype->clientdata)->pytype;\n", NIL);
 	Printv(f_init, "  } else {\n", NIL);
 	Printf(f_init, "    PyErr_SetString(PyExc_TypeError, \"Could not create type '%s' as base '%s' has not been initialized.\\n\");\n", symname, bname);
 	Printv(f_init, "#if PY_VERSION_HEX >= 0x03000000\n", NIL);
@@ -3966,18 +3966,18 @@ public:
 	max_bases = base_count;
     }
     Printv(f_init, "  builtin_bases[builtin_base_count] = NULL;\n", NIL);
-    Printv(f_init, "  SwigPyBuiltin_InitBases(builtin_pytype, builtin_bases);\n", NIL);
+    Printv(f_init, "  alaqilPyBuiltin_InitBases(builtin_pytype, builtin_bases);\n", NIL);
     builtin_bases_needed = 1;
 
     // Check for non-public destructor, in which case tp_dealloc will issue
     // a warning and allow the memory to leak.  Any class that doesn't explicitly
     // have a private/protected destructor has an implicit public destructor.
-    static String *tp_dealloc_bad = NewString("SwigPyBuiltin_BadDealloc");
+    static String *tp_dealloc_bad = NewString("alaqilPyBuiltin_BadDealloc");
 
     String *getset_name = NewStringf("%s_getset", templ);
     String *methods_name = NewStringf("%s_methods", templ);
     String *getset_def = NewString("");
-    Printf(getset_def, "SWIGINTERN PyGetSetDef %s[] = {\n", getset_name);
+    Printf(getset_def, "alaqilINTERN PyGetSetDef %s[] = {\n", getset_name);
 
     // All objects have 'this' and 'thisown' attributes
     Printv(f_init, "PyDict_SetItemString(d, \"this\", this_descr);\n", NIL);
@@ -3989,17 +3989,17 @@ public:
       Hash *mgetset = member_iter.item;
       String *getter = Getattr(mgetset, "getter");
       String *setter = Getattr(mgetset, "setter");
-      const char *getter_closure = getter ? funpack ? "SwigPyBuiltin_FunpackGetterClosure" : "SwigPyBuiltin_GetterClosure" : "0";
-      const char *setter_closure = setter ? funpack ? "SwigPyBuiltin_FunpackSetterClosure" : "SwigPyBuiltin_SetterClosure" : "0";
+      const char *getter_closure = getter ? funpack ? "alaqilPyBuiltin_FunpackGetterClosure" : "alaqilPyBuiltin_GetterClosure" : "0";
+      const char *setter_closure = setter ? funpack ? "alaqilPyBuiltin_FunpackSetterClosure" : "alaqilPyBuiltin_SetterClosure" : "0";
       String *gspair = NewStringf("%s_%s_getset", symname, memname);
-      Printf(f, "static SwigPyGetSet %s = { %s, %s };\n", gspair, getter ? getter : "0", setter ? setter : "0");
+      Printf(f, "static alaqilPyGetSet %s = { %s, %s };\n", gspair, getter ? getter : "0", setter ? setter : "0");
       String *doc = Getattr(mgetset, "doc");
       if (!doc)
 	doc = NewStringf("%s.%s", name, memname);
       String *entry = NewStringf("{ (char *)\"%s\", %s, %s, (char *)\"%s\", &%s }", memname, getter_closure, setter_closure, doc, gspair);
       if (GetFlag(mgetset, "static")) {
 	Printf(f, "static PyGetSetDef %s_def = %s;\n", gspair, entry);
-	Printf(f_init, "static_getset = SwigPyStaticVar_new_getset(metatype, &%s_def);\n", gspair);
+	Printf(f_init, "static_getset = alaqilPyStaticVar_new_getset(metatype, &%s_def);\n", gspair);
 	Printf(f_init, "PyDict_SetItemString(d, static_getset->d_getset->name, (PyObject *) static_getset);\n", memname);
 	Printf(f_init, "Py_DECREF(static_getset);\n");
       } else {
@@ -4014,7 +4014,7 @@ public:
     Hash *richcompare = Getattr(n, "python:richcompare");
     String *richcompare_func = NewStringf("%s_richcompare", templ);
     assert(richcompare);
-    Printf(f, "SWIGINTERN PyObject *\n");
+    Printf(f, "alaqilINTERN PyObject *\n");
     Printf(f, "%s(PyObject *self, PyObject *other, int op) {\n", richcompare_func);
     Printf(f, "  PyObject *result = NULL;\n");
     if (!funpack) {
@@ -4032,8 +4032,8 @@ public:
       Printf(f, "  }\n");
     }
     Printv(f, "  if (!result) {\n", NIL);
-    Printv(f, "    if (SwigPyObject_Check(self) && SwigPyObject_Check(other)) {\n", NIL);
-    Printv(f, "      result = SwigPyObject_richcompare((SwigPyObject *)self, (SwigPyObject *)other, op);\n", NIL);
+    Printv(f, "    if (alaqilPyObject_Check(self) && alaqilPyObject_Check(other)) {\n", NIL);
+    Printv(f, "      result = alaqilPyObject_richcompare((alaqilPyObject *)self, (alaqilPyObject *)other, op);\n", NIL);
     Printv(f, "    } else {\n", NIL);
     Printv(f, "      result = Py_NotImplemented;\n", NIL);
     Printv(f, "      Py_INCREF(result);\n", NIL);
@@ -4045,13 +4045,13 @@ public:
     Printf(f, "}\n\n");
 
     // Methods
-    Printf(f, "SWIGINTERN PyMethodDef %s_methods[] = {\n", templ);
+    Printf(f, "alaqilINTERN PyMethodDef %s_methods[] = {\n", templ);
     Dump(builtin_methods, f);
     Printf(f, "  { NULL, NULL, 0, NULL } /* Sentinel */\n};\n\n");
 
     // No instance dict for nondynamic objects
     if (GetFlag(n, "feature:python:nondynamic"))
-      Setattr(n, "feature:python:tp_setattro", "SWIG_Python_NonDynamicSetAttr");
+      Setattr(n, "feature:python:tp_setattro", "alaqil_Python_NonDynamicSetAttr");
 
     Node *mod = Getattr(n, "module");
     String *modname = mod ? Getattr(mod, "name") : 0;
@@ -4068,13 +4068,13 @@ public:
 	quoted_symname = NewStringf("\"%s\"", symname);
     }
     String *quoted_tp_doc_str = NewStringf("\"%s\"", getSlot(n, "feature:python:tp_doc"));
-    String *tp_init = NewString(builtin_tp_init ? Char(builtin_tp_init) : Swig_directorclass(n) ? "0" : "SwigPyBuiltin_BadInit");
+    String *tp_init = NewString(builtin_tp_init ? Char(builtin_tp_init) : alaqil_directorclass(n) ? "0" : "alaqilPyBuiltin_BadInit");
     String *tp_flags = NewString("Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_CHECKTYPES");
     String *tp_flags_py3 = NewString("Py_TPFLAGS_DEFAULT|Py_TPFLAGS_BASETYPE");
 
-    static String *tp_basicsize = NewStringf("sizeof(SwigPyObject)");
-    static String *tp_dictoffset_default = NewString("offsetof(SwigPyObject, dict)");
-    static String *tp_hash = NewString("SwigPyObject_hash");
+    static String *tp_basicsize = NewStringf("sizeof(alaqilPyObject)");
+    static String *tp_dictoffset_default = NewString("offsetof(alaqilPyObject, dict)");
+    static String *tp_hash = NewString("alaqilPyObject_hash");
     String *tp_as_number = NewStringf("&%s_type.as_number", templ);
     String *tp_as_sequence = NewStringf("&%s_type.as_sequence", templ);
     String *tp_as_mapping = NewStringf("&%s_type.as_mapping", templ);
@@ -4287,13 +4287,13 @@ public:
 
     String *clientdata = NewString("");
     Printf(clientdata, "&%s_clientdata", templ);
-    SwigType_remember_mangleddata(pmname, clientdata);
+    alaqilType_remember_mangleddata(pmname, clientdata);
 
-    SwigType *smart = Swig_cparse_smartptr(n);
+    alaqilType *smart = alaqil_cparse_smartptr(n);
     if (smart) {
-      SwigType_add_pointer(smart);
-      String *smart_pmname = SwigType_manglestr(smart);
-      SwigType_remember_mangleddata(smart_pmname, clientdata);
+      alaqilType_add_pointer(smart);
+      String *smart_pmname = alaqilType_manglestr(smart);
+      alaqilType_remember_mangleddata(smart_pmname, clientdata);
       Delete(smart_pmname);
     }
 
@@ -4303,7 +4303,7 @@ public:
       Printf(clientdata_klass, "(PyObject *) &%s_type", templ);
     }
 
-    Printf(f, "SWIGINTERN SwigPyClientData %s_clientdata = {%s, 0, 0, 0, 0, 0, (PyTypeObject *)&%s_type};\n\n", templ, clientdata_klass, templ);
+    Printf(f, "alaqilINTERN alaqilPyClientData %s_clientdata = {%s, 0, 0, 0, 0, 0, (PyTypeObject *)&%s_type};\n\n", templ, clientdata_klass, templ);
 
     Printv(f_init, "    if (PyType_Ready(builtin_pytype) < 0) {\n", NIL);
     Printf(f_init, "      PyErr_SetString(PyExc_TypeError, \"Could not create type '%s'.\");\n", symname);
@@ -4315,7 +4315,7 @@ public:
     Printv(f_init, "    }\n", NIL);
     Printv(f_init, "    Py_INCREF(builtin_pytype);\n", NIL);
     Printf(f_init, "    PyModule_AddObject(m, \"%s\", (PyObject *)builtin_pytype);\n", symname);
-    Printf(f_init, "    SwigPyBuiltin_AddPublicSymbol(public_interface, \"%s\");\n", symname);
+    Printf(f_init, "    alaqilPyBuiltin_AddPublicSymbol(public_interface, \"%s\");\n", symname);
     Printv(f_init, "    d = md;\n", NIL);
 
     Delete(clientdata);
@@ -4354,7 +4354,7 @@ public:
       real_classname = Getattr(n, "name");
 
       if (!addSymbol(class_name, n))
-	return SWIG_ERROR;
+	return alaqil_ERROR;
 
       if (builtin) {
 	List *baselist = Getattr(n, "bases");
@@ -4377,9 +4377,9 @@ public:
 	  bool ignore = GetFlag(b.item, "feature:ignore") ? true : false;
 	  if (!bname || ignore) {
 	    if (!bname && !ignore) {
-	      Swig_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(n), Getline(n),
+	      alaqil_warning(WARN_TYPE_UNDEFINED_CLASS, Getfile(n), Getline(n),
 			   "Base class '%s' ignored - unknown module name for base. Either import the appropriate module interface file or specify the name of the module in the %%import directive.\n",
-			   SwigType_namestr(Getattr(b.item, "name")));
+			   alaqilType_namestr(Getattr(b.item, "name")));
 	    }
 	    b = Next(b);
 	    continue;
@@ -4420,14 +4420,14 @@ public:
 	  Delete(ds);
 	} else {
 	  String *name = Getattr(n, "name");
-	  String *rname = add_explicit_scope(SwigType_namestr(name));
+	  String *rname = add_explicit_scope(alaqilType_namestr(name));
 	  Setattr(n, "feature:python:tp_doc", rname);
 	  Delete(rname);
 	}
       } else {
 	if (!py3) {
 	  if (GetFlag(n, "feature:python:nondynamic"))
-	    Printv(f_shadow, "@_swig_add_metaclass(_SwigNonDynamicMeta)\n", NIL);
+	    Printv(f_shadow, "@_alaqil_add_metaclass(_alaqilNonDynamicMeta)\n", NIL);
 	}
 	Printv(f_shadow, "class ", class_name, NIL);
 
@@ -4438,7 +4438,7 @@ public:
 	    Printf(f_shadow, "(Exception)");
 	  } else {
 	    Printf(f_shadow, "(object");
-	    Printf(f_shadow, py3 && GetFlag(n, "feature:python:nondynamic") ? ", metaclass=_SwigNonDynamicMeta" : "", ")");
+	    Printf(f_shadow, py3 && GetFlag(n, "feature:python:nondynamic") ? ", metaclass=_alaqilNonDynamicMeta" : "", ")");
 	    Printf(f_shadow, ")");
 	  }
 	}
@@ -4455,7 +4455,7 @@ public:
 	Printv(f_shadow, tab4, "thisown = property(lambda x: x.this.own(), ", "lambda x, v: x.this.own(v), doc='The membership flag')\n", NIL);
 	/* Add static attribute */
 	if (GetFlag(n, "feature:python:nondynamic")) {
-	  Printv(f_shadow_file, tab4, "__setattr__ = _swig_setattr_nondynamic_instance_variable(object.__setattr__)\n", NIL);
+	  Printv(f_shadow_file, tab4, "__setattr__ = _alaqil_setattr_nondynamic_instance_variable(object.__setattr__)\n", NIL);
 	}
       }
     }
@@ -4471,12 +4471,12 @@ public:
 
     // Set up type check for director class constructor
     Clear(none_comparison);
-    if (builtin && Swig_directorclass(n)) {
+    if (builtin && alaqil_directorclass(n)) {
       String *p_real_classname = Copy(real_classname);
-      SwigType_add_pointer(p_real_classname);
-      String *mangle = SwigType_manglestr(p_real_classname);
-      String *descriptor = NewStringf("SWIGTYPE%s", mangle);
-      Printv(none_comparison, "self->ob_type != ((SwigPyClientData *)(", descriptor, ")->clientdata)->pytype", NIL);
+      alaqilType_add_pointer(p_real_classname);
+      String *mangle = alaqilType_manglestr(p_real_classname);
+      String *descriptor = NewStringf("alaqilTYPE%s", mangle);
+      Printv(none_comparison, "self->ob_type != ((alaqilPyClientData *)(", descriptor, ")->clientdata)->pytype", NIL);
       Delete(descriptor);
       Delete(mangle);
       Delete(p_real_classname);
@@ -4492,25 +4492,25 @@ public:
     if (shadow) {
       /* Generate a class registration function */
       // Replace storing a pointer to underlying class with a smart pointer (intended for use with non-intrusive smart pointers)
-      SwigType *smart = Swig_cparse_smartptr(n);
-      SwigType *ct = Copy(smart ? smart : real_classname);
-      SwigType_add_pointer(ct);
-      SwigType *realct = Copy(real_classname);
-      SwigType_add_pointer(realct);
-      SwigType_remember(realct);
+      alaqilType *smart = alaqil_cparse_smartptr(n);
+      alaqilType *ct = Copy(smart ? smart : real_classname);
+      alaqilType_add_pointer(ct);
+      alaqilType *realct = Copy(real_classname);
+      alaqilType_add_pointer(realct);
+      alaqilType_remember(realct);
       if (builtin) {
 	Printv(f_wrappers, builtin_closures_code, NIL);
 	Delete(builtin_closures_code);
 	builtin_closures_code = NewString("");
 	Clear(builtin_closures);
       } else {
-	Printv(f_wrappers, "SWIGINTERN PyObject *", class_name, "_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {\n", NIL);
+	Printv(f_wrappers, "alaqilINTERN PyObject *", class_name, "_alaqilregister(PyObject *alaqilUNUSEDPARM(self), PyObject *args) {\n", NIL);
 	Printv(f_wrappers, "  PyObject *obj;\n", NIL);
-	Printv(f_wrappers, "  if (!SWIG_Python_UnpackTuple(args, \"swigregister\", 1, 1, &obj)) return NULL;\n", NIL);
+	Printv(f_wrappers, "  if (!alaqil_Python_UnpackTuple(args, \"alaqilregister\", 1, 1, &obj)) return NULL;\n", NIL);
 
 	Printv(f_wrappers,
-	       "  SWIG_TypeNewClientData(SWIGTYPE", SwigType_manglestr(ct), ", SWIG_NewClientData(obj));\n", "  return SWIG_Py_Void();\n", "}\n\n", NIL);
-	String *cname = NewStringf("%s_swigregister", class_name);
+	       "  alaqil_TypeNewClientData(alaqilTYPE", alaqilType_manglestr(ct), ", alaqil_NewClientData(obj));\n", "  return alaqil_Py_Void();\n", "}\n\n", NIL);
+	String *cname = NewStringf("%s_alaqilregister", class_name);
 	add_method(cname, cname, 0, 0, 1, 1, 1);
 	Delete(cname);
       }
@@ -4523,16 +4523,16 @@ public:
 		 (Getattr(n, "abstracts") ? " - class is abstract" : ""), "\")\n", NIL);
       } else if (!builtin) {
 
-	Printv(f_wrappers, "SWIGINTERN PyObject *", class_name, "_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {\n", NIL);
-	Printv(f_wrappers, "  return SWIG_Python_InitShadowInstance(args);\n", "}\n\n", NIL);
-	String *cname = NewStringf("%s_swiginit", class_name);
+	Printv(f_wrappers, "alaqilINTERN PyObject *", class_name, "_alaqilinit(PyObject *alaqilUNUSEDPARM(self), PyObject *args) {\n", NIL);
+	Printv(f_wrappers, "  return alaqil_Python_InitShadowInstance(args);\n", "}\n\n", NIL);
+	String *cname = NewStringf("%s_alaqilinit", class_name);
 	add_method(cname, cname, 0);
 	Delete(cname);
       }
       if (!have_repr && !builtin) {
 	/* Supply a repr method for this class  */
-	String *rname = SwigType_namestr(real_classname);
-	Printv(f_shadow_file, tab4, "__repr__ = _swig_repr\n", NIL);
+	String *rname = alaqilType_namestr(real_classname);
+	Printv(f_shadow_file, tab4, "__repr__ = _alaqil_repr\n", NIL);
 	Delete(rname);
       }
 
@@ -4549,7 +4549,7 @@ public:
 	Printv(f_shadow_file, f_shadow, NIL);
 	Printf(f_shadow_file, "\n");
 	Printf(f_shadow_file, "# Register %s in %s:\n", class_name, module);
-	Printf(f_shadow_file, "%s.%s_swigregister(%s)\n", module, class_name, class_name);
+	Printf(f_shadow_file, "%s.%s_alaqilregister(%s)\n", module, class_name, class_name);
       }
 
       shadow_indent = 0;
@@ -4567,7 +4567,7 @@ public:
     Delete(f_shadow);
     f_shadow = f_shadow_file;
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -4599,7 +4599,7 @@ public:
     int oldshadow;
 
     if (builtin)
-      Swig_save("builtin_memberfunc", n, "python:argcount", NIL);
+      alaqil_save("builtin_memberfunc", n, "python:argcount", NIL);
 
     /* Create the default member function */
     oldshadow = shadow;		/* Disable shadowing when wrapping member functions */
@@ -4612,8 +4612,8 @@ public:
       // Can't use checkAttribute(n, "access", "public") because
       // "access" attr isn't set on %extend methods
       if (!checkAttribute(n, "access", "private") && strncmp(Char(symname), "operator ", 9) && !Getattr(class_members, symname)) {
-	String *fullname = Swig_name_member(NSPACE_TODO, class_name, symname);
-	String *wname = Swig_name_wrapper(fullname);
+	String *fullname = alaqil_name_member(NSPACE_TODO, class_name, symname);
+	String *wname = alaqil_name_wrapper(fullname);
 	Setattr(class_members, symname, n);
 	int argcount = Getattr(n, "python:argcount") ? atoi(Char(Getattr(n, "python:argcount"))) : 2;
 	String *ds = have_docstring(n) ? cdocstring(n, AUTODOC_METHOD) : NewString("");
@@ -4637,12 +4637,12 @@ public:
     }
 
     if (builtin)
-      Swig_restore(n);
+      alaqil_restore(n);
 
     if (!Getattr(n, "sym:nextSibling")) {
       if (shadow && !builtin) {
 	int fproxy = fastproxy;
-	String *fullname = Swig_name_member(NSPACE_TODO, class_name, symname);
+	String *fullname = alaqil_name_member(NSPACE_TODO, class_name, symname);
 	if (Strcmp(symname, "__repr__") == 0) {
 	  have_repr = 1;
 	}
@@ -4685,12 +4685,12 @@ public:
 	}
 	if (fproxy) {
 	  Printf(f_shadow, tab4);
-	  Printf(f_shadow, "%s = _swig_new_instance_method(%s.%s)\n", symname, module, Swig_name_member(NSPACE_TODO, class_name, symname));
+	  Printf(f_shadow, "%s = _alaqil_new_instance_method(%s.%s)\n", symname, module, alaqil_name_member(NSPACE_TODO, class_name, symname));
 	}
 	Delete(fullname);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -4701,19 +4701,19 @@ public:
   virtual int staticmemberfunctionHandler(Node *n) {
     String *symname = Getattr(n, "sym:name");
     if (builtin && in_class) {
-      Swig_save("builtin_memberconstantHandler", n, "pybuiltin:symname", NIL);
+      alaqil_save("builtin_memberconstantHandler", n, "pybuiltin:symname", NIL);
       Setattr(n, "pybuiltin:symname", symname);
     }
     Language::staticmemberfunctionHandler(n);
     if (builtin && in_class) {
-      Swig_restore(n);
+      alaqil_restore(n);
     }
 
     if (builtin && in_class) {
       if ((GetFlagAttr(n, "feature:extend") || checkAttribute(n, "access", "public"))
 	  && !Getattr(class_members, symname)) {
-	String *fullname = Swig_name_member(NSPACE_TODO, class_name, symname);
-	String *wname = Swig_name_wrapper(fullname);
+	String *fullname = alaqil_name_member(NSPACE_TODO, class_name, symname);
+	String *wname = alaqil_name_wrapper(fullname);
 	Setattr(class_members, symname, n);
 	int funpack = fastunpack && !Getattr(n, "sym:overloaded");
 	String *pyflags = NewString("METH_STATIC|");
@@ -4738,15 +4738,15 @@ public:
 	Delete(wname);
 	Delete(pyflags);
       }
-      return SWIG_OK;
+      return alaqil_OK;
     }
 
     if (Getattr(n, "sym:nextSibling")) {
-      return SWIG_OK;
+      return alaqil_OK;
     }
 
     if (shadow) {
-      String *staticfunc_name = NewString(fastproxy ? "_swig_new_static_method" : "staticmethod");
+      String *staticfunc_name = NewString(fastproxy ? "_alaqil_new_static_method" : "staticmethod");
       bool fast = (fastproxy && !have_addtofunc(n)) || Getattr(n, "feature:callback");
       if (!fast || olddefs) {
 	int kw = (check_kwargs(n) && !Getattr(n, "sym:overloaded")) ? 1 : 0;
@@ -4759,22 +4759,22 @@ public:
 	if (have_pythonprepend(n))
 	  Printv(f_shadow, indent_pythoncode(pythonprepend(n), tab8, Getfile(n), Getline(n), "%pythonprepend or %feature(\"pythonprepend\")"), "\n", NIL);
 	if (have_pythonappend(n)) {
-	  Printv(f_shadow, tab8, "val = ", funcCall(Swig_name_member(NSPACE_TODO, class_name, symname), callParms), "\n", NIL);
+	  Printv(f_shadow, tab8, "val = ", funcCall(alaqil_name_member(NSPACE_TODO, class_name, symname), callParms), "\n", NIL);
 	  Printv(f_shadow, indent_pythoncode(pythonappend(n), tab8, Getfile(n), Getline(n), "%pythonappend or %feature(\"pythonappend\")"), "\n", NIL);
 	  Printv(f_shadow, tab8, "return val\n", NIL);
 	} else {
-	  Printv(f_shadow, tab8, "return ", funcCall(Swig_name_member(NSPACE_TODO, class_name, symname), callParms), "\n", NIL);
+	  Printv(f_shadow, tab8, "return ", funcCall(alaqil_name_member(NSPACE_TODO, class_name, symname), callParms), "\n", NIL);
 	}
       }
 
       // Below may result in a 2nd definition of the method when -olddefs is used. The Python interpreter will use the second definition as it overwrites the first.
       if (fast) {
-	Printv(f_shadow, tab4, symname, " = ", staticfunc_name, "(", module, ".", Swig_name_member(NSPACE_TODO, class_name, symname),
+	Printv(f_shadow, tab4, symname, " = ", staticfunc_name, "(", module, ".", alaqil_name_member(NSPACE_TODO, class_name, symname),
 	       ")\n", NIL);
       }
       Delete(staticfunc_name);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -4784,20 +4784,20 @@ public:
   virtual int constructorHandler(Node *n) {
     String *symname = Getattr(n, "sym:name");
     int oldshadow = shadow;
-    int use_director = Swig_directorclass(n);
+    int use_director = alaqil_directorclass(n);
 
     /* 
      * If we're wrapping the constructor of a C++ director class, prepend a new parameter
      * to receive the scripting language object (e.g. 'self')
      *
      */
-    Swig_save("python:constructorHandler", n, "parms", NIL);
+    alaqil_save("python:constructorHandler", n, "parms", NIL);
     if (use_director) {
       Parm *parms = Getattr(n, "parms");
       Parm *self;
       String *name = NewString("self");
       String *type = NewString("PyObject");
-      SwigType_add_pointer(type);
+      alaqilType_add_pointer(type);
       self = NewParm(type, name, n);
       Delete(type);
       Delete(name);
@@ -4816,7 +4816,7 @@ public:
     shadow = oldshadow;
 
     Delattr(n, "wrap:self");
-    Swig_restore(n);
+    alaqil_restore(n);
 
     if (!Getattr(n, "sym:nextSibling")) {
       if (shadow) {
@@ -4825,12 +4825,12 @@ public:
 	if (!have_constructor) {
 	  String *nname = Getattr(n, "sym:name");
 	  String *sname = Getattr(getCurrentClass(), "sym:name");
-	  String *cname = Swig_name_construct(NSPACE_TODO, sname);
+	  String *cname = alaqil_name_construct(NSPACE_TODO, sname);
 	  handled_as_init = (Strcmp(nname, sname) == 0) || (Strcmp(nname, cname) == 0);
 	  Delete(cname);
 	}
 
-	String *subfunc = Swig_name_construct(NSPACE_TODO, symname);
+	String *subfunc = alaqil_name_construct(NSPACE_TODO, symname);
 	if (!have_constructor && handled_as_init) {
 	  if (!builtin) {
 	    if (Getattr(n, "feature:shadow")) {
@@ -4842,9 +4842,9 @@ public:
 	      Delete(pycode);
 	    } else {
 	      String *pass_self = NewString("");
-	      Node *parent = Swig_methodclass(n);
-	      String *classname = Swig_class_name(parent);
-	      String *rclassname = Swig_class_name(getCurrentClass());
+	      Node *parent = alaqil_methodclass(n);
+	      String *classname = alaqil_class_name(parent);
+	      String *rclassname = alaqil_class_name(getCurrentClass());
 	      assert(rclassname);
 
 	      String *parms = make_pyParmList(n, true, false, allow_kwargs);
@@ -4865,7 +4865,7 @@ public:
 	      if (have_pythonprepend(n))
 		Printv(f_shadow, indent_pythoncode(pythonprepend(n), tab8, Getfile(n), Getline(n), "%pythonprepend or %feature(\"pythonprepend\")"), "\n", NIL);
 	      Printv(f_shadow, pass_self, NIL);
-	      Printv(f_shadow, tab8, module, ".", class_name, "_swiginit(self, ", funcCall(subfunc, callParms), ")\n", NIL);
+	      Printv(f_shadow, tab8, module, ".", class_name, "_alaqilinit(self, ", funcCall(subfunc, callParms), ")\n", NIL);
 	      if (have_pythonappend(n))
 		Printv(f_shadow, indent_pythoncode(pythonappend(n), tab8, Getfile(n), Getline(n), "%pythonappend or %feature(\"pythonappend\")"), "\n\n", NIL);
 	      Delete(pass_self);
@@ -4907,7 +4907,7 @@ public:
 	Delete(subfunc);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -4919,7 +4919,7 @@ public:
     int oldshadow = shadow;
 
     if (builtin && in_class) {
-      Node *cls = Swig_methodclass(n);
+      Node *cls = alaqil_methodclass(n);
       // Use the destructor for the tp_dealloc slot unless a user overrides it with another method
       if (!Getattr(cls, "feature:python:tp_dealloc")) {
 	Setattr(n, "feature:python:slot", "tp_dealloc");
@@ -4936,15 +4936,15 @@ public:
     if (shadow) {
       if (Getattr(n, "feature:shadow")) {
 	String *pycode = indent_pythoncode(Getattr(n, "feature:shadow"), tab4, Getfile(n), Getline(n), "%feature(\"shadow\")");
-	String *pyaction = NewStringf("%s.%s", module, Swig_name_destroy(NSPACE_TODO, symname));
+	String *pyaction = NewStringf("%s.%s", module, alaqil_name_destroy(NSPACE_TODO, symname));
 	Replaceall(pycode, "$action", pyaction);
 	Delete(pyaction);
 	Printv(f_shadow, pycode, "\n", NIL);
 	Delete(pycode);
       } else {
-	Printv(f_shadow, tab4, "__swig_destroy__ = ", module, ".", Swig_name_destroy(NSPACE_TODO, symname), "\n", NIL);
+	Printv(f_shadow, tab4, "__alaqil_destroy__ = ", module, ".", alaqil_name_destroy(NSPACE_TODO, symname), "\n", NIL);
 	if (!have_pythonprepend(n) && !have_pythonappend(n)) {
-	  return SWIG_OK;
+	  return alaqil_OK;
 	}
 	Printv(f_shadow, tab4, "def __del__(self):\n", NIL);
 	if (have_docstring(n))
@@ -4953,7 +4953,7 @@ public:
 	  Printv(f_shadow, indent_pythoncode(pythonprepend(n), tab8, Getfile(n), Getline(n), "%pythonprepend or %feature(\"pythonprepend\")"), "\n", NIL);
 #ifdef USE_THISOWN
 	Printv(f_shadow, tab8, "try:\n", NIL);
-	Printv(f_shadow, tab8, tab4, "if self.thisown:", module, ".", Swig_name_destroy(NSPACE_TODO, symname), "(self)\n", NIL);
+	Printv(f_shadow, tab8, tab4, "if self.thisown:", module, ".", alaqil_name_destroy(NSPACE_TODO, symname), "(self)\n", NIL);
 	Printv(f_shadow, tab8, "except __builtin__.Exception: pass\n", NIL);
 #else
 #endif
@@ -4963,7 +4963,7 @@ public:
 	Printv(f_shadow, "\n", NIL);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -4980,9 +4980,9 @@ public:
     shadow = oldshadow;
 
     if (shadow && !builtin) {
-      String *mname = Swig_name_member(NSPACE_TODO, class_name, symname);
-      String *setname = Swig_name_set(NSPACE_TODO, mname);
-      String *getname = Swig_name_get(NSPACE_TODO, mname);
+      String *mname = alaqil_name_member(NSPACE_TODO, class_name, symname);
+      String *setname = alaqil_name_set(NSPACE_TODO, mname);
+      String *getname = alaqil_name_get(NSPACE_TODO, mname);
       int assignable = is_assignable(n);
       Printv(f_shadow, tab4, symname, " = property(", module, ".", getname, NIL);
       if (assignable)
@@ -4995,7 +4995,7 @@ public:
       Delete(getname);
     }
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -5003,31 +5003,31 @@ public:
    * ------------------------------------------------------------ */
 
   virtual int staticmembervariableHandler(Node *n) {
-    Swig_save("builtin_staticmembervariableHandler", n, "builtin_symname", NIL);
+    alaqil_save("builtin_staticmembervariableHandler", n, "builtin_symname", NIL);
     Language::staticmembervariableHandler(n);
-    Swig_restore(n);
+    alaqil_restore(n);
 
     if (GetFlag(n, "wrappedasconstant"))
-      return SWIG_OK;
+      return alaqil_OK;
 
     String *symname = Getattr(n, "sym:name");
 
     if (shadow) {
       if (!builtin && GetFlag(n, "hasconsttype")) {
-	String *mname = Swig_name_member(NSPACE_TODO, class_name, symname);
+	String *mname = alaqil_name_member(NSPACE_TODO, class_name, symname);
 	Printf(f_shadow_stubs, "%s.%s = %s.%s.%s\n", class_name, symname, module, global_name, mname);
 	Delete(mname);
       } else {
-	String *mname = Swig_name_member(NSPACE_TODO, class_name, symname);
-	String *getname = Swig_name_get(NSPACE_TODO, mname);
-	String *wrapgetname = Swig_name_wrapper(getname);
-	String *vargetname = NewStringf("Swig_var_%s", getname);
-	String *setname = Swig_name_set(NSPACE_TODO, mname);
-	String *wrapsetname = Swig_name_wrapper(setname);
-	String *varsetname = NewStringf("Swig_var_%s", setname);
+	String *mname = alaqil_name_member(NSPACE_TODO, class_name, symname);
+	String *getname = alaqil_name_get(NSPACE_TODO, mname);
+	String *wrapgetname = alaqil_name_wrapper(getname);
+	String *vargetname = NewStringf("alaqil_var_%s", getname);
+	String *setname = alaqil_name_set(NSPACE_TODO, mname);
+	String *wrapsetname = alaqil_name_wrapper(setname);
+	String *varsetname = NewStringf("alaqil_var_%s", setname);
 
 	Wrapper *f = NewWrapper();
-	Printv(f->def, "SWIGINTERN PyObject *", wrapgetname, "(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {", NIL);
+	Printv(f->def, "alaqilINTERN PyObject *", wrapgetname, "(PyObject *alaqilUNUSEDPARM(self), PyObject *alaqilUNUSEDPARM(args)) {", NIL);
 	Printv(f->code, "  return ", vargetname, "();\n", NIL);
 	Append(f->code, "}\n");
 	add_method(getname, wrapgetname, 0);
@@ -5037,14 +5037,14 @@ public:
 	if (assignable) {
 	  int funpack = fastunpack;
 	  Wrapper *f = NewWrapper();
-	  Printv(f->def, "SWIGINTERN PyObject *", wrapsetname, "(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {", NIL);
+	  Printv(f->def, "alaqilINTERN PyObject *", wrapsetname, "(PyObject *alaqilUNUSEDPARM(self), PyObject *args) {", NIL);
 	  Wrapper_add_local(f, "res", "int res");
 	  if (!funpack) {
 	    Wrapper_add_local(f, "value", "PyObject *value");
 	    Append(f->code, "if (!PyArg_ParseTuple(args, \"O:set\", &value)) return NULL;\n");
 	  }
 	  Printf(f->code, "res = %s(%s);\n", varsetname, funpack ? "args" : "value");
-	  Append(f->code, "return !res ? SWIG_Py_Void() : NULL;\n");
+	  Append(f->code, "return !res ? alaqil_Py_Void() : NULL;\n");
 	  Append(f->code, "}\n");
 	  Wrapper_print(f, f_wrappers);
 	  add_method(setname, wrapsetname, 0, 0, funpack, 1, 1);
@@ -5084,7 +5084,7 @@ public:
 	Delete(varsetname);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -5094,7 +5094,7 @@ public:
   virtual int memberconstantHandler(Node *n) {
     String *symname = Getattr(n, "sym:name");
     if (builtin && in_class) {
-      Swig_save("builtin_memberconstantHandler", n, "pybuiltin:symname", NIL);
+      alaqil_save("builtin_memberconstantHandler", n, "pybuiltin:symname", NIL);
       Setattr(n, "pybuiltin:symname", symname);
     }
     int oldshadow = shadow;
@@ -5104,13 +5104,13 @@ public:
     shadow = oldshadow;
 
     if (builtin && in_class) {
-      Swig_restore(n);
+      alaqil_restore(n);
     } else if (shadow) {
-      Printv(f_shadow, tab4, symname, " = ", module, ".", Swig_name_member(NSPACE_TODO, class_name, symname), "\n", NIL);
+      Printv(f_shadow, tab4, symname, " = ", module, ".", alaqil_name_member(NSPACE_TODO, class_name, symname), "\n", NIL);
       if (have_docstring(n))
 	Printv(f_shadow, tab4, docstring(n, AUTODOC_CONST, tab4), "\n", NIL);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -5139,40 +5139,40 @@ public:
     } else {
       Language::insertDirective(n);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   virtual String *runtimeCode() {
     String *s = NewString("");
-    String *shead = Swig_include_sys("pyhead.swg");
+    String *shead = alaqil_include_sys("pyhead.swg");
     if (!shead) {
       Printf(stderr, "*** Unable to open 'pyhead.swg'\n");
     } else {
       Append(s, shead);
       Delete(shead);
     }
-    String *serrors = Swig_include_sys("pyerrors.swg");
+    String *serrors = alaqil_include_sys("pyerrors.swg");
     if (!serrors) {
       Printf(stderr, "*** Unable to open 'pyerrors.swg'\n");
     } else {
       Append(s, serrors);
       Delete(serrors);
     }
-    String *sthread = Swig_include_sys("pythreads.swg");
+    String *sthread = alaqil_include_sys("pythreads.swg");
     if (!sthread) {
       Printf(stderr, "*** Unable to open 'pythreads.swg'\n");
     } else {
       Append(s, sthread);
       Delete(sthread);
     }
-    String *sapi = Swig_include_sys("pyapi.swg");
+    String *sapi = alaqil_include_sys("pyapi.swg");
     if (!sapi) {
       Printf(stderr, "*** Unable to open 'pyapi.swg'\n");
     } else {
       Append(s, sapi);
       Delete(sapi);
     }
-    String *srun = Swig_include_sys("pyrun.swg");
+    String *srun = alaqil_include_sys("pyrun.swg");
     if (!srun) {
       Printf(stderr, "*** Unable to open 'pyrun.swg'\n");
     } else {
@@ -5183,7 +5183,7 @@ public:
   }
 
   virtual String *defaultExternalRuntimeFilename() {
-    return NewString("swigpyrun.h");
+    return NewString("alaqilpyrun.h");
   }
 
   /*----------------------------------------------------------------------
@@ -5226,7 +5226,7 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
   String *value = Getattr(n, "value");
   String *storage = Getattr(n, "storage");
   bool pure_virtual = false;
-  int status = SWIG_OK;
+  int status = alaqil_OK;
   int idx;
   bool ignored_method = GetFlag(n, "feature:ignore") ? true : false;
 
@@ -5247,20 +5247,20 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
   }
 
   /* determine if the method returns a pointer */
-  is_pointer = SwigType_ispointer_return(decl);
+  is_pointer = alaqilType_ispointer_return(decl);
   is_void = (!Cmp(returntype, "void") && !is_pointer);
 
   /* virtual method definition */
   String *target;
-  String *pclassname = NewStringf("SwigDirector_%s", classname);
+  String *pclassname = NewStringf("alaqilDirector_%s", classname);
   String *qualified_name = NewStringf("%s::%s", pclassname, name);
-  SwigType *rtype = Getattr(n, "conversion_operator") ? 0 : Getattr(n, "classDirectorMethods:type");
-  target = Swig_method_decl(rtype, decl, qualified_name, l, 0);
+  alaqilType *rtype = Getattr(n, "conversion_operator") ? 0 : Getattr(n, "classDirectorMethods:type");
+  target = alaqil_method_decl(rtype, decl, qualified_name, l, 0);
   Printf(w->def, "%s", target);
   Delete(qualified_name);
   Delete(target);
   /* header declaration */
-  target = Swig_method_decl(rtype, decl, name, l, 1);
+  target = alaqil_method_decl(rtype, decl, name, l, 1);
   Printf(declaration, "    virtual %s", target);
   Delete(target);
 
@@ -5278,14 +5278,14 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
     Append(declaration, " throw(");
 
     if (throw_parm_list)
-      Swig_typemap_attach_parms("throws", throw_parm_list, 0);
+      alaqil_typemap_attach_parms("throws", throw_parm_list, 0);
     for (p = throw_parm_list; p; p = nextSibling(p)) {
       if (Getattr(p, "tmap:throws")) {
 	if (gencomma++) {
 	  Append(w->def, ", ");
 	  Append(declaration, ", ");
 	}
-	String *str = SwigType_str(Getattr(p, "type"), 0);
+	String *str = alaqilType_str(Getattr(p, "type"), 0);
 	Append(w->def, str);
 	Append(declaration, str);
 	Delete(str);
@@ -5304,16 +5304,16 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
    * handle it, including declaration of c_result ($result).
    */
   if (!is_void && (!ignored_method || pure_virtual)) {
-    if (!SwigType_isclass(returntype)) {
-      if (!(SwigType_ispointer(returntype) || SwigType_isreference(returntype))) {
-	String *construct_result = NewStringf("= SwigValueInit< %s >()", SwigType_lstr(returntype, 0));
-	Wrapper_add_localv(w, "c_result", SwigType_lstr(returntype, "c_result"), construct_result, NIL);
+    if (!alaqilType_isclass(returntype)) {
+      if (!(alaqilType_ispointer(returntype) || alaqilType_isreference(returntype))) {
+	String *construct_result = NewStringf("= alaqilValueInit< %s >()", alaqilType_lstr(returntype, 0));
+	Wrapper_add_localv(w, "c_result", alaqilType_lstr(returntype, "c_result"), construct_result, NIL);
 	Delete(construct_result);
       } else {
-	Wrapper_add_localv(w, "c_result", SwigType_lstr(returntype, "c_result"), "= 0", NIL);
+	Wrapper_add_localv(w, "c_result", alaqilType_lstr(returntype, "c_result"), "= 0", NIL);
       }
     } else {
-      String *cres = SwigType_lstr(returntype, "c_result");
+      String *cres = alaqilType_lstr(returntype, "c_result");
       Printf(w->code, "%s;\n", cres);
       Delete(cres);
     }
@@ -5328,24 +5328,24 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
     if (!pure_virtual) {
       if (!is_void)
 	Printf(w->code, "return ");
-      String *super_call = Swig_method_call(super, l);
+      String *super_call = alaqil_method_call(super, l);
       Printf(w->code, "%s;\n", super_call);
       Delete(super_call);
     } else {
-      Printf(w->code, "Swig::DirectorPureVirtualException::raise(\"Attempted to invoke pure virtual method %s::%s\");\n", SwigType_namestr(c_classname),
-	     SwigType_namestr(name));
+      Printf(w->code, "alaqil::DirectorPureVirtualException::raise(\"Attempted to invoke pure virtual method %s::%s\");\n", alaqilType_namestr(c_classname),
+	     alaqilType_namestr(name));
     }
   } else {
     /* attach typemaps to arguments (C/C++ -> Python) */
     String *arglist = NewString("");
     String *parse_args = NewString("");
 
-    Swig_director_parms_fixup(l);
+    alaqil_director_parms_fixup(l);
 
     /* remove the wrapper 'w' since it was producing spurious temps */
-    Swig_typemap_attach_parms("in", l, 0);
-    Swig_typemap_attach_parms("directorin", l, w);
-    Swig_typemap_attach_parms("directorargout", l, w);
+    alaqil_typemap_attach_parms("in", l, 0);
+    alaqil_typemap_attach_parms("directorin", l, w);
+    alaqil_typemap_attach_parms("directorargout", l, w);
 
     Parm *p;
     char source[256];
@@ -5388,8 +5388,8 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 	  Replaceall(tm, "$input", input);
 	  Delete(input);
 	  Replaceall(tm, "$owner", "0");
-	  /* Wrapper_add_localv(w, source, "swig::SwigVar_PyObject", source, "= 0", NIL); */
-	  Printv(wrap_args, "swig::SwigVar_PyObject ", source, ";\n", NIL);
+	  /* Wrapper_add_localv(w, source, "alaqil::alaqilVar_PyObject", source, "= 0", NIL); */
+	  Printv(wrap_args, "alaqil::alaqilVar_PyObject ", source, ";\n", NIL);
 
 	  Printv(wrap_args, tm, "\n", NIL);
 	  Printv(arglist, "(PyObject *)", source, NIL);
@@ -5410,56 +5410,56 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 	/* special handling for pointers to other C++ director classes.
 	 * ideally this would be left to a typemap, but there is currently no
 	 * way to selectively apply the dynamic_cast<> to classes that have
-	 * directors.  in other words, the type "SwigDirector_$1_lname" only exists
+	 * directors.  in other words, the type "alaqilDirector_$1_lname" only exists
 	 * for classes with directors.  we avoid the problem here by checking
 	 * module.wrap::directormap, but it's not clear how to get a typemap to
 	 * do something similar.  perhaps a new default typemap (in addition
-	 * to SWIGTYPE) called DIRECTORTYPE?
+	 * to alaqilTYPE) called DIRECTORTYPE?
 	 */
-	if (SwigType_ispointer(ptype) || SwigType_isreference(ptype)) {
+	if (alaqilType_ispointer(ptype) || alaqilType_isreference(ptype)) {
 	  Node *module = Getattr(parent, "module");
-	  Node *target = Swig_directormap(module, ptype);
+	  Node *target = alaqil_directormap(module, ptype);
 	  sprintf(source, "obj%d", idx++);
 	  String *nonconst = 0;
-	  /* strip pointer/reference --- should move to Swig/stype.c */
+	  /* strip pointer/reference --- should move to alaqil/stype.c */
 	  String *nptype = NewString(Char(ptype) + 2);
 	  /* name as pointer */
 	  String *ppname = Copy(pname);
-	  if (SwigType_isreference(ptype)) {
+	  if (alaqilType_isreference(ptype)) {
 	    Insert(ppname, 0, "&");
 	  }
 	  /* if necessary, cast away const since Python doesn't support it! */
-	  if (SwigType_isconst(nptype)) {
+	  if (alaqilType_isconst(nptype)) {
 	    nonconst = NewStringf("nc_tmp_%s", pname);
-	    String *nonconst_i = NewStringf("= const_cast< %s >(%s)", SwigType_lstr(ptype, 0), ppname);
-	    Wrapper_add_localv(w, nonconst, SwigType_lstr(ptype, 0), nonconst, nonconst_i, NIL);
+	    String *nonconst_i = NewStringf("= const_cast< %s >(%s)", alaqilType_lstr(ptype, 0), ppname);
+	    Wrapper_add_localv(w, nonconst, alaqilType_lstr(ptype, 0), nonconst, nonconst_i, NIL);
 	    Delete(nonconst_i);
-	    Swig_warning(WARN_LANG_DISCARD_CONST, input_file, line_number,
+	    alaqil_warning(WARN_LANG_DISCARD_CONST, input_file, line_number,
 			 "Target language argument '%s' discards const in director method %s::%s.\n",
-			 SwigType_str(ptype, pname), SwigType_namestr(c_classname), SwigType_namestr(name));
+			 alaqilType_str(ptype, pname), alaqilType_namestr(c_classname), alaqilType_namestr(name));
 	  } else {
 	    nonconst = Copy(ppname);
 	  }
 	  Delete(nptype);
 	  Delete(ppname);
-	  String *mangle = SwigType_manglestr(ptype);
+	  String *mangle = alaqilType_manglestr(ptype);
 	  if (target) {
 	    String *director = NewStringf("director_%s", mangle);
-	    Wrapper_add_localv(w, director, "Swig::Director *", director, "= 0", NIL);
-	    Wrapper_add_localv(w, source, "swig::SwigVar_PyObject", source, "= 0", NIL);
-	    Printf(wrap_args, "%s = SWIG_DIRECTOR_CAST(%s);\n", director, nonconst);
+	    Wrapper_add_localv(w, director, "alaqil::Director *", director, "= 0", NIL);
+	    Wrapper_add_localv(w, source, "alaqil::alaqilVar_PyObject", source, "= 0", NIL);
+	    Printf(wrap_args, "%s = alaqil_DIRECTOR_CAST(%s);\n", director, nonconst);
 	    Printf(wrap_args, "if (!%s) {\n", director);
-	    Printf(wrap_args, "%s = SWIG_InternalNewPointerObj(%s, SWIGTYPE%s, 0);\n", source, nonconst, mangle);
+	    Printf(wrap_args, "%s = alaqil_InternalNewPointerObj(%s, alaqilTYPE%s, 0);\n", source, nonconst, mangle);
 	    Append(wrap_args, "} else {\n");
-	    Printf(wrap_args, "%s = %s->swig_get_self();\n", source, director);
+	    Printf(wrap_args, "%s = %s->alaqil_get_self();\n", source, director);
 	    Printf(wrap_args, "Py_INCREF((PyObject *)%s);\n", source);
 	    Append(wrap_args, "}\n");
 	    Delete(director);
 	    Printv(arglist, source, NIL);
 	  } else {
-	    Wrapper_add_localv(w, source, "swig::SwigVar_PyObject", source, "= 0", NIL);
-	    Printf(wrap_args, "%s = SWIG_InternalNewPointerObj(%s, SWIGTYPE%s, 0);\n", source, nonconst, mangle);
-	    //Printf(wrap_args, "%s = SWIG_NewPointerObj(%s, SWIGTYPE_p_%s, 0);\n", 
+	    Wrapper_add_localv(w, source, "alaqil::alaqilVar_PyObject", source, "= 0", NIL);
+	    Printf(wrap_args, "%s = alaqil_InternalNewPointerObj(%s, alaqilTYPE%s, 0);\n", source, nonconst, mangle);
+	    //Printf(wrap_args, "%s = alaqil_NewPointerObj(%s, alaqilTYPE_p_%s, 0);\n", 
 	    //       source, nonconst, base);
 	    Printv(arglist, source, NIL);
 	  }
@@ -5467,10 +5467,10 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 	  Delete(mangle);
 	  Delete(nonconst);
 	} else {
-	  Swig_warning(WARN_TYPEMAP_DIRECTORIN_UNDEF, input_file, line_number,
-		       "Unable to use type %s as a function argument in director method %s::%s (skipping method).\n", SwigType_str(ptype, 0),
-		       SwigType_namestr(c_classname), SwigType_namestr(name));
-	  status = SWIG_NOWRAP;
+	  alaqil_warning(WARN_TYPEMAP_DIRECTORIN_UNDEF, input_file, line_number,
+		       "Unable to use type %s as a function argument in director method %s::%s (skipping method).\n", alaqilType_str(ptype, 0),
+		       alaqilType_namestr(c_classname), alaqilType_namestr(name));
+	  status = alaqil_NOWRAP;
 	  break;
 	}
       }
@@ -5492,60 +5492,60 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 
     /* pass the method call on to the Python object */
     if (dirprot_mode() && !is_public(n)) {
-      Printf(w->code, "swig_set_inner(\"%s\", true);\n", name);
+      Printf(w->code, "alaqil_set_inner(\"%s\", true);\n", name);
     }
 
 
-    Append(w->code, "if (!swig_get_self()) {\n");
-    Printf(w->code, "  Swig::DirectorException::raise(\"'self' uninitialized, maybe you forgot to call %s.__init__.\");\n", classname);
+    Append(w->code, "if (!alaqil_get_self()) {\n");
+    Printf(w->code, "  alaqil::DirectorException::raise(\"'self' uninitialized, maybe you forgot to call %s.__init__.\");\n", classname);
     Append(w->code, "}\n");
-    Append(w->code, "#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)\n");
-    Printf(w->code, "const size_t swig_method_index = %d;\n", director_method_index++);
-    Printf(w->code, "const char *const swig_method_name = \"%s\";\n", pyname);
+    Append(w->code, "#if defined(alaqil_PYTHON_DIRECTOR_VTABLE)\n");
+    Printf(w->code, "const size_t alaqil_method_index = %d;\n", director_method_index++);
+    Printf(w->code, "const char *const alaqil_method_name = \"%s\";\n", pyname);
 
-    Append(w->code, "PyObject *method = swig_get_method(swig_method_index, swig_method_name);\n");
+    Append(w->code, "PyObject *method = alaqil_get_method(alaqil_method_index, alaqil_method_name);\n");
     if (Len(parse_args) > 0) {
       if (use_parse) {
-	Printf(w->code, "swig::SwigVar_PyObject %s = PyObject_CallFunction(method, (char *)\"(%s)\" %s);\n", Swig_cresult_name(), parse_args, arglist);
+	Printf(w->code, "alaqil::alaqilVar_PyObject %s = PyObject_CallFunction(method, (char *)\"(%s)\" %s);\n", alaqil_cresult_name(), parse_args, arglist);
       } else {
-	Printf(w->code, "swig::SwigVar_PyObject %s = PyObject_CallFunctionObjArgs(method %s, NULL);\n", Swig_cresult_name(), arglist);
+	Printf(w->code, "alaqil::alaqilVar_PyObject %s = PyObject_CallFunctionObjArgs(method %s, NULL);\n", alaqil_cresult_name(), arglist);
       }
     } else {
-      Append(w->code, "swig::SwigVar_PyObject args = PyTuple_New(0);\n");
-      Printf(w->code, "swig::SwigVar_PyObject %s = PyObject_Call(method, (PyObject *) args, NULL);\n", Swig_cresult_name());
+      Append(w->code, "alaqil::alaqilVar_PyObject args = PyTuple_New(0);\n");
+      Printf(w->code, "alaqil::alaqilVar_PyObject %s = PyObject_Call(method, (PyObject *) args, NULL);\n", alaqil_cresult_name());
     }
     Append(w->code, "#else\n");
     if (Len(parse_args) > 0) {
       if (use_parse) {
-	Printf(w->code, "swig::SwigVar_PyObject %s = PyObject_CallMethod(swig_get_self(), (char *)\"%s\", (char *)\"(%s)\" %s);\n", Swig_cresult_name(), pyname, parse_args, arglist);
+	Printf(w->code, "alaqil::alaqilVar_PyObject %s = PyObject_CallMethod(alaqil_get_self(), (char *)\"%s\", (char *)\"(%s)\" %s);\n", alaqil_cresult_name(), pyname, parse_args, arglist);
       } else {
-	Printf(w->code, "swig::SwigVar_PyObject swig_method_name = SWIG_Python_str_FromChar(\"%s\");\n", pyname);
-	Printf(w->code, "swig::SwigVar_PyObject %s = PyObject_CallMethodObjArgs(swig_get_self(), (PyObject *) swig_method_name %s, NULL);\n", Swig_cresult_name(), arglist);
+	Printf(w->code, "alaqil::alaqilVar_PyObject alaqil_method_name = alaqil_Python_str_FromChar(\"%s\");\n", pyname);
+	Printf(w->code, "alaqil::alaqilVar_PyObject %s = PyObject_CallMethodObjArgs(alaqil_get_self(), (PyObject *) alaqil_method_name %s, NULL);\n", alaqil_cresult_name(), arglist);
       }
     } else {
-      Printf(w->code, "swig::SwigVar_PyObject swig_method_name = SWIG_Python_str_FromChar(\"%s\");\n", pyname);
-      Printf(w->code, "swig::SwigVar_PyObject %s = PyObject_CallMethodObjArgs(swig_get_self(), (PyObject *) swig_method_name, NULL);\n", Swig_cresult_name());
+      Printf(w->code, "alaqil::alaqilVar_PyObject alaqil_method_name = alaqil_Python_str_FromChar(\"%s\");\n", pyname);
+      Printf(w->code, "alaqil::alaqilVar_PyObject %s = PyObject_CallMethodObjArgs(alaqil_get_self(), (PyObject *) alaqil_method_name, NULL);\n", alaqil_cresult_name());
     }
     Append(w->code, "#endif\n");
 
     if (dirprot_mode() && !is_public(n))
-      Printf(w->code, "swig_set_inner(\"%s\", false);\n", name);
+      Printf(w->code, "alaqil_set_inner(\"%s\", false);\n", name);
 
     /* exception handling */
-    tm = Swig_typemap_lookup("director:except", n, Swig_cresult_name(), 0);
+    tm = alaqil_typemap_lookup("director:except", n, alaqil_cresult_name(), 0);
     if (!tm) {
       tm = Getattr(n, "feature:director:except");
       if (tm)
 	tm = Copy(tm);
     }
-    Printf(w->code, "if (!%s) {\n", Swig_cresult_name());
+    Printf(w->code, "if (!%s) {\n", alaqil_cresult_name());
     Append(w->code, "  PyObject *error = PyErr_Occurred();\n");
     if ((tm) && Len(tm) && (Strcmp(tm, "1") != 0)) {
       Replaceall(tm, "$error", "error");
       Printv(w->code, Str(tm), "\n", NIL);
     } else {
       Append(w->code, "  if (error) {\n");
-      Printf(w->code, "    Swig::DirectorMethodException::raise(\"Error detected when calling '%s.%s'\");\n", classname, pyname);
+      Printf(w->code, "    alaqil::DirectorMethodException::raise(\"Error detected when calling '%s.%s'\");\n", classname, pyname);
       Append(w->code, "  }\n");
     }
     Append(w->code, "}\n");
@@ -5565,8 +5565,8 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 
     if (outputs > 1) {
       Wrapper_add_local(w, "output", "PyObject *output");
-      Printf(w->code, "if (!PyTuple_Check(%s)) {\n", Swig_cresult_name());
-      Printf(w->code, "  Swig::DirectorTypeMismatchException::raise(\"Python method %s.%sfailed to return a tuple.\");\n", classname, pyname);
+      Printf(w->code, "if (!PyTuple_Check(%s)) {\n", alaqil_cresult_name());
+      Printf(w->code, "  alaqil::DirectorTypeMismatchException::raise(\"Python method %s.%sfailed to return a tuple.\");\n", classname, pyname);
       Append(w->code, "}\n");
     }
 
@@ -5574,13 +5574,13 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 
     /* marshal return value */
     if (!is_void) {
-      tm = Swig_typemap_lookup("directorout", n, Swig_cresult_name(), w);
+      tm = alaqil_typemap_lookup("directorout", n, alaqil_cresult_name(), w);
       if (tm != 0) {
 	if (outputs > 1) {
-	  Printf(w->code, "output = PyTuple_GetItem(%s, %d);\n", Swig_cresult_name(), idx++);
+	  Printf(w->code, "output = PyTuple_GetItem(%s, %d);\n", alaqil_cresult_name(), idx++);
 	  Replaceall(tm, "$input", "output");
 	} else {
-	  Replaceall(tm, "$input", Swig_cresult_name());
+	  Replaceall(tm, "$input", alaqil_cresult_name());
 	}
 	char temp[24];
 	sprintf(temp, "%d", idx);
@@ -5588,7 +5588,7 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 
 	/* TODO check this */
 	if (Getattr(n, "wrap:disown")) {
-	  Replaceall(tm, "$disown", "SWIG_POINTER_DISOWN");
+	  Replaceall(tm, "$disown", "alaqil_POINTER_DISOWN");
 	} else {
 	  Replaceall(tm, "$disown", "0");
 	}
@@ -5599,10 +5599,10 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 	Printv(w->code, tm, "\n", NIL);
 	Delete(tm);
       } else {
-	Swig_warning(WARN_TYPEMAP_DIRECTOROUT_UNDEF, input_file, line_number,
-		     "Unable to use return type %s in director method %s::%s (skipping method).\n", SwigType_str(returntype, 0), SwigType_namestr(c_classname),
-		     SwigType_namestr(name));
-	status = SWIG_ERROR;
+	alaqil_warning(WARN_TYPEMAP_DIRECTOROUT_UNDEF, input_file, line_number,
+		     "Unable to use return type %s in director method %s::%s (skipping method).\n", alaqilType_str(returntype, 0), alaqilType_namestr(c_classname),
+		     alaqilType_namestr(name));
+	status = alaqil_ERROR;
       }
     }
 
@@ -5610,10 +5610,10 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
     for (p = l; p;) {
       if ((tm = Getattr(p, "tmap:directorargout")) != 0) {
 	if (outputs > 1) {
-	  Printf(w->code, "output = PyTuple_GetItem(%s, %d);\n", Swig_cresult_name(), idx++);
+	  Printf(w->code, "output = PyTuple_GetItem(%s, %d);\n", alaqil_cresult_name(), idx++);
 	  Replaceall(tm, "$result", "output");
 	} else {
-	  Replaceall(tm, "$result", Swig_cresult_name());
+	  Replaceall(tm, "$result", alaqil_cresult_name());
 	}
 	Replaceall(tm, "$input", Getattr(p, "emit:directorinput"));
 	Printv(w->code, tm, "\n", NIL);
@@ -5637,8 +5637,8 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 
   if (!is_void) {
     if (!(ignored_method && !pure_virtual)) {
-      String *rettype = SwigType_str(returntype, 0);
-      if (!SwigType_isreference(returntype)) {
+      String *rettype = alaqilType_str(returntype, 0);
+      if (!alaqilType_isreference(returntype)) {
 	Printf(w->code, "return (%s) c_result;\n", rettype);
       } else {
 	Printf(w->code, "return (%s) *c_result;\n", rettype);
@@ -5653,19 +5653,19 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
   String *inline_extra_method = NewString("");
   if (dirprot_mode() && !is_public(n) && !pure_virtual) {
     Printv(inline_extra_method, declaration, NIL);
-    String *extra_method_name = NewStringf("%sSwigPublic", name);
+    String *extra_method_name = NewStringf("%salaqilPublic", name);
     Replaceall(inline_extra_method, name, extra_method_name);
     Replaceall(inline_extra_method, ";\n", " {\n      ");
     if (!is_void)
       Printf(inline_extra_method, "return ");
-    String *methodcall = Swig_method_call(super, l);
+    String *methodcall = alaqil_method_call(super, l);
     Printv(inline_extra_method, methodcall, ";\n    }\n", NIL);
     Delete(methodcall);
     Delete(extra_method_name);
   }
 
   /* emit the director method */
-  if (status == SWIG_OK) {
+  if (status == alaqil_OK) {
     if (!Getattr(n, "defaultargs")) {
       Replaceall(w->code, "$symname", symname);
       Wrapper_print(w, f_directors);
@@ -5682,12 +5682,12 @@ int PYTHON::classDirectorMethod(Node *n, Node *parent, String *super) {
 }
 
 /* -----------------------------------------------------------------------------
- * swig_python()    - Instantiate module
+ * alaqil_python()    - Instantiate module
  * ----------------------------------------------------------------------------- */
 
-static Language *new_swig_python() {
+static Language *new_alaqil_python() {
   return new PYTHON();
 }
-extern "C" Language *swig_python(void) {
-  return new_swig_python();
+extern "C" Language *alaqil_python(void) {
+  return new_alaqil_python();
 }

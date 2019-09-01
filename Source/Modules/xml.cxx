@@ -1,17 +1,17 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * xml.cxx
  *
  * An Xml parse tree generator.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 
 static const char *usage = "\
 XML Options (available with -xml)\n\
@@ -37,7 +37,7 @@ public:
   }
 
   virtual void main(int argc, char *argv[]) {
-    SWIG_typemap_lang("xml");
+    alaqil_typemap_lang("xml");
     for (int iX = 0; iX < argc; iX++) {
       if (strcmp(argv[iX], "-xml") == 0) {
 	char *extension = 0;
@@ -47,33 +47,33 @@ public:
 	if (strcmp(extension, ".xml"))
 	  continue;
 	iX++;
-	Swig_mark_arg(iX);
+	alaqil_mark_arg(iX);
 	String *outfile = NewString(argv[iX]);
-	out = NewFile(outfile, "w", SWIG_output_files());
+	out = NewFile(outfile, "w", alaqil_output_files());
 	if (!out) {
 	  FileErrorDisplay(outfile);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_exit(EXIT_FAILURE);
 	}
 	continue;
       }
       if (strcmp(argv[iX], "-xmllang") == 0) {
-	Swig_mark_arg(iX);
+	alaqil_mark_arg(iX);
 	iX++;
-	SWIG_typemap_lang(argv[iX]);
-	Swig_mark_arg(iX);
+	alaqil_typemap_lang(argv[iX]);
+	alaqil_mark_arg(iX);
 	continue;
       }
       if (strcmp(argv[iX], "-help") == 0) {
 	fputs(usage, stdout);
       }
       if (strcmp(argv[iX], "-xmllite") == 0) {
-	Swig_mark_arg(iX);
+	alaqil_mark_arg(iX);
 	xmllite = 1;
       }
     }
 
     // Add a symbol to the parser for conditional compilation
-    Preprocessor_define("SWIGXML 1", 0);
+    Preprocessor_define("alaqilXML 1", 0);
   }
 
   /* Top of the parse tree */
@@ -81,20 +81,20 @@ public:
   virtual int top(Node *n) {
     if (out == 0) {
       String *outfile = Getattr(n, "outfile");
-      String *ext = Swig_file_extension(outfile);
+      String *ext = alaqil_file_extension(outfile);
       // If there's an extension, ext will include the ".".
       Delslice(outfile, Len(outfile) - Len(ext), DOH_END);
       Delete(ext);
       Append(outfile, ".xml");
-      out = NewFile(outfile, "w", SWIG_output_files());
+      out = NewFile(outfile, "w", alaqil_output_files());
       if (!out) {
 	FileErrorDisplay(outfile);
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
     }
     Printf(out, "<?xml version=\"1.0\" ?> \n");
     Xml_print_tree(n);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   void print_indent(int l) {
@@ -292,7 +292,7 @@ public:
 };
 
 /* -----------------------------------------------------------------------------
- * Swig_print_xml
+ * alaqil_print_xml
  *
  * Dump an XML version of the parse tree.  This is different from using the -xml
  * language module normally as it allows the real language module to process the
@@ -300,17 +300,17 @@ public:
  * up being a post-processing version of the tree.
  * ----------------------------------------------------------------------------- */
 
-void Swig_print_xml(DOH *obj, String *filename) {
+void alaqil_print_xml(DOH *obj, String *filename) {
   XML xml;
   xmllite = 1;
 
   if (!filename) {
     out = stdout;
   } else {
-    out = NewFile(filename, "w", SWIG_output_files());
+    out = NewFile(filename, "w", alaqil_output_files());
     if (!out) {
       FileErrorDisplay(filename);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
   }
 
@@ -318,9 +318,9 @@ void Swig_print_xml(DOH *obj, String *filename) {
   xml.Xml_print_tree(obj);
 }
 
-static Language *new_swig_xml() {
+static Language *new_alaqil_xml() {
   return new XML();
 }
-extern "C" Language *swig_xml(void) {
-  return new_swig_xml();
+extern "C" Language *alaqil_xml(void) {
+  return new_alaqil_xml();
 }

@@ -1,19 +1,19 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * uffi.cxx
  *
- * Uffi language module for SWIG.
+ * Uffi language module for alaqil.
  * ----------------------------------------------------------------------------- */
 
 // TODO: remove remnants of lisptype
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 
 static const char *usage = "\
 UFFI Options (available with -uffi)\n\
@@ -51,7 +51,7 @@ static int any_varargs(ParmList *pl) {
   Parm *p;
 
   for (p = pl; p; p = nextSibling(p)) {
-    if (SwigType_isvarargs(Getattr(p, "type")))
+    if (alaqilType_isvarargs(Getattr(p, "type")))
       return 1;
   }
 
@@ -73,7 +73,7 @@ static String *strip_parens(String *string) {
   p = (char *) malloc(len - 2 + 1);
   if (!p) {
     Printf(stderr, "Malloc failed\n");
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
 
   strncpy(p, s + 1, len - 1);
@@ -95,16 +95,16 @@ static String *convert_literal(String *num_param, String *type) {
     String *updated = Copy(num);
     if (Replace(updated, "e", "d", DOH_REPLACE_ANY) > 1) {
       Printf(stderr, "Weird!! number %s looks invalid.\n", num);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     Delete(num);
     return updated;
   }
 
-  if (SwigType_type(type) == T_CHAR) {
+  if (alaqilType_type(type) == T_CHAR) {
     /* Use CL syntax for character literals */
     return NewStringf("#\\%s", num_param);
-  } else if (SwigType_type(type) == T_STRING) {
+  } else if (alaqilType_type(type) == T_STRING) {
     /* Use CL syntax for string literals */
     return NewStringf("\"%s\"", num_param);
   }
@@ -135,7 +135,7 @@ static void add_defined_foreign_type(String *type) {
 
   if (!defined_foreign_types.entries) {
     Printf(stderr, "Out of memory\n");
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
 
   /* Fill in the new data */
@@ -144,29 +144,29 @@ static void add_defined_foreign_type(String *type) {
 }
 
 
-static String *get_ffi_type(Node *n, SwigType *ty, const_String_or_char_ptr name) {
+static String *get_ffi_type(Node *n, alaqilType *ty, const_String_or_char_ptr name) {
   Node *node = NewHash();
   Setattr(node, "type", ty);
   Setattr(node, "name", name);
   Setfile(node, Getfile(n));
   Setline(node, Getline(n));
-  const String *tm = Swig_typemap_lookup("ffitype", node, "", 0);
+  const String *tm = alaqil_typemap_lookup("ffitype", node, "", 0);
   Delete(node);
 
   if (tm) {
     return NewString(tm);
   } else {
-    SwigType *tr = SwigType_typedef_resolve_all(ty);
+    alaqilType *tr = alaqilType_typedef_resolve_all(ty);
     char *type_reduced = Char(tr);
     int i;
 
     //Printf(stdout,"convert_type %s\n", ty);
-    if (SwigType_isconst(tr)) {
-      SwigType_pop(tr);
+    if (alaqilType_isconst(tr)) {
+      alaqilType_pop(tr);
       type_reduced = Char(tr);
     }
 
-    if (SwigType_ispointer(type_reduced) || SwigType_isarray(ty) || !strncmp(type_reduced, "p.f", 3)) {
+    if (alaqilType_ispointer(type_reduced) || alaqilType_isarray(ty) || !strncmp(type_reduced, "p.f", 3)) {
       return NewString(":pointer-void");
     }
 
@@ -181,18 +181,18 @@ static String *get_ffi_type(Node *n, SwigType *ty, const_String_or_char_ptr name
     }
 
     Printf(stderr, "Unsupported data type: %s (was: %s)\n", type_reduced, ty);
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
   return 0;
 }
 
-static String *get_lisp_type(Node *n, SwigType *ty, const_String_or_char_ptr name) {
+static String *get_lisp_type(Node *n, alaqilType *ty, const_String_or_char_ptr name) {
   Node *node = NewHash();
   Setattr(node, "type", ty);
   Setattr(node, "name", name);
   Setfile(node, Getfile(n));
   Setline(node, Getline(n));
-  const String *tm = Swig_typemap_lookup("lisptype", node, "", 0);
+  const String *tm = alaqil_typemap_lookup("lisptype", node, "", 0);
   Delete(node);
 
   return tm ? NewString(tm) : NewString("");
@@ -201,9 +201,9 @@ static String *get_lisp_type(Node *n, SwigType *ty, const_String_or_char_ptr nam
 void UFFI::main(int argc, char *argv[]) {
   int i;
 
-  Preprocessor_define("SWIGUFFI 1", 0);
-  SWIG_library_directory("uffi");
-  SWIG_config_file("uffi.swg");
+  Preprocessor_define("alaqilUFFI 1", 0);
+  alaqil_library_directory("uffi");
+  alaqil_config_file("uffi.swg");
 
 
   for (i = 1; i < argc; i++) {
@@ -211,10 +211,10 @@ void UFFI::main(int argc, char *argv[]) {
       char *conv = argv[i + 1];
 
       if (!conv)
-	Swig_arg_error();
+	alaqil_arg_error();
 
-      Swig_mark_arg(i);
-      Swig_mark_arg(i + 1);
+      alaqil_mark_arg(i);
+      alaqil_mark_arg(i + 1);
       i++;
 
       /* check for built-ins */
@@ -242,33 +242,33 @@ int UFFI::top(Node *n) {
   String *output_filename = NewString("");
   File *f_null = NewString("");
 
-  Printf(output_filename, "%s%s.cl", SWIG_output_directory(), module);
+  Printf(output_filename, "%s%s.cl", alaqil_output_directory(), module);
 
 
-  f_cl = NewFile(output_filename, "w", SWIG_output_files());
+  f_cl = NewFile(output_filename, "w", alaqil_output_files());
   if (!f_cl) {
     FileErrorDisplay(output_filename);
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
 
-  Swig_register_filebyname("header", f_null);
-  Swig_register_filebyname("begin", f_null);
-  Swig_register_filebyname("runtime", f_null);
-  Swig_register_filebyname("wrapper", f_cl);
+  alaqil_register_filebyname("header", f_null);
+  alaqil_register_filebyname("begin", f_null);
+  alaqil_register_filebyname("runtime", f_null);
+  alaqil_register_filebyname("wrapper", f_cl);
 
-  Swig_banner_target_lang(f_cl, ";;");
+  alaqil_banner_target_lang(f_cl, ";;");
 
   Printf(f_cl, "\n"
 	 ";; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10; package: %s -*-\n\n(defpackage :%s\n  (:use :common-lisp :uffi))\n\n(in-package :%s)\n",
 	 module, module, module);
-  Printf(f_cl, "(eval-when (compile load eval)\n  (defparameter *swig-identifier-converter* '%s))\n", identifier_converter);
+  Printf(f_cl, "(eval-when (compile load eval)\n  (defparameter *alaqil-identifier-converter* '%s))\n", identifier_converter);
 
   Language::top(n);
 
   Delete(f_cl);			// Delete the handle, not the file
   Delete(f_null);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 int UFFI::functionWrapper(Node *n) {
@@ -280,7 +280,7 @@ int UFFI::functionWrapper(Node *n) {
 
   //Language::functionWrapper(n);
 
-  Printf(f_cl, "(swig-defun \"%s\"\n", funcname);
+  Printf(f_cl, "(alaqil-defun \"%s\"\n", funcname);
   Printf(f_cl, "  (");
 
   /* Special cases */
@@ -293,7 +293,7 @@ int UFFI::functionWrapper(Node *n) {
   } else {
     for (p = pl; p; p = nextSibling(p), argnum++) {
       String *argname = Getattr(p, "name");
-      SwigType *argtype = Getattr(p, "type");
+      alaqilType *argtype = Getattr(p, "type");
       String *ffitype = get_ffi_type(n, argtype, argname);
       String *lisptype = get_lisp_type(n, argtype, argname);
       int tempargname = 0;
@@ -321,12 +321,12 @@ int UFFI::functionWrapper(Node *n) {
 	 //"  :strings-convert t\n"
 	 //"  :call-direct %s\n"
 	 //"  :optimize-for-space t"
-	 ")\n", get_ffi_type(n, Getattr(n, "type"), Swig_cresult_name())
+	 ")\n", get_ffi_type(n, Getattr(n, "type"), alaqil_cresult_name())
 	 //,varargs ? "nil"  : "t"
       );
 
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 int UFFI::constantWrapper(Node *n) {
@@ -338,11 +338,11 @@ int UFFI::constantWrapper(Node *n) {
   Printf(stdout, "constant %s is of type %s. value: %s\n", name, type, converted_value);
 #endif
 
-  Printf(f_cl, "(swig-defconstant \"%s\" %s)\n", name, converted_value);
+  Printf(f_cl, "(alaqil-defconstant \"%s\" %s)\n", name, converted_value);
 
   Delete(converted_value);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 // Includes structs
@@ -355,23 +355,23 @@ int UFFI::classHandler(Node *n) {
   if (Strcmp(kind, "struct")) {
     Printf(stderr, "Don't know how to deal with %s kind of class yet.\n", kind);
     Printf(stderr, " (name: %s)\n", name);
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
 
-  Printf(f_cl, "(swig-def-struct \"%s\"\n \n", name);
+  Printf(f_cl, "(alaqil-def-struct \"%s\"\n \n", name);
 
   for (c = firstChild(n); c; c = nextSibling(c)) {
-    SwigType *type = Getattr(c, "type");
-    SwigType *decl = Getattr(c, "decl");
+    alaqilType *type = Getattr(c, "type");
+    alaqilType *decl = Getattr(c, "decl");
     if (type) {
       type = Copy(type);
-      SwigType_push(type, decl);
+      alaqilType_push(type, decl);
       String *lisp_type;
 
       if (Strcmp(nodeType(c), "cdecl")) {
 	Printf(stderr, "Structure %s has a slot that we can't deal with.\n", name);
 	Printf(stderr, "nodeType: %s, name: %s, type: %s\n", nodeType(c), Getattr(c, "name"), Getattr(c, "type"));
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
 
       /* Printf(stdout, "Converting %s in %s\n", type, name); */
@@ -391,15 +391,15 @@ int UFFI::classHandler(Node *n) {
   //Printf(stdout, "Adding %s foreign type\n", name);
   add_defined_foreign_type(name);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 int UFFI::membervariableHandler(Node *n) {
   Language::membervariableHandler(n);
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
-extern "C" Language *swig_uffi(void) {
+extern "C" Language *alaqil_uffi(void) {
   return new UFFI();
 }

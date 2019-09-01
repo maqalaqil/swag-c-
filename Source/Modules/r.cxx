@@ -1,18 +1,18 @@
 
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3
+ * This file is part of alaqil, which is licensed as a whole under version 3
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * r.cxx
  *
- * R language module for SWIG.
+ * R language module for alaqil.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include "cparse.h"
 
 static String* replaceInitialDash(const String *name)
@@ -27,9 +27,9 @@ static String* replaceInitialDash(const String *name)
   return retval;
 }
 
-static String * getRTypeName(SwigType *t, int *outCount = NULL) {
-  String *b = SwigType_base(t);
-  List *els = SwigType_split(t);
+static String * getRTypeName(alaqilType *t, int *outCount = NULL) {
+  String *b = alaqilType_base(t);
+  List *els = alaqilType_split(t);
   int count = 0;
   int i;
 
@@ -52,7 +52,7 @@ static String * getRTypeName(SwigType *t, int *outCount = NULL) {
     *outCount = count;
 
   String *tmp = NewString("");
-  char *retName = Char(SwigType_manglestr(t));
+  char *retName = Char(alaqilType_manglestr(t));
   Insert(tmp, 0, retName);
   return tmp;
 
@@ -72,22 +72,22 @@ static String * getRTypeName(SwigType *t, int *outCount = NULL) {
  * --------------------------------------------------------------*/
 
 static String *getRClassName(String *retType, int deRef=0, int upRef=0) {
-  SwigType *resolved = SwigType_typedef_resolve_all(retType);
-  int ispointer = SwigType_ispointer(resolved);
-  int isreference = SwigType_isreference(resolved);
+  alaqilType *resolved = alaqilType_typedef_resolve_all(retType);
+  int ispointer = alaqilType_ispointer(resolved);
+  int isreference = alaqilType_isreference(resolved);
   if (upRef) {
-    SwigType_add_pointer(resolved);
+    alaqilType_add_pointer(resolved);
   }
   if (deRef) {
     if (ispointer) {
-      SwigType_del_pointer(resolved);
+      alaqilType_del_pointer(resolved);
     }
     if (isreference) {
-      SwigType_del_reference(resolved);
+      alaqilType_del_reference(resolved);
     }
   } 
   String *tmp = NewString("");
-  Insert(tmp, 0, Char(SwigType_manglestr(resolved)));
+  Insert(tmp, 0, Char(alaqilType_manglestr(resolved)));
   return(tmp);
 }
 
@@ -102,11 +102,11 @@ static String * getRClassNameCopyStruct(String *retType, int addRef) {
   String *tmp = NewString("");
 
 #if 1
-  List *l = SwigType_split(retType);
+  List *l = alaqilType_split(retType);
   int n = Len(l);
   if(!l || n == 0) {
-#ifdef R_SWIG_VERBOSE
-    Printf(stdout, "SwigType_split return an empty list for %s\n", retType);
+#ifdef R_alaqil_VERBOSE
+    Printf(stdout, "alaqilType_split return an empty list for %s\n", retType);
 #endif
     return(tmp);
   }
@@ -128,7 +128,7 @@ static String * getRClassNameCopyStruct(String *retType, int addRef) {
   }
 
 #else
-  char *retName = Char(SwigType_manglestr(retType));
+  char *retName = Char(alaqilType_manglestr(retType));
   if(!retName)
     return(tmp);
 
@@ -192,9 +192,9 @@ static void showUsage() {
   fputs(usage, stdout);
 }
 
-static bool expandTypedef(SwigType *t) {
-  if (SwigType_isenum(t)) return false;
-  String *prefix = SwigType_prefix(t);
+static bool expandTypedef(alaqilType *t) {
+  if (alaqilType_isenum(t)) return false;
+  String *prefix = alaqilType_prefix(t);
   if (Strncmp(prefix, "f", 1)) return false;
   if (Strncmp(prefix, "p.f", 3)) return false;
   return true;
@@ -206,7 +206,7 @@ static bool expandTypedef(SwigType *t) {
  * that wraps/interfaces to the routine that returns the given type.
  * --------------------------------------------------------------*/
 
-static int addCopyParameter(SwigType *type) {
+static int addCopyParameter(alaqilType *type) {
   int ok = 0;
   ok = Strncmp(type, "struct ", 7) == 0 || Strncmp(type, "p.struct ", 9) == 0;
   if(!ok) {
@@ -216,7 +216,7 @@ static int addCopyParameter(SwigType *type) {
   return(ok);
 }
 
-static void replaceRClass(String *tm, SwigType *type) {
+static void replaceRClass(String *tm, alaqilType *type) {
   String *tmp = getRClassName(type, 0, 0);
   String *tmp_base = getRClassName(type, 1, 0);
   String *tmp_ref = getRClassName(type, 0, 1);
@@ -246,7 +246,7 @@ public:
 
   int typedefHandler(Node *n);
 
-  static List *Swig_overload_rank(Node *n,
+  static List *alaqil_overload_rank(Node *n,
 	                          bool script_lang_wrapping);
 
   int memberfunctionHandler(Node *n) {
@@ -291,7 +291,7 @@ protected:
   int OutputClassMethodsTable(File *out);
   int OutputClassAccessInfo(Hash *tb, File *out);
 
-  int defineArrayAccessors(SwigType *type);
+  int defineArrayAccessors(alaqilType *type);
 
   void addNamespaceFunction(String *name) {
     if(!namespaceFunctions)
@@ -305,9 +305,9 @@ protected:
     Append(namespaceMethods, name);
   }
 
-  String* processType(SwigType *t, Node *n, int *nargs = NULL);
-  String *createFunctionPointerHandler(SwigType *t, Node *n, int *nargs);
-  int addFunctionPointerProxy(String *name, Node *n, SwigType *t, String *s_paramTypes) {
+  String* processType(alaqilType *t, Node *n, int *nargs = NULL);
+  String *createFunctionPointerHandler(alaqilType *t, Node *n, int *nargs);
+  int addFunctionPointerProxy(String *name, Node *n, alaqilType *t, String *s_paramTypes) {
     /*XXX Do we need to put the t in there to get the return type later. */
     if(!functionPointerProxyTable)
       functionPointerProxyTable = NewHash();
@@ -320,10 +320,10 @@ protected:
 	   "',\n", tab8,
 	   "prototype = list(parameterTypes = c(", s_paramTypes, "),\n",
 	   tab8, tab8, tab8,
-	   "returnType = '", SwigType_manglestr(t), "'),\n", tab8,
+	   "returnType = '", alaqilType_manglestr(t), "'),\n", tab8,
 	   "contains = 'CRoutinePointer')\n\n##\n", NIL);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -336,7 +336,7 @@ protected:
   void addAccessor(String *memberName, Wrapper *f,
 		   String *name, int isSet = -1);
 
-  static int getFunctionPointerNumArgs(Node *n, SwigType *tt);
+  static int getFunctionPointerNumArgs(Node *n, alaqilType *tt);
 
 protected:
   bool copyStruct;
@@ -453,7 +453,7 @@ R::R() :
 
 bool R::debugMode = false;
 
-int R::getFunctionPointerNumArgs(Node *n, SwigType *tt) {
+int R::getFunctionPointerNumArgs(Node *n, alaqilType *tt) {
   (void) tt;
   n = Getattr(n, "type");
   if (debugMode)
@@ -496,8 +496,8 @@ void R::addSMethodInfo(String *name, String *argType, int nargs) {
  * Returns the name of the new routine.
  * ------------------------------------------ */
 
-String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
-  String *funName = SwigType_manglestr(t);
+String * R::createFunctionPointerHandler(alaqilType *t, Node *n, int *numArgs) {
+  String *funName = alaqilType_manglestr(t);
 
   /* See if we have already processed this one. */
   if(functionPointerProxyTable && Getattr(functionPointerProxyTable, funName))
@@ -506,18 +506,18 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
   if (debugMode)
     Printf(stdout, "<createFunctionPointerHandler> Defining %s\n",  t);
 
-  SwigType *rettype = Copy(Getattr(n, "type"));
-  SwigType *funcparams = SwigType_functionpointer_decompose(rettype);
-  String *rtype = SwigType_str(rettype, 0);
+  alaqilType *rettype = Copy(Getattr(n, "type"));
+  alaqilType *funcparams = alaqilType_functionpointer_decompose(rettype);
+  String *rtype = alaqilType_str(rettype, 0);
 
   //   ParmList *parms = Getattr(n, "parms");
   // memory leak
-  ParmList *parms = SwigType_function_parms(SwigType_del_pointer(Copy(t)), n);
+  ParmList *parms = alaqilType_function_parms(alaqilType_del_pointer(Copy(t)), n);
 
 
   if (debugMode) {
     Printf(stdout, "Type: %s\n", t);
-    Printf(stdout, "Return type: %s\n", SwigType_base(t));
+    Printf(stdout, "Return type: %s\n", alaqilType_base(t));
   }
 
   bool isVoidType = Strcmp(rettype, "void") == 0;
@@ -541,9 +541,9 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
     Setattr(p, "lname", lname);
   }
 
-  Swig_typemap_attach_parms("out", parms, f);
-  Swig_typemap_attach_parms("scoerceout", parms, f);
-  Swig_typemap_attach_parms("scheck", parms, f);
+  alaqil_typemap_attach_parms("out", parms, f);
+  alaqil_typemap_attach_parms("scoerceout", parms, f);
+  alaqil_typemap_attach_parms("scheck", parms, f);
 
   Printf(f->def, "%s %s(", rtype, funName);
 
@@ -552,8 +552,8 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
   //  emit_attach_parmmaps(parms,f);
 
   /*  Using weird name and struct to avoid potential conflicts. */
-  Wrapper_add_local(f, "r_swig_cb_data", "RCallbackFunctionData *r_swig_cb_data = R_SWIG_getCallbackFunctionData()");
-  String *lvar = NewString("r_swig_cb_data");
+  Wrapper_add_local(f, "r_alaqil_cb_data", "RCallbackFunctionData *r_alaqil_cb_data = R_alaqil_getCallbackFunctionData()");
+  String *lvar = NewString("r_alaqil_cb_data");
 
   Wrapper_add_local(f, "r_tmp", "SEXP r_tmp"); // for use in converting arguments to R objects for call.
   Wrapper_add_local(f, "r_nprotect", "int r_nprotect = 0"); // for use in converting arguments to R objects for call.
@@ -574,21 +574,21 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
 
   String *s_paramTypes = NewString("");
   for(i = 0; p; i++) {
-    SwigType *tt = Getattr(p, "type");
-    SwigType *name = Getattr(p, "name");
-    SwigType *swig_parm_name = NewStringf("swigarg_%s", name);
+    alaqilType *tt = Getattr(p, "type");
+    alaqilType *name = Getattr(p, "name");
+    alaqilType *alaqil_parm_name = NewStringf("alaqilarg_%s", name);
     String *tm = Getattr(p, "tmap:out");
     bool isVoidParm = Strcmp(tt, "void") == 0;
     if (isVoidParm)
-      Printf(f->def, "%s", SwigType_str(tt, 0));
+      Printf(f->def, "%s", alaqilType_str(tt, 0));
     else
-      Printf(f->def, "%s %s", SwigType_str(tt, 0), swig_parm_name);
+      Printf(f->def, "%s %s", alaqilType_str(tt, 0), alaqil_parm_name);
     if (tm) {
-      String *lstr = SwigType_lstr(tt, 0);
-      if (SwigType_isreference(tt) || SwigType_isrvalue_reference(tt)) {
-	Printf(f->code, "%s = (%s) &%s;\n", Getattr(p, "lname"), lstr, swig_parm_name);
+      String *lstr = alaqilType_lstr(tt, 0);
+      if (alaqilType_isreference(tt) || alaqilType_isrvalue_reference(tt)) {
+	Printf(f->code, "%s = (%s) &%s;\n", Getattr(p, "lname"), lstr, alaqil_parm_name);
       } else if (!isVoidParm) {
-	Printf(f->code, "%s = (%s) %s;\n", Getattr(p, "lname"), lstr, swig_parm_name);
+	Printf(f->code, "%s = (%s) %s;\n", Getattr(p, "lname"), lstr, alaqil_parm_name);
       }
       Replaceall(tm, "$1", name);
       Replaceall(tm, "$result", "r_tmp");
@@ -601,10 +601,10 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
     } 
     
     Printf(setExprElements, "%s\n", tm);
-    Printf(setExprElements, "SETCAR(r_swig_cb_data->el, %s);\n", "r_tmp");
-    Printf(setExprElements, "r_swig_cb_data->el = CDR(r_swig_cb_data->el);\n\n");
+    Printf(setExprElements, "SETCAR(r_alaqil_cb_data->el, %s);\n", "r_tmp");
+    Printf(setExprElements, "r_alaqil_cb_data->el = CDR(r_alaqil_cb_data->el);\n\n");
 
-    Printf(s_paramTypes, "'%s'", SwigType_manglestr(tt));
+    Printf(s_paramTypes, "'%s'", alaqilType_manglestr(tt));
 
 
     p = nextSibling(p);
@@ -618,23 +618,23 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
 
   Printf(f->code, "Rf_protect(%s->expr = Rf_allocVector(LANGSXP, %d));\n", lvar, nargs + 1);
   Printf(f->code, "r_nprotect++;\n");
-  Printf(f->code, "r_swig_cb_data->el = r_swig_cb_data->expr;\n\n");
+  Printf(f->code, "r_alaqil_cb_data->el = r_alaqil_cb_data->expr;\n\n");
 
-  Printf(f->code, "SETCAR(r_swig_cb_data->el, r_swig_cb_data->fun);\n");
-  Printf(f->code, "r_swig_cb_data->el = CDR(r_swig_cb_data->el);\n\n");
+  Printf(f->code, "SETCAR(r_alaqil_cb_data->el, r_alaqil_cb_data->fun);\n");
+  Printf(f->code, "r_alaqil_cb_data->el = CDR(r_alaqil_cb_data->el);\n\n");
 
   Printf(f->code, "%s\n\n", setExprElements);
 
-  Printv(f->code, "r_swig_cb_data->retValue = R_tryEval(",
-	 "r_swig_cb_data->expr,",
+  Printv(f->code, "r_alaqil_cb_data->retValue = R_tryEval(",
+	 "r_alaqil_cb_data->expr,",
 	 " R_GlobalEnv,",
-	 " &r_swig_cb_data->errorOccurred",
+	 " &r_alaqil_cb_data->errorOccurred",
 	 ");\n",
 	 NIL);
 
   Printv(f->code, "\n",
-	 "if(r_swig_cb_data->errorOccurred) {\n",
-	 "R_SWIG_popCallbackFunctionData(1);\n",
+	 "if(r_alaqil_cb_data->errorOccurred) {\n",
+	 "R_alaqil_popCallbackFunctionData(1);\n",
 	 "Rf_error(\"error in calling R function as a function pointer (",
 	 funName,
 	 ")\");\n",
@@ -647,14 +647,14 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
     /* Need to deal with the return type of the function pointer, not the function pointer itself.
        So build a new node that has the relevant pieces.
        XXX  Have to be a little more clever so that we can deal with struct A * - the * is getting lost.
-       Is this still true? If so, will a SwigType_push() solve things?
+       Is this still true? If so, will a alaqilType_push() solve things?
     */
     Parm *bbase = NewParmNode(rettype, n);
-    String *returnTM = Swig_typemap_lookup("in", bbase, Swig_cresult_name(), f);
+    String *returnTM = alaqil_typemap_lookup("in", bbase, alaqil_cresult_name(), f);
     if(returnTM) {
       String *tm = returnTM;
-      Replaceall(tm,"$input", "r_swig_cb_data->retValue");
-      Replaceall(tm,"$target", Swig_cresult_name());
+      Replaceall(tm,"$input", "r_alaqil_cb_data->retValue");
+      Replaceall(tm,"$target", alaqil_cresult_name());
       replaceRClass(tm, rettype);
       Replaceall(tm,"$owner", "0");
       Replaceall(tm,"$disown","0");
@@ -663,19 +663,19 @@ String * R::createFunctionPointerHandler(SwigType *t, Node *n, int *numArgs) {
     Delete(bbase);
   }
 
-  Printv(f->code, "R_SWIG_popCallbackFunctionData(1);\n", NIL);
+  Printv(f->code, "R_alaqil_popCallbackFunctionData(1);\n", NIL);
   Printv(f->code, "\n", UnProtectWrapupCode, NIL);
 
-  if (SwigType_isreference(rettype)) {
-    Printv(f->code,  "return *", Swig_cresult_name(), ";\n", NIL);
-  } else if (SwigType_isrvalue_reference(rettype)) {
-    Printv(f->code,  "return std::move(*", Swig_cresult_name(), ");\n", NIL);
+  if (alaqilType_isreference(rettype)) {
+    Printv(f->code,  "return *", alaqil_cresult_name(), ";\n", NIL);
+  } else if (alaqilType_isrvalue_reference(rettype)) {
+    Printv(f->code,  "return std::move(*", alaqil_cresult_name(), ");\n", NIL);
   } else if (!isVoidType) {
-    Printv(f->code,  "return ", Swig_cresult_name(), ";\n", NIL);
+    Printv(f->code,  "return ", alaqil_cresult_name(), ";\n", NIL);
   }
 
   Printv(f->code, "\n}\n", NIL);
-  Replaceall(f->code, "SWIG_exception_fail", "SWIG_exception_noreturn");
+  Replaceall(f->code, "alaqil_exception_fail", "alaqil_exception_noreturn");
 
   /* To coerce correctly in S, we really want to have an extra/intermediate
      function that handles the scoerceout.
@@ -723,10 +723,10 @@ void R::init() {
 
 #if 0
 int R::cDeclaration(Node *n) {
-  SwigType *t = Getattr(n, "type");
-  SwigType *name = Getattr(n, "name");
+  alaqilType *t = Getattr(n, "type");
+  alaqilType *name = Getattr(n, "name");
   if (debugMode)
-    Printf(stdout, "cDeclaration (%s): %s\n", name, SwigType_lstr(t, 0));
+    Printf(stdout, "cDeclaration (%s): %s\n", name, alaqilType_lstr(t, 0));
   return Language::cDeclaration(n);
 }
 #endif
@@ -752,29 +752,29 @@ int R::top(Node *n) {
 
   if(outputNamespaceInfo) {
     s_namespace = NewString("");
-    Swig_register_filebyname("snamespace", s_namespace);
+    alaqil_register_filebyname("snamespace", s_namespace);
     Printf(s_namespace, "useDynLib(%s)\n", DllName);
   }
 
   /* Associate the different streams with names so that they can be used in %insert directives by the
      typemap code. */
-  Swig_register_filebyname("sinit", s_init);
-  Swig_register_filebyname("sinitroutine", s_init_routine);
+  alaqil_register_filebyname("sinit", s_init);
+  alaqil_register_filebyname("sinitroutine", s_init_routine);
 
-  Swig_register_filebyname("begin", f_begin);
-  Swig_register_filebyname("runtime", f_runtime);
-  Swig_register_filebyname("init", f_init);
-  Swig_register_filebyname("header", s_header);
-  Swig_register_filebyname("wrapper", f_wrapper);
-  Swig_register_filebyname("s", sfile);
-  Swig_register_filebyname("sclasses", s_classes);
+  alaqil_register_filebyname("begin", f_begin);
+  alaqil_register_filebyname("runtime", f_runtime);
+  alaqil_register_filebyname("init", f_init);
+  alaqil_register_filebyname("header", s_header);
+  alaqil_register_filebyname("wrapper", f_wrapper);
+  alaqil_register_filebyname("s", sfile);
+  alaqil_register_filebyname("sclasses", s_classes);
 
-  Swig_banner(f_begin);
+  alaqil_banner(f_begin);
 
-  Printf(f_runtime, "\n\n#ifndef SWIGR\n#define SWIGR\n#endif\n\n");
+  Printf(f_runtime, "\n\n#ifndef alaqilR\n#define alaqilR\n#endif\n\n");
 
 
-  Swig_banner_target_lang(s_init, "#");
+  alaqil_banner_target_lang(s_init, "#");
   outputCommandLineArguments(s_init);
 
   Printf(f_wrapper, "#ifdef __cplusplus\n");
@@ -788,7 +788,7 @@ int R::top(Node *n) {
   Printf(f_wrapper, "#endif\n");
 
   String *type_table = NewString("");
-  SwigType_emit_type_table(f_runtime,f_wrapper);
+  alaqilType_emit_type_table(f_runtime,f_wrapper);
   Delete(type_table);
 
   if(ClassMemberTable) {
@@ -815,7 +815,7 @@ int R::top(Node *n) {
   Delete(f_runtime);
   Delete(f_begin);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
@@ -827,16 +827,16 @@ int R::DumpCode(Node *n) {
 
 
   /* The name of the file in which we will generate the S code. */
-  Printf(output_filename, "%s%s.R", SWIG_output_directory(), Rpackage);
+  Printf(output_filename, "%s%s.R", alaqil_output_directory(), Rpackage);
 
-#ifdef R_SWIG_VERBOSE
+#ifdef R_alaqil_VERBOSE
   Printf(stdout, "Writing S code to %s\n", output_filename);
 #endif
 
-  File *scode = NewFile(output_filename, "w", SWIG_output_files());
+  File *scode = NewFile(output_filename, "w", alaqil_output_files());
   if (!scode) {
     FileErrorDisplay(output_filename);
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
   Delete(output_filename);
 
@@ -848,10 +848,10 @@ int R::DumpCode(Node *n) {
 
   Delete(scode);
   String *outfile = Getattr(n,"outfile");
-  File *runtime = NewFile(outfile,"w", SWIG_output_files());
+  File *runtime = NewFile(outfile,"w", alaqil_output_files());
   if (!runtime) {
     FileErrorDisplay(outfile);
-    SWIG_exit(EXIT_FAILURE);
+    alaqil_exit(EXIT_FAILURE);
   }
 
   Printf(runtime, "%s", f_begin);
@@ -864,11 +864,11 @@ int R::DumpCode(Node *n) {
 
   if(outputNamespaceInfo) {
     output_filename = NewString("");
-    Printf(output_filename, "%sNAMESPACE", SWIG_output_directory());
-    File *ns = NewFile(output_filename, "w", SWIG_output_files());
+    Printf(output_filename, "%sNAMESPACE", alaqil_output_directory());
+    File *ns = NewFile(output_filename, "w", alaqil_output_files());
     if (!ns) {
       FileErrorDisplay(output_filename);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     Delete(output_filename);
 
@@ -884,7 +884,7 @@ int R::DumpCode(Node *n) {
     Delete(s_namespace);
   }
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
@@ -910,7 +910,7 @@ int R::OutputClassMethodsTable(File *) {
   Hash *tb = ClassMethodsTable;
 
   if(!tb)
-    return SWIG_OK;
+    return alaqil_OK;
 
   List *keys = Keys(tb);
   String *key;
@@ -930,7 +930,7 @@ int R::OutputClassMethodsTable(File *) {
     }
   }
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
@@ -1005,7 +1005,7 @@ int R::OutputMemberReferenceMethod(String *className, int isSet,
   int numMems = Len(el), j;
   int varaccessor = 0;
   if (numMems == 0)
-    return SWIG_OK;
+    return alaqil_OK;
 
   Wrapper *f = NewWrapper(), *attr = NewWrapper();
 
@@ -1120,7 +1120,7 @@ int R::OutputMemberReferenceMethod(String *className, int isSet,
 
   Printf(out, "# end of accessor method for %s\n", className);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 /* -------------------------------------------------------------
@@ -1159,7 +1159,7 @@ int R::OutputArrayMethod(String *className, List *el, File *out) {
 
   Printf(out, "# end of array methods for %s\n", className);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
@@ -1172,14 +1172,14 @@ int R::OutputArrayMethod(String *className, List *el, File *out) {
 int R::enumDeclaration(Node *n) {
   if (!ImportMode) {
     if (getCurrentClass() && (cplus_mode != PUBLIC))
-      return SWIG_NOWRAP;
+      return alaqil_NOWRAP;
 
     String *symname = Getattr(n, "sym:name");
 
     // TODO - deal with anonymous enumerations
     // Previous enum code for R didn't wrap them
     if (!symname || Getattr(n, "unnamedinstance"))
-      return SWIG_NOWRAP;
+      return alaqil_NOWRAP;
 
     // create mangled name for the enum
     // This will have content if the %nspace feature is set on
@@ -1209,7 +1209,7 @@ int R::enumDeclaration(Node *n) {
     Delete(ename);
     //Delete(symname);
   }
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 /* -------------------------------------------------------------
@@ -1218,10 +1218,10 @@ int R::enumDeclaration(Node *n) {
 int R::enumvalueDeclaration(Node *n) {
   if (getCurrentClass() && (cplus_mode != PUBLIC)) {
     Printf(stdout, "evd: Not public\n");
-    return SWIG_NOWRAP;
+    return alaqil_NOWRAP;
   }
 
-  Swig_require("enumvalueDeclaration", n, "*name", "?value", NIL);
+  alaqil_require("enumvalueDeclaration", n, "*name", "?value", NIL);
   String *symname = Getattr(n, "sym:name");
   String *value = Getattr(n, "value");
   String *name = Getattr(n, "name");
@@ -1239,24 +1239,24 @@ int R::enumvalueDeclaration(Node *n) {
   Setattr(n, "value", tmpValue);
   
   // Deal with enum values that are not int
-  int swigtype = SwigType_type(Getattr(n, "type"));
-  if (swigtype == T_BOOL) {
+  int alaqiltype = alaqilType_type(Getattr(n, "type"));
+  if (alaqiltype == T_BOOL) {
     const char *val = Equal(Getattr(n, "enumvalue"), "true") ? "1" : "0";
     Setattr(n, "enumvalue", val);
-  } else if (swigtype == T_CHAR) {
+  } else if (alaqiltype == T_CHAR) {
     String *val = NewStringf("'%s'", Getattr(n, "enumvalue"));
     Setattr(n, "enumvalue", val);
     Delete(val);
   }
 
   if (GetFlag(parent, "scopedenum")) {
-    newsymname = Swig_name_member(0, Getattr(parent, "sym:name"), symname);
+    newsymname = alaqil_name_member(0, Getattr(parent, "sym:name"), symname);
     symname = newsymname;
   }
 
   {
     // Wrap C/C++ enums with constant integers or use the typesafe enum pattern
-    SwigType *typemap_lookup_type = parent_name ? parent_name : NewString("enum ");
+    alaqilType *typemap_lookup_type = parent_name ? parent_name : NewString("enum ");
     if (debugMode) {
       Printf(stdout, "Setting type: %s\n", Copy(typemap_lookup_type));
     }
@@ -1277,7 +1277,7 @@ int R::enumvalueDeclaration(Node *n) {
     Delete(value);
   }
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
@@ -1297,7 +1297,7 @@ int R::variableWrapper(Node *n) {
   processing_variable = 0;
 
 
-  SwigType *ty = Getattr(n, "type");
+  alaqilType *ty = Getattr(n, "type");
   String *nodeType = nodeType(n);
   int addCopyParam = addCopyParameter(ty);
 
@@ -1309,7 +1309,7 @@ int R::variableWrapper(Node *n) {
     if (debugMode) {
       Printf(stdout, "variableWrapper enum branch\n");
     }
-  } else if(!SwigType_isconst(ty)) {
+  } else if(!alaqilType_isconst(ty)) {
     Wrapper *f = NewWrapper();
     Printf(f->def, "%s = \nfunction(value%s)\n{\n",
 	   name, addCopyParam ? ", .copy = FALSE" : "");
@@ -1324,7 +1324,7 @@ int R::variableWrapper(Node *n) {
     Printf(sfile, "%s = %s_get\n", name, name);
   }
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 /* -------------------------------------------------------------
@@ -1375,7 +1375,7 @@ struct Overloaded {
 };
 
 
-List * R::Swig_overload_rank(Node *n,
+List * R::alaqil_overload_rank(Node *n,
 	                     bool script_lang_wrapping) {
   Overloaded  nodes[MAX_OVERLOAD];
   int         nnodes = 0;
@@ -1450,14 +1450,14 @@ List * R::Swig_overload_rank(Node *n,
 	      Printf(stdout,"t1 = '%s', t2 = '%s'\n", t1, t2);
 	    }
 	    if ((!t1) && (!nodes[i].error)) {
-	      Swig_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[i].n), Getline(nodes[i].n),
+	      alaqil_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[i].n), Getline(nodes[i].n),
 			   "Overloaded method %s not supported (incomplete type checking rule - no precedence level in typecheck typemap for '%s').\n",
-			   Swig_name_decl(nodes[i].n), SwigType_str(Getattr(p1, "type"), 0));
+			   alaqil_name_decl(nodes[i].n), alaqilType_str(Getattr(p1, "type"), 0));
 	      nodes[i].error = 1;
 	    } else if ((!t2) && (!nodes[j].error)) {
-	      Swig_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[j].n), Getline(nodes[j].n),
+	      alaqil_warning(WARN_TYPEMAP_TYPECHECK, Getfile(nodes[j].n), Getline(nodes[j].n),
 			   "Overloaded method %s not supported (incomplete type checking rule - no precedence level in typecheck typemap for '%s').\n",
-			   Swig_name_decl(nodes[j].n), SwigType_str(Getattr(p2, "type"), 0));
+			   alaqil_name_decl(nodes[j].n), alaqilType_str(Getattr(p2, "type"), 0));
 	      nodes[j].error = 1;
 	    }
 	    if (t1 && t2) {
@@ -1478,17 +1478,17 @@ List * R::Swig_overload_rank(Node *n,
 	    } else if ((differ == 0) && (Strcmp(t1,"0") == 0)) {
 	      t1 = Getattr(p1,"ltype");
 	      if (!t1) {
-		t1 = SwigType_ltype(Getattr(p1,"type"));
-		if (Getattr(p1,"tmap:typecheck:SWIGTYPE")) {
-		  SwigType_add_pointer(t1);
+		t1 = alaqilType_ltype(Getattr(p1,"type"));
+		if (Getattr(p1,"tmap:typecheck:alaqilTYPE")) {
+		  alaqilType_add_pointer(t1);
 		}
 		Setattr(p1,"ltype",t1);
 	      }
 	      t2 = Getattr(p2,"ltype");
 	      if (!t2) {
-		t2 = SwigType_ltype(Getattr(p2,"type"));
-		if (Getattr(p2,"tmap:typecheck:SWIGTYPE")) {
-		  SwigType_add_pointer(t2);
+		t2 = alaqilType_ltype(Getattr(p2,"type"));
+		if (Getattr(p2,"tmap:typecheck:alaqilTYPE")) {
+		  alaqilType_add_pointer(t2);
 		}
 		Setattr(p2,"ltype",t2);
 	      }
@@ -1496,7 +1496,7 @@ List * R::Swig_overload_rank(Node *n,
 	      /* Need subtype check here.  If t2 is a subtype of t1, then we need to change the
 	         order */
 
-	      if (SwigType_issubtype(t2,t1)) {
+	      if (alaqilType_issubtype(t2,t1)) {
 		Overloaded t = nodes[i];
 		nodes[i] = nodes[j];
 		nodes[j] = t;
@@ -1527,15 +1527,15 @@ List * R::Swig_overload_rank(Node *n,
 	    if (d1 && d2) {
 	      String *dq1 = Copy(d1);
 	      String *dq2 = Copy(d2);
-	      if (SwigType_isconst(d1)) {
-		Delete(SwigType_pop(dq1));
+	      if (alaqilType_isconst(d1)) {
+		Delete(alaqilType_pop(dq1));
 	      }
-	      if (SwigType_isconst(d2)) {
-		Delete(SwigType_pop(dq2));
+	      if (alaqilType_isconst(d2)) {
+		Delete(alaqilType_pop(dq2));
 	      }
 	      if (Strcmp(dq1, dq2) == 0) {
 
-		if (SwigType_isconst(d1) && !SwigType_isconst(d2)) {
+		if (alaqilType_isconst(d1) && !alaqilType_isconst(d2)) {
 		  if (script_lang_wrapping) {
 		    // Swap nodes so that the const method gets ignored (shadowed by the non-const method)
 		    Overloaded t = nodes[i];
@@ -1545,34 +1545,34 @@ List * R::Swig_overload_rank(Node *n,
 		  differ = 1;
 		  if (!nodes[j].error) {
 		    if (script_lang_wrapping) {
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
-				   "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
-				   "using non-const method %s instead.\n", Swig_name_decl(nodes[i].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
+				   "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
+				   "using non-const method %s instead.\n", alaqil_name_decl(nodes[i].n));
 		    } else {
 		      if (!Getattr(nodes[j].n, "overload:ignore")) {
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
-				     "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
-				     "using %s instead.\n", Swig_name_decl(nodes[i].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
+				     "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
+				     "using %s instead.\n", alaqil_name_decl(nodes[i].n));
 		      }
 		    }
 		  }
 		  nodes[j].error = 1;
-		} else if (!SwigType_isconst(d1) && SwigType_isconst(d2)) {
+		} else if (!alaqilType_isconst(d1) && alaqilType_isconst(d2)) {
 		  differ = 1;
 		  if (!nodes[j].error) {
 		    if (script_lang_wrapping) {
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
-				   "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-		      Swig_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
-				   "using non-const method %s instead.\n", Swig_name_decl(nodes[i].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[j].n), Getline(nodes[j].n),
+				   "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+		      alaqil_warning(WARN_LANG_OVERLOAD_CONST, Getfile(nodes[i].n), Getline(nodes[i].n),
+				   "using non-const method %s instead.\n", alaqil_name_decl(nodes[i].n));
 		    } else {
 		      if (!Getattr(nodes[j].n, "overload:ignore")) {
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
-				     "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-			Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
-				     "using %s instead.\n", Swig_name_decl(nodes[i].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
+				     "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+			alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
+				     "using %s instead.\n", alaqil_name_decl(nodes[i].n));
 		      }
 		    }
 		  }
@@ -1586,16 +1586,16 @@ List * R::Swig_overload_rank(Node *n,
 	  if (!differ) {
 	    if (!nodes[j].error) {
 	      if (script_lang_wrapping) {
-		Swig_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[j].n), Getline(nodes[j].n),
-			     "Overloaded method %s effectively ignored,\n", Swig_name_decl(nodes[j].n));
-		Swig_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[i].n), Getline(nodes[i].n),
-			     "as it is shadowed by %s.\n", Swig_name_decl(nodes[i].n));
+		alaqil_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[j].n), Getline(nodes[j].n),
+			     "Overloaded method %s effectively ignored,\n", alaqil_name_decl(nodes[j].n));
+		alaqil_warning(WARN_LANG_OVERLOAD_SHADOW, Getfile(nodes[i].n), Getline(nodes[i].n),
+			     "as it is shadowed by %s.\n", alaqil_name_decl(nodes[i].n));
 	      } else {
 		if (!Getattr(nodes[j].n, "overload:ignore")) {
-		  Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
-			       "Overloaded method %s ignored,\n", Swig_name_decl(nodes[j].n));
-		  Swig_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
-			       "using %s instead.\n", Swig_name_decl(nodes[i].n));
+		  alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[j].n), Getline(nodes[j].n),
+			       "Overloaded method %s ignored,\n", alaqil_name_decl(nodes[j].n));
+		  alaqil_warning(WARN_LANG_OVERLOAD_IGNORED, Getfile(nodes[i].n), Getline(nodes[i].n),
+			       "using %s instead.\n", alaqil_name_decl(nodes[i].n));
 		}
 	      }
 	      nodes[j].error = 1;
@@ -1613,7 +1613,7 @@ List * R::Swig_overload_rank(Node *n,
 	Setattr(nodes[i].n, "overload:ignore", "1");
       Append(result,nodes[i].n);
       //      Printf(stdout,"[ %d ] %s\n", i, ParmList_errorstr(nodes[i].parms));
-      //      Swig_print_node(nodes[i].n);
+      //      alaqil_print_node(nodes[i].n);
     }
   }
   return result;
@@ -1633,9 +1633,9 @@ void R::dispatchFunction(Node *n) {
   Printf(f->def,
 	 "`%s` <- function(...) {", sfname);
   if (debugMode) {
-    Swig_print_node(n);
+    alaqil_print_node(n);
   }
-  List *dispatch = Swig_overload_rank(n, true);
+  List *dispatch = alaqil_overload_rank(n, true);
   int   nfunc = Len(dispatch);
   Printv(f->code,
 	 "argtypes <- mapply(class, list(...));\n",
@@ -1670,14 +1670,14 @@ void R::dispatchFunction(Node *n) {
       Printv(f->code, "if (", NIL);
       for (p =pi, j = 0 ; j < num_arguments ; j++) {
 	if (debugMode) {
-	  Swig_print_node(p);
+	  alaqil_print_node(p);
 	}
-	String *tm = Swig_typemap_lookup("rtype", p, "", 0);
+	String *tm = alaqil_typemap_lookup("rtype", p, "", 0);
 	if(tm) {
 	  replaceRClass(tm, Getattr(p, "type"));
 	}
 
-	String *tmcheck = Swig_typemap_lookup("rtypecheck", p, "", 0);
+	String *tmcheck = alaqil_typemap_lookup("rtypecheck", p, "", 0);
 	if (tmcheck) {
 	  String *tmp = NewString("");
 	  Printf(tmp, "argv[[%d]]", j+1);
@@ -1706,13 +1706,13 @@ void R::dispatchFunction(Node *n) {
 	  } else if (Strcmp(tm, "character") == 0) {
 	    Printf(f->code, "is.character(argv[[%d]])", j+1);
 	  } else {
-	    if (SwigType_ispointer(Getattr(p, "type")))
+	    if (alaqilType_ispointer(Getattr(p, "type")))
 	      Printf(f->code, "(extends(argtypes[%d], '%s') || is.null(argv[[%d]]))", j+1, tm, j+1);
 	    else
 	      Printf(f->code, "extends(argtypes[%d], '%s')", j+1, tm);
 	  }
 	}
-	if (!SwigType_ispointer(Getattr(p, "type"))) {
+	if (!alaqilType_ispointer(Getattr(p, "type"))) {
 	  Printf(f->code, " && length(argv[[%d]]) == 1", j+1);
 	}
 	p = Getattr(p, "tmap:in:next");
@@ -1774,11 +1774,11 @@ int R::functionWrapper(Node *n) {
 
   p = l;
   while(p) {
-    SwigType *resultType = Getattr(p, "type");
+    alaqilType *resultType = Getattr(p, "type");
     if (expandTypedef(resultType) &&
-	SwigType_istypedef(resultType)) {
-      SwigType *resolved =
-	SwigType_typedef_resolve_all(resultType);
+	alaqilType_istypedef(resultType)) {
+      alaqilType *resolved =
+	alaqilType_typedef_resolve_all(resultType);
       if (expandTypedef(resolved)) {
         if (debugMode) {
           Printf(stdout, "Setting type: %s\n", resolved);
@@ -1792,9 +1792,9 @@ int R::functionWrapper(Node *n) {
   String *unresolved_return_type =
     Copy(type);
   if (expandTypedef(type) &&
-      SwigType_istypedef(type)) {
-    SwigType *resolved =
-      SwigType_typedef_resolve_all(type);
+      alaqilType_istypedef(type)) {
+    alaqilType *resolved =
+      alaqilType_typedef_resolve_all(type);
     if (debugMode)
       Printf(stdout, "<functionWrapper> resolved %s\n", Copy(unresolved_return_type));
     if (expandTypedef(resolved)) {
@@ -1809,7 +1809,7 @@ int R::functionWrapper(Node *n) {
       Printf(stdout, "<functionWrapper memberAccess> '%s' '%s' '%s' '%s'\n", fname, iname, member_name, class_name);
 
     if(opaqueClassDeclaration)
-      return SWIG_OK;
+      return alaqil_OK;
 
 
     /* Add the name of this member to a list for this class_name.
@@ -1838,8 +1838,8 @@ int R::functionWrapper(Node *n) {
   int i;
   int nargs;
 
-  String *wname = Swig_name_wrapper(iname);
-  Replace(wname, "_wrap", "R_swig", DOH_REPLACE_FIRST);
+  String *wname = alaqil_name_wrapper(iname);
+  Replace(wname, "_wrap", "R_alaqil", DOH_REPLACE_FIRST);
   if(overname)
     Append(wname, overname);
   Setattr(n,"wrap:name", wname);
@@ -1853,7 +1853,7 @@ int R::functionWrapper(Node *n) {
   // mismatch with the function action
   emit_return_variable(n, unresolved_return_type, f);
 
-  SwigType *rtype = Getattr(n, "type");
+  alaqilType *rtype = Getattr(n, "type");
   int addCopyParam = 0;
 
   if(!isVoidReturnType)
@@ -1861,14 +1861,14 @@ int R::functionWrapper(Node *n) {
 
 
   // Can we get the nodeType() of the type node! and see if it is a struct.
-  //    int addCopyParam = SwigType_isclass(rtype);
+  //    int addCopyParam = alaqilType_isclass(rtype);
 
   //    if(addCopyParam)
   if (debugMode)
     Printf(stdout, "Adding a .copy argument to %s for %s = %s\n",
 	   iname, type, addCopyParam ? "yes" : "no");
 
-  Printv(f->def, "SWIGEXPORT SEXP\n", wname, " ( ", NIL);
+  Printv(f->def, "alaqilEXPORT SEXP\n", wname, " ( ", NIL);
 
   Printf(sfun->def, "# Start of %s\n", iname);
   Printv(sfun->def, "\n`", sfname, "` = function(", NIL);
@@ -1884,9 +1884,9 @@ int R::functionWrapper(Node *n) {
     }
   }
 
-  Swig_typemap_attach_parms("scoercein", l, f);
-  Swig_typemap_attach_parms("scoerceout", l, f);
-  Swig_typemap_attach_parms("scheck", l, f);
+  alaqil_typemap_attach_parms("scoercein", l, f);
+  alaqil_typemap_attach_parms("scoerceout", l, f);
+  alaqil_typemap_attach_parms("scheck", l, f);
 
   emit_parameter_variables(l, f);
   emit_attach_parmmaps(l,f);
@@ -1912,17 +1912,17 @@ int R::functionWrapper(Node *n) {
       p = Getattr(p, "tmap:in:next");
     }
 
-    SwigType *tt = Getattr(p, "type");
+    alaqilType *tt = Getattr(p, "type");
     int nargs = -1;
     String *funcptr_name = processType(tt, p, &nargs);
 
-    //      SwigType *tp = Getattr(p, "type");
+    //      alaqilType *tp = Getattr(p, "type");
     String   *name  = Getattr(p,"name");
     String   *lname  = Getattr(p,"lname");
 
     // R keyword renaming
     if (name) {
-      if (Swig_name_warning(p, 0, name, 0)) {
+      if (alaqil_name_warning(p, 0, name, 0)) {
 	name = 0;
       } else {
 	/* If we have a :: in the parameter name because we are accessing a static member of a class, say, then
@@ -2009,7 +2009,7 @@ int R::functionWrapper(Node *n) {
       Replaceall(tm,"$input", name);
 
       if (Getattr(p,"wrap:disown") || (Getattr(p,"tmap:in:disown"))) {
-	Replaceall(tm,"$disown","SWIG_POINTER_DISOWN");
+	Replaceall(tm,"$disown","alaqil_POINTER_DISOWN");
       } else {
 	Replaceall(tm,"$disown","0");
       }
@@ -2025,7 +2025,7 @@ int R::functionWrapper(Node *n) {
 
       Printf(f->code,"%s\n",tm);
       if(funcptr_name)
-	Printf(f->code, "} else {\n%s = %s;\nR_SWIG_pushCallbackFunctionData(%s, NULL);\n}\n",
+	Printf(f->code, "} else {\n%s = %s;\nR_alaqil_pushCallbackFunctionData(%s, NULL);\n}\n",
 	       lname, funcptr_name, name);
       Printv(f->def, inFirstArg ? "" : ", ", "SEXP ", name, NIL);
       if (Len(name) != 0)
@@ -2037,7 +2037,7 @@ int R::functionWrapper(Node *n) {
     }
 
 
-    tm = Swig_typemap_lookup("rtype", curP, "", 0);
+    tm = alaqil_typemap_lookup("rtype", curP, "", 0);
     if(tm) {
       replaceRClass(tm, Getattr(curP, "type"));
     }
@@ -2051,7 +2051,7 @@ int R::functionWrapper(Node *n) {
 
   if(addCopyParam) {
     Printf(sfun->def, "%s.copy = FALSE", nargs > 0 ? ", " : "");
-    Printf(f->def, "%sSEXP s_swig_copy", nargs > 0 ? ", " : "");
+    Printf(f->def, "%sSEXP s_alaqil_copy", nargs > 0 ? ", " : "");
 
     Printf(sargs, "as.logical(.copy), ");
   }
@@ -2096,10 +2096,10 @@ int R::functionWrapper(Node *n) {
   String *actioncode = emit_action(n);
 
   /* Deal with the explicit return value. */
-  if ((tm = Swig_typemap_lookup_out("out", n, Swig_cresult_name(), f, actioncode))) {
-    SwigType *retType = Getattr(n, "type");
+  if ((tm = alaqil_typemap_lookup_out("out", n, alaqil_cresult_name(), f, actioncode))) {
+    alaqilType *retType = Getattr(n, "type");
     
-    Replaceall(tm,"$1", Swig_cresult_name());
+    Replaceall(tm,"$1", alaqil_cresult_name());
     Replaceall(tm,"$result", "r_ans");
     if (debugMode){
       Printf(stdout, "Calling replace D: %s, %s, %s\n", retType, n, tm);
@@ -2107,14 +2107,14 @@ int R::functionWrapper(Node *n) {
     replaceRClass(tm, retType);
 
     if (GetFlag(n,"feature:new")) {
-      Replaceall(tm, "$owner", "SWIG_POINTER_OWN");
+      Replaceall(tm, "$owner", "alaqil_POINTER_OWN");
     } else {
       Replaceall(tm,"$owner", "0");
     }
 
 #if 0
     if(addCopyParam) {
-      Printf(f->code, "if(LOGICAL(s_swig_copy)[0]) {\n");
+      Printf(f->code, "if(LOGICAL(s_alaqil_copy)[0]) {\n");
       Printf(f->code, "/* Deal with returning a reference. */\nr_ans = R_NilValue;\n");
       Printf(f->code, "}\n else {\n");
     }
@@ -2122,12 +2122,12 @@ int R::functionWrapper(Node *n) {
     Printf(f->code, "%s\n", tm);
 #if 0
     if(addCopyParam)
-      Printf(f->code, "}\n"); /* end of if(s_swig_copy) ... else { ... } */
+      Printf(f->code, "}\n"); /* end of if(s_alaqil_copy) ... else { ... } */
 #endif
 
   } else {
-    Swig_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number,
-		 "Unable to use return type %s in function %s.\n", SwigType_str(type, 0), fname);
+    alaqil_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number,
+		 "Unable to use return type %s in function %s.\n", alaqilType_str(type, 0), fname);
   }
 
 
@@ -2162,15 +2162,15 @@ int R::functionWrapper(Node *n) {
 
   /* Look to see if there is any newfree cleanup code */
   if (GetFlag(n, "feature:new")) {
-    if ((tm = Swig_typemap_lookup("newfree", n, Swig_cresult_name(), 0))) {
-      Replaceall(tm, "$source", Swig_cresult_name());	/* deprecated */
+    if ((tm = alaqil_typemap_lookup("newfree", n, alaqil_cresult_name(), 0))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());	/* deprecated */
       Printf(f->code, "%s\n", tm);
     }
   }
 
   /* See if there is any return cleanup code */
-  if ((tm = Swig_typemap_lookup("ret", n, Swig_cresult_name(), 0))) {
-    Replaceall(tm, "$source", Swig_cresult_name());
+  if ((tm = alaqil_typemap_lookup("ret", n, alaqil_cresult_name(), 0))) {
+    Replaceall(tm, "$source", alaqil_cresult_name());
     Printf(f->code, "%s\n", tm);
     Delete(tm);
   }
@@ -2178,7 +2178,7 @@ int R::functionWrapper(Node *n) {
   Printv(f->code, UnProtectWrapupCode, NIL);
 
   /*If the user gave us something to convert the result in  */
-  if ((tm = Swig_typemap_lookup("scoerceout", n, Swig_cresult_name(), sfun))) {
+  if ((tm = alaqil_typemap_lookup("scoerceout", n, alaqil_cresult_name(), sfun))) {
     Replaceall(tm,"$source","ans");
     Replaceall(tm,"$result","ans");
     if (constructor) {
@@ -2225,9 +2225,9 @@ int R::functionWrapper(Node *n) {
   Wrapper_print(sfun, sfile);
 
   Printf(sfun->code, "\n# End of %s\n", iname);
-  tm = Swig_typemap_lookup("rtype", n, "", 0);
+  tm = alaqil_typemap_lookup("rtype", n, "", 0);
   if(tm) {
-    SwigType *retType = Getattr(n, "type");
+    alaqilType *retType = Getattr(n, "type");
     if (debugMode) {
       Printf(stdout, "Calling replace C: %s\n", Copy(retType));
     }
@@ -2241,7 +2241,7 @@ int R::functionWrapper(Node *n) {
   if(nargs > 0)
     Printv(sfile, "attr(`", sfname, "`, \"inputTypes\") = c(",
 	   s_inputTypes, ")\n", NIL);
-  Printv(sfile, "class(`", sfname, "`) = c(\"SWIGFunction\", class('",
+  Printv(sfile, "class(`", sfname, "`) = c(\"alaqilFunction\", class('",
 	 sfname, "'))\n\n", NIL);
 
   if (memoryProfile) {
@@ -2276,7 +2276,7 @@ int R::functionWrapper(Node *n) {
 
   Delete(sargs);
   Delete(sfname);
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 /* ----------------------------------------------------------------------
@@ -2286,7 +2286,7 @@ int R::functionWrapper(Node *n) {
 int R::constantWrapper(Node *n) {
   (void) n;
   // TODO
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 /*--------------------------------------------------------------
@@ -2308,7 +2308,7 @@ int R::addRegistrationRoutine(String *rname, int nargs) {
 
   Setattr(registrationTable, rname, el);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 /* -------------------------------------------------------------
@@ -2328,7 +2328,7 @@ int R::outputRegistrationRoutines(File *out) {
   if(inCPlusMode)
     Printf(out, "#ifdef __cplusplus\n}\n#endif\n\n");
 
-  Printf(out, "SWIGINTERN R_CallMethodDef CallEntries[] = {\n");
+  Printf(out, "alaqilINTERN R_CallMethodDef CallEntries[] = {\n");
 
   List *keys = Keys(registrationTable);
   n = Len(keys);
@@ -2344,7 +2344,7 @@ int R::outputRegistrationRoutines(File *out) {
 	 we simply replace all occurrences of '.' with '_' to construct the var name */
       String * Rpackage_sane = Copy(Rpackage);
       Replace(Rpackage_sane, ".", "_", DOH_REPLACE_ANY);
-      Printf(out, "SWIGEXPORT void R_init_%s(DllInfo *dll) {\n", Rpackage_sane);
+      Printf(out, "alaqilEXPORT void R_init_%s(DllInfo *dll) {\n", Rpackage_sane);
       Delete(Rpackage_sane);
     }
     Printf(out, "%sR_registerRoutines(dll, NULL, CallEntries, NULL, NULL);\n", tab4);
@@ -2372,8 +2372,8 @@ void R::registerClass(Node *n) {
   String *kind = Getattr(n, "kind");
 
   if (debugMode)
-    Swig_print_node(n);
-  String *sname = NewStringf("_p%s", SwigType_manglestr(name));
+    alaqil_print_node(n);
+  String *sname = NewStringf("_p%s", alaqilType_manglestr(name));
   if(!Getattr(SClassDefs, sname)) {
     Setattr(SClassDefs, sname, sname);
     String *base;
@@ -2386,7 +2386,7 @@ void R::registerClass(Node *n) {
 	for(int i = 0; i < Len(l); i++) {
 	  registerClass(Getitem(l, i));
 	  Printf(base, "'_p%s'%s",
-		 SwigType_manglestr(Getattr(Getitem(l, i), "name")),
+		 alaqilType_manglestr(Getattr(Getitem(l, i), "name")),
 		 i < Len(l)-1 ? ", " : "");
 	}
 	Printf(base, ")");
@@ -2401,9 +2401,9 @@ void R::registerClass(Node *n) {
     String *smartptr = Getattr(n, "feature:smartptr");
     if (smartptr) {
       List *l = Getattr(n, "bases");
-      SwigType *spt = Swig_cparse_type(smartptr);
-      String *smart = SwigType_typedef_resolve_all(spt);
-      String *smart_rname = SwigType_manglestr(smart);
+      alaqilType *spt = alaqil_cparse_type(smartptr);
+      String *smart = alaqilType_typedef_resolve_all(spt);
+      String *smart_rname = alaqilType_manglestr(smart);
       Printf(s_classes, "setClass('_p%s', contains = c('%s'", smart_rname, sname);
       Delete(spt);
       Delete(smart);
@@ -2412,9 +2412,9 @@ void R::registerClass(Node *n) {
 	Node * b = Getitem(l, i);
 	smartptr = Getattr(b, "feature:smartptr");
 	if (smartptr) {
-	  spt = Swig_cparse_type(smartptr);
-	  smart = SwigType_typedef_resolve_all(spt);
-	  smart_rname = SwigType_manglestr(smart);
+	  spt = alaqil_cparse_type(smartptr);
+	  smart = alaqilType_typedef_resolve_all(spt);
+	  smart_rname = alaqilType_manglestr(smart);
 	  Printf(s_classes, ", '_p%s'", smart_rname);
 	  Delete(spt);
 	  Delete(smart);
@@ -2432,7 +2432,7 @@ int R::classDeclaration(Node *n) {
   String *kind = Getattr(n, "kind");
 
   if (debugMode)
-    Swig_print_node(n);
+    alaqil_print_node(n);
   registerClass(n);
 
 
@@ -2497,7 +2497,7 @@ int R::classDeclaration(Node *n) {
 #if 0
       tp = getRType(c);
 #else
-      tp = Swig_typemap_lookup("rtype", c, "", 0);
+      tp = alaqil_typemap_lookup("rtype", c, "", 0);
       if(!tp) {
 	c = nextSibling(c);
 	continue;
@@ -2517,7 +2517,7 @@ int R::classDeclaration(Node *n) {
       }
       //	    else
       //XXX How can we tell if this is already done.
-      //	      SwigType_push(elType, elDecl);
+      //	      alaqilType_push(elType, elDecl);
 	
 	
       // returns ""  tp = processType(elType, c, NULL);
@@ -2531,7 +2531,7 @@ int R::classDeclaration(Node *n) {
       Delete(elNameT);
       c = nextSibling(c);
     }
-    Printf(def, "),\n%scontains = \"RSWIGStruct\")\n", tab8);
+    Printf(def, "),\n%scontains = \"RalaqilStruct\")\n", tab8);
     Printf(s_classes, "%s\n\n# End class %s\n\n", def, name);
 
     generateCopyRoutines(n);
@@ -2571,7 +2571,7 @@ int R::generateCopyRoutines(Node *n) {
     type = NewStringf("%s %s", kind, name);
   }
 
-  String *mangledName = SwigType_manglestr(name);
+  String *mangledName = alaqilType_manglestr(name);
 
   if (debugMode)
     Printf(stdout, "generateCopyRoutines:  name = %s, %s\n", name, type);
@@ -2593,7 +2593,7 @@ int R::generateCopyRoutines(Node *n) {
       continue;
     }
 
-    String *tp = Swig_typemap_lookup("rtype", c, "", 0);
+    String *tp = alaqil_typemap_lookup("rtype", c, "", 0);
     if(!tp) {
       continue;
     }
@@ -2640,7 +2640,7 @@ int R::generateCopyRoutines(Node *n) {
   DelWrapper(copyToR);
   DelWrapper(copyToC);
 
-  return SWIG_OK;
+  return alaqil_OK;
 }
 
 
@@ -2654,7 +2654,7 @@ int R::generateCopyRoutines(Node *n) {
  * --------------------------------------------------------------*/
 
 int R::typedefHandler(Node *n) {
-  SwigType *tp = Getattr(n, "type");
+  alaqilType *tp = Getattr(n, "type");
   String *type = Getattr(n, "type");
   if (debugMode)
     Printf(stdout, "<typedefHandler> %s\n", Getattr(n, "name"));
@@ -2668,7 +2668,7 @@ int R::typedefHandler(Node *n) {
     if (debugMode)
       Printf(stdout, "<typedefHandler> Defining S class %s\n", trueName);
     Printf(s_classes, "setClass('_p%s', contains = 'ExternalReference')\n",
-	   SwigType_manglestr(name));
+	   alaqilType_manglestr(name));
   }
 
   return Language::typedefHandler(n);
@@ -2684,7 +2684,7 @@ int R::typedefHandler(Node *n) {
  * --------------------------------------------------------------*/
 
 int R::membervariableHandler(Node *n) {
-  SwigType *t = Getattr(n, "type");
+  alaqilType *t = Getattr(n, "type");
   processType(t, n, NULL);
   processing_member_access_function = 1;
   member_name = Getattr(n,"sym:name");
@@ -2708,7 +2708,7 @@ int R::membervariableHandler(Node *n) {
   This doesn't seem to get used so leave it out for the moment.
 */
 String * R::runtimeCode() {
-  String *s = Swig_include_sys("rrun.swg");
+  String *s = alaqil_include_sys("rrun.swg");
   if (!s) {
     Printf(stdout, "*** Unable to open 'rrun.swg'\n");
     s = NewString("");
@@ -2718,18 +2718,18 @@ String * R::runtimeCode() {
 
 
 /* -----------------------------------------------------------------------
- * Called when SWIG wants to initialize this
+ * Called when alaqil wants to initialize this
  * We initialize anythin we want here.
- * Most importantly, tell SWIG where to find the files (e.g. r.swg) for this module.
- * Use Swig_mark_arg() to tell SWIG that it is understood and not to
+ * Most importantly, tell alaqil where to find the files (e.g. r.swg) for this module.
+ * Use alaqil_mark_arg() to tell alaqil that it is understood and not to
  * throw an error.
  * --------------------------------------------------------------*/
 
 void R::main(int argc, char *argv[]) {
   init();
-  Preprocessor_define("SWIGR 1", 0);
-  SWIG_library_directory("r");
-  SWIG_config_file("r.swg");
+  Preprocessor_define("alaqilR 1", 0);
+  alaqil_library_directory("r");
+  alaqil_config_file("r.swg");
   debugMode = false;
   copyStruct = true;
   memoryProfile = false;
@@ -2745,62 +2745,62 @@ void R::main(int argc, char *argv[]) {
 
   for(int i = 0; i < argc; i++) {
     if(strcmp(argv[i], "-package") == 0) {
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
       i++;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
       Rpackage = argv[i];
     } else if(strcmp(argv[i], "-dll") == 0) {
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
       i++;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
       DllName = argv[i];
     } else if(strcmp(argv[i], "-help") == 0) {
       showUsage();
     } else if(strcmp(argv[i], "-namespace") == 0) {
       outputNamespaceInfo = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if(!strcmp(argv[i], "-no-init-code")) {
       noInitializationCode = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if(!strcmp(argv[i], "-c++")) {
       inCPlusMode = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
       Printf(s_classes, "setClass('C++Reference', contains = 'ExternalReference')\n");
     } else if(!strcmp(argv[i], "-debug")) {
       debugMode = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (!strcmp(argv[i],"-copystruct")) {
       copyStruct = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (!strcmp(argv[i], "-nocopystruct")) {
       copyStruct = false;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (!strcmp(argv[i], "-memoryprof")) {
       memoryProfile = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (!strcmp(argv[i], "-nomemoryprof")) {
       memoryProfile = false;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (!strcmp(argv[i], "-aggressivegc")) {
       aggressiveGc = true;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (!strcmp(argv[i], "-noaggressivegc")) {
       aggressiveGc = false;
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (strcmp(argv[i], "-cppcast") == 0) {
       Printf(stderr, "Deprecated command line option: %s. This option is now always on.\n", argv[i]);
-      Swig_mark_arg(i);
+      alaqil_mark_arg(i);
     } else if (strcmp(argv[i], "-nocppcast") == 0) {
       Printf(stderr, "Deprecated command line option: %s. This option is no longer supported.\n", argv[i]);
-      Swig_mark_arg(i);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_mark_arg(i);
+      alaqil_exit(EXIT_FAILURE);
     }
 
     if (debugMode) {
-      Swig_typemap_search_debug_set();
-      Swig_typemap_used_debug_set();
-      Swig_typemap_register_debug_set();
-      Swig_file_debug_set();
+      alaqil_typemap_search_debug_set();
+      alaqil_typemap_used_debug_set();
+      alaqil_typemap_register_debug_set();
+      alaqil_file_debug_set();
     }
     /// copyToR copyToC functions.
 
@@ -2827,10 +2827,10 @@ int R::outputCommandLineArguments(File *out)
 
 
 
-/* How SWIG instantiates an object from this module.
-   See swigmain.cxx */
+/* How alaqil instantiates an object from this module.
+   See alaqilmain.cxx */
 extern "C"
-Language *swig_r(void) {
+Language *alaqil_r(void) {
   return new R();
 }
 
@@ -2840,19 +2840,19 @@ Language *swig_r(void) {
 /* -----------------------------------------------------------------------
  * Needs to be reworked.
  *----------------------------------------------------------------------- */
-String * R::processType(SwigType *t, Node *n, int *nargs) {
+String * R::processType(alaqilType *t, Node *n, int *nargs) {
   //XXX Need to handle typedefs, e.g.
   //  a type which is a typedef  to a function pointer.
 
-  SwigType *tmp = Getattr(n, "tdname");
+  alaqilType *tmp = Getattr(n, "tdname");
   if (debugMode)
-    Printf(stdout, "processType %s (tdname = %s)(SwigType = %s)\n", Getattr(n, "name"), tmp, Copy(t));
+    Printf(stdout, "processType %s (tdname = %s)(alaqilType = %s)\n", Getattr(n, "name"), tmp, Copy(t));
 
-  SwigType *td = t;
+  alaqilType *td = t;
   if (expandTypedef(t) &&
-      SwigType_istypedef(t)) {
-    SwigType *resolved =
-      SwigType_typedef_resolve_all(t);
+      alaqilType_istypedef(t)) {
+    alaqilType *resolved =
+      alaqilType_typedef_resolve_all(t);
     if (expandTypedef(resolved)) {
       td = Copy(resolved);
     }
@@ -2875,7 +2875,7 @@ String * R::processType(SwigType *t, Node *n, int *nargs) {
   if(td)
     t = td;
 
-  if(SwigType_isfunctionpointer(t)) {
+  if(alaqilType_isfunctionpointer(t)) {
     if (debugMode)
       Printf(stdout,
 	     "<processType> Defining pointer handler %s\n",  t);
@@ -2885,7 +2885,7 @@ String * R::processType(SwigType *t, Node *n, int *nargs) {
   }
 
 #if 0
-  SwigType_isfunction(t) && SwigType_ispointer(t)
+  alaqilType_isfunction(t) && alaqilType_ispointer(t)
 #endif
 
     return NULL;
@@ -2921,22 +2921,22 @@ String *R::enumValue(Node *n) {
   Setattr(n, "type", etype);
 
   if (!getCurrentClass()) {
-    newsymname = Swig_name_member(0, Getattr(parent, "sym:name"), symname);
+    newsymname = alaqil_name_member(0, Getattr(parent, "sym:name"), symname);
     // Strange hack to change the name
     Setattr(n, "name", Getattr(n, "value"));
     Setattr(n, "sym:name", newsymname);
     variableWrapper(n);
-    value = Swig_name_get(NSPACE_TODO, newsymname);
+    value = alaqil_name_get(NSPACE_TODO, newsymname);
   } else {
     String *enumClassPrefix = getEnumClassPrefix();
-    newsymname = Swig_name_member(0, enumClassPrefix, symname);
+    newsymname = alaqil_name_member(0, enumClassPrefix, symname);
     Setattr(n, "name", Getattr(n, "value"));
     Setattr(n, "sym:name", newsymname);
     variableWrapper(n);
-    value = Swig_name_get(NSPACE_TODO, newsymname);
+    value = alaqil_name_get(NSPACE_TODO, newsymname);
   }
-  value = Swig_name_wrapper(value);
-  Replace(value, "_wrap", "R_swig", DOH_REPLACE_FIRST);
+  value = alaqil_name_wrapper(value);
+  Replace(value, "_wrap", "R_alaqil", DOH_REPLACE_FIRST);
 
   String *valuecall=NewString("");
   Printv(valuecall, ".Call('", value, "',FALSE, PACKAGE='", Rpackage, "')", NIL);

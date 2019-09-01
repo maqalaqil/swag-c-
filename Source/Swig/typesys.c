@@ -1,20 +1,20 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * typesys.c
  *
- * SWIG type system management.   These functions are used to manage
+ * alaqil type system management.   These functions are used to manage
  * the C++ type system including typenames, typedef, type scopes, 
  * inheritance, and namespaces.   Generation of support code for the
  * run-time type checker is also handled here.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 #include "cparse.h"
 
 /* -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@
  *    "parent"          -  Parent scope
  * 
  * The contents of these tables can be viewed for debugging using the -debug-typedef
- * option which calls SwigType_print_scope().
+ * option which calls alaqilType_print_scope().
  *
  * Typedef information is stored in the "typetab" hash table.  For example,
  * if you have these declarations:
@@ -91,7 +91,7 @@
  *      "S" : "S"
  *
  *
- * For inheritance, SWIG tries to resolve types back to the base class. For instance, if
+ * For inheritance, alaqil tries to resolve types back to the base class. For instance, if
  * you have this:
  *
  *      class Foo {
@@ -140,7 +140,7 @@
  *      namespace F = Foo;
  *
  * In this case, F is defined as a scope that "inherits" from Foo.  Internally,
- * F will merely be an empty scope that points to Foo.  SWIG will never 
+ * F will merely be an empty scope that points to Foo.  alaqil will never 
  * place new type information into a namespace alias---attempts to do so
  * will generate a warning message (in the parser) and will place information into 
  * Foo instead.
@@ -154,19 +154,19 @@ static Typetab *global_scope = 0;	/* The global scope                           
 static Hash *scopes = 0;	/* Hash table containing fully qualified scopes */
 
 /* Performance optimization */
-#define SWIG_TYPEDEF_RESOLVE_CACHE 
+#define alaqil_TYPEDEF_RESOLVE_CACHE 
 static Hash *typedef_resolve_cache = 0;
 static Hash *typedef_all_cache = 0;
 static Hash *typedef_qualified_cache = 0;
 
-static Typetab *SwigType_find_scope(Typetab *s, const SwigType *nameprefix);
+static Typetab *alaqilType_find_scope(Typetab *s, const alaqilType *nameprefix);
 
 /* common attribute keys, to avoid calling find_key all the times */
 
 /* 
-   Enable this one if your language fully support SwigValueWrapper<T>.
+   Enable this one if your language fully support alaqilValueWrapper<T>.
    
-   Leaving at '0' keeps the old swig behavior, which is not
+   Leaving at '0' keeps the old alaqil behavior, which is not
    always safe, but is well known.
 
    Setting at '1' activates the new scheme, which is always safe but
@@ -174,7 +174,7 @@ static Typetab *SwigType_find_scope(Typetab *s, const SwigType *nameprefix);
   
 */
 static int value_wrapper_mode = 0;
-int Swig_value_wrapper_mode(int mode) {
+int alaqil_value_wrapper_mode(int mode) {
   value_wrapper_mode = mode;
   return mode;
 }
@@ -188,7 +188,7 @@ static void flush_cache() {
 
 /* Initialize the scoping system */
 
-void SwigType_typesystem_init() {
+void alaqilType_typesystem_init() {
   if (global_scope)
     Delete(global_scope);
   if (scopes)
@@ -208,13 +208,13 @@ void SwigType_typesystem_init() {
 
 
 /* -----------------------------------------------------------------------------
- * SwigType_typedef()
+ * alaqilType_typedef()
  *
  * Defines a new typedef in the current scope. Returns -1 if the type name is 
  * already defined.  
  * ----------------------------------------------------------------------------- */
 
-int SwigType_typedef(const SwigType *type, const_String_or_char_ptr name) {
+int alaqilType_typedef(const alaqilType *type, const_String_or_char_ptr name) {
   /* Printf(stdout, "typedef %s %s\n", type, name); */
   if (Getattr(current_typetab, name))
     return -1;			/* Already defined */
@@ -226,11 +226,11 @@ int SwigType_typedef(const SwigType *type, const_String_or_char_ptr name) {
      system for it.  This is needed to make strange nested scoping problems work
      correctly.  */
   {
-    Typetab *t = SwigType_find_scope(current_scope, type);
+    Typetab *t = alaqilType_find_scope(current_scope, type);
     if (t) {
-      SwigType_new_scope(name);
-      SwigType_inherit_scope(t);
-      SwigType_pop_scope();
+      alaqilType_new_scope(name);
+      alaqilType_inherit_scope(t);
+      alaqilType_pop_scope();
     }
   }
   Setattr(current_typetab, name, type);
@@ -240,12 +240,12 @@ int SwigType_typedef(const SwigType *type, const_String_or_char_ptr name) {
 
 
 /* -----------------------------------------------------------------------------
- * SwigType_typedef_class()
+ * alaqilType_typedef_class()
  *
  * Defines a class in the current scope. 
  * ----------------------------------------------------------------------------- */
 
-int SwigType_typedef_class(const_String_or_char_ptr name) {
+int alaqilType_typedef_class(const_String_or_char_ptr name) {
   String *cname;
   /*  Printf(stdout,"class : '%s'\n", name); */
   if (Getattr(current_typetab, name))
@@ -259,12 +259,12 @@ int SwigType_typedef_class(const_String_or_char_ptr name) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_scope_name()
+ * alaqilType_scope_name()
  *
  * Returns the qualified scope name of a type table
  * ----------------------------------------------------------------------------- */
 
-String *SwigType_scope_name(Typetab *ttab) {
+String *alaqilType_scope_name(Typetab *ttab) {
   String *qname = NewString(Getattr(ttab, "name"));
   ttab = Getattr(ttab, "parent");
   while (ttab) {
@@ -279,12 +279,12 @@ String *SwigType_scope_name(Typetab *ttab) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_new_scope()
+ * alaqilType_new_scope()
  *
  * Creates a new scope
  * ----------------------------------------------------------------------------- */
 
-void SwigType_new_scope(const_String_or_char_ptr name) {
+void alaqilType_new_scope(const_String_or_char_ptr name) {
   Typetab *s;
   Hash *ttab;
   String *qname;
@@ -299,22 +299,22 @@ void SwigType_new_scope(const_String_or_char_ptr name) {
   Setattr(s, "typetab", ttab);
 
   /* Build fully qualified name */
-  qname = SwigType_scope_name(s);
+  qname = alaqilType_scope_name(s);
 #if 1
   {
     /* TODO: only do with templates? What happens with non-templates with code below? */
     String *stripped_qname;
-    stripped_qname = SwigType_remove_global_scope_prefix(qname);
+    stripped_qname = alaqilType_remove_global_scope_prefix(qname);
     /* Use fully qualified name for hash key without unary scope prefix, qname may contain unary scope */
     Setattr(scopes, stripped_qname, s);
     Setattr(s, "qname", qname);
     /*
-    Printf(stdout, "SwigType_new_scope stripped %s %s\n", qname, stripped_qname);
+    Printf(stdout, "alaqilType_new_scope stripped %s %s\n", qname, stripped_qname);
     */
     Delete(stripped_qname);
   }
 #else
-  Printf(stdout, "SwigType_new_scope %s\n", qname);
+  Printf(stdout, "alaqilType_new_scope %s\n", qname);
   Setattr(scopes, qname, s);
   Setattr(s, "qname", qname);
 #endif
@@ -327,13 +327,13 @@ void SwigType_new_scope(const_String_or_char_ptr name) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_inherit_scope()
+ * alaqilType_inherit_scope()
  *
  * Makes the current scope inherit from another scope.  This is used for both
  * C++ class inheritance, namespaces, and namespace aliases.
  * ----------------------------------------------------------------------------- */
 
-void SwigType_inherit_scope(Typetab *scope) {
+void alaqilType_inherit_scope(Typetab *scope) {
   List *inherits;
   int i, len;
   inherits = Getattr(current_scope, "inherit");
@@ -354,15 +354,15 @@ void SwigType_inherit_scope(Typetab *scope) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_scope_alias()
+ * alaqilType_scope_alias()
  *
  * Creates a scope-alias.
  * ----------------------------------------------------------------------------- */
 
-void SwigType_scope_alias(String *aliasname, Typetab *ttab) {
+void alaqilType_scope_alias(String *aliasname, Typetab *ttab) {
   String *q;
   /*  Printf(stdout,"alias: '%s' '%p'\n", aliasname, ttab); */
-  q = SwigType_scope_name(current_scope);
+  q = alaqilType_scope_name(current_scope);
   if (Len(q)) {
     Append(q, "::");
   }
@@ -372,13 +372,13 @@ void SwigType_scope_alias(String *aliasname, Typetab *ttab) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_using_scope()
+ * alaqilType_using_scope()
  *
  * Import another scope into this scope.
  * ----------------------------------------------------------------------------- */
 
-void SwigType_using_scope(Typetab *scope) {
-  SwigType_inherit_scope(scope);
+void alaqilType_using_scope(Typetab *scope) {
+  alaqilType_inherit_scope(scope);
   {
     List *ulist;
     int i, len;
@@ -401,13 +401,13 @@ void SwigType_using_scope(Typetab *scope) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_pop_scope()
+ * alaqilType_pop_scope()
  *
  * Pop off the last scope and perform a merge operation.  Returns the hash
  * table for the scope that was popped off.
  * ----------------------------------------------------------------------------- */
 
-Typetab *SwigType_pop_scope() {
+Typetab *alaqilType_pop_scope() {
   Typetab *t, *old = current_scope;
   t = Getattr(current_scope, "parent");
   if (!t)
@@ -420,12 +420,12 @@ Typetab *SwigType_pop_scope() {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_set_scope()
+ * alaqilType_set_scope()
  *
  * Set the scope.  Returns the old scope.
  * ----------------------------------------------------------------------------- */
 
-Typetab *SwigType_set_scope(Typetab *t) {
+Typetab *alaqilType_set_scope(Typetab *t) {
   Typetab *old = current_scope;
   if (!t)
     t = global_scope;
@@ -437,23 +437,23 @@ Typetab *SwigType_set_scope(Typetab *t) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_attach_symtab()
+ * alaqilType_attach_symtab()
  *
  * Attaches a symbol table to a type scope
  * ----------------------------------------------------------------------------- */
 
-void SwigType_attach_symtab(Symtab *sym) {
+void alaqilType_attach_symtab(Symtab *sym) {
   Setattr(current_scope, "symtab", sym);
   current_symtab = sym;
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_print_scope()
+ * alaqilType_print_scope()
  *
  * Debugging function for printing out current scope
  * ----------------------------------------------------------------------------- */
 
-void SwigType_print_scope(void) {
+void alaqilType_print_scope(void) {
   Hash *ttab;
   Iterator i, j;
 
@@ -479,7 +479,7 @@ void SwigType_print_scope(void) {
   Printf(stdout, "SCOPES finish =======================================\n");
 }
 
-static Typetab *SwigType_find_scope(Typetab *s, const SwigType *nameprefix) {
+static Typetab *alaqilType_find_scope(Typetab *s, const alaqilType *nameprefix) {
   Typetab *ss;
   Typetab *s_orig = s;
   String *nnameprefix = 0;
@@ -490,9 +490,9 @@ static Typetab *SwigType_find_scope(Typetab *s, const SwigType *nameprefix) {
     return 0;
   Setmark(s, 1);
 
-  is_template = SwigType_istemplate(nameprefix);
+  is_template = alaqilType_istemplate(nameprefix);
   if (is_template) {
-    nnameprefix = SwigType_typedef_resolve_all(nameprefix);
+    nnameprefix = alaqilType_typedef_resolve_all(nameprefix);
     nameprefix = nnameprefix;
   }
 
@@ -508,7 +508,7 @@ static Typetab *SwigType_find_scope(Typetab *s, const SwigType *nameprefix) {
     s = Getattr(scopes, full);
     if (!s && is_template) {
       /* try look up scope with all the unary scope operators within the template parameter list removed */
-      SwigType *full_stripped = SwigType_remove_global_scope_prefix(full);
+      alaqilType *full_stripped = alaqilType_remove_global_scope_prefix(full);
       s = Getattr(scopes, full_stripped);
       Delete(full_stripped);
     }
@@ -531,7 +531,7 @@ static Typetab *SwigType_find_scope(Typetab *s, const SwigType *nameprefix) {
 	  int oldcp = check_parent;
 	  ttab = Getitem(inherit, i);
 	  check_parent = 0;
-	  s = SwigType_find_scope(ttab, nameprefix);
+	  s = alaqilType_find_scope(ttab, nameprefix);
 	  check_parent = oldcp;
 	  if (s) {
 	    if (nnameprefix)
@@ -564,9 +564,9 @@ static Typetab *resolved_scope = 0;
 
 /* Internal function */
 
-static SwigType *_typedef_resolve(Typetab *s, String *base, int look_parent) {
+static alaqilType *_typedef_resolve(Typetab *s, String *base, int look_parent) {
   Hash *ttab;
-  SwigType *type = 0;
+  alaqilType *type = 0;
   List *inherit;
   Typetab *parent;
 
@@ -624,16 +624,16 @@ static String *template_parameters_resolve(const String *base) {
   String *type;
   int i, sz;
   int rep = 0;
-  type = SwigType_templateprefix(base);
-  suffix = SwigType_templatesuffix(base);
+  type = alaqilType_templateprefix(base);
+  suffix = alaqilType_templatesuffix(base);
   Append(type, "<(");
-  tparms = SwigType_parmlist(base);
+  tparms = alaqilType_parmlist(base);
   sz = Len(tparms);
   for (i = 0; i < sz; i++) {
-    SwigType *tpr;
-    SwigType *tp = Getitem(tparms, i);
+    alaqilType *tpr;
+    alaqilType *tp = Getitem(tparms, i);
     if (!rep) {
-      tpr = SwigType_typedef_resolve(tp);
+      tpr = alaqilType_typedef_resolve(tp);
     } else {
       tpr = 0;
     }
@@ -659,13 +659,13 @@ static String *template_parameters_resolve(const String *base) {
   return type;
 }
 
-static SwigType *typedef_resolve(Typetab *s, String *base) {
+static alaqilType *typedef_resolve(Typetab *s, String *base) {
   return _typedef_resolve(s, base, 1);
 }
 
 
 /* ----------------------------------------------------------------------------- 
- * SwigType_typedef_resolve()
+ * alaqilType_typedef_resolve()
  *
  * Given a type declaration, this function looks to reduce/resolve the type via a
  * typedef (including via C++ using declarations).
@@ -679,8 +679,8 @@ static SwigType *typedef_resolve(Typetab *s, String *base) {
  * Some additional notes are in Doc/Manual/Extending.html.
  * ----------------------------------------------------------------------------- */
 
-/* #define SWIG_DEBUG */
-SwigType *SwigType_typedef_resolve(const SwigType *t) {
+/* #define alaqil_DEBUG */
+alaqilType *alaqilType_typedef_resolve(const alaqilType *t) {
   String *base;
   String *type = 0;
   String *r = 0;
@@ -692,7 +692,7 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
 
   resolved_scope = 0;
 
-#ifdef SWIG_TYPEDEF_RESOLVE_CACHE
+#ifdef alaqil_TYPEDEF_RESOLVE_CACHE
   if (!typedef_resolve_cache) {
     typedef_resolve_cache = NewHash();
   }
@@ -703,13 +703,13 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
   }
 #endif
 
-  base = SwigType_base(t);
+  base = alaqilType_base(t);
 
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
   Printf(stdout, "base = '%s' t='%s'\n", base, t);
 #endif
 
-  if (SwigType_issimple(base)) {
+  if (alaqilType_issimple(base)) {
     s = current_scope;
     ttab = current_typetab;
     if (strncmp(Char(base), "::", 2) == 0) {
@@ -725,16 +725,16 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
     }
     if (!type) {
       /* Didn't find in this scope.   We need to do a little more searching */
-      if (Swig_scopename_check(base)) {
+      if (alaqil_scopename_check(base)) {
 	/* A qualified name. */
-	Swig_scopename_split(base, &nameprefix, &namebase);
-#ifdef SWIG_DEBUG
+	alaqil_scopename_split(base, &nameprefix, &namebase);
+#ifdef alaqil_DEBUG
 	Printf(stdout, "nameprefix = '%s'\n", nameprefix);
 #endif
 	if (nameprefix) {
-	  rnameprefix = SwigType_typedef_resolve(nameprefix);
+	  rnameprefix = alaqilType_typedef_resolve(nameprefix);
 	  if(rnameprefix != NULL) {
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
 	    Printf(stdout, "nameprefix '%s' is a typedef to '%s'\n", nameprefix, rnameprefix);
 #endif
 	    type = Copy(namebase);
@@ -750,7 +750,7 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
 	    String *rnameprefix = template_parameters_resolve(nameprefix);
 	    nameprefix = rnameprefix ? Copy(rnameprefix) : nameprefix;
 	    Delete(rnameprefix);
-	    s = SwigType_find_scope(s, nameprefix);
+	    s = alaqilType_find_scope(s, nameprefix);
 
 	    /* Couldn't locate a scope for the type.  */
 	    if (!s) {
@@ -761,7 +761,7 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
 	      goto return_result;
 	    }
 	    /* Try to locate the name starting in the scope */
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
 	    Printf(stdout, "namebase = '%s'\n", namebase);
 #endif
 	    type = typedef_resolve(s, namebase);
@@ -774,10 +774,10 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
 	      if (rtype)
 	        type = rtype;
 	    }
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
 	    Printf(stdout, "%s type = '%s'\n", Getattr(s, "name"), type);
 #endif
-	    if ((type) && (!Swig_scopename_check(type)) && resolved_scope) {
+	    if ((type) && (!alaqil_scopename_check(type)) && resolved_scope) {
 	      Typetab *rtab = resolved_scope;
 	      String *qname = Getattr(resolved_scope, "qname");
 	      /* If qualified *and* the typename is defined from the resolved scope, we qualify */
@@ -785,7 +785,7 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
 	        type = Copy(type);
 	        Insert(type, 0, "::");
 	        Insert(type, 0, qname);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
 	        Printf(stdout, "qual %s \n", type);
 #endif
 	        newtype = 1;
@@ -803,14 +803,14 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
       }
     }
 
-    if (!type && SwigType_istemplate(base)) {
-      String *tprefix = SwigType_templateprefix(base);
-      String *rtprefix = SwigType_typedef_resolve(tprefix);
+    if (!type && alaqilType_istemplate(base)) {
+      String *tprefix = alaqilType_templateprefix(base);
+      String *rtprefix = alaqilType_typedef_resolve(tprefix);
       /* We're looking for a using declaration on the template prefix to resolve the template prefix
        * in another scope. Using declaration do not have template parameters. */
-      if (rtprefix && !SwigType_istemplate(rtprefix)) {
-	String *tsuffix = SwigType_templatesuffix(base);
-	String *targs = SwigType_templateargs(base);
+      if (rtprefix && !alaqilType_istemplate(rtprefix)) {
+	String *tsuffix = alaqilType_templatesuffix(base);
+	String *targs = alaqilType_templateargs(base);
 	type = NewString(rtprefix);
 	newtype = 1;
 	Append(type, targs);
@@ -835,26 +835,26 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
     /* If the type is a template, and no typedef was found, we need to check the
        template arguments one by one to see if they can be resolved. */
 
-    if (!type && SwigType_istemplate(base)) {
+    if (!type && alaqilType_istemplate(base)) {
       newtype = 1;
       type = template_parameters_resolve(base);
     }
     Delete(namebase);
     Delete(nameprefix);
   } else {
-    if (SwigType_isfunction(base)) {
+    if (alaqilType_isfunction(base)) {
       List *parms;
       int i, sz;
       int rep = 0;
       type = NewString("f(");
       newtype = 1;
-      parms = SwigType_parmlist(base);
+      parms = alaqilType_parmlist(base);
       sz = Len(parms);
       for (i = 0; i < sz; i++) {
-	SwigType *tpr;
-	SwigType *tp = Getitem(parms, i);
+	alaqilType *tpr;
+	alaqilType *tp = Getitem(parms, i);
 	if (!rep) {
-	  tpr = SwigType_typedef_resolve(tp);
+	  tpr = alaqilType_typedef_resolve(tp);
 	} else {
 	  tpr = 0;
 	}
@@ -874,10 +874,10 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
 	Delete(type);
 	type = 0;
       }
-    } else if (SwigType_ismemberpointer(base)) {
+    } else if (alaqilType_ismemberpointer(base)) {
       String *rt;
-      String *mtype = SwigType_parm(base);
-      rt = SwigType_typedef_resolve(mtype);
+      String *mtype = alaqilType_parm(base);
+      rt = alaqilType_typedef_resolve(mtype);
       if (rt) {
 	type = NewStringf("m(%s).", rt);
 	newtype = 1;
@@ -888,12 +888,12 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
       type = 0;
     }
   }
-  r = SwigType_prefix(t);
+  r = alaqilType_prefix(t);
   if (!type) {
     if (r && Len(r)) {
       char *cr = Char(r);
       if ((strstr(cr, "f(") || (strstr(cr, "m(")))) {
-	SwigType *rt = SwigType_typedef_resolve(r);
+	alaqilType *rt = alaqilType_typedef_resolve(r);
 	if (rt) {
 	  Delete(r);
 	  Append(rt, base);
@@ -920,14 +920,14 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
      and NOT
        q(const).a(7).q(volatile).double    // non-sensical type
   */
-  if (r && Len(r) && SwigType_isarray(type)) {
+  if (r && Len(r) && alaqilType_isarray(type)) {
     List *r_elem;
     String *r_qual;
     int r_sz;
-    r_elem = SwigType_split(r);
+    r_elem = alaqilType_split(r);
     r_sz = Len(r_elem);
     r_qual = Getitem(r_elem, r_sz-1);
-    if (SwigType_isqualifier(r_qual)) {
+    if (alaqilType_isqualifier(r_qual)) {
       String *new_r;
       String *new_type;
       List *type_elem;
@@ -935,17 +935,17 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
       String *r_qual_arg;
       int i, type_sz;
 
-      type_elem = SwigType_split(type);
+      type_elem = alaqilType_split(type);
       type_sz = Len(type_elem);
 
       for (i = 0; i < type_sz; ++i) {
         String *e = Getitem(type_elem, i);
-        if (!SwigType_isarray(e))
+        if (!alaqilType_isarray(e))
           break;
       }
       type_qual = Copy(Getitem(type_elem, i));
-      r_qual_arg = SwigType_parm(r_qual);
-      SwigType_add_qualifier(type_qual, r_qual_arg);
+      r_qual_arg = alaqilType_parm(r_qual);
+      alaqilType_add_qualifier(type_qual, r_qual_arg);
       Delete(r_qual_arg);
       Setitem(type_elem, i, type_qual);
 
@@ -957,7 +957,7 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
       for (i = 0; i < type_sz; ++i) {
         Append(new_type, Getitem(type_elem, i));
       }
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
       Printf(stdout, "r+type='%s%s' new_r+new_type='%s%s'\n", r, type, new_r, new_type);
 #endif
 
@@ -976,11 +976,11 @@ SwigType *SwigType_typedef_resolve(const SwigType *t) {
   }
 
 return_result:
-#ifdef SWIG_TYPEDEF_RESOLVE_CACHE
+#ifdef alaqil_TYPEDEF_RESOLVE_CACHE
   {
     String *key = NewString(t);
     if (r) {
-      SwigType *r1;
+      alaqilType *r1;
       Setattr(typedef_resolve_cache, key, r);
       Setmeta(r, "scope", resolved_scope);
       r1 = Copy(r);
@@ -994,14 +994,14 @@ return_result:
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_typedef_resolve_all()
+ * alaqilType_typedef_resolve_all()
  *
  * Fully resolve a type down to its most basic datatype
  * ----------------------------------------------------------------------------- */
 
-SwigType *SwigType_typedef_resolve_all(const SwigType *t) {
-  SwigType *n;
-  SwigType *r;
+alaqilType *alaqilType_typedef_resolve_all(const alaqilType *t) {
+  alaqilType *n;
+  alaqilType *r;
   int count = 0;
 
   /* Check to see if the typedef resolve has been done before by checking the cache */
@@ -1013,16 +1013,16 @@ SwigType *SwigType_typedef_resolve_all(const SwigType *t) {
     return Copy(r);
   }
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "SwigType_typedef_resolve_all start ... %s\n", t);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqilType_typedef_resolve_all start ... %s\n", t);
 #endif
   /* Recursively resolve the typedef */
   r = NewString(t);
-  while ((n = SwigType_typedef_resolve(r))) {
+  while ((n = alaqilType_typedef_resolve(r))) {
     Delete(r);
     r = n;
     if (++count >= 512) {
-      Swig_error(Getfile(t), Getline(t), "Recursive typedef detected resolving '%s' to '%s' to '%s' and so on...\n", SwigType_str(t, 0), SwigType_str(SwigType_typedef_resolve(t), 0), SwigType_str(SwigType_typedef_resolve(SwigType_typedef_resolve(t)), 0));
+      alaqil_error(Getfile(t), Getline(t), "Recursive typedef detected resolving '%s' to '%s' to '%s' and so on...\n", alaqilType_str(t, 0), alaqilType_str(alaqilType_typedef_resolve(t), 0), alaqilType_str(alaqilType_typedef_resolve(alaqilType_typedef_resolve(t)), 0));
       break;
     }
   }
@@ -1030,21 +1030,21 @@ SwigType *SwigType_typedef_resolve_all(const SwigType *t) {
   /* Add the typedef to the cache for next time it is looked up */
   {
     String *key;
-    SwigType *rr = Copy(r);
+    alaqilType *rr = Copy(r);
     key = NewString(t);
     Setattr(typedef_all_cache, key, rr);
     Delete(key);
     Delete(rr);
   }
-#ifdef SWIG_DEBUG
-  Printf(stdout, "SwigType_typedef_resolve_all end   === %s => %s\n", t, r);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqilType_typedef_resolve_all end   === %s => %s\n", t, r);
 #endif
   return r;
 }
 
 
 /* -----------------------------------------------------------------------------
- * SwigType_typedef_qualified()
+ * alaqilType_typedef_qualified()
  *
  * Given a type declaration, this function tries to fully qualify it so that the
  * resulting type can be used in the global scope. The type name is resolved in
@@ -1055,13 +1055,13 @@ SwigType *SwigType_typedef_resolve_all(const SwigType *t) {
  * expanded, but it will be resolved and fully qualified for use in the global scope.
  *
  * This function is for looking up scopes to qualify a type. It does not resolve
- * C typedefs, it just qualifies them. See SwigType_typedef_resolve for resolving.
+ * C typedefs, it just qualifies them. See alaqilType_typedef_resolve for resolving.
  *
  * If the unary scope operator (::) is used as a prefix to the type to denote global
  * scope, it is left in place.
  * ----------------------------------------------------------------------------- */
 
-SwigType *SwigType_typedef_qualified(const SwigType *t) {
+alaqilType *alaqilType_typedef_qualified(const alaqilType *t) {
   List *elements;
   String *result;
   int i, len;
@@ -1075,15 +1075,15 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
   }
 
   result = NewStringEmpty();
-  elements = SwigType_split(t);
+  elements = alaqilType_split(t);
   len = Len(elements);
   for (i = 0; i < len; i++) {
     String *ty = 0;
     String *e = Getitem(elements, i);
-    if (SwigType_issimple(e)) {
-      if (!SwigType_istemplate(e)) {
+    if (alaqilType_issimple(e)) {
+      if (!alaqilType_istemplate(e)) {
 	String *isenum = 0;
-	if (SwigType_isenum(e)) {
+	if (alaqilType_isenum(e)) {
 	  isenum = NewString("enum ");
 	  ty = NewString(Char(e) + 5);
 	  e = ty;
@@ -1097,12 +1097,12 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
 	    Insert(e, 0, qname);
 	  }
 	} else {
-	  if (Swig_scopename_check(e)) {
+	  if (alaqil_scopename_check(e)) {
 	    String *qlast;
 	    String *qname;
-	    Swig_scopename_split(e, &qname, &qlast);
+	    alaqil_scopename_split(e, &qname, &qlast);
 	    if (qname) {
-	      String *tqname = SwigType_typedef_qualified(qname);
+	      String *tqname = alaqilType_typedef_qualified(qname);
 	      Clear(e);
 	      Printf(e, "%s::%s", tqname, qlast);
 	      Delete(qname);
@@ -1118,9 +1118,9 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
 
 	    Typetab *cs = current_scope;
 	    if (cs) {
-	      Typetab *found_scope = SwigType_find_scope(cs, e);
+	      Typetab *found_scope = alaqilType_find_scope(cs, e);
 	      if (found_scope) {
-		String *qs = SwigType_scope_name(found_scope);
+		String *qs = alaqilType_scope_name(found_scope);
 		Clear(e);
 		Append(e, qs);
 		Delete(qs);
@@ -1139,17 +1139,17 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
 	Iterator pi;
 	Parm *p;
 	List *parms;
-	ty = Swig_symbol_template_deftype(e, current_symtab);
+	ty = alaqil_symbol_template_deftype(e, current_symtab);
 	e = ty;
-	parms = SwigType_parmlist(e);
-	tprefix = SwigType_templateprefix(e);
-	tsuffix = SwigType_templatesuffix(e);
-	qprefix = SwigType_typedef_qualified(tprefix);
+	parms = alaqilType_parmlist(e);
+	tprefix = alaqilType_templateprefix(e);
+	tsuffix = alaqilType_templatesuffix(e);
+	qprefix = alaqilType_typedef_qualified(tprefix);
 	Append(qprefix, "<(");
 	pi = First(parms);
 	while ((p = pi.item)) {
-	  String *qt = SwigType_typedef_qualified(p);
-	  if (Equal(qt, p)) {	/*  && (!Swig_scopename_check(qt))) */
+	  String *qt = alaqilType_typedef_qualified(p);
+	  if (Equal(qt, p)) {	/*  && (!alaqil_scopename_check(qt))) */
 	    /* No change in value.  It is entirely possible that the parameter is an integer value.
 	       If there is a symbol table associated with this scope, we're going to check for this */
 
@@ -1157,7 +1157,7 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
 	      Node *lastnode = 0;
 	      String *value = Copy(p);
 	      while (1) {
-		Node *n = Swig_symbol_clookup(value, current_symtab);
+		Node *n = alaqil_symbol_clookup(value, current_symtab);
 		if (n == lastnode)
 		  break;
 		lastnode = n;
@@ -1165,7 +1165,7 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
 		  char *ntype = Char(nodeType(n));
 		  if (strcmp(ntype, "enumitem") == 0) {
 		    /* An enum item.   Generate a fully qualified name */
-		    String *qn = Swig_symbol_qualified(n);
+		    String *qn = alaqil_symbol_qualified(n);
 		    if (Len(qn)) {
 		      Append(qn, "::");
 		      Append(qn, Getattr(n, "name"));
@@ -1209,13 +1209,13 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
       }
       Append(result, e);
       Delete(ty);
-    } else if (SwigType_isfunction(e)) {
-      List *parms = SwigType_parmlist(e);
+    } else if (alaqilType_isfunction(e)) {
+      List *parms = alaqilType_parmlist(e);
       String *s = NewString("f(");
       Iterator pi;
       pi = First(parms);
       while (pi.item) {
-	String *pq = SwigType_typedef_qualified(pi.item);
+	String *pq = alaqilType_typedef_qualified(pi.item);
 	Append(s, pq);
 	Delete(pq);
 	pi = Next(pi);
@@ -1227,10 +1227,10 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
       Append(result, s);
       Delete(s);
       Delete(parms);
-    } else if (SwigType_isarray(e)) {
+    } else if (alaqilType_isarray(e)) {
       String *ndim;
-      String *dim = SwigType_parm(e);
-      ndim = Swig_symbol_string_qualify(dim, 0);
+      String *dim = alaqilType_parm(e);
+      ndim = alaqil_symbol_string_qualify(dim, 0);
       Printf(result, "a(%s).", ndim);
       Delete(dim);
       Delete(ndim);
@@ -1251,15 +1251,15 @@ SwigType *SwigType_typedef_qualified(const SwigType *t) {
 }
 
 /* ----------------------------------------------------------------------------- 
- * SwigType_istypedef()
+ * alaqilType_istypedef()
  *
  * Checks a typename to see if it is a typedef.
  * ----------------------------------------------------------------------------- */
 
-int SwigType_istypedef(const SwigType *t) {
+int alaqilType_istypedef(const alaqilType *t) {
   String *type;
 
-  type = SwigType_typedef_resolve(t);
+  type = alaqilType_typedef_resolve(t);
   if (type) {
     Delete(type);
     return 1;
@@ -1270,13 +1270,13 @@ int SwigType_istypedef(const SwigType *t) {
 
 
 /* -----------------------------------------------------------------------------
- * SwigType_typedef_using()
+ * alaqilType_typedef_using()
  *
  * Processes a 'using' declaration to import types from one scope into another.
  * Name is a qualified name like A::B.
  * ----------------------------------------------------------------------------- */
 
-int SwigType_typedef_using(const_String_or_char_ptr name) {
+int alaqilType_typedef_using(const_String_or_char_ptr name) {
   String *base;
   String *td;
   String *prefix;
@@ -1287,9 +1287,9 @@ int SwigType_typedef_using(const_String_or_char_ptr name) {
 
   /* Printf(stdout, "using %s\n", name); */
 
-  if (!Swig_scopename_check(name))
+  if (!alaqil_scopename_check(name))
     return -1;			/* Not properly qualified */
-  base = Swig_scopename_last(name);
+  base = alaqil_scopename_last(name);
 
   /* See if the base is already defined in this scope */
   if (Getattr(current_typetab, base)) {
@@ -1298,14 +1298,14 @@ int SwigType_typedef_using(const_String_or_char_ptr name) {
   }
 
   /* See if the using name is a scope */
-  /*  tt = SwigType_find_scope(current_scope,name);
+  /*  tt = alaqilType_find_scope(current_scope,name);
      Printf(stdout,"tt = %p, name = '%s'\n", tt, name); */
 
   /* We set up a typedef  B --> A::B */
   Setattr(current_typetab, base, name);
 
   /* Find the scope name where the symbol is defined */
-  td = SwigType_typedef_resolve(name);
+  td = alaqilType_typedef_resolve(name);
   /*  Printf(stdout,"td = '%s' %p\n", td, resolved_scope); */
   if (resolved_scope) {
     defined_name = Getattr(resolved_scope, "qname");
@@ -1314,7 +1314,7 @@ int SwigType_typedef_using(const_String_or_char_ptr name) {
       Append(defined_name, "::");
       Append(defined_name, base);
       /*  Printf(stdout,"defined_name = '%s'\n", defined_name); */
-      tt = SwigType_find_scope(current_scope, defined_name);
+      tt = alaqilType_find_scope(current_scope, defined_name);
     }
   }
   if (td)
@@ -1323,9 +1323,9 @@ int SwigType_typedef_using(const_String_or_char_ptr name) {
 
   /* Figure out the scope the using directive refers to */
   {
-    prefix = Swig_scopename_prefix(name);
+    prefix = alaqil_scopename_prefix(name);
     if (prefix) {
-      s = SwigType_find_scope(current_scope, prefix);
+      s = alaqilType_find_scope(current_scope, prefix);
       if (s) {
 	Hash *ttab = Getattr(s, "typetab");
 	if (!Getattr(ttab, base) && defined_name) {
@@ -1337,9 +1337,9 @@ int SwigType_typedef_using(const_String_or_char_ptr name) {
 
   if (tt) {
     /* Using directive had its own scope.  We need to create a new scope for it */
-    SwigType_new_scope(base);
-    SwigType_inherit_scope(tt);
-    SwigType_pop_scope();
+    alaqilType_new_scope(base);
+    alaqilType_inherit_scope(tt);
+    alaqilType_pop_scope();
   }
 
   if (defined_name)
@@ -1350,21 +1350,21 @@ int SwigType_typedef_using(const_String_or_char_ptr name) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_isclass()
+ * alaqilType_isclass()
  *
  * Determines if a type defines a class or not.   A class is defined by
  * its type-table entry maps to itself.  Note: a pointer to a class is not
  * a class.
  * ----------------------------------------------------------------------------- */
 
-int SwigType_isclass(const SwigType *t) {
-  SwigType *qty, *qtys;
+int alaqilType_isclass(const alaqilType *t) {
+  alaqilType *qty, *qtys;
   int isclass = 0;
 
-  qty = SwigType_typedef_resolve_all(t);
-  qtys = SwigType_strip_qualifiers(qty);
-  if (SwigType_issimple(qtys)) {
-    String *td = SwigType_typedef_resolve(qtys);
+  qty = alaqilType_typedef_resolve_all(t);
+  qtys = alaqilType_strip_qualifiers(qty);
+  if (alaqilType_issimple(qtys)) {
+    String *td = alaqilType_typedef_resolve(qtys);
     if (td) {
       Delete(td);
     }
@@ -1373,9 +1373,9 @@ int SwigType_isclass(const SwigType *t) {
     }
     /* Hmmm. Not a class.  If a template, it might be uninstantiated */
     if (!isclass) {
-      String *tp = SwigType_istemplate_templateprefix(qtys);
+      String *tp = alaqilType_istemplate_templateprefix(qtys);
       if (tp && Strcmp(tp, t) != 0) {
-	isclass = SwigType_isclass(tp);
+	isclass = alaqilType_isclass(tp);
       }
       Delete(tp);
     }
@@ -1386,22 +1386,22 @@ int SwigType_isclass(const SwigType *t) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_type()
+ * alaqilType_type()
  *
  * Returns an integer code describing the datatype.  This is only used for
- * compatibility with SWIG1.1 language modules and is likely to go away once
+ * compatibility with alaqil1.1 language modules and is likely to go away once
  * everything is based on typemaps.
  * ----------------------------------------------------------------------------- */
 
-int SwigType_type(const SwigType *t) {
+int alaqilType_type(const alaqilType *t) {
   char *c;
   /* Check for the obvious stuff */
   c = Char(t);
 
   if (strncmp(c, "p.", 2) == 0) {
-    if (SwigType_type(c + 2) == T_CHAR)
+    if (alaqilType_type(c + 2) == T_CHAR)
       return T_STRING;
-    else if (SwigType_type(c + 2) == T_WCHAR)
+    else if (alaqilType_type(c + 2) == T_WCHAR)
       return T_WSTRING;
     else
       return T_POINTER;
@@ -1418,7 +1418,7 @@ int SwigType_type(const SwigType *t) {
     while (*c && (*c != '.'))
       c++;
     if (*c)
-      return SwigType_type(c + 1);
+      return alaqilType_type(c + 1);
     return T_ERROR;
   }
   if (strncmp(c, "f(", 2) == 0)
@@ -1475,10 +1475,10 @@ int SwigType_type(const SwigType *t) {
   if (strcmp(c, "v(...)") == 0)
     return T_VARARGS;
   /* Hmmm. Unknown type */
-  if (SwigType_istypedef(t)) {
+  if (alaqilType_istypedef(t)) {
     int r;
-    SwigType *nt = SwigType_typedef_resolve(t);
-    r = SwigType_type(nt);
+    alaqilType *nt = alaqilType_typedef_resolve(t);
+    r = alaqilType_type(nt);
     Delete(nt);
     return r;
   }
@@ -1486,19 +1486,19 @@ int SwigType_type(const SwigType *t) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_alttype()
+ * alaqilType_alttype()
  *
  * Returns the alternative value type needed in C++ for class value
- * types. When swig is not sure about using a plain $ltype value,
+ * types. When alaqil is not sure about using a plain $ltype value,
  * since the class doesn't have a default constructor, or it can't be
- * assigned, you will get back 'SwigValueWrapper<type >'.
+ * assigned, you will get back 'alaqilValueWrapper<type >'.
  *
  * This is the default behavior unless:
  *
- *  1.- swig detects a default_constructor and 'setallocate:default_constructor'
+ *  1.- alaqil detects a default_constructor and 'setallocate:default_constructor'
  *      attribute.
  *
- *  2.- swig doesn't mark 'type' as non-assignable.
+ *  2.- alaqil doesn't mark 'type' as non-assignable.
  *
  *  3.- the user specifies that the value wrapper is not needed by using
  *      %feature("novaluewrapper") like so:
@@ -1510,24 +1510,24 @@ int SwigType_type(const SwigType *t) {
  * %feature("valuewrapper").
  * ----------------------------------------------------------------------------- */
 
-SwigType *SwigType_alttype(const SwigType *t, int local_tmap) {
+alaqilType *alaqilType_alttype(const alaqilType *t, int local_tmap) {
   Node *n;
-  SwigType *w = 0;
+  alaqilType *w = 0;
   int use_wrapper = 0;
-  SwigType *td = 0;
+  alaqilType *td = 0;
 
   if (!cparse_cplusplus)
     return 0;
 
   if (value_wrapper_mode == 0) {
-    /* old partial use of SwigValueTypes, it can fail for opaque types */
+    /* old partial use of alaqilValueTypes, it can fail for opaque types */
     if (local_tmap)
       return 0;
-    if (SwigType_isclass(t)) {
-      SwigType *ftd = SwigType_typedef_resolve_all(t);
-      td = SwigType_strip_qualifiers(ftd);
+    if (alaqilType_isclass(t)) {
+      alaqilType *ftd = alaqilType_typedef_resolve_all(t);
+      td = alaqilType_strip_qualifiers(ftd);
       Delete(ftd);
-      n = Swig_symbol_clookup(td, 0);
+      n = alaqil_symbol_clookup(td, 0);
       if (n) {
 	if (GetFlag(n, "feature:valuewrapper")) {
 	  use_wrapper = 1;
@@ -1539,19 +1539,19 @@ SwigType *SwigType_alttype(const SwigType *t, int local_tmap) {
 	  }
 	}
       } else {
-	if (SwigType_issimple(td) && SwigType_istemplate(td)) {
+	if (alaqilType_issimple(td) && alaqilType_istemplate(td)) {
 	  use_wrapper = 1;
 	}
       }
     }
   } else {
-    /* safe use of SwigValueTypes, it can fail with some typemaps */
-    SwigType *ftd = SwigType_typedef_resolve_all(t);
-    td = SwigType_strip_qualifiers(ftd);
+    /* safe use of alaqilValueTypes, it can fail with some typemaps */
+    alaqilType *ftd = alaqilType_typedef_resolve_all(t);
+    td = alaqilType_strip_qualifiers(ftd);
     Delete(ftd);
-    if (SwigType_type(td) == T_USER) {
+    if (alaqilType_type(td) == T_USER) {
       use_wrapper = 1;
-      n = Swig_symbol_clookup(td, 0);
+      n = alaqil_symbol_clookup(td, 0);
       if (n) {
 	if ((Checkattr(n, "nodeType", "class")
 	     && !Getattr(n, "allocate:noassign")
@@ -1568,7 +1568,7 @@ SwigType *SwigType_alttype(const SwigType *t, int local_tmap) {
      * token is a digraph for [ in C++.  Also need a space after the
      * type in case it ends with ">" since then we form the token ">>".
      */
-    w = NewStringf("SwigValueWrapper< %s >", td);
+    w = NewStringf("alaqilValueWrapper< %s >", td);
   }
   Delete(td);
   return w;
@@ -1580,11 +1580,11 @@ SwigType *SwigType_alttype(const SwigType *t, int local_tmap) {
  * Don't even think about modifying anything below this line unless you   ***
  * are completely on top of *EVERY* subtle aspect of the C++ type system  ***
  * and you are prepared to suffer endless hours of agony trying to        ***
- * debug the SWIG run-time type checker after you break it.               ***
+ * debug the alaqil run-time type checker after you break it.               ***
  * ------------------------------------------------------------------------- */
 
 /* -----------------------------------------------------------------------------
- * SwigType_remember()
+ * alaqilType_remember()
  *
  * This function "remembers" a datatype that was used during wrapper code generation
  * so that a type-checking table can be generated later on. It is up to the language
@@ -1628,9 +1628,9 @@ static Hash *r_clientdata = 0;	/* Hash mapping resolved types to client data    
 static Hash *r_mangleddata = 0;	/* Hash mapping mangled types to client data         */
 static Hash *r_remembered = 0;	/* Hash of types we remembered already */
 
-static void (*r_tracefunc) (const SwigType *t, String *mangled, String *clientdata) = 0;
+static void (*r_tracefunc) (const alaqilType *t, String *mangled, String *clientdata) = 0;
 
-void SwigType_remember_mangleddata(String *mangled, const_String_or_char_ptr clientdata) {
+void alaqilType_remember_mangleddata(String *mangled, const_String_or_char_ptr clientdata) {
   if (!r_mangleddata) {
     r_mangleddata = NewHash();
   }
@@ -1638,12 +1638,12 @@ void SwigType_remember_mangleddata(String *mangled, const_String_or_char_ptr cli
 }
 
 
-void SwigType_remember_clientdata(const SwigType *t, const_String_or_char_ptr clientdata) {
+void alaqilType_remember_clientdata(const alaqilType *t, const_String_or_char_ptr clientdata) {
   String *mt;
-  SwigType *lt;
+  alaqilType *lt;
   Hash *h;
-  SwigType *fr;
-  SwigType *qr;
+  alaqilType *fr;
+  alaqilType *qr;
   String *tkey;
   String *cd;
   Hash *lthash;
@@ -1669,16 +1669,16 @@ void SwigType_remember_clientdata(const SwigType *t, const_String_or_char_ptr cl
   Delete(tkey);
   Delete(cd);
 
-  mt = SwigType_manglestr(t);	/* Create mangled string */
+  mt = alaqilType_manglestr(t);	/* Create mangled string */
 
   if (r_tracefunc) {
     (*r_tracefunc) (t, mt, (String *) clientdata);
   }
 
-  if (SwigType_istypedef(t)) {
+  if (alaqilType_istypedef(t)) {
     lt = Copy(t);
   } else {
-    lt = SwigType_ltype(t);
+    lt = alaqilType_ltype(t);
   }
 
   lthash = Getattr(r_ltype, mt);
@@ -1689,12 +1689,12 @@ void SwigType_remember_clientdata(const SwigType *t, const_String_or_char_ptr cl
   Setattr(lthash, lt, "1");
   Delete(lt);
 
-  fr = SwigType_typedef_resolve_all(t);	/* Create fully resolved type */
-  qr = SwigType_typedef_qualified(fr);
+  fr = alaqilType_typedef_resolve_all(t);	/* Create fully resolved type */
+  qr = alaqilType_typedef_qualified(fr);
   Delete(fr);
 
   /* Added to deal with possible table bug */
-  fr = SwigType_strip_qualifiers(qr);
+  fr = alaqilType_strip_qualifiers(qr);
   Delete(qr);
 
   /*Printf(stdout,"t = '%s'\n", t);
@@ -1703,7 +1703,7 @@ void SwigType_remember_clientdata(const SwigType *t, const_String_or_char_ptr cl
   if (t) {
     char *ct = Char(t);
     if (strchr(ct, '<') && !(strstr(ct, "<("))) {
-      Printf(stdout, "Bad template type passed to SwigType_remember: %s\n", t);
+      Printf(stdout, "Bad template type passed to alaqilType_remember: %s\n", t);
       assert(0);
     }
   }
@@ -1728,7 +1728,7 @@ void SwigType_remember_clientdata(const SwigType *t, const_String_or_char_ptr cl
     String *cd = Getattr(r_clientdata, fr);
     if (cd) {
       if (Strcmp(clientdata, cd) != 0) {
-	Printf(stderr, "*** Internal error. Inconsistent clientdata for type '%s'\n", SwigType_str(fr, 0));
+	Printf(stderr, "*** Internal error. Inconsistent clientdata for type '%s'\n", alaqilType_str(fr, 0));
 	Printf(stderr, "*** '%s' != '%s'\n", clientdata, cd);
 	assert(0);
       }
@@ -1743,31 +1743,31 @@ void SwigType_remember_clientdata(const SwigType *t, const_String_or_char_ptr cl
      This is to prevent odd problems with mixing pointers and references--especially
      when different functions are using different typenames (via typedef). */
 
-  if (SwigType_isreference(t)) {
-    SwigType *tt = Copy(t);
-    SwigType_del_reference(tt);
-    SwigType_add_pointer(tt);
-    SwigType_remember_clientdata(tt, clientdata);
-  } else if (SwigType_isrvalue_reference(t)) {
-    SwigType *tt = Copy(t);
-    SwigType_del_rvalue_reference(tt);
-    SwigType_add_pointer(tt);
-    SwigType_remember_clientdata(tt, clientdata);
+  if (alaqilType_isreference(t)) {
+    alaqilType *tt = Copy(t);
+    alaqilType_del_reference(tt);
+    alaqilType_add_pointer(tt);
+    alaqilType_remember_clientdata(tt, clientdata);
+  } else if (alaqilType_isrvalue_reference(t)) {
+    alaqilType *tt = Copy(t);
+    alaqilType_del_rvalue_reference(tt);
+    alaqilType_add_pointer(tt);
+    alaqilType_remember_clientdata(tt, clientdata);
   }
 }
 
-void SwigType_remember(const SwigType *ty) {
-  SwigType_remember_clientdata(ty, 0);
+void alaqilType_remember(const alaqilType *ty) {
+  alaqilType_remember_clientdata(ty, 0);
 }
 
-void (*SwigType_remember_trace(void (*tf) (const SwigType *, String *, String *))) (const SwigType *, String *, String *) {
-  void (*o) (const SwigType *, String *, String *) = r_tracefunc;
+void (*alaqilType_remember_trace(void (*tf) (const alaqilType *, String *, String *))) (const alaqilType *, String *, String *) {
+  void (*o) (const alaqilType *, String *, String *) = r_tracefunc;
   r_tracefunc = tf;
   return o;
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_equivalent_mangle()
+ * alaqilType_equivalent_mangle()
  *
  * Return a list of all of the mangled typenames that are equivalent to another
  * mangled name.   This works as follows: For each fully qualified C datatype
@@ -1775,7 +1775,7 @@ void (*SwigType_remember_trace(void (*tf) (const SwigType *, String *, String *)
  * r_resolved hash and combine them together in a list (removing duplicate entries).
  * ----------------------------------------------------------------------------- */
 
-List *SwigType_equivalent_mangle(String *ms, Hash *checked, Hash *found) {
+List *alaqilType_equivalent_mangle(String *ms, Hash *checked, Hash *found) {
   List *l;
   Hash *h;
   Hash *ch;
@@ -1812,7 +1812,7 @@ List *SwigType_equivalent_mangle(String *ms, Hash *checked, Hash *found) {
 	rk = First(rh);
 	while (rk.key) {
 	  Setattr(h, rk.key, "1");
-	  SwigType_equivalent_mangle(rk.key, ch, h);
+	  alaqilType_equivalent_mangle(rk.key, ch, h);
 	  rk = Next(rk);
 	}
       }
@@ -1831,13 +1831,13 @@ check_exit:
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_clientdata_collect()
+ * alaqilType_clientdata_collect()
  *
  * Returns the clientdata field for a mangled type-string.
  * ----------------------------------------------------------------------------- */
 
 static
-String *SwigType_clientdata_collect(String *ms) {
+String *alaqilType_clientdata_collect(String *ms) {
   Hash *mh;
   String *clientdata = 0;
 
@@ -1865,7 +1865,7 @@ String *SwigType_clientdata_collect(String *ms) {
 
 
 /* -----------------------------------------------------------------------------
- * SwigType_inherit()
+ * alaqilType_inherit()
  *
  * Record information about inheritance.  We keep a hash table that keeps
  * a mapping between base classes and all of the classes that are derived
@@ -1883,7 +1883,7 @@ String *SwigType_clientdata_collect(String *ms) {
 static Hash *subclass = 0;
 static Hash *conversions = 0;
 
-void SwigType_inherit(String *derived, String *base, String *cast, String *conversioncode) {
+void alaqilType_inherit(String *derived, String *base, String *cast, String *conversioncode) {
   Hash *h;
   String *dd = 0;
   String *bb = 0;
@@ -1892,15 +1892,15 @@ void SwigType_inherit(String *derived, String *base, String *cast, String *conve
 
   /* Printf(stdout,"'%s' --> '%s'  '%s'\n", derived, base, cast); */
 
-  if (SwigType_istemplate(derived)) {
-    String *ty = SwigType_typedef_resolve_all(derived);
-    dd = SwigType_typedef_qualified(ty);
+  if (alaqilType_istemplate(derived)) {
+    String *ty = alaqilType_typedef_resolve_all(derived);
+    dd = alaqilType_typedef_qualified(ty);
     derived = dd;
     Delete(ty);
   }
-  if (SwigType_istemplate(base)) {
-    String *ty = SwigType_typedef_resolve_all(base);
-    bb = SwigType_typedef_qualified(ty);
+  if (alaqilType_istemplate(base)) {
+    String *ty = alaqilType_typedef_resolve_all(base);
+    bb = alaqilType_typedef_qualified(ty);
     base = bb;
     Delete(ty);
   }
@@ -1928,13 +1928,13 @@ void SwigType_inherit(String *derived, String *base, String *cast, String *conve
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_issubtype()
+ * alaqilType_issubtype()
  *
  * Determines if a t1 is a subtype of t2, ie, is t1 derived from t2
  * ----------------------------------------------------------------------------- */
 
-int SwigType_issubtype(const SwigType *t1, const SwigType *t2) {
-  SwigType *ft1, *ft2;
+int alaqilType_issubtype(const alaqilType *t1, const alaqilType *t2) {
+  alaqilType *ft1, *ft2;
   String *b1, *b2;
   Hash *h;
   int r = 0;
@@ -1942,10 +1942,10 @@ int SwigType_issubtype(const SwigType *t1, const SwigType *t2) {
   if (!subclass)
     return 0;
 
-  ft1 = SwigType_typedef_resolve_all(t1);
-  ft2 = SwigType_typedef_resolve_all(t2);
-  b1 = SwigType_base(ft1);
-  b2 = SwigType_base(ft2);
+  ft1 = alaqilType_typedef_resolve_all(t1);
+  ft2 = alaqilType_typedef_resolve_all(t2);
+  b1 = alaqilType_base(ft1);
+  b2 = alaqilType_base(ft2);
 
   h = Getattr(subclass, b2);
   if (h) {
@@ -1962,12 +1962,12 @@ int SwigType_issubtype(const SwigType *t1, const SwigType *t2) {
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_inherit_equiv()
+ * alaqilType_inherit_equiv()
  *
  * Modify the type table to handle C++ inheritance
  * ----------------------------------------------------------------------------- */
 
-void SwigType_inherit_equiv(File *out) {
+void alaqilType_inherit_equiv(File *out) {
   String *ckey;
   String *prefix, *base;
   String *mprefix, *mkey;
@@ -1984,7 +1984,7 @@ void SwigType_inherit_equiv(File *out) {
   rk = First(r_resolved);
   while (rk.key) {
     /* rkey is a fully qualified type.  We strip all of the type constructors off of it just to get the base */
-    base = SwigType_base(rk.key);
+    base = alaqilType_base(rk.key);
     /* Check to see whether the base is recorded in the subclass table */
     sub = Getattr(subclass, base);
     Delete(base);
@@ -2005,28 +2005,28 @@ void SwigType_inherit_equiv(File *out) {
 
     bk = First(sub);
     while (bk.key) {
-      prefix = SwigType_prefix(rk.key);
+      prefix = alaqilType_prefix(rk.key);
       Append(prefix, bk.key);
-      /*      Printf(stdout,"set %p = '%s' : '%s'\n", rh, SwigType_manglestr(prefix),prefix); */
-      mprefix = SwigType_manglestr(prefix);
+      /*      Printf(stdout,"set %p = '%s' : '%s'\n", rh, alaqilType_manglestr(prefix),prefix); */
+      mprefix = alaqilType_manglestr(prefix);
       Setattr(rh, mprefix, prefix);
-      mkey = SwigType_manglestr(rk.key);
+      mkey = alaqilType_manglestr(rk.key);
       ckey = NewStringf("%s+%s", mprefix, mkey);
       if (!Getattr(conversions, ckey)) {
 	String *convname = NewStringf("%sTo%s", mprefix, mkey);
-	String *lkey = SwigType_lstr(rk.key, 0);
-	String *lprefix = SwigType_lstr(prefix, 0);
+	String *lkey = alaqilType_lstr(rk.key, 0);
+	String *lprefix = alaqilType_lstr(prefix, 0);
         Hash *subhash = Getattr(sub, bk.key);
         String *convcode = Getattr(subhash, "convcode");
         if (convcode) {
           char *newmemoryused = Strstr(convcode, "newmemory"); /* see if newmemory parameter is used in order to avoid unused parameter warnings */
           String *fn = Copy(convcode);
           Replaceall(fn, "$from", "x");
-          Printf(out, "static void *%s(void *x, int *%s) {", convname, newmemoryused ? "newmemory" : "SWIGUNUSEDPARM(newmemory)");
+          Printf(out, "static void *%s(void *x, int *%s) {", convname, newmemoryused ? "newmemory" : "alaqilUNUSEDPARM(newmemory)");
           Printf(out, "%s", fn);
         } else {
           String *cast = Getattr(subhash, "cast");
-          Printf(out, "static void *%s(void *x, int *SWIGUNUSEDPARM(newmemory)) {", convname);
+          Printf(out, "static void *%s(void *x, int *alaqilUNUSEDPARM(newmemory)) {", convname);
           Printf(out, "\n    return (void *)((%s) ", lkey);
           if (cast)
             Printf(out, "%s", cast);
@@ -2083,30 +2083,30 @@ void SwigType_inherit_equiv(File *out) {
 }
 
 /* Helper function to sort the mangled list */
-static int SwigType_compare_mangled(const DOH *a, const DOH *b) {
+static int alaqilType_compare_mangled(const DOH *a, const DOH *b) {
   return strcmp((char *) Data(a), (char *) Data(b));
 }
 
 /* -----------------------------------------------------------------------------
- * SwigType_get_sorted_mangled_list()
+ * alaqilType_get_sorted_mangled_list()
  *
  * Returns the sorted list of mangled type names that should be exported into the
  * wrapper file.
  * ----------------------------------------------------------------------------- */
-List *SwigType_get_sorted_mangled_list() {
+List *alaqilType_get_sorted_mangled_list() {
   List *l = Keys(r_mangled);
-  SortList(l, SwigType_compare_mangled);
+  SortList(l, alaqilType_compare_mangled);
   return l;
 }
 
 
 /* -----------------------------------------------------------------------------
- * SwigType_type_table()
+ * alaqilType_type_table()
  *
  * Generate the type-table for the type-checker.
  * ----------------------------------------------------------------------------- */
 
-void SwigType_emit_type_table(File *f_forward, File *f_table) {
+void alaqilType_emit_type_table(File *f_forward, File *f_table) {
   Iterator ki;
   String *types, *table, *cast, *cast_init, *cast_temp;
   Hash *imported_types;
@@ -2121,7 +2121,7 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
 
   Printf(f_table, "\n/* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */\n\n");
 
-  SwigType_inherit_equiv(f_table);
+  alaqilType_inherit_equiv(f_table);
 
    /*#define DEBUG 1*/
 #ifdef DEBUG
@@ -2150,17 +2150,17 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
   cast_init = NewStringEmpty();
   imported_types = NewHash();
 
-  Printf(table, "static swig_type_info *swig_type_initial[] = {\n");
-  Printf(cast_init, "static swig_cast_info *swig_cast_initial[] = {\n");
+  Printf(table, "static alaqil_type_info *alaqil_type_initial[] = {\n");
+  Printf(cast_init, "static alaqil_cast_info *alaqil_cast_initial[] = {\n");
 
   Printf(f_forward, "\n/* -------- TYPES TABLE (BEGIN) -------- */\n\n");
 
-  mangled_list = SwigType_get_sorted_mangled_list();
+  mangled_list = alaqilType_get_sorted_mangled_list();
   for (ki = First(mangled_list); ki.item; ki = Next(ki)) {
     List *el;
     Iterator ei;
-    SwigType *lt;
-    SwigType *rt = 0;
+    alaqilType *lt;
+    alaqilType *rt = 0;
     String *nt;
     String *ln;
     String *rn;
@@ -2171,12 +2171,12 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
 
     cast_temp = NewStringEmpty();
 
-    Printv(types, "static swig_type_info _swigt_", ki.item, " = {", NIL);
+    Printv(types, "static alaqil_type_info _alaqilt_", ki.item, " = {", NIL);
     Append(table_list, ki.item);
-    Printf(cast_temp, "static swig_cast_info _swigc_%s[] = {", ki.item);
+    Printf(cast_temp, "static alaqil_cast_info _alaqilc_%s[] = {", ki.item);
     i++;
 
-    cd = SwigType_clientdata_collect(ki.item);
+    cd = alaqilType_clientdata_collect(ki.item);
     if (!cd)
       cd = "0";
 
@@ -2186,19 +2186,19 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
     ltiter = First(lthash);
     while (ltiter.key) {
       lt = ltiter.key;
-      rt = SwigType_typedef_resolve_all(lt);
+      rt = alaqilType_typedef_resolve_all(lt);
       /* we save the original type and the fully resolved version */
-      ln = SwigType_lstr(lt, 0);
-      rn = SwigType_lstr(rt, 0);
+      ln = alaqilType_lstr(lt, 0);
+      rn = alaqilType_lstr(rt, 0);
       if (Equal(ln, rn)) {
         Setattr(nthash, ln, "1");
       } else {
 	Setattr(nthash, rn, "1");
 	Setattr(nthash, ln, "1");
       }
-      if (SwigType_istemplate(rt)) {
-        String *dt = Swig_symbol_template_deftype(rt, 0);
-        String *dn = SwigType_lstr(dt, 0);
+      if (alaqilType_istemplate(rt)) {
+        String *dt = alaqil_symbol_template_deftype(rt, 0);
+        String *dn = alaqilType_lstr(dt, 0);
         if (!Equal(dn, rn) && !Equal(dn, ln)) {
           Setattr(nthash, dn, "1");
         }
@@ -2224,24 +2224,24 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
 
     Printf(types, "\"%s\", \"%s\", 0, 0, (void*)%s, 0};\n", ki.item, nt, cd);
 
-    el = SwigType_equivalent_mangle(ki.item, 0, 0);
+    el = alaqilType_equivalent_mangle(ki.item, 0, 0);
     for (ei = First(el); ei.item; ei = Next(ei)) {
       String *ckey;
       String *conv;
       ckey = NewStringf("%s+%s", ei.item, ki.item);
       conv = Getattr(conversions, ckey);
       if (conv) {
-	Printf(cast_temp, "  {&_swigt_%s, %s, 0, 0},", ei.item, conv);
+	Printf(cast_temp, "  {&_alaqilt_%s, %s, 0, 0},", ei.item, conv);
       } else {
-	Printf(cast_temp, "  {&_swigt_%s, 0, 0, 0},", ei.item);
+	Printf(cast_temp, "  {&_alaqilt_%s, 0, 0, 0},", ei.item);
       }
       Delete(ckey);
 
       if (!Getattr(r_mangled, ei.item) && !Getattr(imported_types, ei.item)) {
-	Printf(types, "static swig_type_info _swigt_%s = {\"%s\", 0, 0, 0, 0, 0};\n", ei.item, ei.item);
+	Printf(types, "static alaqil_type_info _alaqilt_%s = {\"%s\", 0, 0, 0, 0, 0};\n", ei.item, ei.item);
 	Append(table_list, ei.item);
 
-	Printf(cast, "static swig_cast_info _swigc_%s[] = {{&_swigt_%s, 0, 0, 0},{0, 0, 0, 0}};\n", ei.item, ei.item);
+	Printf(cast, "static alaqil_cast_info _alaqilc_%s[] = {{&_alaqilt_%s, 0, 0, 0},{0, 0, 0, 0}};\n", ei.item, ei.item);
 	i++;
 
 	Setattr(imported_types, ei.item, "1");
@@ -2254,12 +2254,12 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
     Delete(rt);
   }
   /* print the tables in the proper order */
-  SortList(table_list, SwigType_compare_mangled);
+  SortList(table_list, alaqilType_compare_mangled);
   i = 0;
   for (ki = First(table_list); ki.item; ki = Next(ki)) {
-    Printf(f_forward, "#define SWIGTYPE%s swig_types[%d]\n", ki.item, i++);
-    Printf(table, "  &_swigt_%s,\n", ki.item);
-    Printf(cast_init, "  _swigc_%s,\n", ki.item);
+    Printf(f_forward, "#define alaqilTYPE%s alaqil_types[%d]\n", ki.item, i++);
+    Printf(table, "  &_alaqilt_%s,\n", ki.item);
+    Printf(cast_init, "  _alaqilc_%s,\n", ki.item);
   }
   if (i == 0) {
     /* empty arrays are not allowed by ISO C */
@@ -2279,10 +2279,10 @@ void SwigType_emit_type_table(File *f_forward, File *f_table) {
   Printf(f_table, "%s\n", cast_init);
   Printf(f_table, "\n/* -------- TYPE CONVERSION AND EQUIVALENCE RULES (END) -------- */\n\n");
 
-  Printf(f_forward, "static swig_type_info *swig_types[%d];\n", i + 1);
-  Printf(f_forward, "static swig_module_info swig_module = {swig_types, %d, 0, 0, 0, 0};\n", i);
-  Printf(f_forward, "#define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)\n");
-  Printf(f_forward, "#define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)\n");
+  Printf(f_forward, "static alaqil_type_info *alaqil_types[%d];\n", i + 1);
+  Printf(f_forward, "static alaqil_module_info alaqil_module = {alaqil_types, %d, 0, 0, 0, 0};\n", i);
+  Printf(f_forward, "#define alaqil_TypeQuery(name) alaqil_TypeQueryModule(&alaqil_module, &alaqil_module, name)\n");
+  Printf(f_forward, "#define alaqil_MangledTypeQuery(name) alaqil_MangledTypeQueryModule(&alaqil_module, &alaqil_module, name)\n");
   Printf(f_forward, "\n/* -------- TYPES TABLE (END) -------- */\n\n");
 
   Delete(types);

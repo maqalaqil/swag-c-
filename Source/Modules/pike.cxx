@@ -1,14 +1,14 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * pike.cxx
  *
- * Pike language module for SWIG.
+ * Pike language module for alaqil.
  * ----------------------------------------------------------------------------- */
 
 /*
@@ -29,7 +29,7 @@
  *
  */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 
 #include <ctype.h>		// for isalnum()
 
@@ -90,8 +90,8 @@ public:
   
    virtual void main(int argc, char *argv[]) {
 
-    /* Set location of SWIG library */
-    SWIG_library_directory("pike");
+    /* Set location of alaqil library */
+    alaqil_library_directory("pike");
 
     /* Look for certain command line options */
     for (int i = 1; i < argc; i++) {
@@ -103,13 +103,13 @@ public:
     }
 
     /* Add a symbol to the parser for conditional compilation */
-    Preprocessor_define("SWIGPIKE 1", 0);
+    Preprocessor_define("alaqilPIKE 1", 0);
 
     /* Set language-specific configuration file */
-    SWIG_config_file("pike.swg");
+    alaqil_config_file("pike.swg");
 
     /* Set typemap language */
-    SWIG_typemap_lang("pike");
+    alaqil_typemap_lang("pike");
 
     /* Enable overloaded methods support */
     allow_overloading();
@@ -127,10 +127,10 @@ public:
     String *outfile = Getattr(n, "outfile");
 
     /* Open the output file */
-    f_begin = NewFile(outfile, "w", SWIG_output_files());
+    f_begin = NewFile(outfile, "w", alaqil_output_files());
     if (!f_begin) {
       FileErrorDisplay(outfile);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     f_runtime = NewString("");
     f_init = NewString("");
@@ -138,25 +138,25 @@ public:
     f_header = NewString("");
     f_wrappers = NewString("");
 
-    /* Register file targets with the SWIG file handler */
-    Swig_register_filebyname("header", f_header);
-    Swig_register_filebyname("wrapper", f_wrappers);
-    Swig_register_filebyname("begin", f_begin);
-    Swig_register_filebyname("runtime", f_runtime);
-    Swig_register_filebyname("init", f_init);
-    Swig_register_filebyname("classInit", f_classInit);
+    /* Register file targets with the alaqil file handler */
+    alaqil_register_filebyname("header", f_header);
+    alaqil_register_filebyname("wrapper", f_wrappers);
+    alaqil_register_filebyname("begin", f_begin);
+    alaqil_register_filebyname("runtime", f_runtime);
+    alaqil_register_filebyname("init", f_init);
+    alaqil_register_filebyname("classInit", f_classInit);
 
-    /* Standard stuff for the SWIG runtime section */
-    Swig_banner(f_begin);
+    /* Standard stuff for the alaqil runtime section */
+    alaqil_banner(f_begin);
 
-    Printf(f_runtime, "\n\n#ifndef SWIGPIKE\n#define SWIGPIKE\n#endif\n\n");
+    Printf(f_runtime, "\n\n#ifndef alaqilPIKE\n#define alaqilPIKE\n#endif\n\n");
 
-    Printf(f_header, "#define SWIG_init    pike_module_init\n");
-    Printf(f_header, "#define SWIG_name    \"%s\"\n\n", module);
+    Printf(f_header, "#define alaqil_init    pike_module_init\n");
+    Printf(f_header, "#define alaqil_name    \"%s\"\n\n", module);
 
     /* Change naming scheme for constructors and destructors */
-    Swig_name_register("construct", "%n%c_create");
-    Swig_name_register("destroy", "%n%c_destroy");
+    alaqil_name_register("construct", "%n%c_create");
+    alaqil_name_register("destroy", "%n%c_destroy");
 
     /* Current wrap type */
     current = NO_CPP;
@@ -166,7 +166,7 @@ public:
 
     /* Close the initialization function */
     Printf(f_init, "}\n");
-    SwigType_emit_type_table(f_runtime, f_wrappers);
+    alaqilType_emit_type_table(f_runtime, f_wrappers);
 
     /* Close all of the files */
     Dump(f_runtime, f_begin);
@@ -182,7 +182,7 @@ public:
     Delete(f_begin);
 
     /* Done */
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -278,7 +278,7 @@ public:
 
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *d = Getattr(n, "type");
+    alaqilType *d = Getattr(n, "type");
     ParmList *l = Getattr(n, "parms");
 
     Parm *p;
@@ -290,7 +290,7 @@ public:
       overname = Getattr(n, "sym:overname");
     } else {
       if (!addSymbol(iname, n))
-	return SWIG_ERROR;
+	return alaqil_ERROR;
     }
 
     Wrapper *f = NewWrapper();
@@ -313,7 +313,7 @@ public:
     // int offset = (current == MEMBER_VAR) ? 1 : 0;
     int offset = 0;
 
-    String *wname = Swig_name_wrapper(iname);
+    String *wname = alaqil_name_wrapper(iname);
     if (overname) {
       Append(wname, overname);
     }
@@ -330,11 +330,11 @@ public:
 	p = Getattr(p, "tmap:in:next");
       }
 
-      SwigType *pt = Getattr(p, "type");
+      alaqilType *pt = Getattr(p, "type");
       String *ln = Getattr(p, "lname");
 
       if (i < start) {
-	String *lstr = SwigType_lstr(pt, 0);
+	String *lstr = alaqilType_lstr(pt, 0);
 	Printf(f->code, "%s = (%s) THIS;\n", ln, lstr);
 	Delete(lstr);
       } else {
@@ -353,7 +353,7 @@ public:
 	  p = Getattr(p, "tmap:in:next");
 	  continue;
 	} else {
-	  Swig_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", SwigType_str(pt, 0));
+	  alaqil_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", alaqilType_str(pt, 0));
 	  break;
 	}
       }
@@ -414,15 +414,15 @@ public:
 
     /* Return the function value */
     if (current == CONSTRUCTOR) {
-      Printv(actioncode, "THIS = (void *) ", Swig_cresult_name(), ";\n", NIL);
+      Printv(actioncode, "THIS = (void *) ", alaqil_cresult_name(), ";\n", NIL);
       Printv(description, ", tVoid", NIL);
     } else if (current == DESTRUCTOR) {
       Printv(description, ", tVoid", NIL);
     } else {
       Printv(description, ", ", NIL);
-      if ((tm = Swig_typemap_lookup_out("out", n, Swig_cresult_name(), f, actioncode))) {
+      if ((tm = alaqil_typemap_lookup_out("out", n, alaqil_cresult_name(), f, actioncode))) {
         actioncode = 0;
-	Replaceall(tm, "$source", Swig_cresult_name());
+	Replaceall(tm, "$source", alaqil_cresult_name());
 	Replaceall(tm, "$target", "resultobj");
 	Replaceall(tm, "$result", "resultobj");
 	if (GetFlag(n, "feature:new")) {
@@ -436,7 +436,7 @@ public:
 	}
 	Printf(f->code, "%s\n", tm);
       } else {
-	Swig_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", SwigType_str(d, 0), name);
+	alaqil_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", alaqilType_str(d, 0), name);
       }
     }
     if (actioncode) {
@@ -453,15 +453,15 @@ public:
 
     /* Look to see if there is any newfree cleanup code */
     if (GetFlag(n, "feature:new")) {
-      if ((tm = Swig_typemap_lookup("newfree", n, Swig_cresult_name(), 0))) {
-	Replaceall(tm, "$source", Swig_cresult_name());
+      if ((tm = alaqil_typemap_lookup("newfree", n, alaqil_cresult_name(), 0))) {
+	Replaceall(tm, "$source", alaqil_cresult_name());
 	Printf(f->code, "%s\n", tm);
       }
     }
 
     /* See if there is any return cleanup code */
-    if ((tm = Swig_typemap_lookup("ret", n, Swig_cresult_name(), 0))) {
-      Replaceall(tm, "$source", Swig_cresult_name());
+    if ((tm = alaqil_typemap_lookup("ret", n, alaqil_cresult_name(), 0))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Printf(f->code, "%s\n", tm);
     }
 
@@ -493,7 +493,7 @@ public:
     Delete(wname);
     DelWrapper(f);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -507,13 +507,13 @@ public:
 
     int maxargs;
     String *tmp = NewString("");
-    String *dispatch = Swig_overload_dispatch(n, "%s(args); return;", &maxargs);
+    String *dispatch = alaqil_overload_dispatch(n, "%s(args); return;", &maxargs);
 
     /* Generate a dispatch wrapper for all overloaded functions */
 
     Wrapper *f = NewWrapper();
     String *symname = Getattr(n, "sym:name");
-    String *wname = Swig_name_wrapper(symname);
+    String *wname = alaqil_name_wrapper(symname);
 
     Printf(f->def, "static void %s(INT32 args) {", wname);
 
@@ -566,25 +566,25 @@ public:
 
   virtual int constantWrapper(Node *n) {
 
-    Swig_require("constantWrapper", n, "*sym:name", "type", "value", NIL);
+    alaqil_require("constantWrapper", n, "*sym:name", "type", "value", NIL);
 
     String *symname = Getattr(n, "sym:name");
-    SwigType *type = Getattr(n, "type");
+    alaqilType *type = Getattr(n, "type");
     String *value = Getattr(n, "value");
     bool is_enum_item = (Cmp(nodeType(n), "enumitem") == 0);
 
-    if (SwigType_type(type) == T_MPOINTER) {
+    if (alaqilType_type(type) == T_MPOINTER) {
       /* Special hook for member pointer */
-      String *wname = Swig_name_wrapper(symname);
-      Printf(f_header, "static %s = %s;\n", SwigType_str(type, wname), value);
+      String *wname = alaqil_name_wrapper(symname);
+      Printf(f_header, "static %s = %s;\n", alaqilType_str(type, wname), value);
       value = wname;
-    } else if (SwigType_type(type) == T_CHAR && is_enum_item) {
-      type = NewSwigType(T_INT);
+    } else if (alaqilType_type(type) == T_CHAR && is_enum_item) {
+      type = NewalaqilType(T_INT);
       Setattr(n, "type", type);
     }
 
     /* Perform constant typemap substitution */
-    String *tm = Swig_typemap_lookup("constant", n, value, 0);
+    String *tm = alaqil_typemap_lookup("constant", n, value, 0);
     if (tm) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", symname);
@@ -592,12 +592,12 @@ public:
       Replaceall(tm, "$value", value);
       Printf(f_init, "%s\n", tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value %s = %s\n", SwigType_str(type, 0), value);
+      alaqil_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value %s = %s\n", alaqilType_str(type, 0), value);
     }
 
-    Swig_restore(n);
+    alaqil_restore(n);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------ 
@@ -610,10 +610,10 @@ public:
     String *wrapname = Getattr(n, "wrap:name");
 
     if (!addSymbol(wrapname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     add_method(name, wrapname, 0);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -648,7 +648,7 @@ public:
 
     String *symname = Getattr(n, "sym:name");
     if (!addSymbol(symname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     PrefixPlusUnderscore = NewStringf("%s_", getClassPrefix());
 
@@ -660,17 +660,17 @@ public:
       Iterator base = First(baselist);
       while (base.item) {
 	String *basename = Getattr(base.item, "name");
-	SwigType *basetype = NewString(basename);
-	SwigType_add_pointer(basetype);
-	SwigType_remember(basetype);
-	String *basemangle = SwigType_manglestr(basetype);
-	Printf(f_classInit, "low_inherit((struct program *) SWIGTYPE%s->clientdata, 0, 0, 0, 0, 0);\n", basemangle);
+	alaqilType *basetype = NewString(basename);
+	alaqilType_add_pointer(basetype);
+	alaqilType_remember(basetype);
+	String *basemangle = alaqilType_manglestr(basetype);
+	Printf(f_classInit, "low_inherit((struct program *) alaqilTYPE%s->clientdata, 0, 0, 0, 0, 0);\n", basemangle);
 	Delete(basemangle);
 	Delete(basetype);
 	base = Next(base);
       }
     } else {
-      Printf(f_classInit, "ADD_STORAGE(swig_object_wrapper);\n");
+      Printf(f_classInit, "ADD_STORAGE(alaqil_object_wrapper);\n");
     }
 
     Language::classHandler(n);
@@ -688,18 +688,18 @@ public:
     Dump(f_classInit, f_init);
     Clear(f_classInit);
 
-    SwigType *tt = NewString(symname);
-    SwigType_add_pointer(tt);
-    SwigType_remember(tt);
-    String *tm = SwigType_manglestr(tt);
-    Printf(f_init, "SWIG_TypeClientData(SWIGTYPE%s, (void *) pr);\n", tm);
+    alaqilType *tt = NewString(symname);
+    alaqilType_add_pointer(tt);
+    alaqilType_remember(tt);
+    String *tm = alaqilType_manglestr(tt);
+    Printf(f_init, "alaqil_TypeClientData(alaqilTYPE%s, (void *) pr);\n", tm);
     Delete(tm);
     Delete(tt);
 
     Delete(PrefixPlusUnderscore);
     PrefixPlusUnderscore = 0;
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -712,7 +712,7 @@ public:
     current = MEMBER_FUNC;
     Language::memberfunctionHandler(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -725,7 +725,7 @@ public:
     current = CONSTRUCTOR;
     Language::constructorHandler(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -736,7 +736,7 @@ public:
     current = DESTRUCTOR;
     Language::destructorHandler(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -763,8 +763,8 @@ public:
     /* Create a function to set the values of the (mutable) variables */
     if (need_setter) {
       Wrapper *wrapper = NewWrapper();
-      String *setter = Swig_name_member(NSPACE_TODO, getClassPrefix(), "`->=");
-      String *wname = Swig_name_wrapper(setter);
+      String *setter = alaqil_name_member(NSPACE_TODO, getClassPrefix(), "`->=");
+      String *wname = alaqil_name_wrapper(setter);
       Printv(wrapper->def, "static void ", wname, "(INT32 args) {", NIL);
       Printf(wrapper->locals, "char *name = (char *) STR0(Pike_sp[0-args].u.string);\n");
 
@@ -772,7 +772,7 @@ public:
       while (i.item) {
 	if (!GetFlag(i.item, "feature:immutable")) {
 	  name = Getattr(i.item, "name");
-	  funcname = Swig_name_wrapper(Swig_name_set(NSPACE_TODO, Swig_name_member(NSPACE_TODO, getClassPrefix(), name)));
+	  funcname = alaqil_name_wrapper(alaqil_name_set(NSPACE_TODO, alaqil_name_member(NSPACE_TODO, getClassPrefix(), name)));
 	  Printf(wrapper->code, "if (!strcmp(name, \"%s\")) {\n", name);
 	  Printf(wrapper->code, "%s(args);\n", funcname);
 	  Printf(wrapper->code, "return;\n");
@@ -802,15 +802,15 @@ public:
 
     /* Create a function to get the values of the (mutable) variables */
     Wrapper *wrapper = NewWrapper();
-    String *getter = Swig_name_member(NSPACE_TODO, getClassPrefix(), "`->");
-    String *wname = Swig_name_wrapper(getter);
+    String *getter = alaqil_name_member(NSPACE_TODO, getClassPrefix(), "`->");
+    String *wname = alaqil_name_wrapper(getter);
     Printv(wrapper->def, "static void ", wname, "(INT32 args) {", NIL);
     Printf(wrapper->locals, "char *name = (char *) STR0(Pike_sp[0-args].u.string);\n");
 
     i = First(membervariables);
     while (i.item) {
       name = Getattr(i.item, "name");
-      funcname = Swig_name_wrapper(Swig_name_get(NSPACE_TODO, Swig_name_member(NSPACE_TODO, getClassPrefix(), name)));
+      funcname = alaqil_name_wrapper(alaqil_name_get(NSPACE_TODO, alaqil_name_member(NSPACE_TODO, getClassPrefix(), name)));
       Printf(wrapper->code, "if (!strcmp(name, \"%s\")) {\n", name);
       Printf(wrapper->code, "%s(args);\n", funcname);
       Printf(wrapper->code, "return;\n");
@@ -851,7 +851,7 @@ public:
     current = MEMBER_VAR;
     Language::membervariableHandler(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* -----------------------------------------------------------------------
@@ -864,7 +864,7 @@ public:
     current = STATIC_FUNC;
     Language::staticmemberfunctionHandler(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -877,7 +877,7 @@ public:
     current = CLASS_CONST;
     constantWrapper(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ---------------------------------------------------------------------
@@ -888,17 +888,17 @@ public:
     current = STATIC_VAR;
     Language::staticmembervariableHandler(n);
     current = NO_CPP;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 };
 
 /* -----------------------------------------------------------------------------
- * swig_pike()    - Instantiate module
+ * alaqil_pike()    - Instantiate module
  * ----------------------------------------------------------------------------- */
 
-static Language *new_swig_pike() {
+static Language *new_alaqil_pike() {
   return new PIKE();
 }
-extern "C" Language *swig_pike(void) {
-  return new_swig_pike();
+extern "C" Language *alaqil_pike(void) {
+  return new_alaqil_pike();
 }

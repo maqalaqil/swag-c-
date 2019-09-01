@@ -1,17 +1,17 @@
 /* ----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3
+ * This file is part of alaqil, which is licensed as a whole under version 3
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * scilab.cxx
  *
- * Scilab language module for SWIG.
+ * Scilab language module for alaqil.
  * --------------------------------------------------------------------------*/
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 
 static const int SCILAB_IDENTIFIER_NAME_CHAR_MAX = 24;
 static const int SCILAB_VARIABLE_NAME_CHAR_MAX = SCILAB_IDENTIFIER_NAME_CHAR_MAX - 4;
@@ -102,49 +102,49 @@ public:
 	      if (strcmp(argv[argIndex], "-help") == 0) {
 	        Printf(stdout, "%s\n", usage);
 	      } else if (strcmp(argv[argIndex], "-builder") == 0) {
-	        Swig_mark_arg(argIndex);
+	        alaqil_mark_arg(argIndex);
 	        generateBuilder = true;
 	        createLoader = false;
 	      } else if (strcmp(argv[argIndex], "-buildersources") == 0) {
 	        if (argv[argIndex + 1] != NULL) {
-	          Swig_mark_arg(argIndex);
+	          alaqil_mark_arg(argIndex);
 	          char *sourceFile = strtok(argv[argIndex + 1], ",");
 	          while (sourceFile != NULL) {
 	            Insert(sourceFileList, Len(sourceFileList), sourceFile);
 	            sourceFile = strtok(NULL, ",");
 	          }
-	          Swig_mark_arg(argIndex + 1);
+	          alaqil_mark_arg(argIndex + 1);
 	        }
 	      } else if (strcmp(argv[argIndex], "-buildercflags") == 0) {
-          Swig_mark_arg(argIndex);
+          alaqil_mark_arg(argIndex);
           if (argv[argIndex + 1] != NULL) {
             Insert(cflags, Len(cflags), argv[argIndex + 1]);
-            Swig_mark_arg(argIndex + 1);
+            alaqil_mark_arg(argIndex + 1);
           }
         } else if (strcmp(argv[argIndex], "-builderldflags") == 0) {
-          Swig_mark_arg(argIndex);
+          alaqil_mark_arg(argIndex);
           if (argv[argIndex + 1] != NULL) {
             Insert(ldflags, Len(ldflags), argv[argIndex + 1]);
-            Swig_mark_arg(argIndex + 1);
+            alaqil_mark_arg(argIndex + 1);
           }
         } else if (strcmp(argv[argIndex], "-builderverbositylevel") == 0) {
-          Swig_mark_arg(argIndex);
+          alaqil_mark_arg(argIndex);
           verboseBuildLevel = NewString(argv[argIndex + 1]);
-          Swig_mark_arg(argIndex + 1);
+          alaqil_mark_arg(argIndex + 1);
         } else if (strcmp(argv[argIndex], "-builderflagscript") == 0) {
-          Swig_mark_arg(argIndex);
+          alaqil_mark_arg(argIndex);
           buildFlagsScript = NewString(argv[argIndex + 1]);
-          Swig_mark_arg(argIndex + 1);
+          alaqil_mark_arg(argIndex + 1);
         } else if (strcmp(argv[argIndex], "-gatewayxml") == 0) {
-          Swig_mark_arg(argIndex);
+          alaqil_mark_arg(argIndex);
           createGatewayXML = true;
           gatewayID = NewString(argv[argIndex + 1]);
-          Swig_mark_arg(argIndex + 1);
+          alaqil_mark_arg(argIndex + 1);
         } else if (strcmp(argv[argIndex], "-targetversion") == 0) {
           if (argv[argIndex + 1] != NULL) {
-            Swig_mark_arg(argIndex);
+            alaqil_mark_arg(argIndex);
             targetVersion = atoi(argv[argIndex + 1]);
-            Swig_mark_arg(argIndex + 1);
+            alaqil_mark_arg(argIndex + 1);
           }
         }
       }
@@ -154,17 +154,17 @@ public:
       verboseBuildLevel = NewString("0");
     }
 
-    /* Set language-specific subdirectory in SWIG library */
-    SWIG_library_directory("scilab");
+    /* Set language-specific subdirectory in alaqil library */
+    alaqil_library_directory("scilab");
 
     /* Add a symbol to the parser for conditional compilation */
-    Preprocessor_define("SWIGSCILAB 1", 0);
+    Preprocessor_define("alaqilSCILAB 1", 0);
 
     /* Set scilab configuration file */
-    SWIG_config_file("scilab.swg");
+    alaqil_config_file("scilab.swg");
 
     /* Set typemap for scilab */
-    SWIG_typemap_lang("scilab");
+    alaqil_typemap_lang("scilab");
 
     allow_overloading();
   }
@@ -185,27 +185,27 @@ public:
     String *outputFilename = Getattr(node, "outfile");
 
     /* Initialize I/O */
-    beginSection = NewFile(outputFilename, "w", SWIG_output_files());
+    beginSection = NewFile(outputFilename, "w", alaqil_output_files());
     if (!beginSection) {
       FileErrorDisplay(outputFilename);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     runtimeSection = NewString("");
     initSection = NewString("");
     headerSection = NewString("");
     wrappersSection = NewString("");
 
-    /* Register file targets with the SWIG file handler */
-    Swig_register_filebyname("begin", beginSection);
-    Swig_register_filebyname("header", headerSection);
-    Swig_register_filebyname("wrapper", wrappersSection);
-    Swig_register_filebyname("runtime", runtimeSection);
-    Swig_register_filebyname("init", initSection);
+    /* Register file targets with the alaqil file handler */
+    alaqil_register_filebyname("begin", beginSection);
+    alaqil_register_filebyname("header", headerSection);
+    alaqil_register_filebyname("wrapper", wrappersSection);
+    alaqil_register_filebyname("runtime", runtimeSection);
+    alaqil_register_filebyname("init", initSection);
 
     /* Output module initialization code */
-    Swig_banner(beginSection);
+    alaqil_banner(beginSection);
 
-    Printf(runtimeSection, "\n\n#ifndef SWIGSCILAB\n#define SWIGSCILAB\n#endif\n\n");
+    Printf(runtimeSection, "\n\n#ifndef alaqilSCILAB\n#define alaqilSCILAB\n#endif\n\n");
 
     // Gateway header source merged with wrapper source in nobuilder mode
     if (!generateBuilder)
@@ -237,7 +237,7 @@ public:
 
     // Open Scilab wrapper variables creation function
     variablesCode = NewString("");
-    Printf(variablesCode, "int SWIG_CreateScilabVariables(void *_pvApiCtx) {");
+    Printf(variablesCode, "int alaqil_CreateScilabVariables(void *_pvApiCtx) {");
 
     /* Emit code for children */
     if (CPlusPlus) {
@@ -250,7 +250,7 @@ public:
       Printf(wrappersSection, "}\n");
     }
     // Close Scilab wrapper variables creation function
-    Printf(variablesCode, "  return SWIG_OK;\n}\n");
+    Printf(variablesCode, "  return alaqil_OK;\n}\n");
 
     // Add Builder footer code and save
     if (generateBuilder) {
@@ -262,7 +262,7 @@ public:
     Replaceall(initSection, "<module>", gatewayName);
 
     /* Write all to the wrapper file */
-    SwigType_emit_type_table(runtimeSection, wrappersSection);	// Declare pointer types, ... (Ex: SWIGTYPE_p_p_double)
+    alaqilType_emit_type_table(runtimeSection, wrappersSection);	// Declare pointer types, ... (Ex: alaqilTYPE_p_p_double)
 
     // Gateway header source merged with wrapper source in nobuilder mode
     if (!generateBuilder) {
@@ -295,7 +295,7 @@ public:
     Delete(cflags);
     Delete(ldflags);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------------------
@@ -304,7 +304,7 @@ public:
 
   void emitBanner(File *f) {
     Printf(f, "// ----------------------------------------------------------------------------\n");
-    Swig_banner_target_lang(f, "// ");
+    alaqil_banner_target_lang(f, "// ");
     Printf(f, "// ----------------------------------------------------------------------------- */\n\n");
   }
 
@@ -316,7 +316,7 @@ public:
 
     /* Get some useful attributes of this function */
     String *functionName = Getattr(node, "sym:name");
-    SwigType *functionReturnType = Getattr(node, "type");
+    alaqilType *functionReturnType = Getattr(node, "type");
     ParmList *functionParamsList = Getattr(node, "parms");
 
     int paramIndex = 0;		// Used for loops over ParmsList
@@ -326,7 +326,7 @@ public:
     Wrapper *wrapper = NewWrapper();
 
     /* Create the function wrapper name */
-    String *wrapperName = Swig_name_wrapper(functionName);
+    String *wrapperName = alaqil_name_wrapper(functionName);
 
     /* Deal with overloading */
     String *overloadedName = Copy(wrapperName);
@@ -337,7 +337,7 @@ public:
 
     if (!isOverloaded && !addSymbol(functionName, node)) {
       DelWrapper(wrapper);
-      return SWIG_ERROR;
+      return alaqil_ERROR;
     }
 
     if (isOverloaded) {
@@ -345,7 +345,7 @@ public:
     }
 
     /* Write the wrapper function definition (standard Scilab gateway function prototype) */
-    Printv(wrapper->def, "int ", overloadedName, "(SWIG_GatewayParameters) {", NIL);
+    Printv(wrapper->def, "int ", overloadedName, "(alaqil_GatewayParameters) {", NIL);
 
     /* Emit all of the local variables for holding arguments */
     // E.g.: double arg1;
@@ -363,16 +363,16 @@ public:
     int maxOutputArguments = 0;
 
     if (!emit_isvarargs(functionParamsList)) {
-      Printf(wrapper->code, "SWIG_CheckInputArgument(pvApiCtx, $mininputarguments, $maxinputarguments);\n");
+      Printf(wrapper->code, "alaqil_CheckInputArgument(pvApiCtx, $mininputarguments, $maxinputarguments);\n");
     }
     else {
-      Printf(wrapper->code, "SWIG_CheckInputArgumentAtLeast(pvApiCtx, $mininputarguments-1);\n");
+      Printf(wrapper->code, "alaqil_CheckInputArgumentAtLeast(pvApiCtx, $mininputarguments-1);\n");
     }
-    Printf(wrapper->code, "SWIG_CheckOutputArgument(pvApiCtx, $minoutputarguments, $maxoutputarguments);\n");
+    Printf(wrapper->code, "alaqil_CheckOutputArgument(pvApiCtx, $minoutputarguments, $maxoutputarguments);\n");
 
     /* Set context */
-    Printf(wrapper->code, "SWIG_Scilab_SetFuncName(fname);\n");
-    Printf(wrapper->code, "SWIG_Scilab_SetApiContext(pvApiCtx);\n");
+    Printf(wrapper->code, "alaqil_Scilab_SetFuncName(fname);\n");
+    Printf(wrapper->code, "alaqil_Scilab_SetApiContext(pvApiCtx);\n");
 
     /* Write typemaps(in) */
 
@@ -382,7 +382,7 @@ public:
 	param = Getattr(param, "tmap:in:next");
       }
 
-      SwigType *paramType = Getattr(param, "type");
+      alaqilType *paramType = Getattr(param, "type");
       String *paramTypemap = Getattr(param, "tmap:in");
 
       if (paramTypemap) {
@@ -393,19 +393,19 @@ public:
 	Replaceall(paramTypemap, "$input", Getattr(param, "emit:input"));
 
 	if (Getattr(param, "wrap:disown") || (Getattr(param, "tmap:in:disown"))) {
-	  Replaceall(paramTypemap, "$disown", "SWIG_POINTER_DISOWN");
+	  Replaceall(paramTypemap, "$disown", "alaqil_POINTER_DISOWN");
 	} else {
 	  Replaceall(paramTypemap, "$disown", "0");
 	}
 
 	if (paramIndex >= minInputArguments) {	/* Optional input argument management */
-	  Printf(wrapper->code, "if (SWIG_NbInputArgument(pvApiCtx) > %d) {\n%s\n}\n", paramIndex, paramTypemap);
+	  Printf(wrapper->code, "if (alaqil_NbInputArgument(pvApiCtx) > %d) {\n%s\n}\n", paramIndex, paramTypemap);
 	} else {
 	  Printf(wrapper->code, "%s\n", paramTypemap);
 	}
 	param = Getattr(param, "tmap:in:next");
       } else {
-	Swig_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", SwigType_str(paramType, 0));
+	alaqil_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", alaqilType_str(paramType, 0));
 	break;
       }
     }
@@ -415,18 +415,18 @@ public:
     Setattr(node, "wrap:name", overloadedName);
 
     /* Emit the function call */
-    Swig_director_emit_dynamic_cast(node, wrapper);
+    alaqil_director_emit_dynamic_cast(node, wrapper);
     String *functionActionCode = emit_action(node);
 
     /* Insert the return variable */
     emit_return_variable(node, functionReturnType, wrapper);
 
     /* Return the function value if necessary */
-    String *functionReturnTypemap = Swig_typemap_lookup_out("out", node, Swig_cresult_name(), wrapper, functionActionCode);
+    String *functionReturnTypemap = alaqil_typemap_lookup_out("out", node, alaqil_cresult_name(), wrapper, functionActionCode);
     if (functionReturnTypemap) {
       // Result is actually the position of output value on stack
       if (Len(functionReturnTypemap) > 0) {
-	Printf(wrapper->code, "SWIG_Scilab_SetOutputPosition(%d);\n", 1);
+	Printf(wrapper->code, "alaqil_Scilab_SetOutputPosition(%d);\n", 1);
       }
       Replaceall(functionReturnTypemap, "$result", "1");
 
@@ -446,7 +446,7 @@ public:
       Delete(functionReturnTypemap);
 
     } else {
-      Swig_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", SwigType_str(functionReturnType, 0),
+      alaqil_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", alaqilType_str(functionReturnType, 0),
 		   functionName);
     }
 
@@ -456,7 +456,7 @@ public:
       if (paramTypemap) {
 	minOutputArguments++;
 	maxOutputArguments++;
-	Printf(wrapper->code, "SWIG_Scilab_SetOutputPosition(%d);\n", minOutputArguments);
+	Printf(wrapper->code, "alaqil_Scilab_SetOutputPosition(%d);\n", minOutputArguments);
 	String *result = NewString("");
 	Printf(result, "%d", minOutputArguments);
 	Replaceall(paramTypemap, "$result", result);
@@ -483,14 +483,14 @@ public:
 
     /* See if there is any return cleanup code */
     String *tm;
-    if ((tm = Swig_typemap_lookup("ret", node, Swig_cresult_name(), 0))) {
-      Replaceall(tm, "$source", Swig_cresult_name());
+    if ((tm = alaqil_typemap_lookup("ret", node, alaqil_cresult_name(), 0))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Printf(wrapper->code, "%s\n", tm);
       Delete(tm);
     }
 
     /* Close the function(ok) */
-    Printv(wrapper->code, "return SWIG_OK;\n", NIL);
+    Printv(wrapper->code, "return alaqil_OK;\n", NIL);
     Printv(wrapper->code, "}\n", NIL);
 
     /* Add the failure cleanup code */
@@ -540,7 +540,7 @@ public:
     Delete(wrapperName);
     DelWrapper(wrapper);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* -----------------------------------------------------------------------
@@ -551,17 +551,17 @@ public:
     Wrapper *wrapper = NewWrapper();
 
     String *functionName = Getattr(node, "sym:name");
-    String *wrapperName = Swig_name_wrapper(functionName);
+    String *wrapperName = alaqil_name_wrapper(functionName);
     int maxargs = 0;
 
     /* Generate the dispatch function */
-    String *dispatch = Swig_overload_dispatch(node, "return %s(SWIG_GatewayArguments);", &maxargs);
+    String *dispatch = alaqil_overload_dispatch(node, "return %s(alaqil_GatewayArguments);", &maxargs);
     String *tmp = NewString("");
 
-    Printv(wrapper->def, "int ", wrapperName, "(SWIG_GatewayParameters) {\n", NIL);
+    Printv(wrapper->def, "int ", wrapperName, "(alaqil_GatewayParameters) {\n", NIL);
 
     /* Get the number of the parameters */
-    Wrapper_add_local(wrapper, "argc", "int argc = SWIG_NbInputArgument(pvApiCtx)");
+    Wrapper_add_local(wrapper, "argc", "int argc = alaqil_NbInputArgument(pvApiCtx)");
     Printf(tmp, "int argv[%d] = {", maxargs);
     for (int j = 0; j < maxargs; ++j) {
       Printf(tmp, "%s%d", j ? "," : " ", j + 1);
@@ -569,12 +569,12 @@ public:
     Printf(tmp, "}");
     Wrapper_add_local(wrapper, "argv", tmp);
 
-    Printf(wrapper->code, "SWIG_Scilab_SetApiContext(pvApiCtx);\n");
+    Printf(wrapper->code, "alaqil_Scilab_SetApiContext(pvApiCtx);\n");
 
     /* Dump the dispatch function */
     Printv(wrapper->code, dispatch, "\n", NIL);
     Printf(wrapper->code, "Scierror(999, _(\"No matching function for overload\"));\n");
-    Printf(wrapper->code, "return SWIG_ERROR;\n");
+    Printf(wrapper->code, "return alaqil_ERROR;\n");
     Printv(wrapper->code, "}\n", NIL);
     Wrapper_print(wrapper, wrappersSection);
 
@@ -599,26 +599,26 @@ public:
 
     /* Manage GET function */
     Wrapper *getFunctionWrapper = NewWrapper();
-    String *getFunctionName = Swig_name_get(NSPACE_TODO, variableName);
-    String *scilabGetFunctionName = Swig_name_get(NSPACE_TODO, scilabVariableName);
+    String *getFunctionName = alaqil_name_get(NSPACE_TODO, variableName);
+    String *scilabGetFunctionName = alaqil_name_get(NSPACE_TODO, scilabVariableName);
 
     Setattr(node, "wrap:name", getFunctionName);
-    Printv(getFunctionWrapper->def, "int ", getFunctionName, "(SWIG_GatewayParameters) {\n", NIL);
+    Printv(getFunctionWrapper->def, "int ", getFunctionName, "(alaqil_GatewayParameters) {\n", NIL);
 
     /* Check the number of input and output */
-    Printf(getFunctionWrapper->def, "SWIG_CheckInputArgument(pvApiCtx, 0, 0);\n");
-    Printf(getFunctionWrapper->def, "SWIG_CheckOutputArgument(pvApiCtx, 1, 1);\n");
-    Printf(getFunctionWrapper->def, "SWIG_Scilab_SetApiContext(pvApiCtx);\n");
+    Printf(getFunctionWrapper->def, "alaqil_CheckInputArgument(pvApiCtx, 0, 0);\n");
+    Printf(getFunctionWrapper->def, "alaqil_CheckOutputArgument(pvApiCtx, 1, 1);\n");
+    Printf(getFunctionWrapper->def, "alaqil_Scilab_SetApiContext(pvApiCtx);\n");
 
-    String *varoutTypemap = Swig_typemap_lookup("varout", node, origVariableName, 0);
+    String *varoutTypemap = alaqil_typemap_lookup("varout", node, origVariableName, 0);
     if (varoutTypemap != NULL) {
-      Printf(getFunctionWrapper->code, "SWIG_Scilab_SetOutputPosition(%d);\n", 1);
+      Printf(getFunctionWrapper->code, "alaqil_Scilab_SetOutputPosition(%d);\n", 1);
       Replaceall(varoutTypemap, "$value", origVariableName);
       Replaceall(varoutTypemap, "$result", "1");
       emit_action_code(node, getFunctionWrapper->code, varoutTypemap);
       Delete(varoutTypemap);
     }
-    Append(getFunctionWrapper->code, "return SWIG_OK;\n");
+    Append(getFunctionWrapper->code, "return alaqil_OK;\n");
     Append(getFunctionWrapper->code, "}\n");
     Wrapper_print(getFunctionWrapper, wrappersSection);
 
@@ -628,24 +628,24 @@ public:
     /* Manage SET function */
     if (is_assignable(node)) {
       Wrapper *setFunctionWrapper = NewWrapper();
-      String *setFunctionName = Swig_name_set(NSPACE_TODO, variableName);
-      String *scilabSetFunctionName = Swig_name_set(NSPACE_TODO, scilabVariableName);
+      String *setFunctionName = alaqil_name_set(NSPACE_TODO, variableName);
+      String *scilabSetFunctionName = alaqil_name_set(NSPACE_TODO, scilabVariableName);
 
       Setattr(node, "wrap:name", setFunctionName);
-      Printv(setFunctionWrapper->def, "int ", setFunctionName, "(SWIG_GatewayParameters) {\n", NIL);
+      Printv(setFunctionWrapper->def, "int ", setFunctionName, "(alaqil_GatewayParameters) {\n", NIL);
 
       /* Check the number of input and output */
-      Printf(setFunctionWrapper->def, "SWIG_CheckInputArgument(pvApiCtx, 1, 1);\n");
-      Printf(setFunctionWrapper->def, "SWIG_CheckOutputArgument(pvApiCtx, 1, 1);\n");
-      Printf(setFunctionWrapper->def, "SWIG_Scilab_SetApiContext(pvApiCtx);\n");
+      Printf(setFunctionWrapper->def, "alaqil_CheckInputArgument(pvApiCtx, 1, 1);\n");
+      Printf(setFunctionWrapper->def, "alaqil_CheckOutputArgument(pvApiCtx, 1, 1);\n");
+      Printf(setFunctionWrapper->def, "alaqil_Scilab_SetApiContext(pvApiCtx);\n");
 
-      String *varinTypemap = Swig_typemap_lookup("varin", node, origVariableName, 0);
+      String *varinTypemap = alaqil_typemap_lookup("varin", node, origVariableName, 0);
       if (varinTypemap != NULL) {
 	Replaceall(varinTypemap, "$input", "1");
 	emit_action_code(node, setFunctionWrapper->code, varinTypemap);
 	Delete(varinTypemap);
       }
-      Append(setFunctionWrapper->code, "return SWIG_OK;\n");
+      Append(setFunctionWrapper->code, "return alaqil_OK;\n");
       Append(setFunctionWrapper->code, "}\n");
       Wrapper_print(setFunctionWrapper, wrappersSection);
 
@@ -656,7 +656,7 @@ public:
     }
     DelWrapper(getFunctionWrapper);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* -----------------------------------------------------------------------
@@ -667,7 +667,7 @@ public:
 
     /* Get the useful information from the node */
     String *nodeName = Getattr(node, "name");
-    SwigType *type = Getattr(node, "type");
+    alaqilType *type = Getattr(node, "type");
     String *constantName = Getattr(node, "sym:name");
     String *rawValue = Getattr(node, "rawval");
     String *constantValue = rawValue ? rawValue : Getattr(node, "value");
@@ -675,7 +675,7 @@ public:
 
     // If feature scilab:const enabled, constants & enums are wrapped to Scilab variables
     if (GetFlag(node, "feature:scilab:const")) {
-      bool isConstant = ((SwigType_issimple(type)) || (SwigType_type(type) == T_STRING));
+      bool isConstant = ((alaqilType_issimple(type)) || (alaqilType_type(type) == T_STRING));
       bool isEnum = (Cmp(nodeType(node), "enumitem") == 0);
 
       if (isConstant || isEnum) {
@@ -684,7 +684,7 @@ public:
 	  constantValue = Getattr(node, "value");
 	}
 
-	constantTypemap = Swig_typemap_lookup("scilabconstcode", node, nodeName, 0);
+	constantTypemap = alaqil_typemap_lookup("scilabconstcode", node, nodeName, 0);
 	if (constantTypemap != NULL) {
 	  String *scilabConstantName = checkIdentifierName(constantName, SCILAB_IDENTIFIER_NAME_CHAR_MAX);
 
@@ -694,15 +694,15 @@ public:
 
 	  emit_action_code(node, variablesCode, constantTypemap);
 	  Delete(constantTypemap);
-	  return SWIG_OK;
+	  return alaqil_OK;
 	}
       }
     }
 
     /* Create variables for member pointer constants, not supported by typemaps (like Python wrapper does) */
-    if (SwigType_type(type) == T_MPOINTER) {
-      String *wname = Swig_name_wrapper(constantName);
-      String *str = SwigType_str(type, wname);
+    if (alaqilType_type(type) == T_MPOINTER) {
+      String *wname = alaqil_name_wrapper(constantName);
+      String *str = alaqilType_str(type, wname);
       Printf(headerSection, "static %s = %s;\n", str, constantValue);
       Delete(str);
       constantValue = wname;
@@ -712,19 +712,19 @@ public:
 
     /* Create GET function to get the constant value */
     Wrapper *getFunctionWrapper = NewWrapper();
-    String *getFunctionName = Swig_name_get(NSPACE_TODO, constantName);
-    String *scilabGetFunctionName = Swig_name_get(NSPACE_TODO, scilabConstantName);
+    String *getFunctionName = alaqil_name_get(NSPACE_TODO, constantName);
+    String *scilabGetFunctionName = alaqil_name_get(NSPACE_TODO, scilabConstantName);
     Setattr(node, "wrap:name", getFunctionName);
-    Printv(getFunctionWrapper->def, "int ", getFunctionName, "(SWIG_GatewayParameters) {\n", NIL);
+    Printv(getFunctionWrapper->def, "int ", getFunctionName, "(alaqil_GatewayParameters) {\n", NIL);
 
     /* Check the number of input and output */
-    Printf(getFunctionWrapper->def, "SWIG_CheckInputArgument(pvApiCtx, 0, 0);\n");
-    Printf(getFunctionWrapper->def, "SWIG_CheckOutputArgument(pvApiCtx, 1, 1);\n");
-    Printf(getFunctionWrapper->def, "SWIG_Scilab_SetApiContext(pvApiCtx);\n");
+    Printf(getFunctionWrapper->def, "alaqil_CheckInputArgument(pvApiCtx, 0, 0);\n");
+    Printf(getFunctionWrapper->def, "alaqil_CheckOutputArgument(pvApiCtx, 1, 1);\n");
+    Printf(getFunctionWrapper->def, "alaqil_Scilab_SetApiContext(pvApiCtx);\n");
 
-    constantTypemap = Swig_typemap_lookup("constcode", node, nodeName, 0);
+    constantTypemap = alaqil_typemap_lookup("constcode", node, nodeName, 0);
     if (constantTypemap != NULL) {
-      Printf(getFunctionWrapper->code, "SWIG_Scilab_SetOutputPosition(%d);\n", 1);
+      Printf(getFunctionWrapper->code, "alaqil_Scilab_SetOutputPosition(%d);\n", 1);
       Replaceall(constantTypemap, "$value", constantValue);
       Replaceall(constantTypemap, "$result", "1");
       emit_action_code(node, getFunctionWrapper->code, constantTypemap);
@@ -732,7 +732,7 @@ public:
     }
 
     /* Dump the wrapper function */
-    Append(getFunctionWrapper->code, "return SWIG_OK;\n");
+    Append(getFunctionWrapper->code, "return alaqil_OK;\n");
     Append(getFunctionWrapper->code, "}\n");
     Wrapper_print(getFunctionWrapper, wrappersSection);
 
@@ -741,7 +741,7 @@ public:
 
     DelWrapper(getFunctionWrapper);
 
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ---------------------------------------------------------------------
@@ -805,7 +805,7 @@ public:
     if (targetVersion <= 5) {
 			if (Len(name) > char_size_max) {
 				scilabIdentifierName = DohNewStringWithSize(name, char_size_max);
-				Swig_warning(WARN_SCILAB_TRUNCATED_NAME, input_file, line_number,
+				alaqil_warning(WARN_SCILAB_TRUNCATED_NAME, input_file, line_number,
 					"Identifier name '%s' exceeds 24 characters and has been truncated to '%s'.\n", name, scilabIdentifierName);
 			} else
       scilabIdentifierName = name;
@@ -837,11 +837,11 @@ public:
         if (lenScilabMemberName > 0) {
 	        String *scilabMemberName = DohNewStringWithSize(memberName, lenScilabMemberName);
 	        Setattr(node, "sym:name", scilabMemberName);
-	        Swig_warning(WARN_SCILAB_TRUNCATED_NAME, input_file, line_number,
+	        alaqil_warning(WARN_SCILAB_TRUNCATED_NAME, input_file, line_number,
 		        "Wrapping functions names for member '%s.%s' will exceed 24 characters, "
 		        "so member name has been truncated to '%s'.\n", containerName, memberName, scilabMemberName);
         } else {
-	        Swig_error(input_file, line_number,
+	        alaqil_error(input_file, line_number,
 		        "Wrapping functions names for member '%s.%s' will exceed 24 characters, "
 		        "please rename the container of member '%s'.\n", containerName, memberName, containerName);
         }
@@ -854,8 +854,8 @@ public:
    * ----------------------------------------------------------------------- */
 
   void addHelperFunctions() {
-    addFunctionToScilab("SWIG_this", "SWIG_this");
-    addFunctionToScilab("SWIG_ptr", "SWIG_ptr");
+    addFunctionToScilab("alaqil_this", "alaqil_this");
+    addFunctionToScilab("alaqil_ptr", "alaqil_ptr");
   }
 
   /* -----------------------------------------------------------------------
@@ -887,10 +887,10 @@ public:
 
   void createBuilderFile(String *outputFilename) {
     String *builderFilename = NewStringf("builder.sce");
-    builderFile = NewFile(builderFilename, "w", SWIG_output_files());
+    builderFile = NewFile(builderFilename, "w", alaqil_output_files());
     if (!builderFile) {
       FileErrorDisplay(builderFilename);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     emitBanner(builderFile);
 
@@ -988,20 +988,20 @@ public:
 
   void createGatewayXMLFile(String *gatewayName) {
     String *gatewayXMLFilename = NewStringf("%s_gateway.xml", gatewayName);
-    gatewayXMLFile = NewFile(gatewayXMLFilename, "w", SWIG_output_files());
+    gatewayXMLFile = NewFile(gatewayXMLFilename, "w", alaqil_output_files());
     if (!gatewayXMLFile) {
       FileErrorDisplay(gatewayXMLFilename);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
-    // Add a slightly modified SWIG banner to the gateway XML ("--modify" is illegal in XML)
+    // Add a slightly modified alaqil banner to the gateway XML ("--modify" is illegal in XML)
     gatewayXML = NewString("");
     Printf(gatewayXML, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
     Printf(gatewayXML, "<!--\n");
-    Printf(gatewayXML, "This file was automatically generated by SWIG (http://www.swig.org).\n");
-    Printf(gatewayXML, "Version %s\n", Swig_package_version());
+    Printf(gatewayXML, "This file was automatically generated by alaqil (http://www.alaqil.org).\n");
+    Printf(gatewayXML, "Version %s\n", alaqil_package_version());
     Printf(gatewayXML, "\n");
     Printf(gatewayXML, "Do not make changes to this file unless you know what you are doing - modify\n");
-    Printf(gatewayXML, "the SWIG interface file instead.\n");
+    Printf(gatewayXML, "the alaqil interface file instead.\n");
     Printf(gatewayXML, "-->\n");
     Printf(gatewayXML, "<GATEWAY name=\"%s\">\n", gatewayName);
 
@@ -1090,7 +1090,7 @@ public:
     Printf(gatewayHeaderV6, "return 1;\n");
     Printf(gatewayHeaderV6, "};\n");
 
-    Printf(gatewayHeader, "#if SWIG_SCILAB_VERSION >= 600\n");
+    Printf(gatewayHeader, "#if alaqil_SCILAB_VERSION >= 600\n");
     Printv(gatewayHeader, gatewayHeaderV6, NIL);
     Printf(gatewayHeader, "#else\n");
     Printv(gatewayHeader, gatewayHeaderV5, NIL);
@@ -1105,10 +1105,10 @@ public:
 
   void createLoaderFile(String *gatewayLibraryName) {
     String *loaderFilename = NewString("loader.sce");
-    loaderFile = NewFile(loaderFilename, "w", SWIG_output_files());
+    loaderFile = NewFile(loaderFilename, "w", alaqil_output_files());
     if (!loaderFile) {
       FileErrorDisplay(loaderFilename);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
 
     emitBanner(loaderFile);
@@ -1151,6 +1151,6 @@ public:
 
 };
 
-extern "C" Language *swig_scilab(void) {
+extern "C" Language *alaqil_scilab(void) {
   return new SCILAB();
 }

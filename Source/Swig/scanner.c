@@ -1,10 +1,10 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * scanner.c
  *
@@ -14,7 +14,7 @@
  * to easily construct yacc-compatible scanners.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 #include <ctype.h>
 
 extern String *cparse_file;
@@ -147,7 +147,7 @@ void Scanner_push(Scanner *s, String *txt) {
 
 void Scanner_pushtoken(Scanner *s, int nt, const_String_or_char_ptr val) {
   assert(s);
-  assert((nt >= 0) && (nt < SWIG_MAXTOKENS));
+  assert((nt >= 0) && (nt < alaqil_MAXTOKENS));
   s->nexttoken = nt;
   if ( Char(val) != Char(s->text) ) {
     Clear(s->text);
@@ -203,7 +203,7 @@ int Scanner_start_line(Scanner *s) {
 
 void Scanner_idstart(Scanner *s, const char *id) {
   free(s->idstart);
-  s->idstart = Swig_copy_string(id);
+  s->idstart = alaqil_copy_string(id);
 }
 
 /* -----------------------------------------------------------------------------
@@ -528,7 +528,7 @@ static int look(Scanner *s) {
       /* Process delimiters */
 
       if (c == '\n') {
-	return SWIG_TOKEN_ENDLINE;
+	return alaqil_TOKEN_ENDLINE;
       } else if (!isspace(c)) {
 	retract(s, 1);
 	state = 1000;
@@ -542,7 +542,7 @@ static int look(Scanner *s) {
       if ((c = nextchar(s)) == 0)
         return (0);
       if (c == '%')
-	state = 4;		/* Possibly a SWIG directive */
+	state = 4;		/* Possibly a alaqil directive */
       
       /* Look for possible identifiers or unicode/delimiter strings */
       else if ((isalpha(c)) || (c == '_') ||
@@ -554,25 +554,25 @@ static int look(Scanner *s) {
 
       else if (c == '(') {
         brackets_push(s);
-	return SWIG_TOKEN_LPAREN;
+	return alaqil_TOKEN_LPAREN;
       }
       else if (c == ')') {
         brackets_pop(s);
-	return SWIG_TOKEN_RPAREN;
+	return alaqil_TOKEN_RPAREN;
       }
       else if (c == ';') {
         brackets_clear(s);
-	return SWIG_TOKEN_SEMI;
+	return alaqil_TOKEN_SEMI;
       }
       else if (c == ',')
-	return SWIG_TOKEN_COMMA;
+	return alaqil_TOKEN_COMMA;
       else if (c == '*')
 	state = 220;
       else if (c == '}')
-	return SWIG_TOKEN_RBRACE;
+	return alaqil_TOKEN_RBRACE;
       else if (c == '{') {
         brackets_reset(s);
-	return SWIG_TOKEN_LBRACE;
+	return alaqil_TOKEN_LBRACE;
       }
       else if (c == '=')
 	state = 33;
@@ -591,23 +591,23 @@ static int look(Scanner *s) {
       else if (c == '>')
 	state = 61;
       else if (c == '~')
-	return SWIG_TOKEN_NOT;
+	return alaqil_TOKEN_NOT;
       else if (c == '!')
 	state = 3;
       else if (c == '\\')
-	return SWIG_TOKEN_BACKSLASH;
+	return alaqil_TOKEN_BACKSLASH;
       else if (c == '[')
-	return SWIG_TOKEN_LBRACKET;
+	return alaqil_TOKEN_LBRACKET;
       else if (c == ']')
-	return SWIG_TOKEN_RBRACKET;
+	return alaqil_TOKEN_RBRACKET;
       else if (c == '@')
-	return SWIG_TOKEN_AT;
+	return alaqil_TOKEN_AT;
       else if (c == '$')
 	state = 75;
       else if (c == '#')
-	return SWIG_TOKEN_POUND;
+	return alaqil_TOKEN_POUND;
       else if (c == '?')
-	return SWIG_TOKEN_QUESTION;
+	return alaqil_TOKEN_QUESTION;
 
       /* Look for multi-character sequences */
 
@@ -659,28 +659,28 @@ static int look(Scanner *s) {
 	Setfile(s->text, Getfile(s->str));
 	Append(s->text, "/*");
       } else if (c == '=') {
-	return SWIG_TOKEN_DIVEQUAL;
+	return alaqil_TOKEN_DIVEQUAL;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_SLASH;
+	return alaqil_TOKEN_SLASH;
       }
       break;
     case 10:			/* C++ style comment */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated comment\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated comment\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '\n') {
 	retract(s,1);
-	return SWIG_TOKEN_COMMENT;
+	return alaqil_TOKEN_COMMENT;
       } else {
 	state = 10;
       }
       break;
     case 11:			/* C style comment block */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated comment\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated comment\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '*') {
 	state = 12;
@@ -690,13 +690,13 @@ static int look(Scanner *s) {
       break;
     case 12:			/* Still in C style comment */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated comment\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated comment\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '*') {
 	state = 12;
       } else if (c == '/') {
-	return SWIG_TOKEN_COMMENT;
+	return alaqil_TOKEN_COMMENT;
       } else {
 	state = 11;
       }
@@ -709,8 +709,8 @@ static int look(Scanner *s) {
       }
       
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated string\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated string\n");
+	return alaqil_TOKEN_ERROR;
       }
       else if (c == '(') {
 	state = 20;
@@ -725,14 +725,14 @@ static int look(Scanner *s) {
 
     case 20:			/* Inside the string */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated string\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated string\n");
+	return alaqil_TOKEN_ERROR;
       }
       
       if (!str_delimiter) { /* Ordinary string: "value" */
 	if (c == '\"') {
 	  Delitem(s->text, DOH_END);
-	  return SWIG_TOKEN_STRING;
+	  return alaqil_TOKEN_STRING;
 	} else if (c == '\\') {
 	  Delitem(s->text, DOH_END);
 	  get_escape(s);
@@ -755,11 +755,11 @@ static int look(Scanner *s) {
 	    Delete( end_delimiter ); /* Correct end delimiter )XXXX" occurred */
 	    Delete( str_delimiter );
 	    str_delimiter = 0;
-	    return SWIG_TOKEN_STRING;
+	    return alaqil_TOKEN_STRING;
 	  } else {                   /* Incorrect end delimiter occurred */
 	    if (c == 0) {
-	      Swig_error(cparse_file, cparse_start_line, "Unterminated raw string, started with R\"%s( is not terminated by )%s\"\n", str_delimiter, str_delimiter);
-	      return SWIG_TOKEN_ERROR;
+	      alaqil_error(cparse_file, cparse_start_line, "Unterminated raw string, started with R\"%s( is not terminated by )%s\"\n", str_delimiter, str_delimiter);
+	      return alaqil_TOKEN_ERROR;
 	    }
 	    retract( s, i );
 	    Delete( end_delimiter );
@@ -771,55 +771,55 @@ static int look(Scanner *s) {
 
     case 3:			/* Maybe a not equals */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_LNOT;
+	return alaqil_TOKEN_LNOT;
       else if (c == '=')
-	return SWIG_TOKEN_NOTEQUAL;
+	return alaqil_TOKEN_NOTEQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_LNOT;
+	return alaqil_TOKEN_LNOT;
       }
       break;
 
     case 31:			/* AND or Logical AND or ANDEQUAL */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_AND;
+	return alaqil_TOKEN_AND;
       else if (c == '&')
-	return SWIG_TOKEN_LAND;
+	return alaqil_TOKEN_LAND;
       else if (c == '=')
-	return SWIG_TOKEN_ANDEQUAL;
+	return alaqil_TOKEN_ANDEQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_AND;
+	return alaqil_TOKEN_AND;
       }
       break;
 
     case 32:			/* OR or Logical OR */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_OR;
+	return alaqil_TOKEN_OR;
       else if (c == '|')
-	return SWIG_TOKEN_LOR;
+	return alaqil_TOKEN_LOR;
       else if (c == '=')
-	return SWIG_TOKEN_OREQUAL;
+	return alaqil_TOKEN_OREQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_OR;
+	return alaqil_TOKEN_OR;
       }
       break;
 
     case 33:			/* EQUAL or EQUALTO */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_EQUAL;
+	return alaqil_TOKEN_EQUAL;
       else if (c == '=')
-	return SWIG_TOKEN_EQUALTO;
+	return alaqil_TOKEN_EQUALTO;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_EQUAL;
+	return alaqil_TOKEN_EQUAL;
       }
       break;
 
     case 4:			/* A wrapper generator directive (maybe) */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_PERCENT;
+	return alaqil_TOKEN_PERCENT;
       if (c == '{') {
 	state = 40;		/* Include block */
 	Clear(s->text);
@@ -830,20 +830,20 @@ static int look(Scanner *s) {
 	         ((isalpha(c)) || (c == '_'))) {
 	state = 7;
       } else if (c == '=') {
-	return SWIG_TOKEN_MODEQUAL;
+	return alaqil_TOKEN_MODEQUAL;
       } else if (c == '}') {
-	Swig_error(cparse_file, cparse_line, "Syntax error. Extraneous '%%}'\n");
+	alaqil_error(cparse_file, cparse_line, "Syntax error. Extraneous '%%}'\n");
 	exit(1);
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_PERCENT;
+	return alaqil_TOKEN_PERCENT;
       }
       break;
 
     case 40:			/* Process an include block */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated block\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated block\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '%')
 	state = 41;
@@ -857,7 +857,7 @@ static int look(Scanner *s) {
 	Delitem(s->text, DOH_END);
 	Delitem(s->text, DOH_END);
 	Seek(s->text,0,SEEK_SET);
-	return SWIG_TOKEN_CODEBLOCK;
+	return alaqil_TOKEN_CODEBLOCK;
       } else {
 	state = 40;
       }
@@ -866,54 +866,54 @@ static int look(Scanner *s) {
     case 5:			/* Maybe a double colon */
 
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_COLON;
+	return alaqil_TOKEN_COLON;
       if (c == ':')
 	state = 50;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_COLON;
+	return alaqil_TOKEN_COLON;
       }
       break;
 
     case 50:			/* DCOLON, DCOLONSTAR */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_DCOLON;
+	return alaqil_TOKEN_DCOLON;
       else if (c == '*')
-	return SWIG_TOKEN_DCOLONSTAR;
+	return alaqil_TOKEN_DCOLONSTAR;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_DCOLON;
+	return alaqil_TOKEN_DCOLON;
       }
       break;
 
     case 60:			/* shift operators */
       if ((c = nextchar(s)) == 0) {
 	brackets_increment(s);
-	return SWIG_TOKEN_LESSTHAN;
+	return alaqil_TOKEN_LESSTHAN;
       }
       if (c == '<')
 	state = 240;
       else if (c == '=')
-	return SWIG_TOKEN_LTEQUAL;
+	return alaqil_TOKEN_LTEQUAL;
       else {
 	retract(s, 1);
 	brackets_increment(s);
-	return SWIG_TOKEN_LESSTHAN;
+	return alaqil_TOKEN_LESSTHAN;
       }
       break;
     case 61:
       if ((c = nextchar(s)) == 0) {
         brackets_decrement(s);
-	return SWIG_TOKEN_GREATERTHAN;
+	return alaqil_TOKEN_GREATERTHAN;
       }
       if (c == '>' && brackets_allow_shift(s))
 	state = 250;
       else if (c == '=')
-	return SWIG_TOKEN_GTEQUAL;
+	return alaqil_TOKEN_GTEQUAL;
       else {
 	retract(s, 1);
         brackets_decrement(s);
-	return SWIG_TOKEN_GREATERTHAN;
+	return alaqil_TOKEN_GREATERTHAN;
       }
       break;
     
@@ -1015,12 +1015,12 @@ static int look(Scanner *s) {
 
     case 75:			/* Special identifier $ */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_DOLLAR;
+	return alaqil_TOKEN_DOLLAR;
       if (isalnum(c) || (c == '_') || (c == '*') || (c == '&')) {
 	state = 70;
       } else {
 	retract(s,1);
-	if (Len(s->text) == 1) return SWIG_TOKEN_DOLLAR;
+	if (Len(s->text) == 1) return alaqil_TOKEN_DOLLAR;
 	state = 76;
       }
       break;
@@ -1028,16 +1028,16 @@ static int look(Scanner *s) {
     case 76:			/* Identifier or true/false */
       if (cparse_cplusplus) {
 	if (Strcmp(s->text, "true") == 0)
-	  return SWIG_TOKEN_BOOL;
+	  return alaqil_TOKEN_BOOL;
 	else if (Strcmp(s->text, "false") == 0)
-	  return SWIG_TOKEN_BOOL;
+	  return alaqil_TOKEN_BOOL;
 	}
-      return SWIG_TOKEN_ID;
+      return alaqil_TOKEN_ID;
       break;
 
     case 77: /*identifier or wide string literal*/
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_ID;
+	return alaqil_TOKEN_ID;
       else if (c == '\"') {
 	s->start_line = s->line;
 	Clear(s->text);
@@ -1052,52 +1052,52 @@ static int look(Scanner *s) {
 	state = 7;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_ID;
+	return alaqil_TOKEN_ID;
       }
     break;
 
     case 78:			/* Processing a wide string literal*/
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated wide string\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated wide string\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '\"') {
 	Delitem(s->text, DOH_END);
-	return SWIG_TOKEN_WSTRING;
+	return alaqil_TOKEN_WSTRING;
       } else if (c == '\\') {
 	if ((c = nextchar(s)) == 0) {
-	  Swig_error(cparse_file, cparse_start_line, "Unterminated wide string\n");
-	  return SWIG_TOKEN_ERROR;
+	  alaqil_error(cparse_file, cparse_start_line, "Unterminated wide string\n");
+	  return alaqil_TOKEN_ERROR;
 	}
       }
       break;
 
     case 79:			/* Processing a wide char literal */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated wide character constant\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated wide character constant\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '\'') {
 	Delitem(s->text, DOH_END);
-	return (SWIG_TOKEN_WCHAR);
+	return (alaqil_TOKEN_WCHAR);
       } else if (c == '\\') {
 	if ((c = nextchar(s)) == 0) {
-	  Swig_error(cparse_file, cparse_start_line, "Unterminated wide character literal\n");
-	  return SWIG_TOKEN_ERROR;
+	  alaqil_error(cparse_file, cparse_start_line, "Unterminated wide character literal\n");
+	  return alaqil_TOKEN_ERROR;
 	}
       }
       break;
 
     case 8:			/* A numerical digit */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       if (c == '.') {
 	state = 81;
       } else if ((c == 'e') || (c == 'E')) {
 	state = 82;
       } else if ((c == 'f') || (c == 'F')) {
 	Delitem(s->text, DOH_END);
-	return SWIG_TOKEN_FLOAT;
+	return alaqil_TOKEN_FLOAT;
       } else if (isdigit(c)) {
 	state = 8;
       } else if ((c == 'l') || (c == 'L')) {
@@ -1106,58 +1106,58 @@ static int look(Scanner *s) {
 	state = 88;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       }
       break;
     case 81:			/* A floating pointer number of some sort */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_DOUBLE;
+	return alaqil_TOKEN_DOUBLE;
       if (isdigit(c))
 	state = 81;
       else if ((c == 'e') || (c == 'E'))
 	state = 820;
       else if ((c == 'f') || (c == 'F')) {
 	Delitem(s->text, DOH_END);
-	return SWIG_TOKEN_FLOAT;
+	return alaqil_TOKEN_FLOAT;
       } else if ((c == 'l') || (c == 'L')) {
 	Delitem(s->text, DOH_END);
-	return SWIG_TOKEN_DOUBLE;
+	return alaqil_TOKEN_DOUBLE;
       } else {
 	retract(s, 1);
-	return (SWIG_TOKEN_DOUBLE);
+	return (alaqil_TOKEN_DOUBLE);
       }
       break;
     case 82:
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
+	return alaqil_TOKEN_ERROR;
       }
       if ((isdigit(c)) || (c == '-') || (c == '+'))
 	state = 86;
       else {
 	retract(s, 2);
-	Swig_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
+	return alaqil_TOKEN_ERROR;
       }
       break;
     case 820:
       /* Like case 82, but we've seen a decimal point. */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
+	return alaqil_TOKEN_ERROR;
       }
       if ((isdigit(c)) || (c == '-') || (c == '+'))
 	state = 86;
       else {
 	retract(s, 2);
-	Swig_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Exponent does not have any digits\n");
+	return alaqil_TOKEN_ERROR;
       }
       break;
     case 83:
       /* Might be a hexadecimal or octal number */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       if (isdigit(c))
 	state = 84;
       else if ((c == 'e') || (c == 'E'))
@@ -1174,13 +1174,13 @@ static int look(Scanner *s) {
 	state = 88;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       }
       break;
     case 84:
       /* This is an octal number */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       if (isdigit(c))
 	state = 84;
       else if (c == '.')
@@ -1193,13 +1193,13 @@ static int look(Scanner *s) {
 	state = 88;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       }
       break;
     case 85:
       /* This is an hex number */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       if (isxdigit(c))
 	state = 85;
       else if (c == '.') /* hexadecimal float */
@@ -1212,13 +1212,13 @@ static int look(Scanner *s) {
 	state = 88;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       }
       break;
     case 850:
       /* This is a binary number */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       if ((c == '0') || (c == '1'))
 	state = 850;
       else if ((c == 'l') || (c == 'L')) {
@@ -1227,14 +1227,14 @@ static int look(Scanner *s) {
 	state = 88;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_INT;
+	return alaqil_TOKEN_INT;
       }
       break;
     case 860:
       /* hexadecimal float */
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Hexadecimal floating literals require an exponent\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Hexadecimal floating literals require an exponent\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (isxdigit(c))
 	state = 860;
@@ -1242,40 +1242,40 @@ static int look(Scanner *s) {
 	state = 820;
       else {
 	retract(s, 2);
-	Swig_error(cparse_file, cparse_start_line, "Hexadecimal floating literals require an exponent\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Hexadecimal floating literals require an exponent\n");
+	return alaqil_TOKEN_ERROR;
       }
       break;
     case 86:
       /* Rest of floating point number */
 
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_DOUBLE;
+	return alaqil_TOKEN_DOUBLE;
       if (isdigit(c))
 	state = 86;
       else if ((c == 'f') || (c == 'F')) {
 	Delitem(s->text, DOH_END);
-	return SWIG_TOKEN_FLOAT;
+	return alaqil_TOKEN_FLOAT;
       } else if ((c == 'l') || (c == 'L')) {
 	Delitem(s->text, DOH_END);
-	return SWIG_TOKEN_DOUBLE;
+	return alaqil_TOKEN_DOUBLE;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_DOUBLE;
+	return alaqil_TOKEN_DOUBLE;
       }
       break;
 
     case 87:
       /* A long integer of some sort */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_LONG;
+	return alaqil_TOKEN_LONG;
       if ((c == 'u') || (c == 'U')) {
-	return SWIG_TOKEN_ULONG;
+	return alaqil_TOKEN_ULONG;
       } else if ((c == 'l') || (c == 'L')) {
 	state = 870;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_LONG;
+	return alaqil_TOKEN_LONG;
       }
       break;
 
@@ -1283,47 +1283,47 @@ static int look(Scanner *s) {
 
     case 870:
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_LONGLONG;
+	return alaqil_TOKEN_LONGLONG;
       if ((c == 'u') || (c == 'U')) {
-	return SWIG_TOKEN_ULONGLONG;
+	return alaqil_TOKEN_ULONGLONG;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_LONGLONG;
+	return alaqil_TOKEN_LONGLONG;
       }
 
       /* An unsigned number */
     case 88:
 
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_UINT;
+	return alaqil_TOKEN_UINT;
       if ((c == 'l') || (c == 'L')) {
 	state = 880;
       } else {
 	retract(s, 1);
-	return SWIG_TOKEN_UINT;
+	return alaqil_TOKEN_UINT;
       }
       break;
 
       /* Possibly an unsigned long long or unsigned long */
     case 880:
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_ULONG;
+	return alaqil_TOKEN_ULONG;
       if ((c == 'l') || (c == 'L'))
-	return SWIG_TOKEN_ULONGLONG;
+	return alaqil_TOKEN_ULONGLONG;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_ULONG;
+	return alaqil_TOKEN_ULONG;
       }
 
       /* A character constant */
     case 9:
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated character constant\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated character constant\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '\'') {
 	Delitem(s->text, DOH_END);
-	return (SWIG_TOKEN_CHAR);
+	return (alaqil_TOKEN_CHAR);
       } else if (c == '\\') {
 	Delitem(s->text, DOH_END);
 	get_escape(s);
@@ -1339,91 +1339,91 @@ static int look(Scanner *s) {
 	state = 81;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_PERIOD;
+	return alaqil_TOKEN_PERIOD;
       }
       break;
 
     case 200:			/* PLUS, PLUSPLUS, PLUSEQUAL */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_PLUS;
+	return alaqil_TOKEN_PLUS;
       else if (c == '+')
-	return SWIG_TOKEN_PLUSPLUS;
+	return alaqil_TOKEN_PLUSPLUS;
       else if (c == '=')
-	return SWIG_TOKEN_PLUSEQUAL;
+	return alaqil_TOKEN_PLUSEQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_PLUS;
+	return alaqil_TOKEN_PLUS;
       }
       break;
 
     case 210:			/* MINUS, MINUSMINUS, MINUSEQUAL, ARROW */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_MINUS;
+	return alaqil_TOKEN_MINUS;
       else if (c == '-')
-	return SWIG_TOKEN_MINUSMINUS;
+	return alaqil_TOKEN_MINUSMINUS;
       else if (c == '=')
-	return SWIG_TOKEN_MINUSEQUAL;
+	return alaqil_TOKEN_MINUSEQUAL;
       else if (c == '>')
 	state = 211;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_MINUS;
+	return alaqil_TOKEN_MINUS;
       }
       break;
 
     case 211:			/* ARROW, ARROWSTAR */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_ARROW;
+	return alaqil_TOKEN_ARROW;
       else if (c == '*')
-	return SWIG_TOKEN_ARROWSTAR;
+	return alaqil_TOKEN_ARROWSTAR;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_ARROW;
+	return alaqil_TOKEN_ARROW;
       }
       break;
 
 
     case 220:			/* STAR, TIMESEQUAL */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_STAR;
+	return alaqil_TOKEN_STAR;
       else if (c == '=')
-	return SWIG_TOKEN_TIMESEQUAL;
+	return alaqil_TOKEN_TIMESEQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_STAR;
+	return alaqil_TOKEN_STAR;
       }
       break;
 
     case 230:			/* XOR, XOREQUAL */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_XOR;
+	return alaqil_TOKEN_XOR;
       else if (c == '=')
-	return SWIG_TOKEN_XOREQUAL;
+	return alaqil_TOKEN_XOREQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_XOR;
+	return alaqil_TOKEN_XOR;
       }
       break;
 
     case 240:			/* LSHIFT, LSEQUAL */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_LSHIFT;
+	return alaqil_TOKEN_LSHIFT;
       else if (c == '=')
-	return SWIG_TOKEN_LSEQUAL;
+	return alaqil_TOKEN_LSEQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_LSHIFT;
+	return alaqil_TOKEN_LSHIFT;
       }
       break;
 
     case 250:			/* RSHIFT, RSEQUAL */
       if ((c = nextchar(s)) == 0)
-	return SWIG_TOKEN_RSHIFT;
+	return alaqil_TOKEN_RSHIFT;
       else if (c == '=')
-	return SWIG_TOKEN_RSEQUAL;
+	return alaqil_TOKEN_RSEQUAL;
       else {
 	retract(s, 1);
-	return SWIG_TOKEN_RSHIFT;
+	return alaqil_TOKEN_RSHIFT;
       }
       break;
 
@@ -1433,17 +1433,17 @@ static int look(Scanner *s) {
       /* Reverse string */
     case 900:
       if ((c = nextchar(s)) == 0) {
-	Swig_error(cparse_file, cparse_start_line, "Unterminated character constant\n");
-	return SWIG_TOKEN_ERROR;
+	alaqil_error(cparse_file, cparse_start_line, "Unterminated character constant\n");
+	return alaqil_TOKEN_ERROR;
       }
       if (c == '`') {
 	Delitem(s->text, DOH_END);
-	return (SWIG_TOKEN_RSTRING);
+	return (alaqil_TOKEN_RSTRING);
       }
       break;
 
     default:
-      return SWIG_TOKEN_ILLEGAL;
+      return alaqil_TOKEN_ILLEGAL;
     }
   }
 }
@@ -1599,7 +1599,7 @@ int Scanner_skip_balanced(Scanner *s, int startchar, int endchar) {
     case 31:
       state = 30;
       break;
-    /* 40-45 SWIG locator checks - a C comment with contents starting: @SWIG */
+    /* 40-45 alaqil locator checks - a C comment with contents starting: @alaqil */
     case 40:
       state = (c == 'S') ? 41 : (c == '*') ? 14 : 13;
       break;
@@ -1613,7 +1613,7 @@ int Scanner_skip_balanced(Scanner *s, int startchar, int endchar) {
       state = (c == 'G') ? 44 : (c == '*') ? 14 : 13;
       if (c == 'G') {
 	Delete(locator);
-	locator = NewString("/*@SWIG");
+	locator = NewString("/*@alaqil");
       }
       break;
     case 44:
@@ -1621,7 +1621,7 @@ int Scanner_skip_balanced(Scanner *s, int startchar, int endchar) {
 	state = 45;
       Putc(c, locator);
       break;
-    case 45: /* end of SWIG locator in C comment */
+    case 45: /* end of alaqil locator in C comment */
       if (c == '/') {
 	state = 0;
 	Putc(c, locator);
@@ -1763,7 +1763,7 @@ int Scanner_isoperator(int tokval) {
  * locator()
  *
  * Support for locator strings. These are strings of the form
- * @SWIG:filename,line,id@ emitted by the SWIG preprocessor.  They
+ * @alaqil:filename,line,id@ emitted by the alaqil preprocessor.  They
  * are primarily used for macro line number reporting.
  * We just use the locator to mark when to activate/deactivate linecounting.
  * ---------------------------------------------------------------------- */
@@ -1774,7 +1774,7 @@ void Scanner_locator(Scanner *s, String *loc) {
   static int expanding_macro = 0;
 
   if (!follow_locators) {
-    if (Equal(loc, "/*@SWIG@*/")) {
+    if (Equal(loc, "/*@alaqil@*/")) {
       /* End locator. */
       if (expanding_macro)
 	--expanding_macro;
@@ -1819,7 +1819,7 @@ void Scanner_locator(Scanner *s, String *loc) {
 	  break;
 	Putc(c, fn);
       }
-      cparse_file = Swig_copy_string(Char(fn));
+      cparse_file = alaqil_copy_string(Char(fn));
       Clear(fn);
       cparse_line = 1;
       /* Get the line number */
@@ -1837,14 +1837,14 @@ void Scanner_locator(Scanner *s, String *loc) {
 	  break;
 	Putc(c, fn);
       }
-      /*  Swig_diagnostic(cparse_file, cparse_line, "Scanner_set_location\n"); */
+      /*  alaqil_diagnostic(cparse_file, cparse_line, "Scanner_set_location\n"); */
       Scanner_set_location(s, cparse_file, cparse_line);
       Delete(fn);
     }
   }
 }
 
-void Swig_cparse_follow_locators(int v) {
+void alaqil_cparse_follow_locators(int v) {
    follow_locators = v;
 }
 

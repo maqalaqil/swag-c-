@@ -1,17 +1,17 @@
 /* ----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * perl5.cxx
  *
- * Perl5 language module for SWIG.
+ * Perl5 language module for alaqil.
  * ------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include "cparse.h"
 #include <ctype.h>
 
@@ -127,7 +127,7 @@ public:
   }
 
   /* Test to see if a type corresponds to something wrapped with a shadow class */
-  Node *is_shadow(SwigType *t) {
+  Node *is_shadow(alaqilType *t) {
     Node *n;
     n = classLookup(t);
     /*  Printf(stdout,"'%s' --> '%p'\n", t, n); */
@@ -147,66 +147,66 @@ public:
   virtual void main(int argc, char *argv[]) {
     int i = 1;
 
-    SWIG_library_directory("perl5");
+    alaqil_library_directory("perl5");
 
     for (i = 1; i < argc; i++) {
       if (argv[i]) {
 	if (strcmp(argv[i], "-package") == 0) {
 	  Printv(stderr,
 		 "*** -package is no longer supported\n*** use the directive '%module A::B::C' in your interface file instead\n*** see the Perl section in the manual for details.\n", NIL);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_exit(EXIT_FAILURE);
 	} else if (strcmp(argv[i], "-interface") == 0) {
 	  Printv(stderr,
 		 "*** -interface is no longer supported\n*** use the directive '%module A::B::C' in your interface file instead\n*** see the Perl section in the manual for details.\n", NIL);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_exit(EXIT_FAILURE);
 	} else if (strcmp(argv[i], "-exportall") == 0) {
 	  export_all = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-static") == 0) {
 	  staticoption = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if ((strcmp(argv[i], "-shadow") == 0) || ((strcmp(argv[i], "-proxy") == 0))) {
 	  blessed = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if ((strcmp(argv[i], "-noproxy") == 0)) {
 	  blessed = 0;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-const") == 0) {
 	  do_constants = 1;
 	  blessed = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nopm") == 0) {
 	  no_pmfile = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-pm") == 0) {
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	  i++;
 	  pmfile = NewString(argv[i]);
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i],"-v") == 0) {
-	    Swig_mark_arg(i);
+	    alaqil_mark_arg(i);
 	    verbose++;
 	} else if (strcmp(argv[i], "-compat") == 0) {
 	  compat = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-help") == 0) {
 	  fputs(usage, stdout);
 	} else if (strcmp(argv[i], "-cppcast") == 0) {
 	  Printf(stderr, "Deprecated command line option: %s. This option is now always on.\n", argv[i]);
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nocppcast") == 0) {
 	  Printf(stderr, "Deprecated command line option: %s. This option is no longer supported.\n", argv[i]);
-	  Swig_mark_arg(i);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_mark_arg(i);
+	  alaqil_exit(EXIT_FAILURE);
 	}
       }
     }
 
-    Preprocessor_define("SWIGPERL 1", 0);
-    // SWIGPERL5 is deprecated, and no longer documented.
-    Preprocessor_define("SWIGPERL5 1", 0);
-    SWIG_typemap_lang("perl5");
-    SWIG_config_file("perl5.swg");
+    Preprocessor_define("alaqilPERL 1", 0);
+    // alaqilPERL5 is deprecated, and no longer documented.
+    Preprocessor_define("alaqilPERL5 1", 0);
+    alaqil_typemap_lang("perl5");
+    alaqil_config_file("perl5.swg");
     allow_overloading();
   }
 
@@ -273,10 +273,10 @@ public:
     String *outfile = Getattr(n, "outfile");
     String *outfile_h = Getattr(n, "outfile_h");
 
-    f_begin = NewFile(outfile, "w", SWIG_output_files());
+    f_begin = NewFile(outfile, "w", alaqil_output_files());
     if (!f_begin) {
       FileErrorDisplay(outfile);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     f_runtime = NewString("");
     f_init = NewString("");
@@ -286,21 +286,21 @@ public:
     f_directors = NewString("");
 
     if (directorsEnabled()) {
-      f_runtime_h = NewFile(outfile_h, "w", SWIG_output_files());
+      f_runtime_h = NewFile(outfile_h, "w", alaqil_output_files());
       if (!f_runtime_h) {
 	FileErrorDisplay(outfile_h);
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
     }
 
-    /* Register file targets with the SWIG file handler */
-    Swig_register_filebyname("header", f_header);
-    Swig_register_filebyname("wrapper", f_wrappers);
-    Swig_register_filebyname("begin", f_begin);
-    Swig_register_filebyname("runtime", f_runtime);
-    Swig_register_filebyname("init", f_init);
-    Swig_register_filebyname("director", f_directors);
-    Swig_register_filebyname("director_h", f_directors_h);
+    /* Register file targets with the alaqil file handler */
+    alaqil_register_filebyname("header", f_header);
+    alaqil_register_filebyname("wrapper", f_wrappers);
+    alaqil_register_filebyname("begin", f_begin);
+    alaqil_register_filebyname("runtime", f_runtime);
+    alaqil_register_filebyname("init", f_init);
+    alaqil_register_filebyname("director", f_directors);
+    alaqil_register_filebyname("director_h", f_directors_h);
 
     classlist = NewList();
 
@@ -313,18 +313,18 @@ public:
     pragma_include = NewString("");
     additional_perl_code = NewString("");
 
-    command_tab = NewString("static swig_command_info swig_commands[] = {\n");
-    constant_tab = NewString("static swig_constant_info swig_constants[] = {\n");
-    variable_tab = NewString("static swig_variable_info swig_variables[] = {\n");
+    command_tab = NewString("static alaqil_command_info alaqil_commands[] = {\n");
+    constant_tab = NewString("static alaqil_constant_info alaqil_constants[] = {\n");
+    variable_tab = NewString("static alaqil_variable_info alaqil_variables[] = {\n");
 
-    Swig_banner(f_begin);
+    alaqil_banner(f_begin);
 
-    Printf(f_runtime, "\n\n#ifndef SWIGPERL\n#define SWIGPERL\n#endif\n\n");
+    Printf(f_runtime, "\n\n#ifndef alaqilPERL\n#define alaqilPERL\n#endif\n\n");
 
     if (directorsEnabled()) {
-      Printf(f_runtime, "#define SWIG_DIRECTORS\n");
+      Printf(f_runtime, "#define alaqil_DIRECTORS\n");
     }
-    Printf(f_runtime, "#define SWIG_CASTRANK_MODE\n");
+    Printf(f_runtime, "#define alaqil_CASTRANK_MODE\n");
     Printf(f_runtime, "\n");
 
     // Is the imported module in another package?  (IOW, does it use the
@@ -342,10 +342,10 @@ public:
     }
 
     if (directorsEnabled()) {
-      Swig_banner(f_directors_h);
+      alaqil_banner(f_directors_h);
       Printf(f_directors_h, "\n");
-      Printf(f_directors_h, "#ifndef SWIG_%s_WRAP_H_\n", underscore_module);
-      Printf(f_directors_h, "#define SWIG_%s_WRAP_H_\n\n", underscore_module);
+      Printf(f_directors_h, "#ifndef alaqil_%s_WRAP_H_\n", underscore_module);
+      Printf(f_directors_h, "#define alaqil_%s_WRAP_H_\n\n", underscore_module);
       if (dirprot_mode()) {
 	Printf(f_directors_h, "#include <map>\n");
 	Printf(f_directors_h, "#include <string>\n\n");
@@ -356,7 +356,7 @@ public:
       Printf(f_directors, " * C++ director class methods\n");
       Printf(f_directors, " * --------------------------------------------------- */\n\n");
       if (outfile_h) {
-	String *filename = Swig_file_filename(outfile_h);
+	String *filename = alaqil_file_filename(outfile_h);
 	Printf(magic, "#include \"%s\"\n\n", filename);
 	Delete(filename);
       }
@@ -404,25 +404,25 @@ public:
 	}
 	pmfile = NewStringf("%s.pm", m);
       }
-      String *filen = NewStringf("%s%s", SWIG_output_directory(), pmfile);
-      if ((f_pm = NewFile(filen, "w", SWIG_output_files())) == 0) {
+      String *filen = NewStringf("%s%s", alaqil_output_directory(), pmfile);
+      if ((f_pm = NewFile(filen, "w", alaqil_output_files())) == 0) {
 	FileErrorDisplay(filen);
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
       Delete(filen);
       filen = NULL;
-      Swig_register_filebyname("pm", f_pm);
-      Swig_register_filebyname("perl", f_pm);
+      alaqil_register_filebyname("pm", f_pm);
+      alaqil_register_filebyname("perl", f_pm);
     }
     {
       String *boot_name = NewStringf("boot_%s", underscore_module);
-      Printf(f_header,"#define SWIG_init    %s\n\n", boot_name);
-      Printf(f_header,"#define SWIG_name   \"%s::%s\"\n", cmodule, boot_name);
-      Printf(f_header,"#define SWIG_prefix \"%s::\"\n", cmodule);
+      Printf(f_header,"#define alaqil_init    %s\n\n", boot_name);
+      Printf(f_header,"#define alaqil_name   \"%s::%s\"\n", cmodule, boot_name);
+      Printf(f_header,"#define alaqil_prefix \"%s::\"\n", cmodule);
       Delete(boot_name);
     }
 
-    Swig_banner_target_lang(f_pm, "#");
+    alaqil_banner_target_lang(f_pm, "#");
     Printf(f_pm, "\n");
 
     Printf(f_pm, "package %s;\n", module);
@@ -452,7 +452,7 @@ public:
 	   "#else\n",
 	   "#define MAGIC_CLASS\n",
 	   "#endif\n",
-	   "SWIGCLASS_STATIC int swig_magic_readonly(pTHX_ SV *SWIGUNUSEDPARM(sv), MAGIC *SWIGUNUSEDPARM(mg)) {\n",
+	   "alaqilCLASS_STATIC int alaqil_magic_readonly(pTHX_ SV *alaqilUNUSEDPARM(sv), MAGIC *alaqilUNUSEDPARM(mg)) {\n",
 	   tab4, "MAGIC_PPERL\n", tab4, "croak(\"Value is read-only.\");\n", tab4, "return 0;\n", "}\n", NIL);
 
     Printf(f_wrappers, "#ifdef __cplusplus\nextern \"C\" {\n#endif\n");
@@ -462,8 +462,8 @@ public:
 
     if (directorsEnabled()) {
       // Insert director runtime into the f_runtime file (make it occur before %header section)
-      Swig_insert_file("director_common.swg", f_runtime);
-      Swig_insert_file("director.swg", f_runtime);
+      alaqil_insert_file("director_common.swg", f_runtime);
+      alaqil_insert_file("director.swg", f_runtime);
     }
 
     String *base = NewString("");
@@ -483,20 +483,20 @@ public:
       for (cls = First(classlist); cls.item; cls = Next(cls)) {
 	String *pname = Getattr(cls.item, "perl5:proxy");
 	if (pname) {
-	  SwigType *type = Getattr(cls.item, "classtypeobj");
+	  alaqilType *type = Getattr(cls.item, "classtypeobj");
 	  if (!type)
 	    continue;		/* If unnamed class, no type will be found */
 	  type = Copy(type);
 
-	  SwigType_add_pointer(type);
-	  String *mangled = SwigType_manglestr(type);
-	  SwigType_remember_mangleddata(mangled, NewStringf("\"%s\"", pname));
+	  alaqilType_add_pointer(type);
+	  String *mangled = alaqilType_manglestr(type);
+	  alaqilType_remember_mangleddata(mangled, NewStringf("\"%s\"", pname));
 	  Delete(type);
 	  Delete(mangled);
 	}
       }
     }
-    SwigType_emit_type_table(f_runtime, type_table);
+    alaqilType_emit_type_table(f_runtime, type_table);
 
     Printf(f_wrappers, "%s", type_table);
     Delete(type_table);
@@ -568,14 +568,14 @@ public:
 	/* Output a FETCH method.  This is actually common to all classes */
 	Printv(base,
 	       "sub FETCH {\n",
-	       tab4, "my ($self,$field) = @_;\n", tab4, "my $member_func = \"swig_${field}_get\";\n", tab4, "$self->$member_func();\n", "}\n\n", NIL);
+	       tab4, "my ($self,$field) = @_;\n", tab4, "my $member_func = \"alaqil_${field}_get\";\n", tab4, "$self->$member_func();\n", "}\n\n", NIL);
 
 	/* Output a STORE method.   This is also common to all classes (might move to base class) */
 
 	Printv(base,
 	       "sub STORE {\n",
 	       tab4, "my ($self,$field,$newval) = @_;\n",
-	       tab4, "my $member_func = \"swig_${field}_set\";\n", tab4, "$self->$member_func($newval);\n", "}\n\n", NIL);
+	       tab4, "my $member_func = \"alaqil_${field}_set\";\n", tab4, "$self->$member_func($newval);\n", "}\n\n", NIL);
 
 	/* Output a 'this' method */
 
@@ -635,7 +635,7 @@ public:
     Delete(f_directors_h);
     Delete(f_runtime);
     Delete(f_begin);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -659,7 +659,7 @@ public:
   virtual int functionWrapper(Node *n) {
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *d = Getattr(n, "type");
+    alaqilType *d = Getattr(n, "type");
     ParmList *l = Getattr(n, "parms");
     String *overname = 0;
     int director_method = 0;
@@ -678,14 +678,14 @@ public:
       overname = Getattr(n, "sym:overname");
     } else {
       if (!addSymbol(iname, n))
-	return SWIG_ERROR;
+	return alaqil_ERROR;
     }
 
     f = NewWrapper();
     cleanup = NewString("");
     outarg = NewString("");
 
-    String *wname = Swig_name_wrapper(iname);
+    String *wname = alaqil_name_wrapper(iname);
     if (overname) {
       Append(wname, overname);
     }
@@ -709,7 +709,7 @@ public:
     } else {
       Printf(f->code, "    if (items < %d) {\n", num_required);
     }
-    Printf(f->code, "        SWIG_croak(\"Usage: %s\");\n", usage_func(Char(iname), d, l));
+    Printf(f->code, "        alaqil_croak(\"Usage: %s\");\n", usage_func(Char(iname), d, l));
     Printf(f->code, "}\n");
 
     /* Write code to extract parameters. */
@@ -721,7 +721,7 @@ public:
 	p = Getattr(p, "tmap:in:next");
       }
 
-      SwigType *pt = Getattr(p, "type");
+      alaqilType *pt = Getattr(p, "type");
 
       /* Produce string representation of source and target arguments */
       sprintf(source, "ST(%d)", i);
@@ -737,7 +737,7 @@ public:
 	Setattr(p, "emit:input", source);	/* Save input location */
 
 	if (Getattr(p, "wrap:disown") || (Getattr(p, "tmap:in:disown"))) {
-	  Replaceall(tm, "$disown", "SWIG_POINTER_DISOWN");
+	  Replaceall(tm, "$disown", "alaqil_POINTER_DISOWN");
 	} else {
 	  Replaceall(tm, "$disown", "0");
 	}
@@ -745,7 +745,7 @@ public:
 	Printf(f->code, "%s\n", tm);
 	p = Getattr(p, "tmap:in:next");
       } else {
-	Swig_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", SwigType_str(pt, 0));
+	alaqil_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", alaqilType_str(pt, 0));
 	p = nextSibling(p);
       }
       if (i >= num_required) {
@@ -792,12 +792,12 @@ public:
     num_saved = 0;
     for (i = 0, p = l; p; i++) {
       if ((tm = Getattr(p, "tmap:argout"))) {
-	SwigType *t = Getattr(p, "type");
+	alaqilType *t = Getattr(p, "type");
 	Replaceall(tm, "$source", Getattr(p, "lname"));
 	Replaceall(tm, "$target", "ST(argvi)");
 	Replaceall(tm, "$result", "ST(argvi)");
 	if (is_shadow(t)) {
-	  Replaceall(tm, "$shadow", "SWIG_SHADOW");
+	  Replaceall(tm, "$shadow", "alaqil_SHADOW");
 	} else {
 	  Replaceall(tm, "$shadow", "0");
 	}
@@ -825,15 +825,15 @@ public:
 
     director_method = is_member_director(n) && !is_smart_pointer() && 0 != Cmp(nodeType(n), "destructor");
     if (director_method) {
-      Wrapper_add_local(f, "director", "Swig::Director *director = 0");
-      Append(f->code, "director = SWIG_DIRECTOR_CAST(arg1);\n");
+      Wrapper_add_local(f, "director", "alaqil::Director *director = 0");
+      Append(f->code, "director = alaqil_DIRECTOR_CAST(arg1);\n");
       if (dirprot_mode() && !is_public(n)) {
-	Printf(f->code, "if (!director || !(director->swig_get_inner(\"%s\"))) {\n", name);
-	Printf(f->code, "SWIG_exception_fail(SWIG_RuntimeError, \"accessing protected member %s\");\n", name);
+	Printf(f->code, "if (!director || !(director->alaqil_get_inner(\"%s\"))) {\n", name);
+	Printf(f->code, "alaqil_exception_fail(alaqil_RuntimeError, \"accessing protected member %s\");\n", name);
 	Append(f->code, "}\n");
       }
       Wrapper_add_local(f, "upcall", "bool upcall = false");
-      Printf(f->code, "upcall = director && SvSTASH(SvRV(ST(0))) == gv_stashpv(director->swig_get_class(), 0);\n");
+      Printf(f->code, "upcall = director && SvSTASH(SvRV(ST(0))) == gv_stashpv(director->alaqil_get_class(), 0);\n");
     }
 
     /* Emit the function call */
@@ -843,34 +843,34 @@ public:
 
     /* Now write code to make the function call */
 
-    Swig_director_emit_dynamic_cast(n, f);
+    alaqil_director_emit_dynamic_cast(n, f);
     String *actioncode = emit_action(n);
 
     if (director_method) {
-      Append(actioncode, "} catch (Swig::DirectorException& swig_err) {\n");
-      Append(actioncode, "  sv_setsv(ERRSV, swig_err.getNative());\n");
-      Append(actioncode, "  SWIG_fail;\n");
+      Append(actioncode, "} catch (alaqil::DirectorException& alaqil_err) {\n");
+      Append(actioncode, "  sv_setsv(ERRSV, alaqil_err.getNative());\n");
+      Append(actioncode, "  alaqil_fail;\n");
       Append(actioncode, "}\n");
     }
 
-    if ((tm = Swig_typemap_lookup_out("out", n, Swig_cresult_name(), f, actioncode))) {
-      SwigType *t = Getattr(n, "type");
-      Replaceall(tm, "$source", Swig_cresult_name());
+    if ((tm = alaqil_typemap_lookup_out("out", n, alaqil_cresult_name(), f, actioncode))) {
+      alaqilType *t = Getattr(n, "type");
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Replaceall(tm, "$target", "ST(argvi)");
       Replaceall(tm, "$result", "ST(argvi)");
       if (is_shadow(t)) {
-	Replaceall(tm, "$shadow", "SWIG_SHADOW");
+	Replaceall(tm, "$shadow", "alaqil_SHADOW");
       } else {
 	Replaceall(tm, "$shadow", "0");
       }
       if (GetFlag(n, "feature:new")) {
-	Replaceall(tm, "$owner", "SWIG_OWNER");
+	Replaceall(tm, "$owner", "alaqil_OWNER");
       } else {
 	Replaceall(tm, "$owner", "0");
       }
       Printf(f->code, "%s\n", tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", SwigType_str(d, 0), name);
+      alaqil_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", alaqilType_str(d, 0), name);
     }
     emit_return_variable(n, d, f);
 
@@ -883,27 +883,27 @@ public:
     Printv(f->code, cleanup, NIL);
 
     if (GetFlag(n, "feature:new")) {
-      if ((tm = Swig_typemap_lookup("newfree", n, Swig_cresult_name(), 0))) {
-	Replaceall(tm, "$source", Swig_cresult_name());
+      if ((tm = alaqil_typemap_lookup("newfree", n, alaqil_cresult_name(), 0))) {
+	Replaceall(tm, "$source", alaqil_cresult_name());
 	Printf(f->code, "%s\n", tm);
       }
     }
 
-    if ((tm = Swig_typemap_lookup("ret", n, Swig_cresult_name(), 0))) {
-      Replaceall(tm, "$source", Swig_cresult_name());
+    if ((tm = alaqil_typemap_lookup("ret", n, alaqil_cresult_name(), 0))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Printf(f->code, "%s\n", tm);
     }
 
     if (director_method) {
-      if ((tm = Swig_typemap_lookup("directorfree", n, Swig_cresult_name(), 0))) {
-	Replaceall(tm, "$input", Swig_cresult_name());
+      if ((tm = alaqil_typemap_lookup("directorfree", n, alaqil_cresult_name(), 0))) {
+	Replaceall(tm, "$input", alaqil_cresult_name());
 	Replaceall(tm, "$result", "ST(argvi)");
 	Printf(f->code, "%s\n", tm);
 	Delete(tm);
       }
     }
 
-    Printv(f->code, "XSRETURN(argvi);\n", "fail:\n", cleanup, "SWIG_croak_null();\n" "}\n" "}\n", NIL);
+    Printv(f->code, "XSRETURN(argvi);\n", "fail:\n", cleanup, "alaqil_croak_null();\n" "}\n" "}\n", NIL);
 
     /* Add the dXSARGS last */
 
@@ -924,12 +924,12 @@ public:
     } else if (!Getattr(n, "sym:nextSibling")) {
       /* Generate overloaded dispatch function */
       int maxargs;
-      String *dispatch = Swig_overload_dispatch_cast(n, "PUSHMARK(MARK); SWIG_CALLXS(%s); return;", &maxargs);
+      String *dispatch = alaqil_overload_dispatch_cast(n, "PUSHMARK(MARK); alaqil_CALLXS(%s); return;", &maxargs);
 
       /* Generate a dispatch wrapper for all overloaded functions */
 
       Wrapper *df = NewWrapper();
-      String *dname = Swig_name_wrapper(iname);
+      String *dname = alaqil_name_wrapper(iname);
 
       Printv(df->def, "XS(", dname, ") {\n", NIL);
 
@@ -961,7 +961,7 @@ public:
     Delete(cleanup);
     Delete(outarg);
     DelWrapper(f);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -970,17 +970,17 @@ public:
   virtual int variableWrapper(Node *n) {
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *t = Getattr(n, "type");
+    alaqilType *t = Getattr(n, "type");
     Wrapper *getf, *setf;
     String *tm;
-    String *getname = Swig_name_get(NSPACE_TODO, iname);
-    String *setname = Swig_name_set(NSPACE_TODO, iname);
+    String *getname = alaqil_name_get(NSPACE_TODO, iname);
+    String *setname = alaqil_name_set(NSPACE_TODO, iname);
 
-    String *get_name = Swig_name_wrapper(getname);
-    String *set_name = Swig_name_wrapper(setname);
+    String *get_name = alaqil_name_wrapper(getname);
+    String *set_name = alaqil_name_wrapper(setname);
 
     if (!addSymbol(iname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     getf = NewWrapper();
     setf = NewWrapper();
@@ -989,11 +989,11 @@ public:
 
     if (!GetFlag(n, "feature:immutable")) {
       Setattr(n, "wrap:name", set_name);
-      Printf(setf->def, "SWIGCLASS_STATIC int %s(pTHX_ SV* sv, MAGIC * SWIGUNUSEDPARM(mg)) {\n", set_name);
+      Printf(setf->def, "alaqilCLASS_STATIC int %s(pTHX_ SV* sv, MAGIC * alaqilUNUSEDPARM(mg)) {\n", set_name);
       Printv(setf->code, tab4, "MAGIC_PPERL\n", NIL);
 
       /* Check for a few typemaps */
-      tm = Swig_typemap_lookup("varin", n, name, 0);
+      tm = alaqil_typemap_lookup("varin", n, name, 0);
       if (tm) {
 	Replaceall(tm, "$source", "sv");
 	Replaceall(tm, "$target", name);
@@ -1001,10 +1001,10 @@ public:
 	/* Printf(setf->code,"%s\n", tm); */
 	emit_action_code(n, setf->code, tm);
       } else {
-	Swig_warning(WARN_TYPEMAP_VARIN_UNDEF, input_file, line_number, "Unable to set variable of type %s.\n", SwigType_str(t, 0));
+	alaqil_warning(WARN_TYPEMAP_VARIN_UNDEF, input_file, line_number, "Unable to set variable of type %s.\n", alaqilType_str(t, 0));
 	DelWrapper(setf);
 	DelWrapper(getf);
-	return SWIG_NOWRAP;
+	return alaqil_NOWRAP;
       }
       Printf(setf->code, "fail:\n");
       Printf(setf->code, "    return 1;\n}\n");
@@ -1015,25 +1015,25 @@ public:
     /* Now write a function to evaluate the variable */
     Setattr(n, "wrap:name", get_name);
     int addfail = 0;
-    Printf(getf->def, "SWIGCLASS_STATIC int %s(pTHX_ SV *sv, MAGIC *SWIGUNUSEDPARM(mg)) {\n", get_name);
+    Printf(getf->def, "alaqilCLASS_STATIC int %s(pTHX_ SV *sv, MAGIC *alaqilUNUSEDPARM(mg)) {\n", get_name);
     Printv(getf->code, tab4, "MAGIC_PPERL\n", NIL);
 
-    if ((tm = Swig_typemap_lookup("varout", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("varout", n, name, 0))) {
       Replaceall(tm, "$target", "sv");
       Replaceall(tm, "$result", "sv");
       Replaceall(tm, "$source", name);
       if (is_shadow(t)) {
-	Replaceall(tm, "$shadow", "SWIG_SHADOW");
+	Replaceall(tm, "$shadow", "alaqil_SHADOW");
       } else {
 	Replaceall(tm, "$shadow", "0");
       }
       /* Printf(getf->code,"%s\n", tm); */
       addfail = emit_action_code(n, getf->code, tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_VAROUT_UNDEF, input_file, line_number, "Unable to read variable of type %s\n", SwigType_str(t, 0));
+      alaqil_warning(WARN_TYPEMAP_VAROUT_UNDEF, input_file, line_number, "Unable to read variable of type %s\n", alaqilType_str(t, 0));
       DelWrapper(setf);
       DelWrapper(getf);
-      return SWIG_NOWRAP;
+      return alaqil_NOWRAP;
     }
     Printf(getf->code, "    return 1;\n");
     if (addfail) {
@@ -1054,7 +1054,7 @@ public:
     }
     /* Now add symbol to the PERL interpreter */
     if (GetFlag(n, "feature:immutable")) {
-      Printv(variable_tab, tab4, "{ \"", cmodule, "::", iname, "\", MAGIC_CLASS swig_magic_readonly, MAGIC_CLASS ", get_name, ",", tt, " },\n", NIL);
+      Printv(variable_tab, tab4, "{ \"", cmodule, "::", iname, "\", MAGIC_CLASS alaqil_magic_readonly, MAGIC_CLASS ", get_name, ",", tt, " },\n", NIL);
 
     } else {
       Printv(variable_tab, tab4, "{ \"", cmodule, "::", iname, "\", MAGIC_CLASS ", set_name, ", MAGIC_CLASS ", get_name, ",", tt, " },\n", NIL);
@@ -1085,7 +1085,7 @@ public:
     Delete(setname);
     Delete(set_name);
     Delete(get_name);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1095,44 +1095,44 @@ public:
   virtual int constantWrapper(Node *n) {
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *type = Getattr(n, "type");
+    alaqilType *type = Getattr(n, "type");
     String *rawval = Getattr(n, "rawval");
     String *value = rawval ? rawval : Getattr(n, "value");
     String *tm;
 
     if (!addSymbol(iname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     /* Special hook for member pointer */
-    if (SwigType_type(type) == T_MPOINTER) {
-      String *wname = Swig_name_wrapper(iname);
-      Printf(f_wrappers, "static %s = %s;\n", SwigType_str(type, wname), value);
+    if (alaqilType_type(type) == T_MPOINTER) {
+      String *wname = alaqil_name_wrapper(iname);
+      Printf(f_wrappers, "static %s = %s;\n", alaqilType_str(type, wname), value);
       value = Char(wname);
     }
 
-    if ((tm = Swig_typemap_lookup("consttab", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("consttab", n, name, 0))) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", name);
       Replaceall(tm, "$value", value);
       if (is_shadow(type)) {
-	Replaceall(tm, "$shadow", "SWIG_SHADOW");
+	Replaceall(tm, "$shadow", "alaqil_SHADOW");
       } else {
 	Replaceall(tm, "$shadow", "0");
       }
       Printf(constant_tab, "%s,\n", tm);
-    } else if ((tm = Swig_typemap_lookup("constcode", n, name, 0))) {
+    } else if ((tm = alaqil_typemap_lookup("constcode", n, name, 0))) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", name);
       Replaceall(tm, "$value", value);
       if (is_shadow(type)) {
-	Replaceall(tm, "$shadow", "SWIG_SHADOW");
+	Replaceall(tm, "$shadow", "alaqil_SHADOW");
       } else {
 	Replaceall(tm, "$shadow", "0");
       }
       Printf(f_init, "%s\n", tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value.\n");
-      return SWIG_NOWRAP;
+      alaqil_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value.\n");
+      return alaqil_NOWRAP;
     }
 
     if (blessed) {
@@ -1155,13 +1155,13 @@ public:
 	Printf(exported, "$%s ", iname);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
    * usage_func()
    * ------------------------------------------------------------ */
-  char *usage_func(char *iname, SwigType *, ParmList *l) {
+  char *usage_func(char *iname, alaqilType *, ParmList *l) {
     static String *temp = 0;
     Parm *p;
     int i;
@@ -1175,15 +1175,15 @@ public:
     p = l;
     i = 0;
     while (p != 0) {
-      SwigType *pt = Getattr(p, "type");
+      alaqilType *pt = Getattr(p, "type");
       String *pn = Getattr(p, "name");
       if (!checkAttribute(p,"tmap:in:numinputs","0")) {
 	/* If parameter has been named, use that.   Otherwise, just print a type  */
-	if (SwigType_type(pt) != T_VOID) {
+	if (alaqilType_type(pt) != T_VOID) {
 	  if (Len(pn) > 0) {
 	    Printf(temp, "%s", pn);
 	  } else {
-	    Printf(temp, "%s", SwigType_str(pt, 0));
+	    Printf(temp, "%s", alaqilType_str(pt, 0));
 	  }
 	}
 	i++;
@@ -1211,7 +1211,7 @@ public:
     String *funcname = Getattr(n, "wrap:name");
 
     if (!addSymbol(funcname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     Printf(command_tab, "{\"%s::%s\", %s},\n", cmodule, name, funcname);
     if (export_all)
@@ -1219,7 +1219,7 @@ public:
     if (blessed) {
       Printv(func_stubs, "*", name, " = *", cmodule, "::", name, ";\n", NIL);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 /* ----------------------------------------------------------------------------
@@ -1326,7 +1326,7 @@ public:
       class_name = Getattr(n, "sym:name");
 
       if (!addSymbol(class_name, n))
-	return SWIG_ERROR;
+	return alaqil_ERROR;
 
       /* Use the fully qualified name of the Perl class */
       if (!compat) {
@@ -1346,9 +1346,9 @@ public:
     /* Finish the rest of the class */
     if (blessed) {
       /* Generate a client-data entry */
-      SwigType *ct = NewStringf("p.%s", real_classname);
-      Printv(f_init, "SWIG_TypeClientData(SWIGTYPE", SwigType_manglestr(ct), ", (void*) \"", fullclassname, "\");\n", NIL);
-      SwigType_remember(ct);
+      alaqilType *ct = NewStringf("p.%s", real_classname);
+      Printv(f_init, "alaqil_TypeClientData(alaqilTYPE", alaqilType_manglestr(ct), ", (void*) \"", fullclassname, "\");\n", NIL);
+      alaqilType_remember(ct);
       Delete(ct);
 
       Printv(pm, "\n############# Class : ", fullclassname, " ##############\n", "\npackage ", fullclassname, ";\n", NIL);
@@ -1480,24 +1480,24 @@ public:
 
       Delete(operators);
       operators = 0;
-      if (Swig_directorclass(n)) {
+      if (alaqil_directorclass(n)) {
 	/* director classes need a way to recover subclass instance attributes */
 	Node *get_attr = NewHash();
 	String *mrename;
 	String *symname = Getattr(n, "sym:name");
-	mrename = Swig_name_disown(NSPACE_TODO, symname);
-	Replaceall(mrename, "disown", "swig_get_attr");
+	mrename = alaqil_name_disown(NSPACE_TODO, symname);
+	Replaceall(mrename, "disown", "alaqil_get_attr");
 	String *type = NewString(getClassType());
 	String *name = NewString("self");
-	SwigType_add_pointer(type);
+	alaqilType_add_pointer(type);
 	Parm *p = NewParm(type, name, n);
 	Delete(name);
 	Delete(type);
 	type = NewString("SV");
-	SwigType_add_pointer(type);
+	alaqilType_add_pointer(type);
 	String *action = NewString("");
-	Printv(action, "{\n", "  Swig::Director *director = SWIG_DIRECTOR_CAST(arg1);\n",
-	       "  result = sv_newmortal();\n" "  if (director) sv_setsv(result, director->swig_get_self());\n", "}\n", NIL);
+	Printv(action, "{\n", "  alaqil::Director *director = alaqil_DIRECTOR_CAST(arg1);\n",
+	       "  result = sv_newmortal();\n" "  if (director) sv_setsv(result, director->alaqil_get_self());\n", "}\n", NIL);
 	Setfile(get_attr, Getfile(n));
 	Setline(get_attr, Getline(n));
 	Setattr(get_attr, "wrap:action", action);
@@ -1514,16 +1514,16 @@ public:
 	member_func = 0;
 	Delete(get_attr);
 
-	Printv(pm, "sub FETCH {\n", tab4, "my ($self,$field) = @_;\n", tab4, "my $member_func = \"swig_${field}_get\";\n", tab4,
+	Printv(pm, "sub FETCH {\n", tab4, "my ($self,$field) = @_;\n", tab4, "my $member_func = \"alaqil_${field}_get\";\n", tab4,
 	       "if (not $self->can($member_func)) {\n", tab8, "my $h = ", cmodule, "::", mrename, "($self);\n", tab8, "return $h->{$field} if $h;\n",
 	       tab4, "}\n", tab4, "return $self->$member_func;\n", "}\n", "\n", "sub STORE {\n", tab4, "my ($self,$field,$newval) = @_;\n", tab4,
-	       "my $member_func = \"swig_${field}_set\";\n", tab4, "if (not $self->can($member_func)) {\n", tab8, "my $h = ", cmodule, "::", mrename,
+	       "my $member_func = \"alaqil_${field}_set\";\n", tab4, "if (not $self->can($member_func)) {\n", tab8, "my $h = ", cmodule, "::", mrename,
 	       "($self);\n", tab8, "return $h->{$field} = $newval if $h;\n", tab4, "}\n", tab4, "return $self->$member_func($newval);\n", "}\n", NIL);
 
 	Delete(mrename);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1606,15 +1606,15 @@ public:
 
       if (Getattr(n, "feature:shadow")) {
 	String *plcode = perlcode(Getattr(n, "feature:shadow"), 0);
-	String *plaction = NewStringf("%s::%s", cmodule, Swig_name_member(NSPACE_TODO, class_name, symname));
+	String *plaction = NewStringf("%s::%s", cmodule, alaqil_name_member(NSPACE_TODO, class_name, symname));
 	Replaceall(plcode, "$action", plaction);
 	Delete(plaction);
 	Printv(pcode, plcode, NIL);
       } else {
-	Printv(pcode, "*", symname, " = *", cmodule, "::", Swig_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
+	Printv(pcode, "*", symname, " = *", cmodule, "::", alaqil_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
       }
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1626,7 +1626,7 @@ public:
   virtual int membervariableHandler(Node *n) {
 
     String *symname = Getattr(n, "sym:name");
-    /* SwigType *t  = Getattr(n,"type"); */
+    /* alaqilType *t  = Getattr(n,"type"); */
 
     /* Emit a pair of get/set functions for the variable */
 
@@ -1636,8 +1636,8 @@ public:
 
     if (blessed) {
 
-      Printv(pcode, "*swig_", symname, "_get = *", cmodule, "::", Swig_name_get(NSPACE_TODO, Swig_name_member(NSPACE_TODO, class_name, symname)), ";\n", NIL);
-      Printv(pcode, "*swig_", symname, "_set = *", cmodule, "::", Swig_name_set(NSPACE_TODO, Swig_name_member(NSPACE_TODO, class_name, symname)), ";\n", NIL);
+      Printv(pcode, "*alaqil_", symname, "_get = *", cmodule, "::", alaqil_name_get(NSPACE_TODO, alaqil_name_member(NSPACE_TODO, class_name, symname)), ";\n", NIL);
+      Printv(pcode, "*alaqil_", symname, "_set = *", cmodule, "::", alaqil_name_set(NSPACE_TODO, alaqil_name_member(NSPACE_TODO, class_name, symname)), ";\n", NIL);
 
       /* Now we need to generate a little Perl code for this */
 
@@ -1653,7 +1653,7 @@ public:
        */
     }
     have_data_members++;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1671,13 +1671,13 @@ public:
 
     member_func = 1;
 
-    Swig_save("perl5:constructorHandler", n, "parms", NIL);
-    if (Swig_directorclass(n)) {
+    alaqil_save("perl5:constructorHandler", n, "parms", NIL);
+    if (alaqil_directorclass(n)) {
       Parm *parms = Getattr(n, "parms");
       Parm *self;
       String *name = NewString("self");
       String *type = NewString("SV");
-      SwigType_add_pointer(type);
+      alaqilType_add_pointer(type);
       self = NewParm(type, name, n);
       Delete(type);
       Delete(name);
@@ -1694,18 +1694,18 @@ public:
     none_comparison = NewStringf("strcmp(SvPV_nolen(ST(0)), \"%s::%s\") != 0", module, class_name);
     String *saved_director_prot_ctor_code = director_prot_ctor_code;
     director_prot_ctor_code = NewStringf("if ($comparison) { /* subclassed */\n" "  $director_new\n" "} else {\n"
-					 "SWIG_exception_fail(SWIG_RuntimeError, \"accessing abstract class or protected constructor\");\n" "}\n");
+					 "alaqil_exception_fail(alaqil_RuntimeError, \"accessing abstract class or protected constructor\");\n" "}\n");
     Language::constructorHandler(n);
     Delete(none_comparison);
     none_comparison = saved_nc;
     Delete(director_prot_ctor_code);
     director_prot_ctor_code = saved_director_prot_ctor_code;
-    Swig_restore(n);
+    alaqil_restore(n);
 
     if ((blessed) && (!Getattr(n, "sym:nextSibling"))) {
       if (Getattr(n, "feature:shadow")) {
 	String *plcode = perlcode(Getattr(n, "feature:shadow"), 0);
-	String *plaction = NewStringf("%s::%s", module, Swig_name_member(NSPACE_TODO, class_name, symname));
+	String *plaction = NewStringf("%s::%s", module, alaqil_name_member(NSPACE_TODO, class_name, symname));
 	Replaceall(plcode, "$action", plaction);
 	Delete(plaction);
 	Printv(pcode, plcode, NIL);
@@ -1715,19 +1715,19 @@ public:
 	  Printf(pcode, "sub new {\n");
 	} else {
 	  /* Constructor doesn't match classname so we'll just use the normal name  */
-	  Printv(pcode, "sub ", Swig_name_construct(NSPACE_TODO, symname), " {\n", NIL);
+	  Printv(pcode, "sub ", alaqil_name_construct(NSPACE_TODO, symname), " {\n", NIL);
 	}
 
-	const char *pkg = getCurrentClass() && Swig_directorclass(getCurrentClass())? "$_[0]" : "shift";
+	const char *pkg = getCurrentClass() && alaqil_directorclass(getCurrentClass())? "$_[0]" : "shift";
 	Printv(pcode,
 	       tab4, "my $pkg = ", pkg, ";\n",
-	       tab4, "my $self = ", cmodule, "::", Swig_name_construct(NSPACE_TODO, symname), "(@_);\n", tab4, "bless $self, $pkg if defined($self);\n", "}\n\n", NIL);
+	       tab4, "my $self = ", cmodule, "::", alaqil_name_construct(NSPACE_TODO, symname), "(@_);\n", tab4, "bless $self, $pkg if defined($self);\n", "}\n\n", NIL);
 
 	have_constructor = 1;
       }
     }
     member_func = 0;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------ 
@@ -1741,7 +1741,7 @@ public:
     if (blessed) {
       if (Getattr(n, "feature:shadow")) {
 	String *plcode = perlcode(Getattr(n, "feature:shadow"), 0);
-	String *plaction = NewStringf("%s::%s", module, Swig_name_member(NSPACE_TODO, class_name, symname));
+	String *plaction = NewStringf("%s::%s", module, alaqil_name_member(NSPACE_TODO, class_name, symname));
 	Replaceall(plcode, "$action", plaction);
 	Delete(plaction);
 	Printv(pcode, plcode, NIL);
@@ -1753,12 +1753,12 @@ public:
 	       tab4, "return unless defined $self;\n",
 	       tab4, "delete $ITERATORS{$self};\n",
 	       tab4, "if (exists $OWNER{$self}) {\n",
-	       tab8, cmodule, "::", Swig_name_destroy(NSPACE_TODO, symname), "($self);\n", tab8, "delete $OWNER{$self};\n", tab4, "}\n}\n\n", NIL);
+	       tab8, cmodule, "::", alaqil_name_destroy(NSPACE_TODO, symname), "($self);\n", tab8, "delete $OWNER{$self};\n", tab4, "}\n}\n\n", NIL);
 	have_destructor = 1;
       }
     }
     member_func = 0;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1771,9 +1771,9 @@ public:
     member_func = 0;
     if ((blessed) && (!Getattr(n, "sym:nextSibling"))) {
       String *symname = Getattr(n, "sym:name");
-      Printv(pcode, "*", symname, " = *", cmodule, "::", Swig_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
+      Printv(pcode, "*", symname, " = *", cmodule, "::", alaqil_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1784,9 +1784,9 @@ public:
     Language::staticmembervariableHandler(n);
     if (blessed) {
       String *symname = Getattr(n, "sym:name");
-      Printv(pcode, "*", symname, " = *", cmodule, "::", Swig_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
+      Printv(pcode, "*", symname, " = *", cmodule, "::", alaqil_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1803,9 +1803,9 @@ public:
     blessed = oldblessed;
 
     if (blessed) {
-      Printv(pcode, "*", symname, " = *", cmodule, "::", Swig_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
+      Printv(pcode, "*", symname, " = *", cmodule, "::", alaqil_name_member(NSPACE_TODO, class_name, symname), ";\n", NIL);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1834,9 +1834,9 @@ public:
 	} else if (Strcmp(code, "include") == 0) {
 	  /* Include a file into the .pm file */
 	  if (value) {
-	    FILE *f = Swig_include_open(value);
+	    FILE *f = alaqil_include_open(value);
 	    if (!f) {
-	      Swig_error(input_file, line_number, "Unable to locate file %s\n", value);
+	      alaqil_error(input_file, line_number, "Unable to locate file %s\n", value);
 	    } else {
 	      char buffer[4096];
 	      while (fgets(buffer, 4095, f)) {
@@ -1846,7 +1846,7 @@ public:
 	    }
 	  }
 	} else {
-	  Swig_error(input_file, line_number, "Unrecognized pragma.\n");
+	  alaqil_error(input_file, line_number, "Unrecognized pragma.\n");
 	}
       }
     }
@@ -1927,26 +1927,26 @@ public:
     } else {
       Language::insertDirective(n);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   String *runtimeCode() {
     String *s = NewString("");
-    String *shead = Swig_include_sys("perlhead.swg");
+    String *shead = alaqil_include_sys("perlhead.swg");
     if (!shead) {
       Printf(stderr, "*** Unable to open 'perlhead.swg'\n");
     } else {
       Append(s, shead);
       Delete(shead);
     }
-    String *serrors = Swig_include_sys("perlerrors.swg");
+    String *serrors = alaqil_include_sys("perlerrors.swg");
     if (!serrors) {
       Printf(stderr, "*** Unable to open 'perlerrors.swg'\n");
     } else {
       Append(s, serrors);
       Delete(serrors);
     }
-    String *srun = Swig_include_sys("perlrun.swg");
+    String *srun = alaqil_include_sys("perlrun.swg");
     if (!srun) {
       Printf(stderr, "*** Unable to open 'perlrun.swg'\n");
     } else {
@@ -1957,11 +1957,11 @@ public:
   }
 
   String *defaultExternalRuntimeFilename() {
-    return NewString("swigperlrun.h");
+    return NewString("alaqilperlrun.h");
   }
 
   virtual int classDirectorInit(Node *n) {
-    String *declaration = Swig_director_declaration(n);
+    String *declaration = alaqil_director_declaration(n);
     Printf(f_directors_h, "\n");
     Printf(f_directors_h, "%s\n", declaration);
     Printf(f_directors_h, "public:\n");
@@ -1982,16 +1982,16 @@ public:
       Printf(f_directors_h, "\n");
       Printf(f_directors_h, "/* Internal director utilities */\n");
       Printf(f_directors_h, "public:\n");
-      Printf(f_directors_h, "    bool swig_get_inner(const char *swig_protected_method_name) const {\n");
-      Printf(f_directors_h, "      std::map<std::string, bool>::const_iterator iv = swig_inner.find(swig_protected_method_name);\n");
-      Printf(f_directors_h, "      return (iv != swig_inner.end() ? iv->second : false);\n");
+      Printf(f_directors_h, "    bool alaqil_get_inner(const char *alaqil_protected_method_name) const {\n");
+      Printf(f_directors_h, "      std::map<std::string, bool>::const_iterator iv = alaqil_inner.find(alaqil_protected_method_name);\n");
+      Printf(f_directors_h, "      return (iv != alaqil_inner.end() ? iv->second : false);\n");
       Printf(f_directors_h, "    }\n");
 
-      Printf(f_directors_h, "    void swig_set_inner(const char *swig_protected_method_name, bool swig_val) const {\n");
-      Printf(f_directors_h, "      swig_inner[swig_protected_method_name] = swig_val;\n");
+      Printf(f_directors_h, "    void alaqil_set_inner(const char *alaqil_protected_method_name, bool alaqil_val) const {\n");
+      Printf(f_directors_h, "      alaqil_inner[alaqil_protected_method_name] = alaqil_val;\n");
       Printf(f_directors_h, "    }\n");
       Printf(f_directors_h, "private:\n");
-      Printf(f_directors_h, "    mutable std::map<std::string, bool> swig_inner;\n");
+      Printf(f_directors_h, "    mutable std::map<std::string, bool> alaqil_inner;\n");
     }
     Printf(f_directors_h, "};\n");
     return Language::classDirectorEnd(n);
@@ -2001,16 +2001,16 @@ public:
     Node *parent = Getattr(n, "parentNode");
     String *sub = NewString("");
     String *decl = Getattr(n, "decl");
-    String *supername = Swig_class_name(parent);
+    String *supername = alaqil_class_name(parent);
     String *classname = NewString("");
-    Printf(classname, "SwigDirector_%s", supername);
+    Printf(classname, "alaqilDirector_%s", supername);
 
     /* insert self parameter */
     Parm *p;
     ParmList *superparms = Getattr(n, "parms");
     ParmList *parms = CopyParmList(superparms);
     String *type = NewString("SV");
-    SwigType_add_pointer(type);
+    alaqilType_add_pointer(type);
     p = NewParm(type, NewString("self"), n);
     set_nextSibling(p, parms);
     parms = p;
@@ -2021,10 +2021,10 @@ public:
 	Wrapper *w = NewWrapper();
 	String *call;
 	String *basetype = Getattr(parent, "classtype");
-	String *target = Swig_method_decl(0, decl, classname, parms, 0);
-	call = Swig_csuperclass_call(0, basetype, superparms);
-	Printf(w->def, "%s::%s: %s, Swig::Director(self) { \n", classname, target, call);
-	Printf(w->def, "   SWIG_DIRECTOR_RGTR((%s *)this, this); \n", basetype);
+	String *target = alaqil_method_decl(0, decl, classname, parms, 0);
+	call = alaqil_csuperclass_call(0, basetype, superparms);
+	Printf(w->def, "%s::%s: %s, alaqil::Director(self) { \n", classname, target, call);
+	Printf(w->def, "   alaqil_DIRECTOR_RGTR((%s *)this, this); \n", basetype);
 	Append(w->def, "}\n");
 	Delete(target);
 	Wrapper_print(w, f_directors);
@@ -2034,7 +2034,7 @@ public:
 
       /* constructor header */
       {
-	String *target = Swig_method_decl(0, decl, classname, parms, 1);
+	String *target = alaqil_method_decl(0, decl, classname, parms, 1);
 	Printf(f_directors_h, "    %s;\n", target);
 	Delete(target);
       }
@@ -2064,7 +2064,7 @@ public:
     String *value = Getattr(n, "value");
     String *storage = Getattr(n, "storage");
     bool pure_virtual = false;
-    int status = SWIG_OK;
+    int status = alaqil_OK;
     int idx;
     bool ignored_method = GetFlag(n, "feature:ignore") ? true : false;
 
@@ -2075,20 +2075,20 @@ public:
     }
 
     /* determine if the method returns a pointer */
-    is_pointer = SwigType_ispointer_return(decl);
+    is_pointer = alaqilType_ispointer_return(decl);
     is_void = (!Cmp(returntype, "void") && !is_pointer);
 
     /* virtual method definition */
     String *target;
-    String *pclassname = NewStringf("SwigDirector_%s", classname);
+    String *pclassname = NewStringf("alaqilDirector_%s", classname);
     String *qualified_name = NewStringf("%s::%s", pclassname, name);
-    SwigType *rtype = Getattr(n, "conversion_operator") ? 0 : Getattr(n, "classDirectorMethods:type");
-    target = Swig_method_decl(rtype, decl, qualified_name, l, 0);
+    alaqilType *rtype = Getattr(n, "conversion_operator") ? 0 : Getattr(n, "classDirectorMethods:type");
+    target = alaqil_method_decl(rtype, decl, qualified_name, l, 0);
     Printf(w->def, "%s", target);
     Delete(qualified_name);
     Delete(target);
     /* header declaration */
-    target = Swig_method_decl(rtype, decl, name, l, 1);
+    target = alaqil_method_decl(rtype, decl, name, l, 1);
     Printf(declaration, "    virtual %s", target);
     Delete(target);
 
@@ -2107,14 +2107,14 @@ public:
       Append(declaration, " throw(");
 
       if (throw_parm_list)
-	Swig_typemap_attach_parms("throws", throw_parm_list, 0);
+	alaqil_typemap_attach_parms("throws", throw_parm_list, 0);
       for (p = throw_parm_list; p; p = nextSibling(p)) {
 	if (Getattr(p, "tmap:throws")) {
 	  if (gencomma++) {
 	    Append(w->def, ", ");
 	    Append(declaration, ", ");
 	  }
-	  String *str = SwigType_str(Getattr(p, "type"), 0);
+	  String *str = alaqilType_str(Getattr(p, "type"), 0);
 	  Append(w->def, str);
 	  Append(declaration, str);
 	  Delete(str);
@@ -2133,24 +2133,24 @@ public:
      * handle it, including declaration of c_result ($result).
      */
     if (!is_void && (!ignored_method || pure_virtual)) {
-      if (!SwigType_isclass(returntype)) {
-	if (!(SwigType_ispointer(returntype) || SwigType_isreference(returntype))) {
-	  String *construct_result = NewStringf("= SwigValueInit< %s >()", SwigType_lstr(returntype, 0));
-	  Wrapper_add_localv(w, "c_result", SwigType_lstr(returntype, "c_result"), construct_result, NIL);
+      if (!alaqilType_isclass(returntype)) {
+	if (!(alaqilType_ispointer(returntype) || alaqilType_isreference(returntype))) {
+	  String *construct_result = NewStringf("= alaqilValueInit< %s >()", alaqilType_lstr(returntype, 0));
+	  Wrapper_add_localv(w, "c_result", alaqilType_lstr(returntype, "c_result"), construct_result, NIL);
 	  Delete(construct_result);
 	} else {
-	  Wrapper_add_localv(w, "c_result", SwigType_lstr(returntype, "c_result"), "= 0", NIL);
+	  Wrapper_add_localv(w, "c_result", alaqilType_lstr(returntype, "c_result"), "= 0", NIL);
 	}
       } else {
-	String *cres = SwigType_lstr(returntype, "c_result");
+	String *cres = alaqilType_lstr(returntype, "c_result");
 	Printf(w->code, "%s;\n", cres);
 	Delete(cres);
       }
     }
 
     if (!is_void && !ignored_method) {
-      String *pres = NewStringf("SV *%s", Swig_cresult_name());
-      Wrapper_add_local(w, Swig_cresult_name(), pres);
+      String *pres = NewStringf("SV *%s", alaqil_cresult_name());
+      Wrapper_add_local(w, alaqil_cresult_name(), pres);
       Delete(pres);
     }
 
@@ -2158,38 +2158,38 @@ public:
       if (!pure_virtual) {
 	if (!is_void)
 	  Printf(w->code, "return ");
-	String *super_call = Swig_method_call(super, l);
+	String *super_call = alaqil_method_call(super, l);
 	Printf(w->code, "%s;\n", super_call);
 	Delete(super_call);
       } else {
-	Printf(w->code, "Swig::DirectorPureVirtualException::raise(\"Attempted to invoke pure virtual method %s::%s\");\n", SwigType_namestr(c_classname),
-	       SwigType_namestr(name));
+	Printf(w->code, "alaqil::DirectorPureVirtualException::raise(\"Attempted to invoke pure virtual method %s::%s\");\n", alaqilType_namestr(c_classname),
+	       alaqilType_namestr(name));
       }
     } else {
       /* attach typemaps to arguments (C/C++ -> Perl) */
       String *parse_args = NewString("");
       String *pstack = NewString("");
 
-      Swig_director_parms_fixup(l);
+      alaqil_director_parms_fixup(l);
 
       /* remove the wrapper 'w' since it was producing spurious temps */
-      Swig_typemap_attach_parms("in", l, 0);
-      Swig_typemap_attach_parms("directorin", l, w);
-      Swig_typemap_attach_parms("directorargout", l, w);
+      alaqil_typemap_attach_parms("in", l, 0);
+      alaqil_typemap_attach_parms("directorin", l, w);
+      alaqil_typemap_attach_parms("directorargout", l, w);
 
       Wrapper_add_local(w, "SP", "dSP");
 
       {
 	String *ptype = Copy(getClassType());
-	SwigType_add_pointer(ptype);
-	String *mangle = SwigType_manglestr(ptype);
+	alaqilType_add_pointer(ptype);
+	String *mangle = alaqilType_manglestr(ptype);
 
-	Wrapper_add_local(w, "swigself", "SV *swigself");
-	Printf(w->code, "swigself = SWIG_NewPointerObj(SWIG_as_voidptr(this), SWIGTYPE%s, SWIG_SHADOW);\n", mangle);
-	Printf(w->code, "sv_bless(swigself, gv_stashpv(swig_get_class(), 0));\n");
+	Wrapper_add_local(w, "alaqilself", "SV *alaqilself");
+	Printf(w->code, "alaqilself = alaqil_NewPointerObj(alaqil_as_voidptr(this), alaqilTYPE%s, alaqil_SHADOW);\n", mangle);
+	Printf(w->code, "sv_bless(alaqilself, gv_stashpv(alaqil_get_class(), 0));\n");
 	Delete(mangle);
 	Delete(ptype);
-	Append(pstack, "XPUSHs(swigself);\n");
+	Append(pstack, "XPUSHs(alaqilself);\n");
       }
 
       Parm *p;
@@ -2242,64 +2242,64 @@ public:
 	  /* special handling for pointers to other C++ director classes.
 	   * ideally this would be left to a typemap, but there is currently no
 	   * way to selectively apply the dynamic_cast<> to classes that have
-	   * directors.  in other words, the type "SwigDirector_$1_lname" only exists
+	   * directors.  in other words, the type "alaqilDirector_$1_lname" only exists
 	   * for classes with directors.  we avoid the problem here by checking
 	   * module.wrap::directormap, but it's not clear how to get a typemap to
 	   * do something similar.  perhaps a new default typemap (in addition
-	   * to SWIGTYPE) called DIRECTORTYPE?
+	   * to alaqilTYPE) called DIRECTORTYPE?
 	   */
-	  if (SwigType_ispointer(ptype) || SwigType_isreference(ptype)) {
+	  if (alaqilType_ispointer(ptype) || alaqilType_isreference(ptype)) {
 	    Node *module = Getattr(parent, "module");
-	    Node *target = Swig_directormap(module, ptype);
+	    Node *target = alaqil_directormap(module, ptype);
 	    sprintf(source, "obj%d", idx++);
 	    String *nonconst = 0;
-	    /* strip pointer/reference --- should move to Swig/stype.c */
+	    /* strip pointer/reference --- should move to alaqil/stype.c */
 	    String *nptype = NewString(Char(ptype) + 2);
 	    /* name as pointer */
 	    String *ppname = Copy(pname);
-	    if (SwigType_isreference(ptype)) {
+	    if (alaqilType_isreference(ptype)) {
 	      Insert(ppname, 0, "&");
 	    }
 	    /* if necessary, cast away const since Perl doesn't support it! */
-	    if (SwigType_isconst(nptype)) {
+	    if (alaqilType_isconst(nptype)) {
 	      nonconst = NewStringf("nc_tmp_%s", pname);
-	      String *nonconst_i = NewStringf("= const_cast< %s >(%s)", SwigType_lstr(ptype, 0), ppname);
-	      Wrapper_add_localv(w, nonconst, SwigType_lstr(ptype, 0), nonconst, nonconst_i, NIL);
+	      String *nonconst_i = NewStringf("= const_cast< %s >(%s)", alaqilType_lstr(ptype, 0), ppname);
+	      Wrapper_add_localv(w, nonconst, alaqilType_lstr(ptype, 0), nonconst, nonconst_i, NIL);
 	      Delete(nonconst_i);
-	      Swig_warning(WARN_LANG_DISCARD_CONST, input_file, line_number,
+	      alaqil_warning(WARN_LANG_DISCARD_CONST, input_file, line_number,
 			   "Target language argument '%s' discards const in director method %s::%s.\n",
-			   SwigType_str(ptype, pname), SwigType_namestr(c_classname), SwigType_namestr(name));
+			   alaqilType_str(ptype, pname), alaqilType_namestr(c_classname), alaqilType_namestr(name));
 	    } else {
 	      nonconst = Copy(ppname);
 	    }
 	    Delete(nptype);
 	    Delete(ppname);
-	    String *mangle = SwigType_manglestr(ptype);
+	    String *mangle = alaqilType_manglestr(ptype);
 	    if (target) {
 	      String *director = NewStringf("director_%s", mangle);
-	      Wrapper_add_localv(w, director, "Swig::Director *", director, "= 0", NIL);
+	      Wrapper_add_localv(w, director, "alaqil::Director *", director, "= 0", NIL);
 	      Wrapper_add_localv(w, source, "SV *", source, "= 0", NIL);
-	      Printf(wrap_args, "%s = SWIG_DIRECTOR_CAST(%s);\n", director, nonconst);
+	      Printf(wrap_args, "%s = alaqil_DIRECTOR_CAST(%s);\n", director, nonconst);
 	      Printf(wrap_args, "if (!%s) {\n", director);
-	      Printf(wrap_args, "%s = SWIG_NewPointerObj(%s, SWIGTYPE%s, 0);\n", source, nonconst, mangle);
+	      Printf(wrap_args, "%s = alaqil_NewPointerObj(%s, alaqilTYPE%s, 0);\n", source, nonconst, mangle);
 	      Append(wrap_args, "} else {\n");
-	      Printf(wrap_args, "%s = %s->swig_get_self();\n", source, director);
+	      Printf(wrap_args, "%s = %s->alaqil_get_self();\n", source, director);
 	      Printf(wrap_args, "SvREFCNT_inc((SV *)%s);\n", source);
 	      Append(wrap_args, "}\n");
 	      Delete(director);
 	    } else {
 	      Wrapper_add_localv(w, source, "SV *", source, "= 0", NIL);
-	      Printf(wrap_args, "%s = SWIG_NewPointerObj(%s, SWIGTYPE%s, 0);\n", source, nonconst, mangle);
+	      Printf(wrap_args, "%s = alaqil_NewPointerObj(%s, alaqilTYPE%s, 0);\n", source, nonconst, mangle);
 	      Printf(pstack, "XPUSHs(sv_2mortal(%s));\n", source);
 	    }
 	    Putc('O', parse_args);
 	    Delete(mangle);
 	    Delete(nonconst);
 	  } else {
-	    Swig_warning(WARN_TYPEMAP_DIRECTORIN_UNDEF, input_file, line_number,
-			 "Unable to use type %s as a function argument in director method %s::%s (skipping method).\n", SwigType_str(ptype, 0),
-			 SwigType_namestr(c_classname), SwigType_namestr(name));
-	    status = SWIG_NOWRAP;
+	    alaqil_warning(WARN_TYPEMAP_DIRECTORIN_UNDEF, input_file, line_number,
+			 "Unable to use type %s as a function argument in director method %s::%s (skipping method).\n", alaqilType_str(ptype, 0),
+			 alaqilType_namestr(c_classname), alaqilType_namestr(name));
+	    status = alaqil_NOWRAP;
 	    break;
 	  }
 	}
@@ -2314,7 +2314,7 @@ public:
 
       /* pass the method call on to the Python object */
       if (dirprot_mode() && !is_public(n)) {
-	Printf(w->code, "swig_set_inner(\"%s\", true);\n", name);
+	Printf(w->code, "alaqil_set_inner(\"%s\", true);\n", name);
       }
 
       Append(w->code, "ENTER;\n");
@@ -2326,10 +2326,10 @@ public:
       Printf(w->code, "call_method(\"%s\", G_EVAL | G_SCALAR);\n", pyname);
 
       if (dirprot_mode() && !is_public(n))
-	Printf(w->code, "swig_set_inner(\"%s\", false);\n", name);
+	Printf(w->code, "alaqil_set_inner(\"%s\", false);\n", name);
 
       /* exception handling */
-      tm = Swig_typemap_lookup("director:except", n, Swig_cresult_name(), 0);
+      tm = alaqil_typemap_lookup("director:except", n, alaqil_cresult_name(), 0);
       if (!tm) {
 	tm = Getattr(n, "feature:director:except");
 	if (tm)
@@ -2341,7 +2341,7 @@ public:
 	Replaceall(tm, "$error", "ERRSV");
 	Printv(w->code, Str(tm), "\n", NIL);
       } else {
-	Printf(w->code, "  Swig::DirectorMethodException::raise(ERRSV);\n", classname, pyname);
+	Printf(w->code, "  alaqil::DirectorMethodException::raise(ERRSV);\n", classname, pyname);
       }
       Append(w->code, "}\n");
       Delete(tm);
@@ -2361,7 +2361,7 @@ public:
       if (outputs > 1) {
 	Wrapper_add_local(w, "output", "SV *output");
 	Printf(w->code, "if (count != %d) {\n", outputs);
-	Printf(w->code, "  Swig::DirectorTypeMismatchException::raise(\"Perl method %s.%sfailed to return a list.\");\n", classname, pyname);
+	Printf(w->code, "  alaqil::DirectorTypeMismatchException::raise(\"Perl method %s.%sfailed to return a list.\");\n", classname, pyname);
 	Append(w->code, "}\n");
       }
 
@@ -2370,14 +2370,14 @@ public:
       /* marshal return value */
       if (!is_void) {
 	Append(w->code, "SPAGAIN;\n");
-	Printf(w->code, "%s = POPs;\n", Swig_cresult_name());
-	tm = Swig_typemap_lookup("directorout", n, Swig_cresult_name(), w);
+	Printf(w->code, "%s = POPs;\n", alaqil_cresult_name());
+	tm = alaqil_typemap_lookup("directorout", n, alaqil_cresult_name(), w);
 	if (tm != 0) {
 	  if (outputs > 1) {
 	    Printf(w->code, "output = POPs;\n");
 	    Replaceall(tm, "$input", "output");
 	  } else {
-	    Replaceall(tm, "$input", Swig_cresult_name());
+	    Replaceall(tm, "$input", alaqil_cresult_name());
 	  }
 	  char temp[24];
 	  sprintf(temp, "%d", idx);
@@ -2385,7 +2385,7 @@ public:
 
 	  /* TODO check this */
 	  if (Getattr(n, "wrap:disown")) {
-	    Replaceall(tm, "$disown", "SWIG_POINTER_DISOWN");
+	    Replaceall(tm, "$disown", "alaqil_POINTER_DISOWN");
 	  } else {
 	    Replaceall(tm, "$disown", "0");
 	  }
@@ -2393,10 +2393,10 @@ public:
 	  Printv(w->code, tm, "\n", NIL);
 	  Delete(tm);
 	} else {
-	  Swig_warning(WARN_TYPEMAP_DIRECTOROUT_UNDEF, input_file, line_number,
-		       "Unable to use return type %s in director method %s::%s (skipping method).\n", SwigType_str(returntype, 0),
-		       SwigType_namestr(c_classname), SwigType_namestr(name));
-	  status = SWIG_ERROR;
+	  alaqil_warning(WARN_TYPEMAP_DIRECTOROUT_UNDEF, input_file, line_number,
+		       "Unable to use return type %s in director method %s::%s (skipping method).\n", alaqilType_str(returntype, 0),
+		       alaqilType_namestr(c_classname), alaqilType_namestr(name));
+	  status = alaqil_ERROR;
 	}
       }
 
@@ -2407,7 +2407,7 @@ public:
 	    Printf(w->code, "output = POPs;\n");
 	    Replaceall(tm, "$result", "output");
 	  } else {
-	    Replaceall(tm, "$result", Swig_cresult_name());
+	    Replaceall(tm, "$result", alaqil_cresult_name());
 	  }
 	  Replaceall(tm, "$input", Getattr(p, "emit:directorinput"));
 	  Printv(w->code, tm, "\n", NIL);
@@ -2430,8 +2430,8 @@ public:
 
     if (!is_void) {
       if (!(ignored_method && !pure_virtual)) {
-	String *rettype = SwigType_str(returntype, 0);
-	if (!SwigType_isreference(returntype)) {
+	String *rettype = alaqilType_str(returntype, 0);
+	if (!alaqilType_isreference(returntype)) {
 	  Printf(w->code, "return (%s) c_result;\n", rettype);
 	} else {
 	  Printf(w->code, "return (%s) *c_result;\n", rettype);
@@ -2446,19 +2446,19 @@ public:
     String *inline_extra_method = NewString("");
     if (dirprot_mode() && !is_public(n) && !pure_virtual) {
       Printv(inline_extra_method, declaration, NIL);
-      String *extra_method_name = NewStringf("%sSwigPublic", name);
+      String *extra_method_name = NewStringf("%salaqilPublic", name);
       Replaceall(inline_extra_method, name, extra_method_name);
       Replaceall(inline_extra_method, ";\n", " {\n      ");
       if (!is_void)
 	Printf(inline_extra_method, "return ");
-      String *methodcall = Swig_method_call(super, l);
+      String *methodcall = alaqil_method_call(super, l);
       Printv(inline_extra_method, methodcall, ";\n    }\n", NIL);
       Delete(methodcall);
       Delete(extra_method_name);
     }
 
     /* emit the director method */
-    if (status == SWIG_OK) {
+    if (status == alaqil_OK) {
       if (!Getattr(n, "defaultargs")) {
 	Replaceall(w->code, "$symname", symname);
 	Wrapper_print(w, f_directors);
@@ -2478,9 +2478,9 @@ public:
     member_func = 1;
     rv = Language::classDirectorDisown(n);
     member_func = 0;
-    if (rv == SWIG_OK && Swig_directorclass(n)) {
+    if (rv == alaqil_OK && alaqil_directorclass(n)) {
       String *symname = Getattr(n, "sym:name");
-      String *disown = Swig_name_disown(NSPACE_TODO, symname);
+      String *disown = alaqil_name_disown(NSPACE_TODO, symname);
       Setattr(n, "perl5:directordisown", NewStringf("%s::%s", cmodule, disown));
     }
     return rv;
@@ -2491,11 +2491,11 @@ public:
     String *body = NewString("\n");
 
     String *ptype = Copy(getClassType());
-    SwigType_add_pointer(ptype);
-    String *mangle = SwigType_manglestr(ptype);
+    alaqilType_add_pointer(ptype);
+    String *mangle = alaqilType_manglestr(ptype);
 
-    Printv(body, tab4, "dSP;\n", tab4, "SV *self = SWIG_NewPointerObj(SWIG_as_voidptr(this), SWIGTYPE", mangle, ", SWIG_SHADOW);\n", tab4, "\n", tab4,
-	   "sv_bless(self, gv_stashpv(swig_get_class(), 0));\n", tab4, "ENTER;\n", tab4, "SAVETMPS;\n", tab4, "PUSHMARK(SP);\n", tab4,
+    Printv(body, tab4, "dSP;\n", tab4, "SV *self = alaqil_NewPointerObj(alaqil_as_voidptr(this), alaqilTYPE", mangle, ", alaqil_SHADOW);\n", tab4, "\n", tab4,
+	   "sv_bless(self, gv_stashpv(alaqil_get_class(), 0));\n", tab4, "ENTER;\n", tab4, "SAVETMPS;\n", tab4, "PUSHMARK(SP);\n", tab4,
 	   "XPUSHs(self);\n", tab4, "XPUSHs(&PL_sv_yes);\n", tab4, "PUTBACK;\n", tab4, "call_method(\"DESTROY\", G_EVAL | G_VOID);\n", tab4,
 	   "FREETMPS;\n", tab4, "LEAVE;\n", NIL);
 
@@ -2512,17 +2512,17 @@ public:
       Printf(f_directors_h, "    virtual ~%s();\n", DirectorClassName);
       Printf(f_directors, "%s::~%s() {%s}\n\n", DirectorClassName, DirectorClassName, body);
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 };
 
 /* -----------------------------------------------------------------------------
- * swig_perl5()    - Instantiate module
+ * alaqil_perl5()    - Instantiate module
  * ----------------------------------------------------------------------------- */
 
-static Language *new_swig_perl5() {
+static Language *new_alaqil_perl5() {
   return new PERL5();
 }
-extern "C" Language *swig_perl5(void) {
-  return new_swig_perl5();
+extern "C" Language *alaqil_perl5(void) {
+  return new_alaqil_perl5();
 }

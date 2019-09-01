@@ -1,17 +1,17 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * s-exp.cxx
  *
  * A parse tree represented as Lisp s-expressions.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include "dohint.h"
 
 static const char *usage = "\
@@ -44,15 +44,15 @@ public:
 
   virtual void main(int argc, char *argv[]) {
     // Add a symbol to the parser for conditional compilation
-    Preprocessor_define("SWIGSEXP 1", 0);
+    Preprocessor_define("alaqilSEXP 1", 0);
 
-    SWIG_typemap_lang("sexp");
+    alaqil_typemap_lang("sexp");
     for (int iX = 0; iX < argc; iX++) {
       if (strcmp(argv[iX], "-typemaplang") == 0) {
-	Swig_mark_arg(iX);
+	alaqil_mark_arg(iX);
 	iX++;
-	SWIG_typemap_lang(argv[iX]);
-	Swig_mark_arg(iX);
+	alaqil_typemap_lang(argv[iX]);
+	alaqil_mark_arg(iX);
 	continue;
       }
       if (strcmp(argv[iX], "-help") == 0) {
@@ -67,24 +67,24 @@ public:
       String *outfile = Getattr(n, "outfile");
       Replaceall(outfile, "_wrap.cxx", ".lisp");
       Replaceall(outfile, "_wrap.c", ".lisp");
-      out = NewFile(outfile, "w", SWIG_output_files());
+      out = NewFile(outfile, "w", alaqil_output_files());
       if (!out) {
 	FileErrorDisplay(outfile);
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
     }
     String *f_sink = NewString("");
-    Swig_register_filebyname("header", f_sink);
-    Swig_register_filebyname("wrapper", f_sink);
-    Swig_register_filebyname("begin", f_sink);
-    Swig_register_filebyname("runtime", f_sink);
-    Swig_register_filebyname("init", f_sink);
+    alaqil_register_filebyname("header", f_sink);
+    alaqil_register_filebyname("wrapper", f_sink);
+    alaqil_register_filebyname("begin", f_sink);
+    alaqil_register_filebyname("runtime", f_sink);
+    alaqil_register_filebyname("init", f_sink);
 
-    Swig_banner_target_lang(out, ";;;");
+    alaqil_banner_target_lang(out, ";;;");
 
     Language::top(n);
     Printf(out, "\n");
-    Printf(out, ";;; Lisp parse tree produced by SWIG\n");
+    Printf(out, ";;; Lisp parse tree produced by alaqil\n");
     print_circle_hash = NewHash();
     print_circle_count = 0;
     hanging_parens = 0;
@@ -92,7 +92,7 @@ public:
     need_newline = 0;
     Sexp_print_node(n);
     flush_parens();
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   void print_indent() {
@@ -388,15 +388,15 @@ public:
     emit_attach_parmmaps(l, f);
     Setattr(n, "wrap:parms", l);
     DelWrapper(f);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 };
 
 
-static Language *new_swig_sexp() {
+static Language *new_alaqil_sexp() {
   return new Sexp();
 }
-extern "C" Language *swig_sexp(void) {
-  return new_swig_sexp();
+extern "C" Language *alaqil_sexp(void) {
+  return new_alaqil_sexp();
 }

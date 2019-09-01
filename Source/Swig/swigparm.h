@@ -1,21 +1,21 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
- * swigparm.h
+ * alaqilparm.h
  *
  * Functions related to the handling of function/method parameters and
  * parameter lists.  
  * ----------------------------------------------------------------------------- */
 
 /* Individual parameters */
-extern Parm      *NewParm(SwigType *type, const_String_or_char_ptr name, Node *from_node);
-extern Parm      *NewParmWithoutFileLineInfo(SwigType *type, const_String_or_char_ptr name);
-extern Parm      *NewParmNode(SwigType *type, Node *from_node);
+extern Parm      *NewParm(alaqilType *type, const_String_or_char_ptr name, Node *from_node);
+extern Parm      *NewParmWithoutFileLineInfo(alaqilType *type, const_String_or_char_ptr name);
+extern Parm      *NewParmNode(alaqilType *type, Node *from_node);
 extern Parm      *CopyParm(Parm *p);
 
 /* Parameter lists */

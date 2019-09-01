@@ -1,22 +1,22 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * typemap.c
  *
- * A somewhat generalized implementation of SWIG1.1 typemaps.
+ * A somewhat generalized implementation of alaqil1.1 typemaps.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 #include "cparse.h"
 #include <ctype.h>
 
 #if 0
-#define SWIG_DEBUG
+#define alaqil_DEBUG
 #endif
 
 static int typemap_search_debug = 0;
@@ -71,14 +71,14 @@ static Hash *typemaps;
  * This is a copy and modification of feature_identifier_fix in parser.y.
  * ----------------------------------------------------------------------------- */
 
-static SwigType *typemap_identifier_fix(const SwigType *s) {
-  String *tp = SwigType_istemplate_templateprefix(s);
+static alaqilType *typemap_identifier_fix(const alaqilType *s) {
+  String *tp = alaqilType_istemplate_templateprefix(s);
   if (tp) {
     String *ts, *ta, *tq, *tr;
-    ts = SwigType_templatesuffix(s);
-    ta = SwigType_templateargs(s);
-    tq = Swig_symbol_type_qualify(ta, 0);
-    tr = SwigType_typedef_resolve_all(ta);
+    ts = alaqilType_templatesuffix(s);
+    ta = alaqilType_templateargs(s);
+    tq = alaqil_symbol_type_qualify(ta, 0);
+    tr = alaqilType_typedef_resolve_all(ta);
     Append(tp,tr);
     Append(tp,ts);
     Delete(ts);
@@ -91,21 +91,21 @@ static SwigType *typemap_identifier_fix(const SwigType *s) {
   }
 }
 
-static Hash *get_typemap(const SwigType *type) {
+static Hash *get_typemap(const alaqilType *type) {
   Hash *tm = 0;
-  SwigType *dtype = 0;
-  SwigType *hashtype;
+  alaqilType *dtype = 0;
+  alaqilType *hashtype;
 
-  if (SwigType_istemplate(type)) {
-    SwigType *rty = typemap_identifier_fix(type);
-    String *ty = Swig_symbol_template_deftype(rty, 0);
-    dtype = Swig_symbol_type_qualify(ty, 0);
+  if (alaqilType_istemplate(type)) {
+    alaqilType *rty = typemap_identifier_fix(type);
+    String *ty = alaqil_symbol_template_deftype(rty, 0);
+    dtype = alaqil_symbol_type_qualify(ty, 0);
     type = dtype;
     Delete(ty);
   }
 
   /* remove unary scope operator (::) prefix indicating global scope for looking up in the hashmap */
-  hashtype = SwigType_remove_global_scope_prefix(type);
+  hashtype = alaqilType_remove_global_scope_prefix(type);
   tm = Getattr(typemaps, hashtype);
 
   Delete(dtype);
@@ -114,21 +114,21 @@ static Hash *get_typemap(const SwigType *type) {
   return tm;
 }
 
-static void set_typemap(const SwigType *type, Hash **tmhash) {
-  SwigType *hashtype = 0;
+static void set_typemap(const alaqilType *type, Hash **tmhash) {
+  alaqilType *hashtype = 0;
   Hash *new_tm = 0;
   assert(*tmhash == 0);
-  if (SwigType_istemplate(type)) {
-    SwigType *rty = typemap_identifier_fix(type);
-    String *ty = Swig_symbol_template_deftype(rty, 0);
-    String *tyq = Swig_symbol_type_qualify(ty, 0);
-    hashtype = SwigType_remove_global_scope_prefix(tyq);
+  if (alaqilType_istemplate(type)) {
+    alaqilType *rty = typemap_identifier_fix(type);
+    String *ty = alaqil_symbol_template_deftype(rty, 0);
+    String *tyq = alaqil_symbol_type_qualify(ty, 0);
+    hashtype = alaqilType_remove_global_scope_prefix(tyq);
     *tmhash = Getattr(typemaps, hashtype);
     Delete(rty);
     Delete(tyq);
     Delete(ty);
   } else {
-    hashtype = SwigType_remove_global_scope_prefix(type);
+    hashtype = alaqilType_remove_global_scope_prefix(type);
   }
 
   if (!*tmhash) {
@@ -146,12 +146,12 @@ static void set_typemap(const SwigType *type, Hash **tmhash) {
 
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_init()
+ * alaqil_typemap_init()
  *
  * Initialize the typemap system
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_init() {
+void alaqil_typemap_init() {
   typemaps = NewHash();
 }
 
@@ -185,7 +185,7 @@ static String *typemap_method_name(const_String_or_char_ptr tmap_method) {
 /* ----------------------------------------------------------------------------- 
  * typemap_register()
  *
- * Internal implementation for Swig_typemap_register()
+ * Internal implementation for alaqil_typemap_register()
  * ----------------------------------------------------------------------------- */
 
 static void typemap_register(const_String_or_char_ptr tmap_method, ParmList *parms, const_String_or_char_ptr code, ParmList *locals, ParmList *kwargs, String *source_directive) {
@@ -194,14 +194,14 @@ static void typemap_register(const_String_or_char_ptr tmap_method, ParmList *par
   Hash *tm2;
   Parm *np;
   String *tm_method;
-  SwigType *type;
+  alaqilType *type;
   String *pname;
   if (!parms)
     return;
 
   if (typemap_register_debug) {
       Printf(stdout, "Registering - %s\n", tmap_method);
-      Swig_print_node(parms);
+      alaqil_print_node(parms);
   }
 
   tm_method = typemap_method_name(tmap_method);
@@ -289,12 +289,12 @@ static void typemap_register(const_String_or_char_ptr tmap_method, ParmList *par
 }
 
 /* ----------------------------------------------------------------------------- 
- * Swig_typemap_register()
+ * alaqil_typemap_register()
  *
  * Add a new, possibly multi-argument, typemap
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_register(const_String_or_char_ptr tmap_method, ParmList *parms, const_String_or_char_ptr code, ParmList *locals, ParmList *kwargs) {
+void alaqil_typemap_register(const_String_or_char_ptr tmap_method, ParmList *parms, const_String_or_char_ptr code, ParmList *locals, ParmList *kwargs) {
   String *parms_str = ParmList_str_multibrackets(parms);
   String *source_directive = NewStringf("typemap(%s) %s", tmap_method, parms_str);
 
@@ -310,7 +310,7 @@ void Swig_typemap_register(const_String_or_char_ptr tmap_method, ParmList *parms
  * Retrieve typemap information.
  * ----------------------------------------------------------------------------- */
 
-static Hash *typemap_get(SwigType *type, const_String_or_char_ptr name) {
+static Hash *typemap_get(alaqilType *type, const_String_or_char_ptr name) {
   Hash *tm, *tm1;
   tm = get_typemap(type);
   if (!tm) {
@@ -324,17 +324,17 @@ static Hash *typemap_get(SwigType *type, const_String_or_char_ptr name) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_copy()
+ * alaqil_typemap_copy()
  *
  * Copy a typemap
  * ----------------------------------------------------------------------------- */
 
-int Swig_typemap_copy(const_String_or_char_ptr tmap_method, ParmList *srcparms, ParmList *parms) {
+int alaqil_typemap_copy(const_String_or_char_ptr tmap_method, ParmList *srcparms, ParmList *parms) {
   Hash *tm = 0;
   String *tm_method;
   Parm *p;
   String *pname;
-  SwigType *ptype;
+  alaqilType *ptype;
   String *tm_methods, *multi_tmap_method;
   if (ParmList_len(parms) != ParmList_len(srcparms))
     return -1;
@@ -383,13 +383,13 @@ int Swig_typemap_copy(const_String_or_char_ptr tmap_method, ParmList *srcparms, 
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_clear()
+ * alaqil_typemap_clear()
  *
  * Delete a multi-argument typemap
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_clear(const_String_or_char_ptr tmap_method, ParmList *parms) {
-  SwigType *type;
+void alaqil_typemap_clear(const_String_or_char_ptr tmap_method, ParmList *parms) {
+  alaqilType *type;
   String *name;
   Parm *p;
   String *multi_tmap_method;
@@ -420,7 +420,7 @@ void Swig_typemap_clear(const_String_or_char_ptr tmap_method, ParmList *parms) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_apply()
+ * alaqil_typemap_apply()
  *
  * Multi-argument %apply directive.  This is pretty horrible so I sure hope
  * it works.
@@ -438,11 +438,11 @@ static int count_args(String *s) {
   return na;
 }
 
-int Swig_typemap_apply(ParmList *src, ParmList *dest) {
+int alaqil_typemap_apply(ParmList *src, ParmList *dest) {
   String *ssig, *dsig;
   Parm *p, *np, *lastp, *dp, *lastdp = 0;
   int narg = 0;
-  SwigType *type = 0, *name;
+  alaqilType *type = 0, *name;
   Hash *tm, *sm;
   int match = 0;
 
@@ -501,7 +501,7 @@ int Swig_typemap_apply(ParmList *src, ParmList *dest) {
      %apply(size_t) {my_size};  ==>  %apply(unsigned long) {my_size};
    */
   if (!sm) {
-    SwigType *ntype = SwigType_typedef_resolve(type);
+    alaqilType *ntype = alaqilType_typedef_resolve(type);
     if (ntype && (Cmp(ntype, type) != 0)) {
       sm = typemap_get(ntype, name);
     }
@@ -556,13 +556,13 @@ int Swig_typemap_apply(ParmList *src, ParmList *dest) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_clear_apply()
+ * alaqil_typemap_clear_apply()
  *
  * %clear directive.   Clears all typemaps for a type (in the current scope only).    
  * ----------------------------------------------------------------------------- */
 
 /* Multi-argument %clear directive */
-void Swig_typemap_clear_apply(Parm *parms) {
+void alaqil_typemap_clear_apply(Parm *parms) {
   String *tsig;
   Parm *p, *np, *lastp;
   int narg = 0;
@@ -612,14 +612,14 @@ void Swig_typemap_clear_apply(Parm *parms) {
 }
 
 /* Internal function to strip array dimensions. */
-static SwigType *strip_arrays(SwigType *type) {
-  SwigType *t;
+static alaqilType *strip_arrays(alaqilType *type) {
+  alaqilType *t;
   int ndim;
   int i;
   t = Copy(type);
-  ndim = SwigType_array_ndim(t);
+  ndim = alaqilType_array_ndim(t);
   for (i = 0; i < ndim; i++) {
-    SwigType_array_setdim(t, i, "ANY");
+    alaqilType_array_setdim(t, i, "ANY");
   }
   return t;
 }
@@ -641,11 +641,11 @@ static void debug_search_result_display(Node *tm) {
  * %typemap(tm_method) ctype 
  * ----------------------------------------------------------------------------- */
 
-static Hash *typemap_search_helper(int debug_display, Hash *tm, const String *tm_method, SwigType *ctype, const String *cqualifiedname, const String *cname, Hash **backup) {
+static Hash *typemap_search_helper(int debug_display, Hash *tm, const String *tm_method, alaqilType *ctype, const String *cqualifiedname, const String *cname, Hash **backup) {
   Hash *result = 0;
   Hash *tm1;
   if (debug_display && cqualifiedname)
-    Printf(stdout, "  Looking for: %s\n", SwigType_str(ctype, cqualifiedname));
+    Printf(stdout, "  Looking for: %s\n", alaqilType_str(ctype, cqualifiedname));
   if (tm && cqualifiedname) {
     tm1 = Getattr(tm, cqualifiedname);
     if (tm1) {
@@ -657,7 +657,7 @@ static Hash *typemap_search_helper(int debug_display, Hash *tm, const String *tm
     }
   }
   if (debug_display && cname)
-    Printf(stdout, "  Looking for: %s\n", SwigType_str(ctype, cname));
+    Printf(stdout, "  Looking for: %s\n", alaqilType_str(ctype, cname));
   if (tm && cname) {
     tm1 = Getattr(tm, cname);
     if (tm1) {
@@ -669,7 +669,7 @@ static Hash *typemap_search_helper(int debug_display, Hash *tm, const String *tm
     }
   }
   if (debug_display)
-    Printf(stdout, "  Looking for: %s\n", SwigType_str(ctype, 0));
+    Printf(stdout, "  Looking for: %s\n", alaqilType_str(ctype, 0));
   if (tm) {
     result = Getattr(tm, tm_method);	/* See if there is simply a type without name match */
     if (result && Getattr(result, "code"))
@@ -689,13 +689,13 @@ ret_result:
  * 'code' attribute.
  * ----------------------------------------------------------------------------- */
 
-static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type, const_String_or_char_ptr name, const_String_or_char_ptr qualifiedname, SwigType **matchtype, Node *node) {
+static Hash *typemap_search(const_String_or_char_ptr tmap_method, alaqilType *type, const_String_or_char_ptr name, const_String_or_char_ptr qualifiedname, alaqilType **matchtype, Node *node) {
   Hash *result = 0;
   Hash *tm;
   Hash *backup = 0;
-  SwigType *primitive = 0;
-  SwigType *ctype = 0;
-  SwigType *ctype_unstripped = 0;
+  alaqilType *primitive = 0;
+  alaqilType *ctype = 0;
+  alaqilType *ctype_unstripped = 0;
   int isarray;
   const String *cname = 0;
   const String *cqualifiedname = 0;
@@ -708,8 +708,8 @@ static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type
     cqualifiedname = qualifiedname;
 
   if (debug_display) {
-    String *typestr = SwigType_str(type, cqualifiedname ? cqualifiedname : cname);
-    Swig_diagnostic(Getfile(node), Getline(node), "Searching for a suitable '%s' typemap for: %s\n", tmap_method, typestr);
+    String *typestr = alaqilType_str(type, cqualifiedname ? cqualifiedname : cname);
+    alaqil_diagnostic(Getfile(node), Getline(node), "Searching for a suitable '%s' typemap for: %s\n", tmap_method, typestr);
     Delete(typestr);
   }
   ctype = Copy(type);
@@ -723,7 +723,7 @@ static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type
 
     {
       /* Look for the type reduced to just the template prefix - for templated types without the template parameter list being specified */
-      SwigType *template_prefix = SwigType_istemplate_only_templateprefix(ctype);
+      alaqilType *template_prefix = alaqilType_istemplate_only_templateprefix(ctype);
       if (template_prefix) {
 	tm = get_typemap(template_prefix);
 	result = typemap_search_helper(debug_display, tm, tm_method, template_prefix, cqualifiedname, cname, &backup);
@@ -734,11 +734,11 @@ static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type
     }
 
     /* look for [ANY] arrays */
-    isarray = SwigType_isarray(ctype);
+    isarray = alaqilType_isarray(ctype);
     if (isarray) {
       /* If working with arrays, strip away all of the dimensions and replace with "ANY".
 	 See if that generates a match */
-      SwigType *noarrays = strip_arrays(ctype);
+      alaqilType *noarrays = strip_arrays(ctype);
       tm = get_typemap(noarrays);
       result = typemap_search_helper(debug_display, tm, tm_method, noarrays, cqualifiedname, cname, &backup);
       Delete(noarrays);
@@ -747,11 +747,11 @@ static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type
     }
 
     /* No match so far - try with a qualifier stripped (strip one qualifier at a time until none remain)
-     * The order of stripping in SwigType_strip_single_qualifier is used to provide some sort of consistency
-     * with the default (SWIGTYPE) typemap matching rules for the first qualifier to be stripped. */
+     * The order of stripping in alaqilType_strip_single_qualifier is used to provide some sort of consistency
+     * with the default (alaqilTYPE) typemap matching rules for the first qualifier to be stripped. */
     {
-      SwigType *oldctype = ctype;
-      ctype = SwigType_strip_single_qualifier(oldctype);
+      alaqilType *oldctype = ctype;
+      ctype = alaqilType_strip_single_qualifier(oldctype);
       if (!Equal(ctype, oldctype)) {
 	Delete(oldctype);
 	continue;
@@ -761,17 +761,17 @@ static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type
 
     /* Once all qualifiers are stripped try resolve a typedef */
     {
-      SwigType *oldctype = ctype;
-      ctype = SwigType_typedef_resolve(ctype_unstripped);
+      alaqilType *oldctype = ctype;
+      ctype = alaqilType_typedef_resolve(ctype_unstripped);
       Delete(oldctype);
       Delete(ctype_unstripped);
       ctype_unstripped = Copy(ctype);
     }
   }
 
-  /* Hmmm. Well, no match seems to be found at all. See if there is some kind of default (SWIGTYPE) mapping */
+  /* Hmmm. Well, no match seems to be found at all. See if there is some kind of default (alaqilTYPE) mapping */
 
-  primitive = SwigType_default_create(type);
+  primitive = alaqilType_default_create(type);
   while (primitive) {
     tm = get_typemap(primitive);
     result = typemap_search_helper(debug_display, tm, tm_method, primitive, cqualifiedname, cname, &backup);
@@ -779,7 +779,7 @@ static Hash *typemap_search(const_String_or_char_ptr tmap_method, SwigType *type
       goto ret_result;
 
     {
-      SwigType *nprim = SwigType_default_deduce(primitive);
+      alaqilType *nprim = alaqilType_default_deduce(primitive);
       Delete(primitive);
       primitive = nprim;
     }
@@ -807,8 +807,8 @@ ret_result:
  * ----------------------------------------------------------------------------- */
 
 static Hash *typemap_search_multi(const_String_or_char_ptr tmap_method, ParmList *parms, int *nmatch) {
-  SwigType *type;
-  SwigType *mtype = 0;
+  alaqilType *type;
+  alaqilType *mtype = 0;
   String *name;
   String *multi_tmap_method;
   Hash *tm;
@@ -824,7 +824,7 @@ static Hash *typemap_search_multi(const_String_or_char_ptr tmap_method, ParmList
   /* Try to find a match on the first type */
   tm = typemap_search(tmap_method, type, name, 0, &mtype, parms);
   if (tm) {
-    if (mtype && SwigType_isarray(mtype)) {
+    if (mtype && alaqilType_isarray(mtype)) {
       Setattr(parms, "tmap:match", mtype);
     }
     Delete(mtype);
@@ -848,8 +848,8 @@ static Hash *typemap_search_multi(const_String_or_char_ptr tmap_method, ParmList
   if (typemap_search_debug && (in_typemap_search_multi == 0))
     debug_search_result_display(tm);
   if (typemaps_used_debug && (in_typemap_search_multi == 0) && tm) {
-    String *typestr = SwigType_str(type, name);
-    Swig_diagnostic(Getfile(parms), Getline(parms), "Typemap for %s (%s) : %%%s\n", typestr, tmap_method, Getattr(tm, "source"));
+    String *typestr = alaqilType_str(type, name);
+    alaqil_diagnostic(Getfile(parms), Getline(parms), "Typemap for %s (%s) : %%%s\n", typestr, tmap_method, Getattr(tm, "source"));
     assert(Getfile(parms) && Len(Getfile(parms)) > 0); /* Missing file and line numbering information */
     Delete(typestr);
   }
@@ -866,7 +866,7 @@ static Hash *typemap_search_multi(const_String_or_char_ptr tmap_method, ParmList
  * ----------------------------------------------------------------------------- */
 
 static void replace_local_types(ParmList *p, const String *name, const String *rep) {
-  SwigType *t;
+  alaqilType *t;
   while (p) {
     t = Getattr(p, "type");
     Replace(t, name, rep, DOH_REPLACE_ANY);
@@ -884,15 +884,15 @@ static int check_locals(ParmList *p, const char *s) {
   return 0;
 }
 
-static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, SwigType *rtype, String *pname, String *lname, int index) {
+static int typemap_replace_vars(String *s, ParmList *locals, alaqilType *type, alaqilType *rtype, String *pname, String *lname, int index) {
   char var[512];
   char *varname;
-  SwigType *ftype;
+  alaqilType *ftype;
   int bare_substitution_count = 0;
 
   Replaceall(s, "$typemap", "$TYPEMAP"); /* workaround for $type substitution below */
 
-  ftype = SwigType_typedef_resolve_all(type);
+  ftype = alaqilType_typedef_resolve_all(type);
 
   if (!pname)
     pname = lname;
@@ -915,16 +915,16 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
   /* If the original datatype was an array. We're going to go through and substitute
      its array dimensions */
 
-  if (SwigType_isarray(type) || SwigType_isarray(ftype)) {
+  if (alaqilType_isarray(type) || alaqilType_isarray(ftype)) {
     String *size;
     int ndim;
     int i;
-    if (SwigType_array_ndim(type) != SwigType_array_ndim(ftype))
+    if (alaqilType_array_ndim(type) != alaqilType_array_ndim(ftype))
       type = ftype;
-    ndim = SwigType_array_ndim(type);
+    ndim = alaqilType_array_ndim(type);
     size = NewStringEmpty();
     for (i = 0; i < ndim; i++) {
-      String *dim = SwigType_array_getdim(type, i);
+      String *dim = alaqilType_array_getdim(type, i);
       if (index == 1) {
 	char t[32];
 	sprintf(t, "$dim%d", i);
@@ -954,8 +954,8 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
 
   /* Type-related stuff */
   {
-    SwigType *star_type, *amp_type, *base_type, *lex_type;
-    SwigType *ltype, *star_ltype, *amp_ltype;
+    alaqilType *star_type, *amp_type, *base_type, *lex_type;
+    alaqilType *ltype, *star_ltype, *amp_ltype;
     String *mangle, *star_mangle, *amp_mangle, *base_mangle, *base_name, *base_type_str;
     String *descriptor, *star_descriptor, *amp_descriptor;
     String *ts;
@@ -965,7 +965,7 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
 
     if (strstr(sc, "type") || check_locals(locals, "type")) {
       /* Given type : $type */
-      ts = SwigType_str(type, 0);
+      ts = alaqilType_str(type, 0);
       if (index == 1) {
 	Replace(s, "$type", ts, DOH_REPLACE_ANY);
 	replace_local_types(locals, "$type", type);
@@ -978,8 +978,8 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     }
     if (strstr(sc, "ltype") || check_locals(locals, "ltype")) {
       /* Local type:  $ltype */
-      ltype = SwigType_ltype(type);
-      ts = SwigType_str(ltype, 0);
+      ltype = alaqilType_ltype(type);
+      ts = alaqilType_str(ltype, 0);
       if (index == 1) {
 	Replace(s, "$ltype", ts, DOH_REPLACE_ANY);
 	replace_local_types(locals, "$ltype", ltype);
@@ -994,21 +994,21 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     if (strstr(sc, "mangle") || strstr(sc, "descriptor")) {
       /* Mangled type */
 
-      mangle = SwigType_manglestr(type);
+      mangle = alaqilType_manglestr(type);
       if (index == 1)
 	Replace(s, "$mangle", mangle, DOH_REPLACE_ANY);
       strcpy(varname, "mangle");
       Replace(s, var, mangle, DOH_REPLACE_ANY);
 
-      descriptor = NewStringf("SWIGTYPE%s", mangle);
+      descriptor = NewStringf("alaqilTYPE%s", mangle);
 
       if (index == 1)
 	if (Replace(s, "$descriptor", descriptor, DOH_REPLACE_ANY))
-	  SwigType_remember(type);
+	  alaqilType_remember(type);
 
       strcpy(varname, "descriptor");
       if (Replace(s, var, descriptor, DOH_REPLACE_ANY))
-	SwigType_remember(type);
+	alaqilType_remember(type);
 
       Delete(descriptor);
       Delete(mangle);
@@ -1020,19 +1020,19 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
        $*n_ltype
      */
 
-    if (SwigType_ispointer(ftype) || (SwigType_isarray(ftype)) || (SwigType_isreference(ftype)) || (SwigType_isrvalue_reference(ftype))) {
-      if (!(SwigType_isarray(type) || SwigType_ispointer(type) || SwigType_isreference(type) || SwigType_isrvalue_reference(type))) {
+    if (alaqilType_ispointer(ftype) || (alaqilType_isarray(ftype)) || (alaqilType_isreference(ftype)) || (alaqilType_isrvalue_reference(ftype))) {
+      if (!(alaqilType_isarray(type) || alaqilType_ispointer(type) || alaqilType_isreference(type) || alaqilType_isrvalue_reference(type))) {
 	star_type = Copy(ftype);
       } else {
 	star_type = Copy(type);
       }
-      if (!(SwigType_isreference(star_type) || SwigType_isrvalue_reference(star_type))) {
-	if (SwigType_isarray(star_type)) {
-	  SwigType_del_element(star_type);
+      if (!(alaqilType_isreference(star_type) || alaqilType_isrvalue_reference(star_type))) {
+	if (alaqilType_isarray(star_type)) {
+	  alaqilType_del_element(star_type);
 	} else {
-	  SwigType_del_pointer(star_type);
+	  alaqilType_del_pointer(star_type);
 	}
-	ts = SwigType_str(star_type, 0);
+	ts = alaqilType_str(star_type, 0);
 	if (index == 1) {
 	  Replace(s, "$*type", ts, DOH_REPLACE_ANY);
 	  replace_local_types(locals, "$*type", star_type);
@@ -1042,10 +1042,10 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
 	replace_local_types(locals, varname, star_type);
 	Delete(ts);
       } else {
-	SwigType_del_element(star_type);
+	alaqilType_del_element(star_type);
       }
-      star_ltype = SwigType_ltype(star_type);
-      ts = SwigType_str(star_ltype, 0);
+      star_ltype = alaqilType_ltype(star_type);
+      ts = alaqilType_str(star_ltype, 0);
       if (index == 1) {
 	Replace(s, "$*ltype", ts, DOH_REPLACE_ANY);
 	replace_local_types(locals, "$*ltype", star_ltype);
@@ -1056,20 +1056,20 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
       Delete(ts);
       Delete(star_ltype);
 
-      star_mangle = SwigType_manglestr(star_type);
+      star_mangle = alaqilType_manglestr(star_type);
       if (index == 1)
 	Replace(s, "$*mangle", star_mangle, DOH_REPLACE_ANY);
 
       sprintf(varname, "$*%d_mangle", index);
       Replace(s, varname, star_mangle, DOH_REPLACE_ANY);
 
-      star_descriptor = NewStringf("SWIGTYPE%s", star_mangle);
+      star_descriptor = NewStringf("alaqilTYPE%s", star_mangle);
       if (index == 1)
 	if (Replace(s, "$*descriptor", star_descriptor, DOH_REPLACE_ANY))
-	  SwigType_remember(star_type);
+	  alaqilType_remember(star_type);
       sprintf(varname, "$*%d_descriptor", index);
       if (Replace(s, varname, star_descriptor, DOH_REPLACE_ANY))
-	SwigType_remember(star_type);
+	alaqilType_remember(star_type);
 
       Delete(star_descriptor);
       Delete(star_mangle);
@@ -1080,8 +1080,8 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     }
     /* One pointer level added */
     amp_type = Copy(type);
-    SwigType_add_pointer(amp_type);
-    ts = SwigType_str(amp_type, 0);
+    alaqilType_add_pointer(amp_type);
+    ts = alaqilType_str(amp_type, 0);
     if (index == 1) {
       Replace(s, "$&type", ts, DOH_REPLACE_ANY);
       replace_local_types(locals, "$&type", amp_type);
@@ -1091,9 +1091,9 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     replace_local_types(locals, varname, amp_type);
     Delete(ts);
 
-    amp_ltype = SwigType_ltype(type);
-    SwigType_add_pointer(amp_ltype);
-    ts = SwigType_str(amp_ltype, 0);
+    amp_ltype = alaqilType_ltype(type);
+    alaqilType_add_pointer(amp_ltype);
+    ts = alaqilType_str(amp_ltype, 0);
 
     if (index == 1) {
       Replace(s, "$&ltype", ts, DOH_REPLACE_ANY);
@@ -1105,34 +1105,34 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     Delete(ts);
     Delete(amp_ltype);
 
-    amp_mangle = SwigType_manglestr(amp_type);
+    amp_mangle = alaqilType_manglestr(amp_type);
     if (index == 1)
       Replace(s, "$&mangle", amp_mangle, DOH_REPLACE_ANY);
     sprintf(varname, "$&%d_mangle", index);
     Replace(s, varname, amp_mangle, DOH_REPLACE_ANY);
 
-    amp_descriptor = NewStringf("SWIGTYPE%s", amp_mangle);
+    amp_descriptor = NewStringf("alaqilTYPE%s", amp_mangle);
     if (index == 1)
       if (Replace(s, "$&descriptor", amp_descriptor, DOH_REPLACE_ANY))
-	SwigType_remember(amp_type);
+	alaqilType_remember(amp_type);
     sprintf(varname, "$&%d_descriptor", index);
     if (Replace(s, varname, amp_descriptor, DOH_REPLACE_ANY))
-      SwigType_remember(amp_type);
+      alaqilType_remember(amp_type);
 
     Delete(amp_descriptor);
     Delete(amp_mangle);
     Delete(amp_type);
 
     /* Base type */
-    if (SwigType_isarray(type)) {
+    if (alaqilType_isarray(type)) {
       base_type = Copy(type);
-      Delete(SwigType_pop_arrays(base_type));
+      Delete(alaqilType_pop_arrays(base_type));
     } else {
-      base_type = SwigType_base(type);
+      base_type = alaqilType_base(type);
     }
 
-    base_type_str = SwigType_str(base_type, 0);
-    base_name = SwigType_namestr(base_type_str);
+    base_type_str = alaqilType_str(base_type, 0);
+    base_name = alaqilType_namestr(base_type_str);
     if (index == 1) {
       Replace(s, "$basetype", base_name, DOH_REPLACE_ANY);
       replace_local_types(locals, "$basetype", base_name);
@@ -1141,7 +1141,7 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     Replace(s, var, base_type_str, DOH_REPLACE_ANY);
     replace_local_types(locals, var, base_name);
 
-    base_mangle = SwigType_manglestr(base_type);
+    base_mangle = alaqilType_manglestr(base_type);
     if (index == 1)
       Replace(s, "$basemangle", base_mangle, DOH_REPLACE_ANY);
     strcpy(varname, "basemangle");
@@ -1151,7 +1151,7 @@ static int typemap_replace_vars(String *s, ParmList *locals, SwigType *type, Swi
     Delete(base_type_str);
     Delete(base_type);
 
-    lex_type = SwigType_base(rtype);
+    lex_type = alaqilType_base(rtype);
     if (index == 1)
       Replace(s, "$lextype", lex_type, DOH_REPLACE_ANY);
     strcpy(varname, "lextype");
@@ -1187,8 +1187,8 @@ static void typemap_locals(String *s, ParmList *l, Wrapper *f, int argnum) {
 
   p = l;
   while (p) {
-    SwigType *pt = Getattr(p, "type");
-    SwigType *at = SwigType_alttype(pt, 1);
+    alaqilType *pt = Getattr(p, "type");
+    alaqilType *at = alaqilType_alttype(pt, 1);
     String *pn = Getattr(p, "name");
     String *value = Getattr(p, "value");
     if (at)
@@ -1220,11 +1220,11 @@ static void typemap_locals(String *s, ParmList *l, Wrapper *f, int argnum) {
 	  continue;
 	}
 	if (value) {
-	  String *pstr = SwigType_str(pt, str);
+	  String *pstr = alaqilType_str(pt, str);
 	  new_name = Wrapper_new_localv(f, str, pstr, "=", value, NIL);
 	  Delete(pstr);
 	} else {
-	  String *pstr = SwigType_str(pt, str);
+	  String *pstr = alaqilType_str(pt, str);
 	  new_name = Wrapper_new_localv(f, str, pstr, NIL);
 	  Delete(pstr);
 	}
@@ -1257,7 +1257,7 @@ static String *typemap_warn(const_String_or_char_ptr tmap_method, Parm *p) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_lookup()
+ * alaqil_typemap_lookup()
  *
  * Attach one or more typemaps to a node and optionally generate the typemap contents
  * into the wrapper.
@@ -1280,9 +1280,9 @@ static String *typemap_warn(const_String_or_char_ptr tmap_method, Parm *p) {
  *              $1 in the out typemap will be replaced  by the code in actioncode.
  * ----------------------------------------------------------------------------- */
 
-static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, Node *node, const_String_or_char_ptr lname, Wrapper *f, String *actioncode) {
-  SwigType *type;
-  SwigType *mtype = 0;
+static String *alaqil_typemap_lookup_impl(const_String_or_char_ptr tmap_method, Node *node, const_String_or_char_ptr lname, Wrapper *f, String *actioncode) {
+  alaqilType *type;
+  alaqilType *mtype = 0;
   String *pname;
   String *qpname = 0;
   String *noscope_pname = 0;
@@ -1301,7 +1301,7 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
   int optimal_substitution = 0;
   int delete_optimal_attribute = 0;
   int num_substitutions = 0;
-  SwigType *matchtype = 0;
+  alaqilType *matchtype = 0;
 
   type = Getattr(node, "type");
   if (!type)
@@ -1311,10 +1311,10 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
    * We could choose to put this hook into a number of different typemaps, not necessarily 'newfree'... 
    * Rather confusingly 'newfree' is used to release memory and the 'ref' feature is used to add in memory references - yuck! */
   if (Cmp(tmap_method, "newfree") == 0) {
-    String *base = SwigType_base(type);
-    Node *typenode = Swig_symbol_clookup(base, 0);
+    String *base = alaqilType_base(type);
+    Node *typenode = alaqil_symbol_clookup(base, 0);
     if (typenode)
-      sdef = Swig_ref_call(typenode, lname);
+      sdef = alaqil_ref_call(typenode, lname);
     Delete(base);
   }
 
@@ -1329,15 +1329,15 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
      * Note that if node is a parameter (Parm *) then there will be no symbol table attached to the Parm *.
      */
     String *qsn;
-    if (Swig_scopename_check(pname)) {
+    if (alaqil_scopename_check(pname)) {
       /* sometimes pname is qualified, so we remove all the scope for the lookup */
       Delete(noscope_pname);
-      noscope_pname = Swig_scopename_last(pname);
+      noscope_pname = alaqil_scopename_last(pname);
       /*
       Printf(stdout, "Removed scope: %s => %s\n", pname, noscope_pname);
       */
     }
-    qsn = Swig_symbol_qualified(node);
+    qsn = alaqil_symbol_qualified(node);
     if (qsn && Len(qsn)) {
       qpname = NewStringf("%s::%s", qsn, noscope_pname);
       Delete(qsn);
@@ -1348,8 +1348,8 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
   if (typemap_search_debug)
     debug_search_result_display(tm);
   if (typemaps_used_debug && tm) {
-    String *typestr = SwigType_str(type, qpname ? qpname : pname);
-    Swig_diagnostic(Getfile(node), Getline(node), "Typemap for %s (%s) : %%%s\n", typestr, tmap_method, Getattr(tm, "source"));
+    String *typestr = alaqilType_str(type, qpname ? qpname : pname);
+    alaqil_diagnostic(Getfile(node), Getline(node), "Typemap for %s (%s) : %%%s\n", typestr, tmap_method, Getattr(tm, "source"));
     assert(Getfile(node) && Len(Getfile(node)) > 0); /* Missing file and line numbering information */
     Delete(typestr);
   }
@@ -1389,7 +1389,7 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
      * If f and actioncode are NULL, then the caller is just looking to attach the "out" attributes
      * ie, not use the typemap code, otherwise both f and actioncode must be non null. */
     if (actioncode) {
-      const String *result_equals = NewStringf("%s = ", Swig_cresult_name());
+      const String *result_equals = NewStringf("%s = ", alaqil_cresult_name());
       clname = Copy(actioncode);
       /* check that the code in the typemap can be used in this optimal way.
        * The code should be in the form "result = ...;\n". We need to extract
@@ -1412,8 +1412,8 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
         }
       }
       if (!optimal_substitution) {
-	Swig_warning(WARN_TYPEMAP_OUT_OPTIMAL_IGNORED, Getfile(node), Getline(node), "Method %s usage of the optimal attribute ignored\n", Swig_name_decl(node));
-	Swig_warning(WARN_TYPEMAP_OUT_OPTIMAL_IGNORED, Getfile(s), Getline(s), "in the out typemap as the following cannot be used to generate optimal code: %s\n", clname);
+	alaqil_warning(WARN_TYPEMAP_OUT_OPTIMAL_IGNORED, Getfile(node), Getline(node), "Method %s usage of the optimal attribute ignored\n", alaqil_name_decl(node));
+	alaqil_warning(WARN_TYPEMAP_OUT_OPTIMAL_IGNORED, Getfile(s), Getline(s), "in the out typemap as the following cannot be used to generate optimal code: %s\n", clname);
 	delete_optimal_attribute = 1;
       }
     } else {
@@ -1433,21 +1433,21 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
     locals = CopyParmList(locals);
 
   if (pname) {
-    if (SwigType_istemplate(pname)) {
-      cname = SwigType_namestr(pname);
+    if (alaqilType_istemplate(pname)) {
+      cname = alaqilType_namestr(pname);
       pname = cname;
     }
   }
-  if (SwigType_istemplate((char *) lname)) {
-    clname = SwigType_namestr((char *) lname);
+  if (alaqilType_istemplate((char *) lname)) {
+    clname = alaqilType_namestr((char *) lname);
     lname = clname;
   }
 
-  matchtype = mtype && SwigType_isarray(mtype) ? mtype : type;
+  matchtype = mtype && alaqilType_isarray(mtype) ? mtype : type;
   num_substitutions = typemap_replace_vars(s, locals, matchtype, type, pname, (char *) lname, 1);
   if (optimal_substitution && num_substitutions > 1) {
-    Swig_warning(WARN_TYPEMAP_OUT_OPTIMAL_MULTIPLE, Getfile(node), Getline(node), "Multiple calls to %s might be generated due to\n", Swig_name_decl(node));
-    Swig_warning(WARN_TYPEMAP_OUT_OPTIMAL_MULTIPLE, Getfile(s), Getline(s), "optimal attribute usage in the out typemap.\n");
+    alaqil_warning(WARN_TYPEMAP_OUT_OPTIMAL_MULTIPLE, Getfile(node), Getline(node), "Multiple calls to %s might be generated due to\n", alaqil_name_decl(node));
+    alaqil_warning(WARN_TYPEMAP_OUT_OPTIMAL_MULTIPLE, Getfile(s), Getline(s), "optimal attribute usage in the out typemap.\n");
   }
 
   if (locals && f) {
@@ -1469,10 +1469,10 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
     char *ckwname = Char(Getattr(kw, "name"));
     {
       /* Expand special variables in typemap attributes. */
-      SwigType *ptype = Getattr(node, "type");
+      alaqilType *ptype = Getattr(node, "type");
       String *pname = Getattr(node, "name");
-      SwigType *mtype = Getattr(node, "tmap:match");
-      SwigType *matchtype = mtype ? mtype : ptype;
+      alaqilType *mtype = Getattr(node, "tmap:match");
+      alaqilType *matchtype = mtype ? mtype : ptype;
       ParmList *parm_sublist;
       typemap_replace_vars(value, NULL, matchtype, ptype, pname, (char *)lname, 1);
 
@@ -1483,7 +1483,7 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
       Delete(parm_sublist);
     }
     if (kwtype) {
-      String *mangle = Swig_string_mangle(kwtype);
+      String *mangle = alaqil_string_mangle(kwtype);
       Append(value, mangle);
       Delete(mangle);
     }
@@ -1509,8 +1509,8 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
     Delete(locals);
   }
 
-  if (Checkattr(tm, "type", "SWIGTYPE")) {
-    sprintf(temp, "%s:SWIGTYPE", cmethod);
+  if (Checkattr(tm, "type", "alaqilTYPE")) {
+    sprintf(temp, "%s:alaqilTYPE", cmethod);
     Setattr(node, typemap_method_name(temp), "1");
   }
 
@@ -1521,7 +1521,7 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
     Replace(warning, "$name", pname, DOH_REPLACE_ANY);
     if (symname)
       Replace(warning, "$symname", symname, DOH_REPLACE_ANY);
-    Swig_warning(0, Getfile(node), Getline(node), "%s\n", warning);
+    alaqil_warning(0, Getfile(node), Getline(node), "%s\n", warning);
     Delete(warning);
   }
 
@@ -1534,7 +1534,7 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
       String *fname = Copy(fragment);
       Setfile(fname, Getfile(node));
       Setline(fname, Getline(node));
-      Swig_fragment_emit(fname);
+      alaqil_fragment_emit(fname);
       Delete(fname);
     }
   }
@@ -1552,14 +1552,14 @@ static String *Swig_typemap_lookup_impl(const_String_or_char_ptr tmap_method, No
   return s;
 }
 
-String *Swig_typemap_lookup_out(const_String_or_char_ptr tmap_method, Node *node, const_String_or_char_ptr lname, Wrapper *f, String *actioncode) {
+String *alaqil_typemap_lookup_out(const_String_or_char_ptr tmap_method, Node *node, const_String_or_char_ptr lname, Wrapper *f, String *actioncode) {
   assert(actioncode);
   assert(Cmp(tmap_method, "out") == 0);
-  return Swig_typemap_lookup_impl(tmap_method, node, lname, f, actioncode);
+  return alaqil_typemap_lookup_impl(tmap_method, node, lname, f, actioncode);
 }
 
-String *Swig_typemap_lookup(const_String_or_char_ptr tmap_method, Node *node, const_String_or_char_ptr lname, Wrapper *f) {
-  return Swig_typemap_lookup_impl(tmap_method, node, lname, f, 0);
+String *alaqil_typemap_lookup(const_String_or_char_ptr tmap_method, Node *node, const_String_or_char_ptr lname, Wrapper *f) {
+  return alaqil_typemap_lookup_impl(tmap_method, node, lname, f, 0);
 }
 
 /* -----------------------------------------------------------------------------
@@ -1584,11 +1584,11 @@ static void typemap_attach_kwargs(Hash *tm, const_String_or_char_ptr tmap_method
     Parm *p = firstp;
     /* Expand special variables */
     for (i = 0; i < nmatch; i++) {
-      SwigType *type = Getattr(p, "type");
+      alaqilType *type = Getattr(p, "type");
       String *pname = Getattr(p, "name");
       String *lname = Getattr(p, "lname");
-      SwigType *mtype = Getattr(p, "tmap:match");
-      SwigType *matchtype = mtype ? mtype : type;
+      alaqilType *mtype = Getattr(p, "tmap:match");
+      alaqilType *matchtype = mtype ? mtype : type;
       typemap_replace_vars(value, NULL, matchtype, type, pname, lname, i + 1);
       p = nextSibling(p);
     }
@@ -1598,7 +1598,7 @@ static void typemap_attach_kwargs(Hash *tm, const_String_or_char_ptr tmap_method
      * For example: $typemap(imtype, $2_type). */
     p = firstp;
     for (i = 0; i < nmatch; i++) {
-      SwigType *type = Getattr(p, "type");
+      alaqilType *type = Getattr(p, "type");
       String *pname = Getattr(p, "name");
       String *lname = Getattr(p, "lname");
       ParmList *parm_sublist = NewParmWithoutFileLineInfo(type, pname);
@@ -1632,7 +1632,7 @@ static void typemap_emit_code_fragments(const_String_or_char_ptr tmap_method, Pa
     String *fname = Copy(f);
     Setfile(fname, Getfile(p));
     Setline(fname, Getline(p));
-    Swig_fragment_emit(fname);
+    alaqil_fragment_emit(fname);
     Delete(fname);
   }
   Delete(temp);
@@ -1651,7 +1651,7 @@ static String *typemap_get_option(Hash *tm, const_String_or_char_ptr name) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_attach_parms()
+ * alaqil_typemap_attach_parms()
  *
  * Given a parameter list, this function attaches all of the typemaps and typemap
  * attributes to the parameter for each type in the parameter list. 
@@ -1666,7 +1666,7 @@ static String *typemap_get_option(Hash *tm, const_String_or_char_ptr name) {
  * f           - wrapper code to generate into if non null
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *parms, Wrapper *f) {
+void alaqil_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *parms, Wrapper *f) {
   Parm *p, *firstp;
   Hash *tm;
   int nmatch = 0;
@@ -1680,18 +1680,18 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
   String *kwmatch = 0;
   p = parms;
 
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_typemap_attach_parms:  %s\n", tmap_method);
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_typemap_attach_parms:  %s\n", tmap_method);
 #endif
 
   while (p) {
     argnum++;
     nmatch = 0;
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     Printf(stdout, "parms:  %s %s %s\n", tmap_method, Getattr(p, "name"), Getattr(p, "type"));
 #endif
     tm = typemap_search_multi(tmap_method, p, &nmatch);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     if (tm)
       Printf(stdout, "found:  %s\n", tm);
 #endif
@@ -1703,8 +1703,8 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
        Check if the typemap requires to match the type of another
        typemap, for example:
 
-       %typemap(in) SWIGTYPE * (int var) {...}
-       %typemap(freearg,match="in") SWIGTYPE * {if (var$argnum) ...}
+       %typemap(in) alaqilTYPE * (int var) {...}
+       %typemap(freearg,match="in") alaqilTYPE * {if (var$argnum) ...}
 
        here, the freearg typemap requires the "in" typemap to match,
        or the 'var$argnum' variable will not exist.
@@ -1714,7 +1714,7 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
       String *tmname = NewStringf("tmap:%s", kwmatch);
       String *tmin = Getattr(p, tmname);
       Delete(tmname);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
       if (tm)
 	Printf(stdout, "matching:  %s\n", kwmatch);
 #endif
@@ -1726,9 +1726,9 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
 	  p = nextSibling(p);
 	  continue;
 	} else {
-	  SwigType *typetm = Getattr(tm, "type");
+	  alaqilType *typetm = Getattr(tm, "type");
 	  String *temp = NewStringf("tmap:%s:match_type", kwmatch);
-	  SwigType *typein = Getattr(p, temp);
+	  alaqilType *typein = Getattr(p, temp);
 	  Delete(temp);
 	  if (!Equal(typein, typetm)) {
 	    p = nextSibling(p);
@@ -1756,7 +1756,7 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
       p = nextSibling(p);
       continue;
     }
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     if (s)
       Printf(stdout, "code:  %s\n", s);
 #endif
@@ -1772,22 +1772,22 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
     if (locals)
       locals = CopyParmList(locals);
     firstp = p;
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     Printf(stdout, "nmatch:  %d\n", nmatch);
 #endif
     for (i = 0; i < nmatch; i++) {
-      SwigType *type = Getattr(p, "type");
+      alaqilType *type = Getattr(p, "type");
       String *pname = Getattr(p, "name");
       String *lname = Getattr(p, "lname");
-      SwigType *mtype = Getattr(p, "tmap:match");
-      SwigType *matchtype = mtype ? mtype : type;
+      alaqilType *mtype = Getattr(p, "tmap:match");
+      alaqilType *matchtype = mtype ? mtype : type;
 
       typemap_replace_vars(s, locals, matchtype, type, pname, lname, i + 1);
       if (mtype)
 	Delattr(p, "tmap:match");
 
-      if (Checkattr(tm, "type", "SWIGTYPE")) {
-	sprintf(temp, "%s:SWIGTYPE", cmethod);
+      if (Checkattr(tm, "type", "alaqilTYPE")) {
+	sprintf(temp, "%s:alaqilTYPE", cmethod);
 	Setattr(p, typemap_method_name(temp), "1");
       }
       p = nextSibling(p);
@@ -1800,7 +1800,7 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
     replace_embedded_typemap(s, firstp, f, tm);
 
     /* Attach attributes to object */
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     Printf(stdout, "attach: %s %s %s\n", Getattr(firstp, "name"), typemap_method_name(tmap_method), s);
 #endif
     Setattr(firstp, typemap_method_name(tmap_method), s);	/* Code object */
@@ -1825,14 +1825,14 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
     /* Print warnings, if any */
     warning = typemap_warn(tmap_method, firstp);
     if (warning) {
-      SwigType *type = Getattr(firstp, "type");
+      alaqilType *type = Getattr(firstp, "type");
       String *pname = Getattr(firstp, "name");
       String *lname = Getattr(firstp, "lname");
-      SwigType *mtype = Getattr(firstp, "tmap:match");
-      SwigType *matchtype = mtype ? mtype : type;
+      alaqilType *mtype = Getattr(firstp, "tmap:match");
+      alaqilType *matchtype = mtype ? mtype : type;
       typemap_replace_vars(warning, 0, matchtype, type, pname, lname, 1);
       Replace(warning, "$argnum", temp, DOH_REPLACE_ANY);
-      Swig_warning(0, Getfile(firstp), Getline(firstp), "%s\n", warning);
+      alaqil_warning(0, Getfile(firstp), Getline(firstp), "%s\n", warning);
       Delete(warning);
     }
 
@@ -1842,13 +1842,13 @@ void Swig_typemap_attach_parms(const_String_or_char_ptr tmap_method, ParmList *p
     /* increase argnum to consider numinputs */
     argnum += nmatch - 1;
     Delete(s);
-#ifdef SWIG_DEBUG
+#ifdef alaqil_DEBUG
     Printf(stdout, "res: %s %s %s\n", Getattr(firstp, "name"), typemap_method_name(tmap_method), Getattr(firstp, typemap_method_name(tmap_method)));
 #endif
 
   }
-#ifdef SWIG_DEBUG
-  Printf(stdout, "Swig_typemap_attach_parms: end\n");
+#ifdef alaqil_DEBUG
+  Printf(stdout, "alaqil_typemap_attach_parms: end\n");
 #endif
 
 }
@@ -1909,14 +1909,14 @@ static List *split_embedded_typemap(String *s) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_replace_embedded_typemap()
+ * alaqil_typemap_replace_embedded_typemap()
  *
  * For special variable macro $typemap(...) expansion outside of typemaps.
  * Only limited usage works as most typemap special variables ($1, $input etc)
  * are not expanded correctly outside of typemaps.
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_replace_embedded_typemap(String *s, Node *file_line_node) {
+void alaqil_typemap_replace_embedded_typemap(String *s, Node *file_line_node) {
   Setfile(s, Getfile(file_line_node));
   Setline(s, Getline(file_line_node));
   Replaceall(s, "$typemap", "$TYPEMAP");
@@ -1988,7 +1988,7 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
 
 	/* the second parameter might contain multiple sub-parameters for multi-argument 
 	 * typemap matching, so split these parameters apart */
-	to_match_parms = Swig_cparse_parms(Getitem(l, 1), file_line_node);
+	to_match_parms = alaqil_cparse_parms(Getitem(l, 1), file_line_node);
 	if (to_match_parms) {
 	  Parm *p = to_match_parms;
 	  Parm *sub_p = parm_sublist;
@@ -2031,8 +2031,8 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
 	  String *tm;
 	  String *attr;
 	  int match = 0;
-#ifdef SWIG_DEBUG
-	  Printf(stdout, "Swig_typemap_attach_parms:  embedded\n");
+#ifdef alaqil_DEBUG
+	  Printf(stdout, "alaqil_typemap_attach_parms:  embedded\n");
 #endif
 	  if (already_substituting < 10) {
 	    already_substituting++;
@@ -2042,7 +2042,7 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
 	      Printf(stdout, "  Containing: %s\n", dtypemap);
 	      Delete(dtypemap);
 	    }
-	    Swig_typemap_attach_parms(tmap_method, to_match_parms, f);
+	    alaqil_typemap_attach_parms(tmap_method, to_match_parms, f);
 	    already_substituting--;
 
 	    /* Look for the typemap code */
@@ -2069,7 +2069,7 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
 	    if (!match) {
 	      String *dtypemap = NewString(dollar_typemap);
 	      Replaceall(dtypemap, "$TYPEMAP", "$typemap");
-	      Swig_error(Getfile(s), Getline(s), "No typemap found for %s\n", dtypemap);
+	      alaqil_error(Getfile(s), Getline(s), "No typemap found for %s\n", dtypemap);
 	      Delete(dtypemap);
 	    }
 	    Delete(attr);
@@ -2078,7 +2078,7 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
 	     * number of calls by a embedded typemaps to other embedded typemaps though */
 	    String *dtypemap = NewString(dollar_typemap);
 	    Replaceall(dtypemap, "$TYPEMAP", "$typemap");
-	    Swig_error(Getfile(s), Getline(s), "Likely recursive $typemap calls containing %s. Use -debug-tmsearch to debug.\n", dtypemap);
+	    alaqil_error(Getfile(s), Getline(s), "Likely recursive $typemap calls containing %s. Use -debug-tmsearch to debug.\n", dtypemap);
 	    Delete(dtypemap);
 	  }
 	  syntax_error = 0;
@@ -2091,7 +2091,7 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
     if (syntax_error) {
       String *dtypemap = NewString(dollar_typemap);
       Replaceall(dtypemap, "$TYPEMAP", "$typemap");
-      Swig_error(Getfile(s), Getline(s), "Syntax error in: %s\n", dtypemap);
+      alaqil_error(Getfile(s), Getline(s), "Syntax error in: %s\n", dtypemap);
       Delete(dtypemap);
     }
     Replace(s, dollar_typemap, "<error in embedded typemap>", DOH_REPLACE_ANY);
@@ -2100,46 +2100,46 @@ static void replace_embedded_typemap(String *s, ParmList *parm_sublist, Wrapper 
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_debug()
+ * alaqil_typemap_debug()
  *
  * Display all typemaps
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_debug() {
+void alaqil_typemap_debug() {
   int nesting_level = 2;
   Printf(stdout, "---[ typemaps ]--------------------------------------------------------------\n");
-  Swig_print(typemaps, nesting_level);
+  alaqil_print(typemaps, nesting_level);
   Printf(stdout, "-----------------------------------------------------------------------------\n");
 }
 
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_search_debug_set()
+ * alaqil_typemap_search_debug_set()
  *
  * Turn on typemap searching debug display
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_search_debug_set(void) {
+void alaqil_typemap_search_debug_set(void) {
   typemap_search_debug = 1;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_used_debug_set()
+ * alaqil_typemap_used_debug_set()
  *
  * Turn on typemaps used debug display
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_used_debug_set(void) {
+void alaqil_typemap_used_debug_set(void) {
   typemaps_used_debug = 1;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_typemap_register_debug_set()
+ * alaqil_typemap_register_debug_set()
  *
  * Turn on typemaps used debug display
  * ----------------------------------------------------------------------------- */
 
-void Swig_typemap_register_debug_set(void) {
+void alaqil_typemap_register_debug_set(void) {
   typemap_register_debug = 1;
 }
 

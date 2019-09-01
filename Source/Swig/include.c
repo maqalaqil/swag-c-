@@ -1,19 +1,19 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * include.c
  *
- * The functions in this file are used to manage files in the SWIG library.
+ * The functions in this file are used to manage files in the alaqil library.
  * General purpose functions for opening, including, and retrieving pathnames
  * are provided.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 
 static List   *directories = 0;	        /* List of include directories */
 static String *lastpath = 0;	        /* Last file that was included */
@@ -22,21 +22,21 @@ static int     dopush = 1;		/* Whether to push directories */
 static int file_debug = 0;
 
 /* This functions determine whether to push/pop dirs in the preprocessor */
-void Swig_set_push_dir(int push) {
+void alaqil_set_push_dir(int push) {
   dopush = push;
 }
 
-int Swig_get_push_dir(void) {
+int alaqil_get_push_dir(void) {
   return dopush;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_add_directory()
+ * alaqil_add_directory()
  *
- * Adds a directory to the SWIG search path.
+ * Adds a directory to the alaqil search path.
  * ----------------------------------------------------------------------------- */
 
-List *Swig_add_directory(const_String_or_char_ptr dirname) {
+List *alaqil_add_directory(const_String_or_char_ptr dirname) {
   String *adirname;
   if (!directories)
     directories = NewList();
@@ -50,15 +50,15 @@ List *Swig_add_directory(const_String_or_char_ptr dirname) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_push_directory()
+ * alaqil_push_directory()
  *
- * Inserts a directory at the front of the SWIG search path.  This is used by
+ * Inserts a directory at the front of the alaqil search path.  This is used by
  * the preprocessor to grab files in the same directory as other included files.
  * ----------------------------------------------------------------------------- */
 
-void Swig_push_directory(const_String_or_char_ptr dirname) {
+void alaqil_push_directory(const_String_or_char_ptr dirname) {
   String *pdirname;
-  if (!Swig_get_push_dir())
+  if (!alaqil_get_push_dir())
     return;
   if (!pdirectories)
     pdirectories = NewList();
@@ -70,14 +70,14 @@ void Swig_push_directory(const_String_or_char_ptr dirname) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_pop_directory()
+ * alaqil_pop_directory()
  *
- * Pops a directory off the front of the SWIG search path.  This is used by
+ * Pops a directory off the front of the alaqil search path.  This is used by
  * the preprocessor.
  * ----------------------------------------------------------------------------- */
 
-void Swig_pop_directory(void) {
-  if (!Swig_get_push_dir())
+void alaqil_pop_directory(void) {
+  if (!alaqil_get_push_dir())
     return;
   if (!pdirectories)
     return;
@@ -85,23 +85,23 @@ void Swig_pop_directory(void) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_last_file()
+ * alaqil_last_file()
  * 
  * Returns the full pathname of the last file opened. 
  * ----------------------------------------------------------------------------- */
 
-String *Swig_last_file(void) {
+String *alaqil_last_file(void) {
   assert(lastpath);
   return lastpath;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_search_path_any() 
+ * alaqil_search_path_any() 
  * 
  * Returns a list of the current search paths.
  * ----------------------------------------------------------------------------- */
 
-static List *Swig_search_path_any(int syspath) {
+static List *alaqil_search_path_any(int syspath) {
   String *filename;
   List   *slist;
   int     i, ilen;
@@ -110,10 +110,10 @@ static List *Swig_search_path_any(int syspath) {
   assert(slist);
   filename = NewStringEmpty();
   assert(filename);
-#ifdef MACSWIG
-  Printf(filename, "%s", SWIG_FILE_DELIMITER);
+#ifdef MACalaqil
+  Printf(filename, "%s", alaqil_FILE_DELIMITER);
 #else
-  Printf(filename, ".%s", SWIG_FILE_DELIMITER);
+  Printf(filename, ".%s", alaqil_FILE_DELIMITER);
 #endif
   Append(slist, filename);
   Delete(filename);
@@ -123,7 +123,7 @@ static List *Swig_search_path_any(int syspath) {
     ilen = Len(pdirectories);
     for (i = 0; i < ilen; i++) {
       filename = NewString(Getitem(pdirectories,i));
-      Append(filename,SWIG_FILE_DELIMITER);
+      Append(filename,alaqil_FILE_DELIMITER);
       Append(slist,filename);
       Delete(filename);
     }
@@ -132,7 +132,7 @@ static List *Swig_search_path_any(int syspath) {
   ilen = Len(directories);
   for (i = 0; i < ilen; i++) {
     filename = NewString(Getitem(directories,i));
-    Append(filename,SWIG_FILE_DELIMITER);
+    Append(filename,alaqil_FILE_DELIMITER);
     if (syspath) {
       /* If doing a system include, put the system directories first */
       Insert(slist,i,filename);
@@ -145,20 +145,20 @@ static List *Swig_search_path_any(int syspath) {
   return slist;
 }
 
-List *Swig_search_path() {
-  return Swig_search_path_any(0);
+List *alaqil_search_path() {
+  return alaqil_search_path_any(0);
 }
 
 
 
 /* -----------------------------------------------------------------------------
- * Swig_open()
+ * alaqil_open()
  *
  * open a file, optionally looking for it in the include path.  Returns an open  
  * FILE * on success.
  * ----------------------------------------------------------------------------- */
 
-static FILE *Swig_open_file(const_String_or_char_ptr name, int sysfile, int use_include_path) {
+static FILE *alaqil_open_file(const_String_or_char_ptr name, int sysfile, int use_include_path) {
   FILE *f;
   String *filename;
   List *spath = 0;
@@ -178,7 +178,7 @@ static FILE *Swig_open_file(const_String_or_char_ptr name, int sysfile, int use_
   }
   f = fopen(Char(filename), "r");
   if (!f && use_include_path) {
-    spath = Swig_search_path_any(sysfile);
+    spath = alaqil_search_path_any(sysfile);
     ilen = Len(spath);
     for (i = 0; i < ilen; i++) {
       Clear(filename);
@@ -205,24 +205,24 @@ static FILE *Swig_open_file(const_String_or_char_ptr name, int sysfile, int use_
 }
 
 /* Open a file - searching the include paths to find it */
-FILE *Swig_include_open(const_String_or_char_ptr name) {
-  return Swig_open_file(name, 0, 1);
+FILE *alaqil_include_open(const_String_or_char_ptr name) {
+  return alaqil_open_file(name, 0, 1);
 }
 
 /* Open a file - does not use include paths to find it */
-FILE *Swig_open(const_String_or_char_ptr name) {
-  return Swig_open_file(name, 0, 0);
+FILE *alaqil_open(const_String_or_char_ptr name) {
+  return alaqil_open_file(name, 0, 0);
 }
 
 
 
 /* -----------------------------------------------------------------------------
- * Swig_read_file()
+ * alaqil_read_file()
  * 
  * Reads data from an open FILE * and returns it as a string.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_read_file(FILE *f) {
+String *alaqil_read_file(FILE *f) {
   int len;
   char buffer[4096];
   String *str = NewStringEmpty();
@@ -244,47 +244,47 @@ String *Swig_read_file(FILE *f) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_include()
+ * alaqil_include()
  *
  * Opens a file and returns it as a string.
  * ----------------------------------------------------------------------------- */
 
-static String *Swig_include_any(const_String_or_char_ptr name, int sysfile) {
+static String *alaqil_include_any(const_String_or_char_ptr name, int sysfile) {
   FILE *f;
   String *str;
   String *file;
 
-  f = Swig_open_file(name, sysfile, 1);
+  f = alaqil_open_file(name, sysfile, 1);
   if (!f)
     return 0;
-  str = Swig_read_file(f);
+  str = alaqil_read_file(f);
   fclose(f);
   Seek(str, 0, SEEK_SET);
-  file = Copy(Swig_last_file());
+  file = Copy(alaqil_last_file());
   Setfile(str, file);
   Delete(file);
   Setline(str, 1);
   return str;
 }
 
-String *Swig_include(const_String_or_char_ptr name) {
-  return Swig_include_any(name, 0);
+String *alaqil_include(const_String_or_char_ptr name) {
+  return alaqil_include_any(name, 0);
 }
 
-String *Swig_include_sys(const_String_or_char_ptr name) {
-  return Swig_include_any(name, 1);
+String *alaqil_include_sys(const_String_or_char_ptr name) {
+  return alaqil_include_any(name, 1);
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_insert_file()
+ * alaqil_insert_file()
  *
  * Copies the contents of a file into another file
  * ----------------------------------------------------------------------------- */
 
-int Swig_insert_file(const_String_or_char_ptr filename, File *outfile) {
+int alaqil_insert_file(const_String_or_char_ptr filename, File *outfile) {
   char buffer[4096];
   int nbytes;
-  FILE *f = Swig_include_open(filename);
+  FILE *f = alaqil_include_open(filename);
 
   if (!f)
     return -1;
@@ -296,42 +296,42 @@ int Swig_insert_file(const_String_or_char_ptr filename, File *outfile) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_register_filebyname()
+ * alaqil_register_filebyname()
  *
  * Register a "named" file with the core.  Named files can become targets
- * for %insert directives and other SWIG operations.  This function takes
+ * for %insert directives and other alaqil operations.  This function takes
  * the place of the f_header, f_wrapper, f_init, and other global variables
- * in SWIG1.1
+ * in alaqil1.1
  * ----------------------------------------------------------------------------- */
 
 static Hash *named_files = 0;
 
-void Swig_register_filebyname(const_String_or_char_ptr filename, File *outfile) {
+void alaqil_register_filebyname(const_String_or_char_ptr filename, File *outfile) {
   if (!named_files)
     named_files = NewHash();
   Setattr(named_files, filename, outfile);
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_filebyname()
+ * alaqil_filebyname()
  *
  * Get a named file
  * ----------------------------------------------------------------------------- */
 
-File *Swig_filebyname(const_String_or_char_ptr filename) {
+File *alaqil_filebyname(const_String_or_char_ptr filename) {
   if (!named_files)
     return 0;
   return Getattr(named_files, filename);
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_file_extension()
+ * alaqil_file_extension()
  *
  * Returns the extension of a file
  * ----------------------------------------------------------------------------- */
 
-String *Swig_file_extension(const_String_or_char_ptr filename) {
-  String *name = Swig_file_filename(filename);
+String *alaqil_file_extension(const_String_or_char_ptr filename) {
+  String *name = alaqil_file_filename(filename);
   const char *c = strrchr(Char(name), '.');
   String *extension = c ? NewString(c) : NewString("");
   Delete(name);
@@ -339,43 +339,43 @@ String *Swig_file_extension(const_String_or_char_ptr filename) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_file_basename()
+ * alaqil_file_basename()
  *
  * Returns the filename with the extension removed.
  * ----------------------------------------------------------------------------- */
 
-String *Swig_file_basename(const_String_or_char_ptr filename) {
-  String *extension = Swig_file_extension(filename);
+String *alaqil_file_basename(const_String_or_char_ptr filename) {
+  String *extension = alaqil_file_extension(filename);
   String *basename = NewStringWithSize(filename, Len(filename) - Len(extension));
   Delete(extension);
   return basename;
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_file_filename()
+ * alaqil_file_filename()
  *
  * Return the file name with any leading path stripped off
  * ----------------------------------------------------------------------------- */
-String *Swig_file_filename(const_String_or_char_ptr filename) {
-  const char *delim = SWIG_FILE_DELIMITER;
+String *alaqil_file_filename(const_String_or_char_ptr filename) {
+  const char *delim = alaqil_FILE_DELIMITER;
   const char *c = strrchr(Char(filename), *delim);
   return c ? NewString(c + 1) : NewString(filename);
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_file_dirname()
+ * alaqil_file_dirname()
  *
  * Return the name of the directory associated with a file
  * ----------------------------------------------------------------------------- */
-String *Swig_file_dirname(const_String_or_char_ptr filename) {
-  const char *delim = SWIG_FILE_DELIMITER;
+String *alaqil_file_dirname(const_String_or_char_ptr filename) {
+  const char *delim = alaqil_FILE_DELIMITER;
   const char *c = strrchr(Char(filename), *delim);
   return c ? NewStringWithSize(filename, (int)(c - Char(filename) + 1)) : NewString("");
 }
 
 /*
- * Swig_file_debug()
+ * alaqil_file_debug()
  */
-void Swig_file_debug_set() {
+void alaqil_file_debug_set() {
   file_debug = 1;
 }

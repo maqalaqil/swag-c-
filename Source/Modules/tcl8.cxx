@@ -1,17 +1,17 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * tcl8.cxx
  *
- * Tcl8 language module for SWIG.
+ * Tcl8 language module for alaqil.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include "cparse.h"
 
 static const char *usage = "\
@@ -77,52 +77,52 @@ public:
 
   virtual void main(int argc, char *argv[]) {
 
-     SWIG_library_directory("tcl");
+     alaqil_library_directory("tcl");
 
     for (int i = 1; i < argc; i++) {
       if (argv[i]) {
 	if (strcmp(argv[i], "-prefix") == 0) {
 	  if (argv[i + 1]) {
 	    prefix = NewString(argv[i + 1]);
-	    Swig_mark_arg(i);
-	    Swig_mark_arg(i + 1);
+	    alaqil_mark_arg(i);
+	    alaqil_mark_arg(i + 1);
 	    i++;
 	  } else
-	     Swig_arg_error();
+	     alaqil_arg_error();
 	} else if (strcmp(argv[i], "-pkgversion") == 0) {
 	  if (argv[i + 1]) {
 	    version = NewString(argv[i + 1]);
-	    Swig_mark_arg(i);
-	    Swig_mark_arg(i + 1);
+	    alaqil_mark_arg(i);
+	    alaqil_mark_arg(i + 1);
 	    i++;
 	  }
 	} else if (strcmp(argv[i], "-namespace") == 0) {
 	  namespace_option = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-itcl") == 0) {
 	  itcl = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nosafe") == 0) {
 	  nosafe = 1;
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-help") == 0) {
 	  fputs(usage, stdout);
 	} else if (strcmp(argv[i], "-cppcast") == 0) {
 	  Printf(stderr, "Deprecated command line option: %s. This option is now always on.\n", argv[i]);
-	  Swig_mark_arg(i);
+	  alaqil_mark_arg(i);
 	} else if (strcmp(argv[i], "-nocppcast") == 0) {
 	  Printf(stderr, "Deprecated command line option: %s. This option is no longer supported.\n", argv[i]);
-	  Swig_mark_arg(i);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_mark_arg(i);
+	  alaqil_exit(EXIT_FAILURE);
 	}
       }
     }
 
-    Preprocessor_define("SWIGTCL 1", 0);
-    // SWIGTCL8 is deprecated, and no longer documented.
-    Preprocessor_define("SWIGTCL8 1", 0);
-    SWIG_typemap_lang("tcl8");
-    SWIG_config_file("tcl8.swg");
+    Preprocessor_define("alaqilTCL 1", 0);
+    // alaqilTCL8 is deprecated, and no longer documented.
+    Preprocessor_define("alaqilTCL8 1", 0);
+    alaqil_typemap_lang("tcl8");
+    alaqil_config_file("tcl8.swg");
     allow_overloading();
   }
 
@@ -135,22 +135,22 @@ public:
     /* Initialize all of the output files */
     String *outfile = Getattr(n, "outfile");
 
-    f_begin = NewFile(outfile, "w", SWIG_output_files());
+    f_begin = NewFile(outfile, "w", alaqil_output_files());
     if (!f_begin) {
       FileErrorDisplay(outfile);
-      SWIG_exit(EXIT_FAILURE);
+      alaqil_exit(EXIT_FAILURE);
     }
     f_runtime = NewString("");
     f_init = NewString("");
     f_header = NewString("");
     f_wrappers = NewString("");
 
-    /* Register file targets with the SWIG file handler */
-    Swig_register_filebyname("header", f_header);
-    Swig_register_filebyname("wrapper", f_wrappers);
-    Swig_register_filebyname("begin", f_begin);
-    Swig_register_filebyname("runtime", f_runtime);
-    Swig_register_filebyname("init", f_init);
+    /* Register file targets with the alaqil file handler */
+    alaqil_register_filebyname("header", f_header);
+    alaqil_register_filebyname("wrapper", f_wrappers);
+    alaqil_register_filebyname("begin", f_begin);
+    alaqil_register_filebyname("runtime", f_runtime);
+    alaqil_register_filebyname("init", f_init);
 
     /* Initialize some variables for the object interface */
 
@@ -159,9 +159,9 @@ public:
     methods_tab = NewString("");
     const_tab = NewString("");
 
-    Swig_banner(f_begin);
+    alaqil_banner(f_begin);
 
-    Printf(f_runtime, "\n\n#ifndef SWIGTCL\n#define SWIGTCL\n#endif\n\n");
+    Printf(f_runtime, "\n\n#ifndef alaqilTCL\n#define alaqilTCL\n#endif\n\n");
 
     /* Set the module name, namespace, and prefix */
 
@@ -176,20 +176,20 @@ public:
     /* If shadow classing is enabled, we're going to change the module name to "_module" */
     if (itcl) {
       String *filen;
-      filen = NewStringf("%s%s.itcl", SWIG_output_directory(), module);
+      filen = NewStringf("%s%s.itcl", alaqil_output_directory(), module);
 
       Insert(module, 0, "_");
 
-      if ((f_shadow = NewFile(filen, "w", SWIG_output_files())) == 0) {
+      if ((f_shadow = NewFile(filen, "w", alaqil_output_files())) == 0) {
 	FileErrorDisplay(filen);
-	SWIG_exit(EXIT_FAILURE);
+	alaqil_exit(EXIT_FAILURE);
       }
       f_shadow_stubs = NewString("");
 
-      Swig_register_filebyname("shadow", f_shadow);
-      Swig_register_filebyname("itcl", f_shadow);
+      alaqil_register_filebyname("shadow", f_shadow);
+      alaqil_register_filebyname("itcl", f_shadow);
 
-      Swig_banner_target_lang(f_shadow, "#");
+      alaqil_banner_target_lang(f_shadow, "#");
 
       Printv(f_shadow, "\npackage require Itcl\n\n", NIL);
       Delete(filen);
@@ -197,19 +197,19 @@ public:
 
     /* Generate some macros used throughout code generation */
 
-    Printf(f_header, "#define SWIG_init    %s\n", init_name);
-    Printf(f_header, "#define SWIG_name    \"%s\"\n", module);
+    Printf(f_header, "#define alaqil_init    %s\n", init_name);
+    Printf(f_header, "#define alaqil_name    \"%s\"\n", module);
     if (namespace_option) {
-      Printf(f_header, "#define SWIG_prefix  \"%s::\"\n", ns_name);
-      Printf(f_header, "#define SWIG_namespace \"%s\"\n\n", ns_name);
+      Printf(f_header, "#define alaqil_prefix  \"%s::\"\n", ns_name);
+      Printf(f_header, "#define alaqil_namespace \"%s\"\n\n", ns_name);
     } else {
-      Printf(f_header, "#define SWIG_prefix  \"%s\"\n", prefix);
+      Printf(f_header, "#define alaqil_prefix  \"%s\"\n", prefix);
     }
-    Printf(f_header, "#define SWIG_version \"%s\"\n", version);
+    Printf(f_header, "#define alaqil_version \"%s\"\n", version);
 
-    Printf(cmd_tab, "\nstatic swig_command_info swig_commands[] = {\n");
-    Printf(var_tab, "\nstatic swig_var_info swig_variables[] = {\n");
-    Printf(const_tab, "\nstatic swig_const_info swig_constants[] = {\n");
+    Printf(cmd_tab, "\nstatic alaqil_command_info alaqil_commands[] = {\n");
+    Printf(var_tab, "\nstatic alaqil_var_info alaqil_variables[] = {\n");
+    Printf(const_tab, "\nstatic alaqil_const_info alaqil_constants[] = {\n");
 
     Printf(f_wrappers, "#ifdef __cplusplus\nextern \"C\" {\n#endif\n");
 
@@ -224,7 +224,7 @@ public:
     Printv(f_wrappers, cmd_tab, var_tab, const_tab, NIL);
 
     /* Dump the pointer equivalency table */
-    SwigType_emit_type_table(f_runtime, f_wrappers);
+    alaqilType_emit_type_table(f_runtime, f_wrappers);
 
     Printf(f_wrappers, "#ifdef __cplusplus\n}\n#endif\n");
 
@@ -232,8 +232,8 @@ public:
     Printf(f_init, "return TCL_OK;\n}\n");
 
     if (!nosafe) {
-      Printf(f_init, "SWIGEXPORT int %(title)s_SafeInit(Tcl_Interp *interp) {\n", module);
-      Printf(f_init, "    return SWIG_init(interp);\n");
+      Printf(f_init, "alaqilEXPORT int %(title)s_SafeInit(Tcl_Interp *interp) {\n", module);
+      Printf(f_init, "    return alaqil_init(interp);\n");
       Printf(f_init, "}\n");
     }
 
@@ -251,7 +251,7 @@ public:
     Delete(f_init);
     Delete(f_runtime);
     Delete(f_begin);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -261,7 +261,7 @@ public:
   virtual int functionWrapper(Node *n) {
     String *name = Getattr(n, "name");	/* Like to get rid of this */
     String *iname = Getattr(n, "sym:name");
-    SwigType *type = Getattr(n, "type");
+    alaqilType *type = Getattr(n, "type");
     ParmList *parms = Getattr(n, "parms");
     String *overname = 0;
 
@@ -280,7 +280,7 @@ public:
       overname = Getattr(n, "sym:overname");
     } else {
       if (!addSymbol(iname, n))
-	return SWIG_ERROR;
+	return alaqil_ERROR;
     }
 
     incode = NewString("");
@@ -291,18 +291,18 @@ public:
 
     f = NewWrapper();
 
-#ifdef SWIG_USE_RESULTOBJ
+#ifdef alaqil_USE_RESULTOBJ
     Wrapper_add_local(f, "resultobj", "Tcl_Obj *resultobj = NULL");
 #endif
 
 
-    String *wname = Swig_name_wrapper(iname);
+    String *wname = alaqil_name_wrapper(iname);
     if (overname) {
       Append(wname, overname);
     }
     Setattr(n, "wrap:name", wname);
 
-    Printv(f->def, "SWIGINTERN int\n ", wname, "(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {", NIL);
+    Printv(f->def, "alaqilINTERN int\n ", wname, "(ClientData clientData alaqilUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {", NIL);
 
     // Emit all of the local variables for holding arguments.
     emit_parameter_variables(parms, f);
@@ -325,7 +325,7 @@ public:
 	p = Getattr(p, "tmap:in:next");
       }
 
-      SwigType *pt = Getattr(p, "type");
+      alaqilType *pt = Getattr(p, "type");
       String *ln = Getattr(p, "lname");
 
       /* Produce string representations of the source and target arguments */
@@ -342,7 +342,7 @@ public:
 	  Setattr(p, "emit:input", source);
 
 	  if (Getattr(p, "wrap:disown") || (Getattr(p, "tmap:in:disown"))) {
-	    Replaceall(tm, "$disown", "SWIG_POINTER_DISOWN");
+	    Replaceall(tm, "$disown", "alaqil_POINTER_DISOWN");
 	  } else {
 	    Replaceall(tm, "$disown", "0");
 	  }
@@ -360,12 +360,12 @@ public:
 	  Printf(argstr, "%s", parse);
 	  Printf(args, ",&%s", ln);
 	  if (Strcmp(parse, "p") == 0) {
-	    SwigType *lt = SwigType_ltype(pt);
-	    SwigType_remember(pt);
+	    alaqilType *lt = alaqilType_ltype(pt);
+	    alaqilType_remember(pt);
 	    if (Cmp(lt, "p.void") == 0) {
 	      Printf(args, ",(void *)0");
 	    } else {
-	      Printf(args, ",SWIGTYPE%s", SwigType_manglestr(pt));
+	      Printf(args, ",alaqilTYPE%s", alaqilType_manglestr(pt));
 	    }
 	    Delete(lt);
 	  }
@@ -373,7 +373,7 @@ public:
 	p = Getattr(p, "tmap:in:next");
 	continue;
       } else {
-	Swig_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", SwigType_str(pt, 0));
+	alaqil_warning(WARN_TYPEMAP_IN_UNDEF, input_file, line_number, "Unable to use type %s as a function argument.\n", alaqilType_str(pt, 0));
       }
       p = nextSibling(p);
     }
@@ -394,7 +394,7 @@ public:
 
     Printf(argstr, "%s\"", usage_string(Char(iname), type, parms));
 
-    Printv(f->code, "if (SWIG_GetArgs(interp, objc, objv,", argstr, args, ") == TCL_ERROR) SWIG_fail;\n", NIL);
+    Printv(f->code, "if (alaqil_GetArgs(interp, objc, objv,", argstr, args, ") == TCL_ERROR) alaqil_fail;\n", NIL);
 
     Printv(f->code, incode, NIL);
 
@@ -427,7 +427,7 @@ public:
     for (i = 0, p = parms; p; i++) {
       if ((tm = Getattr(p, "tmap:argout"))) {
 	Replaceall(tm, "$source", Getattr(p, "lname"));
-#ifdef SWIG_USE_RESULTOBJ
+#ifdef alaqil_USE_RESULTOBJ
 	Replaceall(tm, "$target", "resultobj");
 	Replaceall(tm, "$result", "resultobj");
 #else
@@ -449,9 +449,9 @@ public:
     /* Need to redo all of this code (eventually) */
 
     /* Return value if necessary  */
-    if ((tm = Swig_typemap_lookup_out("out", n, Swig_cresult_name(), f, actioncode))) {
-      Replaceall(tm, "$source", Swig_cresult_name());
-#ifdef SWIG_USE_RESULTOBJ
+    if ((tm = alaqil_typemap_lookup_out("out", n, alaqil_cresult_name(), f, actioncode))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());
+#ifdef alaqil_USE_RESULTOBJ
       Replaceall(tm, "$target", "resultobj");
       Replaceall(tm, "$result", "resultobj");
 #else
@@ -459,13 +459,13 @@ public:
       Replaceall(tm, "$result", "(Tcl_GetObjResult(interp))");
 #endif
       if (GetFlag(n, "feature:new")) {
-	Replaceall(tm, "$owner", "SWIG_POINTER_OWN");
+	Replaceall(tm, "$owner", "alaqil_POINTER_OWN");
       } else {
 	Replaceall(tm, "$owner", "0");
       }
       Printf(f->code, "%s\n", tm);
     } else {
-      Swig_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", SwigType_str(type, 0), name);
+      alaqil_warning(WARN_TYPEMAP_OUT_UNDEF, input_file, line_number, "Unable to use return type %s in function %s.\n", alaqilType_str(type, 0), name);
     }
     emit_return_variable(n, type, f);
 
@@ -477,17 +477,17 @@ public:
 
     /* Look for any remaining cleanup */
     if (GetFlag(n, "feature:new")) {
-      if ((tm = Swig_typemap_lookup("newfree", n, Swig_cresult_name(), 0))) {
-	Replaceall(tm, "$source", Swig_cresult_name());
+      if ((tm = alaqil_typemap_lookup("newfree", n, alaqil_cresult_name(), 0))) {
+	Replaceall(tm, "$source", alaqil_cresult_name());
 	Printf(f->code, "%s\n", tm);
       }
     }
 
-    if ((tm = Swig_typemap_lookup("ret", n, Swig_cresult_name(), 0))) {
-      Replaceall(tm, "$source", Swig_cresult_name());
+    if ((tm = alaqil_typemap_lookup("ret", n, alaqil_cresult_name(), 0))) {
+      Replaceall(tm, "$source", alaqil_cresult_name());
       Printf(f->code, "%s\n", tm);
     }
-#ifdef SWIG_USE_RESULTOBJ
+#ifdef alaqil_USE_RESULTOBJ
     Printv(f->code, "if (resultobj) Tcl_SetObjResult(interp, resultobj);\n", NIL);
 #endif
     Printv(f->code, "return TCL_OK;\n", NIL);
@@ -503,20 +503,20 @@ public:
 
     if (!Getattr(n, "sym:overloaded")) {
       /* Register the function with Tcl */
-      Printv(cmd_tab, tab4, "{ SWIG_prefix \"", iname, "\", (swig_wrapper_func) ", Swig_name_wrapper(iname), ", NULL},\n", NIL);
+      Printv(cmd_tab, tab4, "{ alaqil_prefix \"", iname, "\", (alaqil_wrapper_func) ", alaqil_name_wrapper(iname), ", NULL},\n", NIL);
     } else {
       if (!Getattr(n, "sym:nextSibling")) {
 	/* Emit overloading dispatch function */
 
 	int maxargs;
-	String *dispatch = Swig_overload_dispatch(n, "return %s(clientData, interp, objc, argv - 1);", &maxargs);
+	String *dispatch = alaqil_overload_dispatch(n, "return %s(clientData, interp, objc, argv - 1);", &maxargs);
 
 	/* Generate a dispatch wrapper for all overloaded functions */
 
 	Wrapper *df = NewWrapper();
-	String *dname = Swig_name_wrapper(iname);
+	String *dname = alaqil_name_wrapper(iname);
 
-	Printv(df->def, "SWIGINTERN int\n", dname, "(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {", NIL);
+	Printv(df->def, "alaqilINTERN int\n", dname, "(ClientData clientData alaqilUNUSED, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]) {", NIL);
 	Printf(df->code, "Tcl_Obj *CONST *argv = objv+1;\n");
 	Printf(df->code, "int argc = objc-1;\n");
 	Printv(df->code, dispatch, "\n", NIL);
@@ -525,7 +525,7 @@ public:
 	  sibl = Getattr(sibl, "sym:previousSibling");	// go all the way up
 	String *protoTypes = NewString("");
 	do {
-	  String *fulldecl = Swig_name_decl(sibl);
+	  String *fulldecl = alaqil_name_decl(sibl);
 	  Printf(protoTypes, "\n\"    %s\\n\"", fulldecl);
 	  Delete(fulldecl);
 	} while ((sibl = Getattr(sibl, "sym:nextSibling")));
@@ -536,7 +536,7 @@ public:
 	Printf(df->code, "return TCL_ERROR;\n");
 	Printv(df->code, "}\n", NIL);
 	Wrapper_print(df, f_wrappers);
-	Printv(cmd_tab, tab4, "{ SWIG_prefix \"", iname, "\", (swig_wrapper_func) ", dname, ", NULL},\n", NIL);
+	Printv(cmd_tab, tab4, "{ alaqil_prefix \"", iname, "\", (alaqil_wrapper_func) ", dname, ", NULL},\n", NIL);
 	DelWrapper(df);
 	Delete(dispatch);
 	Delete(dname);
@@ -549,7 +549,7 @@ public:
     Delete(argstr);
     Delete(args);
     DelWrapper(f);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -560,7 +560,7 @@ public:
 
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
-    SwigType *t = Getattr(n, "type");
+    alaqilType *t = Getattr(n, "type");
 
     String *setname = 0;
     String *setfname = 0;
@@ -569,17 +569,17 @@ public:
     String *tm;
 
     if (!addSymbol(iname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     /* Create a function for getting a variable */
     int addfail = 0;
     getf = NewWrapper();
-    String *getname = Swig_name_get(NSPACE_TODO, iname);
-    String *getfname = Swig_name_wrapper(getname);
+    String *getname = alaqil_name_get(NSPACE_TODO, iname);
+    String *getfname = alaqil_name_wrapper(getname);
     Setattr(n, "wrap:name", getfname);
-    Printv(getf->def, "SWIGINTERN const char *", getfname, "(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, char *name1, char *name2, int flags) {", NIL);
+    Printv(getf->def, "alaqilINTERN const char *", getfname, "(ClientData clientData alaqilUNUSED, Tcl_Interp *interp, char *name1, char *name2, int flags) {", NIL);
     Wrapper_add_local(getf, "value", "Tcl_Obj *value = 0");
-    if ((tm = Swig_typemap_lookup("varout", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("varout", n, name, 0))) {
       Replaceall(tm, "$source", name);
       Replaceall(tm, "$target", "value");
       Replaceall(tm, "$result", "value");
@@ -597,32 +597,32 @@ public:
       Printf(getf->code, "}\n");
       Wrapper_print(getf, f_wrappers);
     } else {
-      Swig_warning(WARN_TYPEMAP_VAROUT_UNDEF, input_file, line_number, "Unable to read variable of type %s\n", SwigType_str(t, 0));
+      alaqil_warning(WARN_TYPEMAP_VAROUT_UNDEF, input_file, line_number, "Unable to read variable of type %s\n", alaqilType_str(t, 0));
       DelWrapper(getf);
-      return SWIG_NOWRAP;
+      return alaqil_NOWRAP;
     }
     DelWrapper(getf);
 
     /* Try to create a function setting a variable */
     if (is_assignable(n)) {
       setf = NewWrapper();
-      setname = Swig_name_set(NSPACE_TODO, iname);
-      setfname = Swig_name_wrapper(setname);
+      setname = alaqil_name_set(NSPACE_TODO, iname);
+      setfname = alaqil_name_wrapper(setname);
       Setattr(n, "wrap:name", setfname);
       if (setf) {
-        Printv(setf->def, "SWIGINTERN const char *", setfname,
-	     "(ClientData clientData SWIGUNUSED, Tcl_Interp *interp, char *name1, char *name2 SWIGUNUSED, int flags) {", NIL);
+        Printv(setf->def, "alaqilINTERN const char *", setfname,
+	     "(ClientData clientData alaqilUNUSED, Tcl_Interp *interp, char *name1, char *name2 alaqilUNUSED, int flags) {", NIL);
         Wrapper_add_local(setf, "value", "Tcl_Obj *value = 0");
         Wrapper_add_local(setf, "name1o", "Tcl_Obj *name1o = 0");
 
-        if ((tm = Swig_typemap_lookup("varin", n, name, 0))) {
+        if ((tm = alaqil_typemap_lookup("varin", n, name, 0))) {
 	  Replaceall(tm, "$source", "value");
 	  Replaceall(tm, "$target", name);
 	  Replaceall(tm, "$input", "value");
 	  Printf(setf->code, "name1o = Tcl_NewStringObj(name1,-1);\n");
 	  Printf(setf->code, "value = Tcl_ObjGetVar2(interp, name1o, 0, flags);\n");
 	  Printf(setf->code, "Tcl_DecrRefCount(name1o);\n");
-	  Printf(setf->code, "if (!value) SWIG_fail;\n");
+	  Printf(setf->code, "if (!value) alaqil_fail;\n");
 	  /* Printf(setf->code,"%s\n", tm); */
 	  emit_action_code(n, setf->code, tm);
 	  Printf(setf->code, "return NULL;\n");
@@ -631,7 +631,7 @@ public:
 	  Printf(setf->code, "}\n");
 	  Wrapper_print(setf, f_wrappers);
         } else {
-	  Swig_warning(WARN_TYPEMAP_VARIN_UNDEF, input_file, line_number, "Unable to set variable of type %s.\n", SwigType_str(t, 0));
+	  alaqil_warning(WARN_TYPEMAP_VARIN_UNDEF, input_file, line_number, "Unable to set variable of type %s.\n", alaqilType_str(t, 0));
 	  readonly = 1;
         }
       }
@@ -641,27 +641,27 @@ public:
     }
 
 
-    Printv(var_tab, tab4, "{ SWIG_prefix \"", iname, "\", 0, (swig_variable_func) ", getfname, ",", NIL);
+    Printv(var_tab, tab4, "{ alaqil_prefix \"", iname, "\", 0, (alaqil_variable_func) ", getfname, ",", NIL);
     if (readonly) {
       static int readonlywrap = 0;
       if (!readonlywrap) {
 	Wrapper *ro = NewWrapper();
 	Printf(ro->def,
-	       "SWIGINTERN const char *swig_readonly(ClientData clientData SWIGUNUSED, Tcl_Interp *interp SWIGUNUSED, char *name1 SWIGUNUSED, char *name2 SWIGUNUSED, int flags SWIGUNUSED) {");
+	       "alaqilINTERN const char *alaqil_readonly(ClientData clientData alaqilUNUSED, Tcl_Interp *interp alaqilUNUSED, char *name1 alaqilUNUSED, char *name2 alaqilUNUSED, int flags alaqilUNUSED) {");
 	Printv(ro->code, "return \"Variable is read-only\";\n", "}\n", NIL);
 	Wrapper_print(ro, f_wrappers);
 	readonlywrap = 1;
 	DelWrapper(ro);
       }
-      Printf(var_tab, "(swig_variable_func) swig_readonly},\n");
+      Printf(var_tab, "(alaqil_variable_func) alaqil_readonly},\n");
     } else {
-      Printv(var_tab, "(swig_variable_func) ", setfname, "},\n", NIL);
+      Printv(var_tab, "(alaqil_variable_func) ", setfname, "},\n", NIL);
     }
     Delete(getfname);
     Delete(setfname);
     Delete(setname);
     Delete(getname);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -672,30 +672,30 @@ public:
     String *name = Getattr(n, "name");
     String *iname = Getattr(n, "sym:name");
     String *nsname = !namespace_option ? Copy(iname) : NewStringf("%s::%s", ns_name, iname);
-    SwigType *type = Getattr(n, "type");
+    alaqilType *type = Getattr(n, "type");
     String *rawval = Getattr(n, "rawval");
     String *value = rawval ? rawval : Getattr(n, "value");
     String *tm;
 
     if (!addSymbol(iname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
     if (namespace_option)
       Setattr(n, "sym:name", nsname);
 
     /* Special hook for member pointer */
-    if (SwigType_type(type) == T_MPOINTER) {
-      String *wname = Swig_name_wrapper(iname);
-      Printf(f_wrappers, "static %s = %s;\n", SwigType_str(type, wname), value);
+    if (alaqilType_type(type) == T_MPOINTER) {
+      String *wname = alaqil_name_wrapper(iname);
+      Printf(f_wrappers, "static %s = %s;\n", alaqilType_str(type, wname), value);
       value = Char(wname);
     }
 
-    if ((tm = Swig_typemap_lookup("consttab", n, name, 0))) {
+    if ((tm = alaqil_typemap_lookup("consttab", n, name, 0))) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", name);
       Replaceall(tm, "$value", value);
       Replaceall(tm, "$nsname", nsname);
       Printf(const_tab, "%s,\n", tm);
-    } else if ((tm = Swig_typemap_lookup("constcode", n, name, 0))) {
+    } else if ((tm = alaqil_typemap_lookup("constcode", n, name, 0))) {
       Replaceall(tm, "$source", value);
       Replaceall(tm, "$target", name);
       Replaceall(tm, "$value", value);
@@ -703,11 +703,11 @@ public:
       Printf(f_init, "%s\n", tm);
     } else {
       Delete(nsname);
-      Swig_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value.\n");
-      return SWIG_NOWRAP;
+      alaqil_warning(WARN_TYPEMAP_CONST_UNDEF, input_file, line_number, "Unsupported constant value.\n");
+      return alaqil_NOWRAP;
     }
     Delete(nsname);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -718,11 +718,11 @@ public:
     String *name = Getattr(n, "sym:name");
     String *funcname = Getattr(n, "wrap:name");
     if (!addSymbol(funcname, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
-    Printf(f_init, "\t Tcl_CreateObjCommand(interp, SWIG_prefix \"%s\", (swig_wrapper_func) %s, (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);\n", name,
+    Printf(f_init, "\t Tcl_CreateObjCommand(interp, alaqil_prefix \"%s\", (alaqil_wrapper_func) %s, (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);\n", name,
 	   funcname);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -757,47 +757,47 @@ public:
 
     class_name = Getattr(n, "sym:name");
     if (!addSymbol(class_name, n))
-      return SWIG_ERROR;
+      return alaqil_ERROR;
 
     real_classname = Getattr(n, "name");
-    mangled_classname = Swig_name_mangle(real_classname);
+    mangled_classname = alaqil_name_mangle(real_classname);
 
     if (Getattr(emitted, mangled_classname))
-      return SWIG_NOWRAP;
+      return alaqil_NOWRAP;
     Setattr(emitted, mangled_classname, "1");
 
     attr_tab = NewString("");
-    Printf(attr_tab, "static swig_attribute swig_");
+    Printf(attr_tab, "static alaqil_attribute alaqil_");
     Printv(attr_tab, mangled_classname, "_attributes[] = {\n", NIL);
 
     methods_tab = NewStringf("");
-    Printf(methods_tab, "static swig_method swig_");
+    Printf(methods_tab, "static alaqil_method alaqil_");
     Printv(methods_tab, mangled_classname, "_methods[] = {\n", NIL);
 
     /* Generate normal wrappers */
     Language::classHandler(n);
 
-    SwigType *t = Copy(Getattr(n, "name"));
-    SwigType_add_pointer(t);
+    alaqilType *t = Copy(Getattr(n, "name"));
+    alaqilType_add_pointer(t);
 
     // Catch all: eg. a class with only static functions and/or variables will not have 'remembered'
-    // SwigType_remember(t);
+    // alaqilType_remember(t);
     String *wrap_class = NewStringf("&_wrap_class_%s", mangled_classname);
-    SwigType_remember_clientdata(t, wrap_class);
+    alaqilType_remember_clientdata(t, wrap_class);
 
     String *rt = Copy(getClassType());
-    SwigType_add_pointer(rt);
+    alaqilType_add_pointer(rt);
 
     // Register the class structure with the type checker
-    /*    Printf(f_init,"SWIG_TypeClientData(SWIGTYPE%s, (void *) &_wrap_class_%s);\n", SwigType_manglestr(t), mangled_classname); */
+    /*    Printf(f_init,"alaqil_TypeClientData(alaqilTYPE%s, (void *) &_wrap_class_%s);\n", alaqilType_manglestr(t), mangled_classname); */
     if (have_destructor) {
-      Printv(f_wrappers, "SWIGINTERN void swig_delete_", class_name, "(void *obj) {\n", NIL);
+      Printv(f_wrappers, "alaqilINTERN void alaqil_delete_", class_name, "(void *obj) {\n", NIL);
       if (destructor_action) {
-	Printv(f_wrappers, SwigType_str(rt, "arg1"), " = (", SwigType_str(rt, 0), ") obj;\n", NIL);
+	Printv(f_wrappers, alaqilType_str(rt, "arg1"), " = (", alaqilType_str(rt, 0), ") obj;\n", NIL);
 	Printv(f_wrappers, destructor_action, "\n", NIL);
       } else {
 	if (CPlusPlus) {
-	  Printv(f_wrappers, "    delete (", SwigType_str(rt, 0), ") obj;\n", NIL);
+	  Printv(f_wrappers, "    delete (", alaqilType_str(rt, 0), ") obj;\n", NIL);
 	} else {
 	  Printv(f_wrappers, "    free((char *) obj);\n", NIL);
 	}
@@ -836,15 +836,15 @@ public:
 	  Printv(base_classes, bname, " ", NIL);
 	  Printv(base_class_init, "    ", bname, "Ptr::constructor $ptr\n", NIL);
 	}
-	String *bmangle = Swig_name_mangle(bname);
-	//      Printv(f_wrappers,"extern swig_class _wrap_class_", bmangle, ";\n", NIL);
+	String *bmangle = alaqil_name_mangle(bname);
+	//      Printv(f_wrappers,"extern alaqil_class _wrap_class_", bmangle, ";\n", NIL);
 	//      Printf(base_class,"&_wrap_class_%s",bmangle);
 	Printf(base_class, "0");
-	Printf(base_class_names, "\"%s *\",", SwigType_namestr(bname));
+	Printf(base_class_names, "\"%s *\",", alaqilType_namestr(bname));
 	/* Put code to register base classes in init function */
 
 	//Printf(f_init,"/* Register base : %s */\n", bmangle);
-	//Printf(f_init,"swig_%s_bases[%d] = (swig_class *) SWIG_TypeQuery(\"%s *\")->clientdata;\n",  mangled_classname, index, SwigType_namestr(bname));
+	//Printf(f_init,"alaqil_%s_bases[%d] = (alaqil_class *) alaqil_TypeQuery(\"%s *\")->clientdata;\n",  mangled_classname, index, alaqilType_namestr(bname));
 	b = Next(b);
 	index++;
 	Putc(',', base_class);
@@ -860,28 +860,28 @@ public:
       if (have_base_classes)
 	Printv(ptrclass, "  inherit ", base_classes, "\n", NIL);
 
-      //  Define protected variables for SWIG object pointer
-      Printv(ptrclass, "  protected variable swigobj\n", "  protected variable thisown\n", NIL);
+      //  Define protected variables for alaqil object pointer
+      Printv(ptrclass, "  protected variable alaqilobj\n", "  protected variable thisown\n", NIL);
 
       //  Define public variables
       if (have_attributes) {
 	Printv(ptrclass, attributes, NIL);
 
-	// base class swig_getset was being called for complex inheritance trees
+	// base class alaqil_getset was being called for complex inheritance trees
 	if (namespace_option) {
 
-	  Printv(ptrclass, "  protected method ", class_name, "_swig_getset {var name1 name2 op} {\n", NIL);
+	  Printv(ptrclass, "  protected method ", class_name, "_alaqil_getset {var name1 name2 op} {\n", NIL);
 
 	  Printv(ptrclass,
 		 "    switch -exact -- $op {\n",
-		 "      r {set $var [", ns_name, "::", class_name, "_[set var]_get $swigobj]}\n",
-		 "      w {", ns_name, "::", class_name, "_${var}_set $swigobj [set $var]}\n", "    }\n", "  }\n", NIL);
+		 "      r {set $var [", ns_name, "::", class_name, "_[set var]_get $alaqilobj]}\n",
+		 "      w {", ns_name, "::", class_name, "_${var}_set $alaqilobj [set $var]}\n", "    }\n", "  }\n", NIL);
 	} else {
 	  Printv(ptrclass,
-		 "  protected method ", class_name, "_swig_getset {var name1 name2 op} {\n",
+		 "  protected method ", class_name, "_alaqil_getset {var name1 name2 op} {\n",
 		 "    switch -exact -- $op {\n",
-		 "      r {set $var [", class_name, "_[set var]_get $swigobj]}\n",
-		 "      w {", class_name, "_${var}_set $swigobj [set $var]}\n", "    }\n", "  }\n", NIL);
+		 "      r {set $var [", class_name, "_[set var]_get $alaqilobj]}\n",
+		 "      w {", class_name, "_${var}_set $alaqilobj [set $var]}\n", "    }\n", "  }\n", NIL);
 	}
       }
       //  Add the constructor, which may include
@@ -893,7 +893,7 @@ public:
 	Printv(ptrclass, "  } {\n", NIL);
       }
 
-      Printv(ptrclass, "    set swigobj $ptr\n", "    set thisown 0\n", NIL);
+      Printv(ptrclass, "    set alaqilobj $ptr\n", "    set thisown 0\n", NIL);
 
       if (have_attributes) {
 	Printv(ptrclass, attribute_traces, NIL);
@@ -904,7 +904,7 @@ public:
       //  Add destructor
       Printv(ptrclass, "  destructor {\n",
 	     "    set d_func delete_", class_name, "\n",
-	     "    if { $thisown && ([info command $d_func] != \"\") } {\n" "      $d_func $swigobj\n", "    }\n", "  }\n", NIL);
+	     "    if { $thisown && ([info command $d_func] != \"\") } {\n" "      $d_func $alaqilobj\n", "    }\n", "  }\n", NIL);
 
       //  Add methods
       if (have_methods) {
@@ -942,36 +942,36 @@ public:
       Printv(f_shadow, "}\n\n", NIL);
     }
 
-    Printv(f_wrappers, "static swig_class *swig_", mangled_classname, "_bases[] = {", base_class, "0};\n", NIL);
-    Printv(f_wrappers, "static const char * swig_", mangled_classname, "_base_names[] = {", base_class_names, "0};\n", NIL);
+    Printv(f_wrappers, "static alaqil_class *alaqil_", mangled_classname, "_bases[] = {", base_class, "0};\n", NIL);
+    Printv(f_wrappers, "static const char * alaqil_", mangled_classname, "_base_names[] = {", base_class_names, "0};\n", NIL);
     Delete(base_class);
     Delete(base_class_names);
 
-    Printv(f_wrappers, "static swig_class _wrap_class_", mangled_classname, " = { \"", class_name, "\", &SWIGTYPE", SwigType_manglestr(t), ",", NIL);
+    Printv(f_wrappers, "static alaqil_class _wrap_class_", mangled_classname, " = { \"", class_name, "\", &alaqilTYPE", alaqilType_manglestr(t), ",", NIL);
 
     if (have_constructor) {
-      Printf(f_wrappers, "%s", Swig_name_wrapper(Swig_name_construct(NSPACE_TODO, constructor_name)));
+      Printf(f_wrappers, "%s", alaqil_name_wrapper(alaqil_name_construct(NSPACE_TODO, constructor_name)));
       Delete(constructor_name);
       constructor_name = 0;
     } else {
       Printf(f_wrappers, "0");
     }
     if (have_destructor) {
-      Printv(f_wrappers, ", swig_delete_", class_name, NIL);
+      Printv(f_wrappers, ", alaqil_delete_", class_name, NIL);
     } else {
       Printf(f_wrappers, ",0");
     }
-    Printv(f_wrappers, ", swig_", mangled_classname, "_methods, swig_", mangled_classname, "_attributes, swig_", mangled_classname, "_bases,",
-	   "swig_", mangled_classname, "_base_names, &swig_module, SWIG_TCL_HASHTABLE_INIT };\n", NIL);
+    Printv(f_wrappers, ", alaqil_", mangled_classname, "_methods, alaqil_", mangled_classname, "_attributes, alaqil_", mangled_classname, "_bases,",
+	   "alaqil_", mangled_classname, "_base_names, &alaqil_module, alaqil_TCL_HASHTABLE_INIT };\n", NIL);
 
     if (!itcl) {
-      Printv(cmd_tab, tab4, "{ SWIG_prefix \"", class_name, "\", (swig_wrapper_func) SWIG_ObjectConstructor, (ClientData)&_wrap_class_", mangled_classname,
+      Printv(cmd_tab, tab4, "{ alaqil_prefix \"", class_name, "\", (alaqil_wrapper_func) alaqil_ObjectConstructor, (ClientData)&_wrap_class_", mangled_classname,
 	     "},\n", NIL);
     };
 
     Delete(t);
     Delete(mangled_classname);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
 
@@ -988,7 +988,7 @@ public:
     Language::memberfunctionHandler(n);
 
     realname = iname ? iname : name;
-    rname = Swig_name_wrapper(Swig_name_member(NSPACE_TODO, class_name, realname));
+    rname = alaqil_name_wrapper(alaqil_name_member(NSPACE_TODO, class_name, realname));
     if (!Getattr(n, "sym:nextSibling")) {
       Printv(methods_tab, tab4, "{\"", realname, "\", ", rname, "}, \n", NIL);
     }
@@ -1006,7 +1006,7 @@ public:
 
 	String *pn = Getattr(p, "name");
 	String *dv = Getattr(p, "value");
-	SwigType *pt = Getattr(p, "type");
+	alaqilType *pt = Getattr(p, "type");
 
 	Printv(pname, ",(", pt, ")", NIL);
 	Clear(pname);
@@ -1040,16 +1040,16 @@ public:
       Printv(imethods, "] ", NIL);
 
       if (namespace_option) {
-	Printv(imethods, "{ ", ns_name, "::", class_name, "_", realname, " $swigobj", NIL);
+	Printv(imethods, "{ ", ns_name, "::", class_name, "_", realname, " $alaqilobj", NIL);
       } else {
-	Printv(imethods, "{ ", class_name, "_", realname, " $swigobj", NIL);
+	Printv(imethods, "{ ", class_name, "_", realname, " $alaqilobj", NIL);
       };
 
       pnum = 0;
       for (p = l; p; p = nextSibling(p)) {
 
 	String *pn = Getattr(p, "name");
-	SwigType *pt = Getattr(p, "type");
+	alaqilType *pt = Getattr(p, "type");
 	Clear(pname);
 
 	/* Only print an argument if not void */
@@ -1068,7 +1068,7 @@ public:
     }
 
     Delete(rname);
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1081,11 +1081,11 @@ public:
 
     Language::membervariableHandler(n);
     Printv(attr_tab, tab4, "{ \"-", symname, "\",", NIL);
-    rname = Swig_name_wrapper(Swig_name_get(NSPACE_TODO, Swig_name_member(NSPACE_TODO, class_name, symname)));
+    rname = alaqil_name_wrapper(alaqil_name_get(NSPACE_TODO, alaqil_name_member(NSPACE_TODO, class_name, symname)));
     Printv(attr_tab, rname, ", ", NIL);
     Delete(rname);
     if (!GetFlag(n, "feature:immutable")) {
-      rname = Swig_name_wrapper(Swig_name_set(NSPACE_TODO, Swig_name_member(NSPACE_TODO, class_name, symname)));
+      rname = alaqil_name_wrapper(alaqil_name_set(NSPACE_TODO, alaqil_name_member(NSPACE_TODO, class_name, symname)));
       Printv(attr_tab, rname, "},\n", NIL);
       Delete(rname);
     } else {
@@ -1095,12 +1095,12 @@ public:
     if (itcl) {
       Printv(attributes, "  public variable ", symname, "\n", NIL);
 
-      Printv(attribute_traces, "    trace variable ", symname, " rw [list ", class_name, "_swig_getset ", symname, "]\n", NIL);
+      Printv(attribute_traces, "    trace variable ", symname, " rw [list ", class_name, "_alaqil_getset ", symname, "]\n", NIL);
       Printv(attribute_traces, "    set ", symname, "\n", NIL);
 
       have_attributes = 1;
     }
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1131,7 +1131,7 @@ public:
 	int pnum = 0;
 	for (p = l; p; p = nextSibling(p)) {
 
-	  SwigType *pt = Getattr(p, "type");
+	  alaqilType *pt = Getattr(p, "type");
 	  String *pn = Getattr(p, "name");
 	  String *dv = Getattr(p, "value");
 	  Clear(pname);
@@ -1176,7 +1176,7 @@ public:
 	pnum = 0;
 	for (p = l; p; p = nextSibling(p)) {
 
-	  SwigType *pt = Getattr(p, "type");
+	  alaqilType *pt = Getattr(p, "type");
 	  String *pn = Getattr(p, "name");
 	  Clear(pname);
 
@@ -1199,7 +1199,7 @@ public:
     if (!have_constructor)
       constructor_name = NewString(Getattr(n, "sym:name"));
     have_constructor = 1;
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1210,7 +1210,7 @@ public:
     Language::destructorHandler(n);
     have_destructor = 1;
     destructor_action = Getattr(n, "wrap:action");
-    return SWIG_OK;
+    return alaqil_OK;
   }
 
   /* ------------------------------------------------------------
@@ -1227,7 +1227,7 @@ public:
    * usage_string()
    * ------------------------------------------------------------ */
 
-  char *usage_string(char *iname, SwigType *, ParmList *l) {
+  char *usage_string(char *iname, alaqilType *, ParmList *l) {
     static String *temp = 0;
     Parm *p;
     int i, numopt, pcount;
@@ -1246,7 +1246,7 @@ public:
     numopt = pcount - emit_num_required(l);
     for (p = l; p; p = nextSibling(p)) {
 
-      SwigType *pt = Getattr(p, "type");
+      alaqilType *pt = Getattr(p, "type");
       String *pn = Getattr(p, "name");
       /* Only print an argument if not ignored */
       if (!checkAttribute(p, "tmap:in:numinputs", "0")) {
@@ -1255,7 +1255,7 @@ public:
 	if (Len(pn) > 0) {
 	  Printf(temp, "%s", pn);
 	} else {
-	  Printf(temp, "%s", SwigType_str(pt, 0));
+	  Printf(temp, "%s", alaqilType_str(pt, 0));
 	}
 	if (i >= (pcount - numopt))
 	  Putc('?', temp);
@@ -1268,21 +1268,21 @@ public:
 
   String *runtimeCode() {
     String *s = NewString("");
-    String *serrors = Swig_include_sys("tclerrors.swg");
+    String *serrors = alaqil_include_sys("tclerrors.swg");
     if (!serrors) {
       Printf(stderr, "*** Unable to open 'tclerrors.swg'\n");
     } else {
       Append(s, serrors);
       Delete(serrors);
     }
-    String *sapi = Swig_include_sys("tclapi.swg");
+    String *sapi = alaqil_include_sys("tclapi.swg");
     if (!sapi) {
       Printf(stderr, "*** Unable to open 'tclapi.swg'\n");
     } else {
       Append(s, sapi);
       Delete(sapi);
     }
-    String *srun = Swig_include_sys("tclrun.swg");
+    String *srun = alaqil_include_sys("tclrun.swg");
     if (!srun) {
       Printf(stderr, "*** Unable to open 'tclrun.swg'\n");
     } else {
@@ -1294,17 +1294,17 @@ public:
   }
 
   String *defaultExternalRuntimeFilename() {
-    return NewString("swigtclrun.h");
+    return NewString("alaqiltclrun.h");
   }
 };
 
 /* ----------------------------------------------------------------------
- * swig_tcl()    - Instantiate module
+ * alaqil_tcl()    - Instantiate module
  * ---------------------------------------------------------------------- */
 
-static Language *new_swig_tcl() {
+static Language *new_alaqil_tcl() {
   return new TCL8();
 }
-extern "C" Language *swig_tcl(void) {
-  return new_swig_tcl();
+extern "C" Language *alaqil_tcl(void) {
+  return new_alaqil_tcl();
 }

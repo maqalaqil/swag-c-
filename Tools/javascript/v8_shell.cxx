@@ -281,8 +281,8 @@ v8::Handle<v8::Value> V8Shell::Import(const std::string &module_path)
   alaqilV8_ESCAPE(module);
 }
 
-SwigV8ReturnValue V8Shell::Print(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+alaqilV8ReturnValue V8Shell::Print(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
 
   bool first = true;
   for (int i = 0; i < args.Length(); i++) {
@@ -299,11 +299,11 @@ SwigV8ReturnValue V8Shell::Print(const SwigV8Arguments &args) {
   printf("\n");
   fflush(stdout);
 
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 
-SwigV8ReturnValue V8Shell::Require(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+alaqilV8ReturnValue V8Shell::Require(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
 
   if (args.Length() != 1) {
     printf("Illegal arguments for `require`");
@@ -313,35 +313,35 @@ SwigV8ReturnValue V8Shell::Require(const SwigV8Arguments &args) {
   const char *cstr = V8Shell::ToCString(str);
   std::string moduleName(cstr);
 
-  v8::Local<v8::Object> global = SWIGV8_CURRENT_CONTEXT()->Global();
+  v8::Local<v8::Object> global = alaqilV8_CURRENT_CONTEXT()->Global();
 
-  v8::Local<v8::Value> hidden = global->GetHiddenValue(SWIGV8_STRING_NEW("__shell__"));
+  v8::Local<v8::Value> hidden = global->GetHiddenValue(alaqilV8_STRING_NEW("__shell__"));
   v8::Local<v8::External> __shell__ = v8::Local<v8::External>::Cast(hidden);
   V8Shell *_this = (V8Shell *) (long) __shell__->Value();
 
   v8::Handle<v8::Value> module = _this->Import(moduleName);
 
-  SWIGV8_RETURN(module);
+  alaqilV8_RETURN(module);
 }
 
-SwigV8ReturnValue V8Shell::Quit(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
+alaqilV8ReturnValue V8Shell::Quit(const alaqilV8Arguments &args) {
+  alaqilV8_HANDLESCOPE();
 
   int exit_code = args[0]->Int32Value();
   fflush(stdout);
   fflush(stderr);
   exit(exit_code);
 
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+  alaqilV8_RETURN(alaqilV8_UNDEFINED());
 }
 
-SwigV8ReturnValue V8Shell::Version(const SwigV8Arguments &args) {
-    SWIGV8_HANDLESCOPE();
-    SWIGV8_RETURN(SWIGV8_STRING_NEW(v8::V8::GetVersion()));
+alaqilV8ReturnValue V8Shell::Version(const alaqilV8Arguments &args) {
+    alaqilV8_HANDLESCOPE();
+    alaqilV8_RETURN(alaqilV8_STRING_NEW(v8::V8::GetVersion()));
 }
 
 void V8Shell::ReportException(v8::TryCatch *try_catch) {
-  SWIGV8_HANDLESCOPE();
+  alaqilV8_HANDLESCOPE();
 
   v8::String::Utf8Value exception(try_catch->Exception());
   const char *exception_string = V8Shell::ToCString(exception);

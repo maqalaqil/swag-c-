@@ -1,10 +1,10 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * fragment.c
  *
@@ -16,8 +16,8 @@
  * wrapper code and to generate cleaner wrapper files. 
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
-#include "swigwarn.h"
+#include "alaqil.h"
+#include "alaqilwarn.h"
 #include "cparse.h"
 
 static Hash *fragments = 0;
@@ -26,22 +26,22 @@ static int debug = 0;
 
 
 /* -----------------------------------------------------------------------------
- * Swig_fragment_register()
+ * alaqil_fragment_register()
  *
  * Add a fragment. Use the original Node*, so, if something needs to be
  * changed, lang.cxx doesn't nedd to be touched again.
  * ----------------------------------------------------------------------------- */
 
-void Swig_fragment_register(Node *fragment) {
+void alaqil_fragment_register(Node *fragment) {
   if (Getattr(fragment, "emitonly")) {
-    Swig_fragment_emit(fragment);
+    alaqil_fragment_emit(fragment);
     return;
   } else {
     String *name = Copy(Getattr(fragment, "value"));
     String *type = Getattr(fragment, "type");
     if (type) {
-      SwigType *rtype = SwigType_typedef_resolve_all(type);
-      String *mangle = Swig_string_mangle(type);
+      alaqilType *rtype = alaqilType_typedef_resolve_all(type);
+      String *mangle = alaqil_string_mangle(type);
       Append(name, mangle);
       Delete(mangle);
       Delete(rtype);
@@ -62,7 +62,7 @@ void Swig_fragment_register(Node *fragment) {
       Setfile(ccode, Getfile(fragment));
       Setline(ccode, Getline(fragment));
       /* Replace $descriptor() macros */
-      Swig_cparse_replace_descriptor(ccode);
+      alaqil_cparse_replace_descriptor(ccode);
       Setattr(fragments, name, ccode);
       if (debug)
 	Printf(stdout, "registering fragment %s %s\n", name, section);
@@ -74,7 +74,7 @@ void Swig_fragment_register(Node *fragment) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_fragment_emit()
+ * alaqil_fragment_emit()
  *
  * Emit a fragment
  * ----------------------------------------------------------------------------- */
@@ -86,7 +86,7 @@ char *char_index(char *str, char c) {
   return (c == *str) ? str : 0;
 }
 
-void Swig_fragment_emit(Node *n) {
+void alaqil_fragment_emit(Node *n) {
   String *code;
   char *pc, *tok;
   String *t;
@@ -100,13 +100,13 @@ void Swig_fragment_emit(Node *n) {
   }
 
   if (!fragments) {
-    Swig_warning(WARN_FRAGMENT_NOT_FOUND, Getfile(n), Getline(n), "Fragment '%s' not found.\n", name);
+    alaqil_warning(WARN_FRAGMENT_NOT_FOUND, Getfile(n), Getline(n), "Fragment '%s' not found.\n", name);
     return;
   }
 
   type = Getattr(n, "type");
   if (type) {
-    mangle = Swig_string_mangle(type);
+    mangle = alaqil_string_mangle(type);
   }
 
   if (debug)
@@ -138,14 +138,14 @@ void Swig_fragment_emit(Node *n) {
 	    Printf(stdout, "emitting fragment %s %s\n", nn, type);
 	  Setfile(nn, Getfile(n));
 	  Setline(nn, Getline(n));
-	  Swig_fragment_emit(nn);
+	  alaqil_fragment_emit(nn);
 	}
 	nn = nextSibling(nn);
       }
       if (section) {
-	File *f = Swig_filebyname(section);
+	File *f = alaqil_filebyname(section);
 	if (!f) {
-	  Swig_error(Getfile(code), Getline(code), "Bad section '%s' in %%fragment declaration for code fragment '%s'\n", section, name);
+	  alaqil_error(Getfile(code), Getline(code), "Bad section '%s' in %%fragment declaration for code fragment '%s'\n", section, name);
 	} else {
 	  if (debug)
 	    Printf(stdout, "emitting subfragment %s %s\n", name, section);
@@ -159,14 +159,14 @@ void Swig_fragment_emit(Node *n) {
 	}
       }
     } else if (!code && type) {
-      SwigType *rtype = SwigType_typedef_resolve_all(type);
+      alaqilType *rtype = alaqilType_typedef_resolve_all(type);
       if (!Equal(type, rtype)) {
 	String *name = Copy(Getattr(n, "value"));
-	String *mangle = Swig_string_mangle(type);
+	String *mangle = alaqil_string_mangle(type);
 	Append(name, mangle);
 	Setfile(name, Getfile(n));
 	Setline(name, Getline(n));
-	Swig_fragment_emit(name);
+	alaqil_fragment_emit(name);
 	Delete(mangle);
 	Delete(name);
       }
@@ -174,7 +174,7 @@ void Swig_fragment_emit(Node *n) {
     }
 
     if (!code) {
-      Swig_warning(WARN_FRAGMENT_NOT_FOUND, Getfile(n), Getline(n), "Fragment '%s' not found.\n", name);
+      alaqil_warning(WARN_FRAGMENT_NOT_FOUND, Getfile(n), Getline(n), "Fragment '%s' not found.\n", name);
     }
     tok = pc ? pc + 1 : 0;
     if (tok) {

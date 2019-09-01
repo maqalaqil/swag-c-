@@ -1,49 +1,49 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
- * swigmain.cxx
+ * alaqilmain.cxx
  *
- * Simplified Wrapper and Interface Generator  (SWIG)
+ * Simplified Wrapper and Interface Generator  (alaqil)
  *
- * This file is the main entry point to SWIG.  It collects the command
+ * This file is the main entry point to alaqil.  It collects the command
  * line options, registers built-in language modules, and instantiates
  * a module for code generation.   If adding new language modules
- * to SWIG, you would modify this file.
+ * to alaqil, you would modify this file.
  * ----------------------------------------------------------------------------- */
 
-#include "swigmod.h"
+#include "alaqilmod.h"
 #include <ctype.h>
 
 /* Module factories.  These functions are used to instantiate
    the built-in language modules.    If adding a new language
-   module to SWIG, place a similar function here. Make sure
+   module to alaqil, place a similar function here. Make sure
    the function has "C" linkage.  This is required so that modules
    can be dynamically loaded in future versions. */
 
 extern "C" {
-  Language *swig_csharp(void);
-  Language *swig_d(void);
-  Language *swig_go(void);
-  Language *swig_guile(void);
-  Language *swig_java(void);
-  Language *swig_javascript(void);
-  Language *swig_lua(void);
-  Language *swig_mzscheme(void);
-  Language *swig_ocaml(void);
-  Language *swig_octave(void);
-  Language *swig_perl5(void);
-  Language *swig_php(void);
-  Language *swig_python(void);
-  Language *swig_r(void);
-  Language *swig_ruby(void);
-  Language *swig_scilab(void);
-  Language *swig_tcl(void);
-  Language *swig_xml(void);
+  Language *alaqil_csharp(void);
+  Language *alaqil_d(void);
+  Language *alaqil_go(void);
+  Language *alaqil_guile(void);
+  Language *alaqil_java(void);
+  Language *alaqil_javascript(void);
+  Language *alaqil_lua(void);
+  Language *alaqil_mzscheme(void);
+  Language *alaqil_ocaml(void);
+  Language *alaqil_octave(void);
+  Language *alaqil_perl5(void);
+  Language *alaqil_php(void);
+  Language *alaqil_python(void);
+  Language *alaqil_r(void);
+  Language *alaqil_ruby(void);
+  Language *alaqil_scilab(void);
+  Language *alaqil_tcl(void);
+  Language *alaqil_xml(void);
 }
 
 /* Association of command line options to language modules.
@@ -55,36 +55,36 @@ static TargetLanguageModule modules[] = {
   {"-chicken", NULL, "CHICKEN", Disabled},
   {"-clisp", NULL, "CLISP", Disabled},
   {"-cffi", NULL, "CFFI", Disabled},
-  {"-csharp", swig_csharp, "C#", Supported},
-  {"-d", swig_d, "D", Supported},
-  {"-go", swig_go, "Go", Supported},
-  {"-guile", swig_guile, "Guile", Supported},
-  {"-java", swig_java, "Java", Supported},
-  {"-javascript", swig_javascript, "Javascript", Supported},
-  {"-lua", swig_lua, "Lua", Supported},
+  {"-csharp", alaqil_csharp, "C#", Supported},
+  {"-d", alaqil_d, "D", Supported},
+  {"-go", alaqil_go, "Go", Supported},
+  {"-guile", alaqil_guile, "Guile", Supported},
+  {"-java", alaqil_java, "Java", Supported},
+  {"-javascript", alaqil_javascript, "Javascript", Supported},
+  {"-lua", alaqil_lua, "Lua", Supported},
   {"-modula3", NULL, "Modula 3", Disabled},
-  {"-mzscheme", swig_mzscheme, "MzScheme/Racket", Experimental},
-  {"-ocaml", swig_ocaml, "OCaml", Experimental},
-  {"-octave", swig_octave, "Octave", Supported},
-  {"-perl", swig_perl5, NULL, Supported},
-  {"-perl5", swig_perl5, "Perl 5", Supported},
-  {"-php", swig_php, NULL, Supported},
+  {"-mzscheme", alaqil_mzscheme, "MzScheme/Racket", Experimental},
+  {"-ocaml", alaqil_ocaml, "OCaml", Experimental},
+  {"-octave", alaqil_octave, "Octave", Supported},
+  {"-perl", alaqil_perl5, NULL, Supported},
+  {"-perl5", alaqil_perl5, "Perl 5", Supported},
+  {"-php", alaqil_php, NULL, Supported},
   {"-php5", NULL, "PHP 5", Disabled},
-  {"-php7", swig_php, "PHP 7", Supported},
+  {"-php7", alaqil_php, "PHP 7", Supported},
   {"-pike", NULL, "Pike", Disabled},
-  {"-python", swig_python, "Python", Supported},
-  {"-r", swig_r, "R (aka GNU S)", Supported},
-  {"-ruby", swig_ruby, "Ruby", Supported},
-  {"-scilab", swig_scilab, "Scilab", Supported},
+  {"-python", alaqil_python, "Python", Supported},
+  {"-r", alaqil_r, "R (aka GNU S)", Supported},
+  {"-ruby", alaqil_ruby, "Ruby", Supported},
+  {"-scilab", alaqil_scilab, "Scilab", Supported},
   {"-sexp", NULL, "Lisp S-Expressions", Disabled},
-  {"-tcl", swig_tcl, NULL, Supported},
-  {"-tcl8", swig_tcl, "Tcl 8", Supported},
+  {"-tcl", alaqil_tcl, NULL, Supported},
+  {"-tcl8", alaqil_tcl, "Tcl 8", Supported},
   {"-uffi", NULL, "Common Lisp / UFFI", Disabled},
-  {"-xml", swig_xml, "XML", Supported},
+  {"-xml", alaqil_xml, "XML", Supported},
   {NULL, NULL, NULL, Disabled}
 };
 
-#ifdef MACSWIG
+#ifdef MACalaqil
 #include <console.h>
 #include <SIOUX.h>
 #endif
@@ -95,7 +95,7 @@ static TargetLanguageModule modules[] = {
 // Main program.    Initializes the files and starts the parser.
 //-----------------------------------------------------------------
 
-void SWIG_merge_envopt(const char *env, int oargc, char *oargv[], int *nargc, char ***nargv) {
+void alaqil_merge_envopt(const char *env, int oargc, char *oargv[], int *nargc, char ***nargv) {
   if (!env) {
     *nargc = oargc;
     *nargv = (char **)malloc(sizeof(char *) * (oargc + 1));
@@ -218,15 +218,15 @@ int main(int margc, char **margv) {
   int argc;
   char **argv;
 
-  SWIG_merge_envopt(getenv("SWIG_FEATURES"), margc, margv, &argc, &argv);
+  alaqil_merge_envopt(getenv("alaqil_FEATURES"), margc, margv, &argc, &argv);
   merge_options_files(&argc, &argv);
 
-#ifdef MACSWIG
+#ifdef MACalaqil
   SIOUXSettings.asktosaveonclose = false;
   argc = ccommand(&argv);
 #endif
 
-  Swig_init_args(argc, argv);
+  alaqil_init_args(argc, argv);
 
   /* Get options */
   for (i = 1; i < argc; i++) {
@@ -240,13 +240,13 @@ int main(int margc, char **margv) {
 	}
       }
       if (is_target_language_module) {
-	Swig_mark_arg(i);
+	alaqil_mark_arg(i);
 	if (language_module->status == Disabled) {
 	  if (language_module->help)
 	    Printf(stderr, "Target language option %s (%s) is no longer supported.\n", language_module->name, language_module->help);
 	  else
 	    Printf(stderr, "Target language option %s is no longer supported.\n", language_module->name);
-	  SWIG_exit(EXIT_FAILURE);
+	  alaqil_exit(EXIT_FAILURE);
 	}
       } else if ((strcmp(argv[i], "-help") == 0) || (strcmp(argv[i], "--help") == 0)) {
 	if (strcmp(argv[i], "--help") == 0)
@@ -263,12 +263,12 @@ int main(int margc, char **margv) {
 	    Printf(stdout, "     %-15s - Generate %s wrappers\n", modules[j].name, modules[j].help);
 	  }
 	}
-	// Swig_mark_arg not called as the general -help options also need to be displayed later on
+	// alaqil_mark_arg not called as the general -help options also need to be displayed later on
       }
     }
   }
 
-  int res = SWIG_main(argc, argv, language_module);
+  int res = alaqil_main(argc, argv, language_module);
 
   return res;
 }

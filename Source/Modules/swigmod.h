@@ -1,22 +1,22 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
- * swigmod.h
+ * alaqilmod.h
  *
- * Main header file for SWIG modules.
+ * Main header file for alaqil modules.
  * ----------------------------------------------------------------------------- */
 
-#ifndef SWIG_SWIGMOD_H_
-#define SWIG_SWIGMOD_H_
+#ifndef alaqil_alaqilMOD_H_
+#define alaqil_alaqilMOD_H_
 
-#include "swig.h"
+#include "alaqil.h"
 #include "preprocessor.h"
-#include "swigwarn.h"
+#include "alaqilwarn.h"
 
 #define NOT_VIRTUAL     0
 #define PLAIN_VIRTUAL   1
@@ -33,7 +33,7 @@ extern int ImportMode;
 extern int NoExcept;		// -no_except option
 extern int Abstract;		// abstract base class
 extern int SmartPointer;	// smart pointer methods being emitted
-extern int SwigRuntime;
+extern int alaqilRuntime;
 
 /* Overload "argc" and "argv" */
 extern String *argv_template_string;
@@ -60,7 +60,7 @@ public:
   /* Top of the parse tree */
   virtual int top(Node *n) = 0;
 
-  /* SWIG directives */
+  /* alaqil directives */
 
   virtual int applyDirective(Node *n);
   virtual int clearDirective(Node *n);
@@ -125,7 +125,7 @@ public:
 
   virtual int top(Node *n);
 
-  /* SWIG directives */
+  /* alaqil directives */
 
 
   virtual int applyDirective(Node *n);
@@ -214,8 +214,8 @@ public:
   virtual Hash* symbolAddScope(const_String_or_char_ptr scope);
   virtual Hash* symbolScopeLookup(const_String_or_char_ptr scope);
   virtual Hash* symbolScopePseudoSymbolLookup(const_String_or_char_ptr scope);
-  static Node *classLookup(const SwigType *s); /* Class lookup      */
-  static Node *enumLookup(SwigType *s);	/* Enum lookup       */
+  static Node *classLookup(const alaqilType *s); /* Class lookup      */
+  static Node *enumLookup(alaqilType *s);	/* Enum lookup       */
   virtual int abstractClassTest(Node *n);	/* Is class really abstract? */
   virtual int is_assignable(Node *n);	/* Is variable assignable? */
   virtual String *runtimeCode();	/* returns the language specific runtime code */
@@ -355,7 +355,7 @@ private:
 };
 
 extern "C" {
-  void SWIG_typemap_lang(const char *);
+  void alaqil_typemap_lang(const char *);
   typedef Language *(*ModuleFactory) (void);
 }
 
@@ -368,19 +368,19 @@ struct TargetLanguageModule {
   Status status;
 };
 
-int SWIG_main(int argc, char *argv[], const TargetLanguageModule *tlm);
+int alaqil_main(int argc, char *argv[], const TargetLanguageModule *tlm);
 void emit_parameter_variables(ParmList *l, Wrapper *f);
-void emit_return_variable(Node *n, SwigType *rt, Wrapper *f);
-void SWIG_exit(int);		/* use EXIT_{SUCCESS,FAILURE} */
-void SWIG_config_file(const_String_or_char_ptr );
-const String *SWIG_output_directory();
-void SWIG_config_cppext(const char *ext);
-void Swig_print_xml(Node *obj, String *filename);
+void emit_return_variable(Node *n, alaqilType *rt, Wrapper *f);
+void alaqil_exit(int);		/* use EXIT_{SUCCESS,FAILURE} */
+void alaqil_config_file(const_String_or_char_ptr );
+const String *alaqil_output_directory();
+void alaqil_config_cppext(const char *ext);
+void alaqil_print_xml(Node *obj, String *filename);
 
 /* get the list of generated files */
-List *SWIG_output_files();
+List *alaqil_output_files();
 
-void SWIG_library_directory(const char *);
+void alaqil_library_directory(const char *);
 int emit_num_arguments(ParmList *);
 int emit_num_required(ParmList *);
 int emit_isvarargs(ParmList *p);
@@ -389,21 +389,21 @@ void emit_attach_parmmaps(ParmList *, Wrapper *f);
 void emit_mark_varargs(ParmList *l);
 String *emit_action(Node *n);
 int emit_action_code(Node *n, String *wrappercode, String *action);
-void Swig_overload_check(Node *n);
-String *Swig_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *, const_String_or_char_ptr fmt_fastdispatch = 0);
-String *Swig_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *);
-List *Swig_overload_rank(Node *n, bool script_lang_wrapping);
-SwigType *cplus_value_type(SwigType *t);
+void alaqil_overload_check(Node *n);
+String *alaqil_overload_dispatch(Node *n, const_String_or_char_ptr fmt, int *, const_String_or_char_ptr fmt_fastdispatch = 0);
+String *alaqil_overload_dispatch_cast(Node *n, const_String_or_char_ptr fmt, int *);
+List *alaqil_overload_rank(Node *n, bool script_lang_wrapping);
+alaqilType *cplus_value_type(alaqilType *t);
 
 /* directors.cxx start */
-String *Swig_csuperclass_call(String *base, String *method, ParmList *l);
-String *Swig_class_declaration(Node *n, String *name);
-String *Swig_class_name(Node *n);
-String *Swig_method_call(const_String_or_char_ptr name, ParmList *parms);
-String *Swig_method_decl(SwigType *return_base_type, SwigType *decl, const_String_or_char_ptr id, List *args, int default_args);
-String *Swig_director_declaration(Node *n);
-void Swig_director_emit_dynamic_cast(Node *n, Wrapper *f);
-void Swig_director_parms_fixup(ParmList *parms);
+String *alaqil_csuperclass_call(String *base, String *method, ParmList *l);
+String *alaqil_class_declaration(Node *n, String *name);
+String *alaqil_class_name(Node *n);
+String *alaqil_method_call(const_String_or_char_ptr name, ParmList *parms);
+String *alaqil_method_decl(alaqilType *return_base_type, alaqilType *decl, const_String_or_char_ptr id, List *args, int default_args);
+String *alaqil_director_declaration(Node *n);
+void alaqil_director_emit_dynamic_cast(Node *n, Wrapper *f);
+void alaqil_director_parms_fixup(ParmList *parms);
 /* directors.cxx end */
 
 /* Utilities */
@@ -423,29 +423,29 @@ void Wrapper_naturalvar_mode_set(int);
 void clean_overloaded(Node *n);
 
 extern "C" {
-  const char *Swig_to_string(DOH *object, int count = -1);
-  const char *Swig_to_string_with_location(DOH *object, int count = -1);
-  void Swig_print(DOH *object, int count = -1);
-  void Swig_print_with_location(DOH *object, int count = -1);
+  const char *alaqil_to_string(DOH *object, int count = -1);
+  const char *alaqil_to_string_with_location(DOH *object, int count = -1);
+  void alaqil_print(DOH *object, int count = -1);
+  void alaqil_print_with_location(DOH *object, int count = -1);
 }
 
 /* Contracts */
-void Swig_contracts(Node *n);
-void Swig_contract_mode_set(int flag);
-int Swig_contract_mode_get();
+void alaqil_contracts(Node *n);
+void alaqil_contract_mode_set(int flag);
+int alaqil_contract_mode_get();
 
 /* Browser */
-void Swig_browser(Node *n, int);
-void Swig_default_allocators(Node *n);
-void Swig_process_types(Node *n);
+void alaqil_browser(Node *n, int);
+void alaqil_default_allocators(Node *n);
+void alaqil_process_types(Node *n);
 
 /* Nested classes */
-void Swig_nested_process_classes(Node *n);
-void Swig_nested_name_unnamed_c_structs(Node *n);
+void alaqil_nested_process_classes(Node *n);
+void alaqil_nested_name_unnamed_c_structs(Node *n);
 
 /* Interface feature */
-void Swig_interface_feature_enable();
-void Swig_interface_propagate_methods(Node *n);
+void alaqil_interface_feature_enable();
+void alaqil_interface_propagate_methods(Node *n);
 
 /* Miscellaneous */
 template <class T> class save_value {

@@ -1,18 +1,18 @@
 /* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
- * swigopt.h
+ * alaqilopt.h
  *
- * Header file for the SWIG command line processing functions
+ * Header file for the alaqil command line processing functions
  * ----------------------------------------------------------------------------- */
 
- extern void  Swig_init_args(int argc, char **argv);
- extern void  Swig_mark_arg(int n);
- extern int   Swig_check_marked(int n);
- extern void  Swig_check_options(int check_input);
- extern void  Swig_arg_error(void);
+ extern void  alaqil_init_args(int argc, char **argv);
+ extern void  alaqil_mark_arg(int n);
+ extern int   alaqil_check_marked(int n);
+ extern void  alaqil_check_options(int check_input);
+ extern void  alaqil_arg_error(void);

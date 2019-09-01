@@ -1,17 +1,17 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * parms.c
  *
  * Parameter list class.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 
 /* ------------------------------------------------------------------------
  * NewParm()
@@ -20,7 +20,7 @@
  * the file and line number from the Node from_node.
  * ------------------------------------------------------------------------ */
 
-Parm *NewParm(SwigType *type, const_String_or_char_ptr name, Node *from_node) {
+Parm *NewParm(alaqilType *type, const_String_or_char_ptr name, Node *from_node) {
   Parm *p = NewParmWithoutFileLineInfo(type, name);
   Setfile(p, Getfile(from_node));
   Setline(p, Getline(from_node));
@@ -34,11 +34,11 @@ Parm *NewParm(SwigType *type, const_String_or_char_ptr name, Node *from_node) {
  * file / line numbering information.
  * ------------------------------------------------------------------------ */
 
-Parm *NewParmWithoutFileLineInfo(SwigType *type, const_String_or_char_ptr name) {
+Parm *NewParmWithoutFileLineInfo(alaqilType *type, const_String_or_char_ptr name) {
   Parm *p = NewHash();
   set_nodeType(p, "parm");
   if (type) {
-    SwigType *ntype = Copy(type);
+    alaqilType *ntype = Copy(type);
     Setattr(p, "type", ntype);
     Delete(ntype);
   }
@@ -54,7 +54,7 @@ Parm *NewParmWithoutFileLineInfo(SwigType *type, const_String_or_char_ptr name) 
  * The resulting Parm will be similar to a Node used for typemap lookups.
  * ------------------------------------------------------------------------ */
 
-Parm *NewParmNode(SwigType *type, Node *from_node) {
+Parm *NewParmNode(alaqilType *type, Node *from_node) {
   Parm *p = NewParm(type, Getattr(from_node, "name"), from_node);
   Setattr(p, "sym:symtab", Getattr(from_node, "sym:symtab"));
   return p;
@@ -119,11 +119,11 @@ ParmList *CopyParmList(ParmList *p) {
 int ParmList_numrequired(ParmList *p) {
   int i = 0;
   while (p) {
-    SwigType *t = Getattr(p, "type");
+    alaqilType *t = Getattr(p, "type");
     String *value = Getattr(p, "value");
     if (value)
       return i;
-    if (!(SwigType_type(t) == T_VOID))
+    if (!(alaqilType_type(t) == T_VOID))
       i++;
     else
       break;
@@ -149,7 +149,7 @@ int ParmList_len(ParmList *p) {
  * get_empty_type()
  * ---------------------------------------------------------------------- */
 
-static SwigType *get_empty_type() {
+static alaqilType *get_empty_type() {
   return NewStringEmpty();
 }
 
@@ -163,7 +163,7 @@ String *ParmList_str(ParmList *p) {
   String *out = NewStringEmpty();
   while (p) {
     String *type = Getattr(p, "type");
-    String *pstr = SwigType_str(type ? type : get_empty_type(), Getattr(p, "name"));
+    String *pstr = alaqilType_str(type ? type : get_empty_type(), Getattr(p, "name"));
     Append(out, pstr);
     p = nextSibling(p);
     if (p) {
@@ -185,7 +185,7 @@ String *ParmList_str_defaultargs(ParmList *p) {
   while (p) {
     String *value = Getattr(p, "value");
     String *type = Getattr(p, "type");
-    String *pstr = SwigType_str(type ? type : get_empty_type(), Getattr(p, "name"));
+    String *pstr = alaqilType_str(type ? type : get_empty_type(), Getattr(p, "name"));
     Append(out, pstr);
     if (value) {
       Printf(out, "=%s", value);
@@ -227,7 +227,7 @@ String *ParmList_protostr(ParmList *p) {
   String *out = NewStringEmpty();
   while (p) {
     String *type = Getattr(p, "type");
-    String *pstr = SwigType_str(type ? type : get_empty_type(), 0);
+    String *pstr = alaqilType_str(type ? type : get_empty_type(), 0);
     Append(out, pstr);
     p = nextSibling(p);
     if (p) {
@@ -268,5 +268,5 @@ int ParmList_has_varargs(ParmList *p) {
     lp = p;
     p = nextSibling(p);
   }
-  return lp ? SwigType_isvarargs(Getattr(lp, "type")) : 0;
+  return lp ? alaqilType_isvarargs(Getattr(lp, "type")) : 0;
 }

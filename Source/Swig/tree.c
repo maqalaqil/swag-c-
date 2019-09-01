@@ -1,10 +1,10 @@
 /* -----------------------------------------------------------------------------
- * This file is part of SWIG, which is licensed as a whole under version 3 
+ * This file is part of alaqil, which is licensed as a whole under version 3 
  * (or any later version) of the GNU General Public License. Some additional
- * terms also apply to certain portions of SWIG. The full details of the SWIG
+ * terms also apply to certain portions of alaqil. The full details of the alaqil
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
- * included with the SWIG source code as distributed by the SWIG developers
- * and at http://www.swig.org/legal.html.
+ * included with the alaqil source code as distributed by the alaqil developers
+ * and at http://www.alaqil.org/legal.html.
  *
  * tree.c
  *
@@ -12,17 +12,17 @@
  * parse trees.
  * ----------------------------------------------------------------------------- */
 
-#include "swig.h"
+#include "alaqil.h"
 #include <stdarg.h>
 #include <assert.h>
 
 /* -----------------------------------------------------------------------------
- * Swig_print_tags()
+ * alaqil_print_tags()
  *
  * Dump the tag structure of a parse tree to standard output
  * ----------------------------------------------------------------------------- */
 
-void Swig_print_tags(DOH *obj, DOH *root) {
+void alaqil_print_tags(DOH *obj, DOH *root) {
   DOH *croot, *newroot;
   DOH *cobj;
 
@@ -32,11 +32,11 @@ void Swig_print_tags(DOH *obj, DOH *root) {
     croot = root;
 
   while (obj) {
-    Swig_diagnostic(Getfile(obj), Getline(obj), "%s . %s\n", croot, nodeType(obj));
+    alaqil_diagnostic(Getfile(obj), Getline(obj), "%s . %s\n", croot, nodeType(obj));
     cobj = firstChild(obj);
     if (cobj) {
       newroot = NewStringf("%s . %s", croot, nodeType(obj));
-      Swig_print_tags(cobj, newroot);
+      alaqil_print_tags(cobj, newroot);
       Delete(newroot);
     }
     obj = nextSibling(obj);
@@ -60,10 +60,10 @@ static void print_indent(int l) {
 
 
 /* -----------------------------------------------------------------------------
- * Swig_print_node(Node *n)
+ * alaqil_print_node(Node *n)
  * ----------------------------------------------------------------------------- */
 
-void Swig_print_node(Node *obj) {
+void alaqil_print_node(Node *obj) {
   Iterator ki;
   Node *cobj;
 
@@ -101,7 +101,7 @@ void Swig_print_node(Node *obj) {
   if (cobj) {
     indent_level += 6;
     Printf(stdout, "\n");
-    Swig_print_tree(cobj);
+    alaqil_print_tree(cobj);
     indent_level -= 6;
   } else {
     print_indent(1);
@@ -110,14 +110,14 @@ void Swig_print_node(Node *obj) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_print_tree()
+ * alaqil_print_tree()
  *
  * Dump the tree structure of a parse tree to standard output
  * ----------------------------------------------------------------------------- */
 
-void Swig_print_tree(DOH *obj) {
+void alaqil_print_tree(DOH *obj) {
   while (obj) {
-    Swig_print_node(obj);
+    alaqil_print_node(obj);
     obj = nextSibling(obj);
   }
 }
@@ -257,7 +257,7 @@ int checkAttribute(Node *n, const_String_or_char_ptr name, const_String_or_char_
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_require()
+ * alaqil_require()
  * ns   - namespace for the view name for saving any attributes under
  * n    - node
  * ...  - list of attribute names of type char*
@@ -265,12 +265,12 @@ int checkAttribute(Node *n, const_String_or_char_ptr name, const_String_or_char_
  * not. Assert will only occur unless the attribute is optional. An attribute is
  * optional if it is prefixed by ?, eg "?value". If the attribute name is prefixed
  * by * or ?, eg "*value" then a copy of the attribute is saved. The saved
- * attributes will be restored on a subsequent call to Swig_restore(). All the
+ * attributes will be restored on a subsequent call to alaqil_restore(). All the
  * saved attributes are saved in the view namespace (prefixed by ns).
  * This function can be called more than once with different namespaces.
  * ----------------------------------------------------------------------------- */
 
-void Swig_require(const char *ns, Node *n, ...) {
+void alaqil_require(const char *ns, Node *n, ...) {
   va_list ap;
   char *name;
   DOH *obj;
@@ -290,7 +290,7 @@ void Swig_require(const char *ns, Node *n, ...) {
     }
     obj = Getattr(n, name);
     if (!opt && !obj) {
-      Swig_error(Getfile(n), Getline(n), "Fatal error (Swig_require).  Missing attribute '%s' in node '%s'.\n", name, nodeType(n));
+      alaqil_error(Getfile(n), Getline(n), "Fatal error (alaqil_require).  Missing attribute '%s' in node '%s'.\n", name, nodeType(n));
       assert(obj);
     }
     if (!obj)
@@ -319,12 +319,12 @@ void Swig_require(const char *ns, Node *n, ...) {
 
 
 /* -----------------------------------------------------------------------------
- * Swig_save()
- * Same as Swig_require(), but all attribute names are optional and all attributes
+ * alaqil_save()
+ * Same as alaqil_require(), but all attribute names are optional and all attributes
  * are saved, ie behaves as if all the attribute names were prefixed by ?.
  * ----------------------------------------------------------------------------- */
 
-void Swig_save(const char *ns, Node *n, ...) {
+void alaqil_save(const char *ns, Node *n, ...) {
   va_list ap;
   char *name;
   DOH *obj;
@@ -343,7 +343,7 @@ void Swig_save(const char *ns, Node *n, ...) {
 
     /* Save a copy of the attribute */
     if (Setattr(n, NewStringf("%s:%s", ns, name), obj)) {
-      Printf(stderr, "Swig_save('%s','%s'): Warning, attribute '%s' was already saved.\n", ns, nodeType(n), name);
+      Printf(stderr, "alaqil_save('%s','%s'): Warning, attribute '%s' was already saved.\n", ns, nodeType(n), name);
     }
     name = va_arg(ap, char *);
   }
@@ -364,11 +364,11 @@ void Swig_save(const char *ns, Node *n, ...) {
 }
 
 /* -----------------------------------------------------------------------------
- * Swig_restore()
- * Restores attributes saved by a previous call to Swig_require() or Swig_save().
+ * alaqil_restore()
+ * Restores attributes saved by a previous call to alaqil_require() or alaqil_save().
  * ----------------------------------------------------------------------------- */
 
-void Swig_restore(Node *n) {
+void alaqil_restore(Node *n) {
   String *temp;
   int len;
   List *l;
