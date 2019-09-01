@@ -1,0 +1,25 @@
+alaqil Source directory
+
+ Source/DOH          -  A core set of basic datatypes including
+                        strings, lists, hashes, and files.  Used
+                        extensively by the rest of alaqil.
+
+ Source/alaqil         -  alaqil core. Type-system, utility functions.
+
+ Source/Preprocessor -  alaqil C Preprocessor
+
+ Source/CParse       -  alaqil C Parser (still messy)
+
+ Source/Modules      -  Language modules.
+
+ Source/Include      -  Include files.
+
+Historic directories which may be in CVS, but have been removed:
+
+ Source/Modules1.1   -  Old alaqil-1.1 modules. Empty.
+
+ Source/LParse       -  Experimental parser.  Officially dead
+                        as CParse is more capable.
+
+ Source/alaqil1.1      -  Old alaqil1.1 core. Completely empty now.
+
