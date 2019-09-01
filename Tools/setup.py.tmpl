@@ -1,0 +1,139 @@
+#!@PYTHON@
+'''A setup.py script with better alaqil support.  To use it, either
+rename it to setup.py.in and have it pe processed by your configure
+script (you will need to define @PYTHON@), or replace the @*@ strings
+by hand.
+
+Copyright 2001,  Anthony Joseph Seward'''
+
+
+from distutils.core import setup, Extension
+
+###############################################################################
+##      Start of better alaqil support
+###############################################################################
+from distutils.command.build_ext import build_ext
+import os
+import string
+class build_alaqil_ext(build_ext):
+    '''Better alaqil support for Distutils'''
+
+    ## __ Tell Distutils about the options
+    user_options = build_ext.user_options
+    boolean_options = build_ext.boolean_options
+
+    user_options.append(
+        ('alaqil-doc=', None,
+         'what type of documentation should alaqil produce (default: none)')
+        )
+    user_options.append(
+        ('alaqil-inc=', None,
+         'a list of directories to add to the alaqil include path'
+         +  "(separated by ':')(default: alaqil)")
+        )
+    user_options.append(
+        ('alaqil-shadow', None,
+         'have alaqil create shadow classes'
+         + ' (also adds docstrings to the shadow classes')
+        )
+
+    boolean_options.append('alaqil-shadow')
+
+    def initialize_options(self):
+        '''Initialize the new options after the inherited ones'''
+        build_ext.initialize_options(self)
+        self.alaqil_doc = 'none'
+        self.alaqil_inc = 'alaqil'
+        self.alaqil_shadow = None        
+    
+    def alaqil_sources(self, sources):
+        """Override the definition of 'alaqil_sources' in build_ext.  This
+        is essentially the same function but with better alaqil support.
+        I will now quote the original docstring:
+
+          Walk the list of source files in 'sources', looking for alaqil
+          interface (.i) files.  Run alaqil on all that are found, and
+          return a modified 'sources' list with alaqil source files replaced
+          by the generated C (or C++) files.
+        """
+
+        new_sources = []
+        alaqil_sources = []
+        alaqil_targets = {}
+
+        # XXX this drops generated C/C++ files into the source tree, which
+        # is fine for developers who want to distribute the generated
+        # source -- but there should be an option to put alaqil output in
+        # the temp dir.
+
+        if self.alaqil_cpp:
+            target_ext = '.cpp'
+        else:
+            target_ext = '.c'
+
+        for source in sources:
+            (base, ext) = os.path.splitext(source)
+            if ext == ".i":             # alaqil interface file
+                new_sources.append(base + target_ext)
+                alaqil_sources.append(source)
+                alaqil_targets[source] = new_sources[-1]
+            else:
+                new_sources.append(source)
+
+        if not alaqil_sources:
+            return new_sources
+
+        includes = self.alaqil_inc
+        if type(includes) is type(''):
+            includes = string.split(includes, ':')
+            includes = map(lambda x: '-I'+x, includes)
+            includes = string.join(includes)
+        
+        alaqil = self.find_alaqil()
+##        alaqil_cmd = [alaqil, "-python", "-d%s" % self.alaqil_doc,  includes]
+        alaqil_cmd = [alaqil, '-v', '-python', '-d%s' % self.alaqil_doc,  includes]
+        if self.alaqil_cpp:
+            alaqil_cmd.append('-c++')
+
+        if self.alaqil_shadow:
+            alaqil_cmd.append('-shadow')
+## alaqil1.1            alaqil_cmd.append('-docstring')
+
+        for source in alaqil_sources:
+            target = alaqil_targets[source]
+            self.announce('alaqilging %s to %s' % (source, target))
+            self.spawn(alaqil_cmd + ['-o', target, source])
+
+        return new_sources
+
+    # alaqil_sources ()
+###############################################################################
+##      End of improved alaqil support
+###############################################################################
+
+package = '@PACKAGE@'
+version = '@VERSION@'
+include_dirs = ['@top_srcdir@']
+lib_dirs = ['@top_srcdir@/@PACKAGE@']
+libraries = ['@PACKAGE@', 'stdc++']
+
+setup(name = package,
+      version = version,
+      description = '',
+      author = '',
+      author_email = '',
+      url = 'http://',
+
+      cmdclass = {'build_ext': build_alaqil_ext},
+      ext_modules = [Extension(package+'cmodule',
+                               [package+'.i'],
+                               include_dirs=include_dirs,
+                               library_dirs=lib_dirs,
+                               libraries=libraries,
+                               )],
+      options = {'build_ext':
+                 {'alaqil_doc': 'html',
+                  'alaqil_cpp': not None,
+                  'alaqil_shadow': not None}
+                 }
+      )
